@@ -37962,7 +37962,7 @@ A.Ki.prototype={
 l(){this.d.l()
 this.aF()},
 L(a){var s,r,q,p,o,n=this,m=null,l=A.bo(a,m,t.w).w.a.a<800
-if(l){s=A.ku("assets/images/oval_logo.png",m,48,m,m)
+if(l){s=A.ku("assets/images/Oval_Logo.png",m,48,m,m)
 s=new A.ta(s,1,B.bf,!0,new A.NL(m,m,1/0,56),m)}else s=m
 r=t.p
 q=A.c([],r)
@@ -37988,7 +37988,7 @@ r=A.IA(B.e4,r,B.ft)
 if(l)q=new A.tm(B.CQ,0,B.bf,m,m)
 else q=m
 return new A.x7(s,r,q,m)},
-Vr(){var s=this,r=null,q=A.ku("assets/images/oval_logo.png",r,80,r,r),p=s.oj("About",s.f),o=s.oj("Methodology",s.r),n=s.oj("Fieldwork",s.Q),m=s.oj("Donate",s.z),l=s.Fv("Team",s.x,0.2),k=s.oj("FAQ",s.y),j=A.akm(r,r,B.d6,r,r,r,r,r,r,r,r,r,B.Au,r,r,r,r,r,r,r),i=t.p
+Vr(){var s=this,r=null,q=A.ku("assets/images/Oval_Logo.png",r,80,r,r),p=s.oj("About",s.f),o=s.oj("Methodology",s.r),n=s.oj("Fieldwork",s.Q),m=s.oj("Donate",s.z),l=s.Fv("Team",s.x,0.2),k=s.oj("FAQ",s.y),j=A.akm(r,r,B.d6,r,r,r,r,r,r,r,r,r,B.Au,r,r,r,r,r,r,r),i=t.p
 return A.cD(r,A.pY(A.c([q,B.K_,A.amV(B.cd,A.c([p,o,n,m,l,k,A.la(A.V8(A.bj(s.a.c==="en"?"ES":"EN",r,r,B.Nt,r),new A.a99(s),j),32,r)],i),0,16)],i),B.A,B.dx,B.C,0),B.q,B.bf,r,r,r,r,r,B.AB,r,r,r)},
 Fv(a,b,c){var s=null
 return A.vK(A.mu(s,A.bj(a,s,s,B.jk,s),B.an,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.a9a(this,b,c),s,s,s),B.jf,s,s,s)},
