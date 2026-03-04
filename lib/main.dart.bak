@@ -44,7 +44,7 @@ class _ChagresAppState extends State<ChagresApp> {
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
-        fontFamily: 'serif',
+        fontFamily: 'Times New Roman',
         scaffoldBackgroundColor: const Color(0xFF070C18),
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF0C1328),
@@ -82,32 +82,11 @@ class ChagresHome extends StatefulWidget {
 class _ChagresHomeState extends State<ChagresHome> {
   final ScrollController _scrollController = ScrollController();
   int _currentPageIndex = 0;
-  
-  // GlobalKey references for each section
-  final GlobalKey _aboutKey = GlobalKey();
-  final GlobalKey _methodologyKey = GlobalKey();
-  final GlobalKey _fieldworkKey = GlobalKey();
-  final GlobalKey _teamKey = GlobalKey();
-  final GlobalKey _faqKey = GlobalKey();
-  final GlobalKey _donateKey = GlobalKey();
-  final GlobalKey _reportsKey = GlobalKey();
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-  
-  void _scrollToSection(GlobalKey key, {double alignment = 0.50}) {
-    final context = key.currentContext;
-    if (context != null) {
-      Scrollable.ensureVisible(
-        context,
-        duration: const Duration(milliseconds: 800),
-        curve: Curves.easeInOut,
-        alignment: alignment,
-      );
-    }
   }
 
   @override
@@ -116,43 +95,28 @@ class _ChagresHomeState extends State<ChagresHome> {
     
     return Scaffold(
       appBar: isMobile ? _buildMobileAppBar() : null,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: [
-                if (!isMobile) SizedBox(height: 100), // Space for fixed header
-                HeroSection(language: widget.language),
-                TeamSection(key: _teamKey, language: widget.language),
-                AboutSection(key: _aboutKey, language: widget.language),
-                MeaningfulSection(language: widget.language),
-                AuthorizationSection(language: widget.language),
-                MethodologySection(key: _methodologyKey, language: widget.language),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40),
-                  child: Image.asset('assets/images/community_meeting.jpg'),
-                ),
-                GallerySection(language: widget.language),
-                MapsSection(language: widget.language),
-                ReportsSection(key: _reportsKey, language: widget.language),
-                FAQSection(key: _faqKey, language: widget.language),
-                DonateSection(key: _donateKey, language: widget.language),
-                FooterSection(
-                  language: widget.language,
-                  onLanguageChanged: widget.onLanguageChanged,
-                ),
-              ],
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            if (!isMobile) _buildDesktopHeader(),
+            HeroSection(language: widget.language),
+            TeamSection(language: widget.language),
+            AboutSection(language: widget.language),
+            MeaningfulSection(language: widget.language),
+            AuthorizationSection(language: widget.language),
+            MethodologySection(language: widget.language),
+            GallerySection(language: widget.language),
+            MapsSection(language: widget.language),
+            ReportsSection(language: widget.language),
+            FAQSection(language: widget.language),
+            DonateSection(language: widget.language),
+            FooterSection(
+              language: widget.language,
+              onLanguageChanged: widget.onLanguageChanged,
             ),
-          ),
-          if (!isMobile)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: _buildDesktopHeader(),
-            ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: isMobile
           ? BottomNavigationBar(
@@ -198,12 +162,11 @@ class _ChagresHomeState extends State<ChagresHome> {
           Wrap(
             spacing: 16,
             children: [
-              _buildNavLink('About', _aboutKey),
-              _buildNavLink('Methodology', _methodologyKey),
-              _buildNavLink('Fieldwork', _reportsKey),
-              _buildNavLink('Donate', _donateKey),
-              _buildNavLink('Team', _teamKey, alignment: 0.20),
-              _buildNavLink('FAQ', _faqKey),
+              _buildNavLink('About'),
+              _buildNavLink('Methodology'),
+              _buildNavLink('Fieldwork'),
+              _buildNavLink('Team'),
+              _buildNavLink('FAQ'),
               SizedBox(
                 height: 32,
                 child: ElevatedButton(
@@ -217,8 +180,8 @@ class _ChagresHomeState extends State<ChagresHome> {
                   child: Text(
                     widget.language == 'en' ? 'ES' : 'EN',
                     style: const TextStyle(
-                      fontSize: 15,
-                      fontFamily: 'serif',
+                      fontSize: 12,
+                      fontFamily: 'Times New Roman',
                     ),
                   ),
                 ),
@@ -230,16 +193,16 @@ class _ChagresHomeState extends State<ChagresHome> {
     );
   }
 
-  Widget _buildNavLink(String label, GlobalKey key, {double alignment = 0.50}) {
+  Widget _buildNavLink(String label) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => _scrollToSection(key, alignment: alignment),
+        onTap: () {},
         child: Text(
           label,
           style: const TextStyle(
             color: Color(0xFFB9C6EA),
-            fontSize: 17,
+            fontSize: 14,
           ),
         ),
       ),
@@ -271,7 +234,7 @@ class HeroSection extends StatelessWidget {
           ],
         ),
         image: const DecorationImage(
-          image: AssetImage('assets/images/palms.jpg'),
+          image: AssetImage('assets/images/hero_background.JPG'),
           fit: BoxFit.cover,
           opacity: 0.3,
         ),
@@ -285,13 +248,6 @@ class HeroSection extends StatelessWidget {
             style: Theme.of(context).textTheme.displayMedium?.copyWith(
               fontFamily: 'serif',
               color: Colors.white,
-              shadows: [
-                Shadow(
-                  offset: const Offset(1.5, 1.5),
-                  blurRadius: 3.0,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ],
             ),
             textAlign: TextAlign.center,
           ),
@@ -311,6 +267,34 @@ class HeroSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+          GestureDetector(
+            onTap: () {
+              launchUrl(Uri.parse('https://geog.ku.edu/donate'));
+            },
+            child: Text(
+              language == 'en'
+                  ? 'You can be part of our team by donating.'
+                  : 'Puedes ser parte de nuestro equipo donando.',
+              style: const TextStyle(
+                color: Color(0xFFE8000D),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            language == 'en'
+                ? 'Your tax-deductible donation directly supports paid Indigenous research collaborators, participatory mapping workshops, watershed monitoring equipment, and field support for KU and UT-Arlington student researchers working to map Chagres National Park.'
+                : 'Tu donación deducible de impuestos apoya directamente a los colaboradores de investigación indígena remunerados, talleres de mapeo participativo, equipos de monitoreo de cuencas y apoyo de campo para investigadores estudiantes.',
+            style: const TextStyle(
+              color: Color(0xFFB9C6EA),
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 30),
           // Hero Strip Image
           Container(
@@ -340,47 +324,6 @@ class HeroSection extends StatelessWidget {
             width: isMobile ? 280 : 360,
             fit: BoxFit.contain,
             opacity: const AlwaysStoppedAnimation(0.95),
-          ),
-          const SizedBox(height: 40),
-          // Donation Section - Oval with transparent crimson background
-          GestureDetector(
-            onTap: () {
-              launchUrl(Uri.parse('https://geog.ku.edu/donate'));
-            },
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 600),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE8000D).withOpacity(0.35),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-              child: Column(
-                children: [
-                  Text(
-                    language == 'en'
-                        ? 'You can be part of our team by donating.'
-                        : 'Puedes ser parte de nuestro equipo donando.',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 21,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            language == 'en'
-                ? 'Your tax-deductible donation directly supports paid Indigenous research collaborators, participatory mapping workshops, watershed monitoring equipment, and field support for KU and UT-Arlington student researchers working to map Chagres National Park.'
-                : 'Tu donación deducible de impuestos apoya directamente a los colaboradores de investigación indígena remunerados, talleres de mapeo participativo, equipos de monitoreo de cuencas y apoyo de campo para investigadores estudiantes.',
-            style: const TextStyle(
-              color: Color(0xFFB9C6EA),
-              fontSize: 17,
-            ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -433,13 +376,6 @@ class AboutSection extends StatelessWidget {
                 color: const Color(0xFFB9C6EA),
               ),
             ),
-          ),
-          const SizedBox(height: 40),
-          Image.asset(
-            'assets/images/labonga_seal.png',
-            width: 200,
-            height: 200,
-            fit: BoxFit.contain,
           ),
         ],
       ),
@@ -680,8 +616,8 @@ class MethodologySection extends StatelessWidget {
                           stage.$1,
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: Colors.white,
-                            fontFamily: 'serif',
-                            fontSize: 17,
+                            fontFamily: 'Times New Roman',
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -690,8 +626,8 @@ class MethodologySection extends StatelessWidget {
                           stage.$2,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: const Color(0xFFB9C6EA),
-                            fontFamily: 'serif',
-                            fontSize: 15,
+                            fontFamily: 'Times New Roman',
+                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -834,7 +770,8 @@ class MapsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 800;
     
-    return Padding(
+    return Container(
+      color: const Color(0xFF0C1328),
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
         vertical: 60,
@@ -850,42 +787,64 @@ class MapsSection extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: const Color(0xFF101A2F),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              child: AspectRatio(
+                aspectRatio: 1 / 1.2,
+                child: Image.asset(
+                  'assets/images/chagres_broadermap.jpg',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF101A2F),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
+            ),
+            padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+            child: Text(
+              language == 'en'
+                  ? 'This overview map situates the Río Pequení watershed within Chagres National Park - the geographic setting for our participatory research mapping work with the community of La Bonga.'
+                  : 'Este mapa de descripción general sitúa la cuenca del Río Pequení dentro del Parque Nacional Chagres - el escenario geográfico para nuestro trabajo de mapeo de investigación participativa con la comunidad de La Bonga.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: const Color(0xFFB9C6EA),
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF101A2F),
               borderRadius: BorderRadius.circular(16),
             ),
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 450,
+                // Google Maps Embed
+                AspectRatio(
+                  aspectRatio: 16 / 9,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      'assets/images/chagres_broadermap.jpg',
-                      fit: BoxFit.contain,
-                    ),
+                    child: _GoogleMapEmbed(),
                   ),
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  language == 'en'
-                      ? 'This overview map situates the Río Pequení watershed within Chagres National Park - the geographic setting for our participatory research mapping work with the community of La Bonga.'
-                      : 'Este mapa de descripción general sitúa la cuenca del Río Pequení dentro del Parque Nacional Chagres - el escenario geográfico para nuestro trabajo de mapeo de investigación participativa con la comunidad de La Bonga.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFFB9C6EA),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  height: 400,
-                  child: _GoogleMapEmbed(),
-                ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {
                     launchUrl(Uri.parse(
-                      'https://www.google.com/maps/place/San+Juan+de+Pequní+Indígena+(+La+Bonga)/@9.3827301,-79.5241626,17z/data=!3m1!4b1!4m6!3m5!1s0x8fab494a734c2493:0xe55e405b5412d0dc!8m2!3d9.3827301!4d-79.5215877!16s%2Fg%2F11mtjt0g7z?entry=ttu',
+                      'https://www.google.com/maps/place/San+Juan+de+Pequení+Indígena+(+La+Bonga)/@9.3827301,-79.5241626,17z/data=!3m1!4b1!4m6!3m5!1s0x8fab494a734c2493:0xe55e405b5412d0dc!8m2!3d9.3827301!4d-79.5215877!16s%2Fg%2F11mtjt0g7z?entry=ttu',
                     ));
                   },
                   child: Text(
@@ -915,18 +874,10 @@ class _GoogleMapEmbed extends StatelessWidget {
 
 
 // Reports Section
-// Reports Section
-class ReportsSection extends StatefulWidget {
+class ReportsSection extends StatelessWidget {
   final String language;
 
   const ReportsSection({super.key, required this.language});
-
-  @override
-  State<ReportsSection> createState() => _ReportsSectionState();
-}
-
-class _ReportsSectionState extends State<ReportsSection> {
-  int _selectedTab = 0; // 0 = Blog, 1 = Official Reports
 
   @override
   Widget build(BuildContext context) {
@@ -940,14 +891,14 @@ class _ReportsSectionState extends State<ReportsSection> {
       child: Column(
         children: [
           Text(
-            widget.language == 'en' ? 'Field Reports' : 'Informes de Campo',
+            language == 'en' ? 'Field Reports' : 'Informes de Campo',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
             ),
           ),
           const SizedBox(height: 12),
           Text(
-            widget.language == 'en'
+            language == 'en'
                 ? 'Ongoing field reflections, research updates, and official project documentation from the Chagres Initiative.'
                 : 'Reflexiones continuas de campo, actualizaciones de investigación y documentación oficial del proyecto de la Iniciativa Chagres.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -956,69 +907,30 @@ class _ReportsSectionState extends State<ReportsSection> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
-          // Tab Buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          GridView.count(
+            crossAxisCount: isMobile ? 1 : 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            childAspectRatio: 3,
             children: [
-              GestureDetector(
-                onTap: () => setState(() => _selectedTab = 0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: _selectedTab == 0 ? const Color(0xFF0051BA) : const Color(0xFF101A2F),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    widget.language == 'en' ? 'Field Blog' : 'Blog de Campo',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'serif',
-                    ),
-                  ),
-                ),
+              _buildReportCard(
+                context,
+                language == 'en' ? 'Field Blog' : 'Blog de Campo',
+                language == 'en'
+                    ? 'Narrative updates from the field, participatory mapping workshops, and watershed engagement activities.'
+                    : 'Actualizaciones narrativas del campo, talleres de mapeo participativo y actividades de compromiso de cuencas hidrográficas.',
               ),
-              const SizedBox(width: 16),
-              GestureDetector(
-                onTap: () => setState(() => _selectedTab = 1),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: _selectedTab == 1 ? const Color(0xFF0051BA) : const Color(0xFF101A2F),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    widget.language == 'en' ? 'Official Reports' : 'Informes Oficiales',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'serif',
-                    ),
-                  ),
-                ),
+              _buildReportCard(
+                context,
+                language == 'en' ? 'Official Reports' : 'Informes Oficiales',
+                language == 'en'
+                    ? 'Formal reports, project summaries, grant documentation, and technical outputs.'
+                    : 'Informes formales, resúmenes de proyectos, documentación de subvenciones y resultados técnicos.',
               ),
             ],
           ),
-          const SizedBox(height: 24),
-          // Tab Content
-          if (_selectedTab == 0)
-            _buildReportCard(
-              context,
-              widget.language == 'en' ? 'Field Blog' : 'Blog de Campo',
-              widget.language == 'en'
-                  ? 'Narrative updates from the field, participatory mapping workshops, and watershed engagement activities.'
-                  : 'Actualizaciones narrativas del campo, talleres de mapeo participativo y actividades de compromiso de cuencas hidrográficas.',
-            )
-          else
-            _buildReportCard(
-              context,
-              widget.language == 'en' ? 'Official Reports' : 'Informes Oficiales',
-              widget.language == 'en'
-                  ? 'Formal reports, project summaries, grant documentation, and technical outputs.'
-                  : 'Informes formales, resúmenes de proyectos, documentación de subvenciones y resultados técnicos.',
-            ),
         ],
       ),
     );
@@ -1050,7 +962,7 @@ class _ReportsSectionState extends State<ReportsSection> {
             title,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -1059,7 +971,7 @@ class _ReportsSectionState extends State<ReportsSection> {
             description,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFB9C6EA),
-              fontSize: 16,
+              fontSize: 13,
             ),
           ),
         ],
@@ -1157,7 +1069,7 @@ class FAQSection extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w600,
-            fontSize: 18,
+            fontSize: 15,
           ),
         ),
         childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -1294,7 +1206,7 @@ class DonateSection extends StatelessWidget {
               text,
               style: const TextStyle(
                 color: Color(0xFFB9C6EA),
-                fontSize: 17,
+                fontSize: 14,
               ),
             ),
           ),
@@ -1359,18 +1271,6 @@ class TeamSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 40),
-          // La Bonga Section
-          _buildTeamSection(
-            context,
-            language == 'en' ? 'La Bonga Personnel' : 'Personal de La Bonga',
-            [
-              ('Marcelino Guatico', 'Chief of La Bonga', 'Nokó de La Bonga', '', 'labonga_seal.png'),
-              ('Elieser Adames', 'President of La Bonga', 'Presidente de La Bonga', '', 'labonga_seal.png'),
-            ],
-            language,
-            isMobile,
-          ),
-          const SizedBox(height: 40),
           // University of Kansas Section
           _buildTeamSection(
             context,
@@ -1397,6 +1297,18 @@ class TeamSection extends StatelessWidget {
             language,
             isMobile,
           ),
+          const SizedBox(height: 40),
+          // La Bonga Section
+          _buildTeamSection(
+            context,
+            language == 'en' ? 'La Bonga Personnel' : 'Personal de La Bonga',
+            [
+              ('Marcelino Guatico', 'Chief of La Bonga', 'Nokó de La Bonga', '', 'labonga_seal.png'),
+              ('Elieser Adames', 'President of La Bonga', 'Presidente de La Bonga', '', 'labonga_seal.png'),
+            ],
+            language,
+            isMobile,
+          ),
         ],
       ),
     );
@@ -1418,7 +1330,7 @@ class TeamSection extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: Colors.white,
-              fontSize: 19,
+              fontSize: 16,
             ),
           ),
           const SizedBox(height: 10),
@@ -1476,7 +1388,7 @@ class TeamSection extends StatelessWidget {
             name,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -1488,7 +1400,7 @@ class TeamSection extends StatelessWidget {
             position,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFB9C6EA),
-              fontSize: 16,
+              fontSize: 13,
               height: 1.2,
             ),
             textAlign: TextAlign.center,
@@ -1508,7 +1420,7 @@ class TeamSection extends StatelessWidget {
                 email,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: const Color(0xFF0051BA),
-                  fontSize: 14,
+                  fontSize: 11,
                   decoration: TextDecoration.underline,
                   height: 1.0,
                 ),

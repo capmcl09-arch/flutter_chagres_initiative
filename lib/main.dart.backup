@@ -1,23 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:html' as html;
-import 'dart:ui_web' as ui;
 
 void main() {
-  // Register the Google Maps iframe view factory for web
-  ui.platformViewRegistry.registerViewFactory(
-    'google-maps-embed',
-    (int viewId) => html.IFrameElement()
-      ..src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.823992608622!2d-79.5241626!3d9.3827301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fab494a734c2493%3A0xe55e405b5412d0dc!2sSan%20Juan%20de%20Pequen%C3%AD%20Ind%C3%ADgena%20(La%20Bonga)!5e0!3m2!1sen!2sus!4v1730000000000'
-      ..style.border = 'none'
-      ..style.width = '100%'
-      ..style.height = '100%'
-      ..setAttribute('loading', 'lazy')
-      ..setAttribute('referrerpolicy', 'no-referrer-when-downgrade')
-      ..setAttribute('allowfullscreen', '')
-      ..setAttribute('title', 'San Juan de Pequení Indígena (La Bonga)'),
-  );
-  
   runApp(const ChagresApp());
 }
 
@@ -44,7 +28,6 @@ class _ChagresAppState extends State<ChagresApp> {
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
-        fontFamily: 'serif',
         scaffoldBackgroundColor: const Color(0xFF070C18),
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF0C1328),
@@ -82,32 +65,11 @@ class ChagresHome extends StatefulWidget {
 class _ChagresHomeState extends State<ChagresHome> {
   final ScrollController _scrollController = ScrollController();
   int _currentPageIndex = 0;
-  
-  // GlobalKey references for each section
-  final GlobalKey _aboutKey = GlobalKey();
-  final GlobalKey _methodologyKey = GlobalKey();
-  final GlobalKey _fieldworkKey = GlobalKey();
-  final GlobalKey _teamKey = GlobalKey();
-  final GlobalKey _faqKey = GlobalKey();
-  final GlobalKey _donateKey = GlobalKey();
-  final GlobalKey _reportsKey = GlobalKey();
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-  
-  void _scrollToSection(GlobalKey key, {double alignment = 0.50}) {
-    final context = key.currentContext;
-    if (context != null) {
-      Scrollable.ensureVisible(
-        context,
-        duration: const Duration(milliseconds: 800),
-        curve: Curves.easeInOut,
-        alignment: alignment,
-      );
-    }
   }
 
   @override
@@ -116,43 +78,28 @@ class _ChagresHomeState extends State<ChagresHome> {
     
     return Scaffold(
       appBar: isMobile ? _buildMobileAppBar() : null,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: [
-                if (!isMobile) SizedBox(height: 100), // Space for fixed header
-                HeroSection(language: widget.language),
-                TeamSection(key: _teamKey, language: widget.language),
-                AboutSection(key: _aboutKey, language: widget.language),
-                MeaningfulSection(language: widget.language),
-                AuthorizationSection(language: widget.language),
-                MethodologySection(key: _methodologyKey, language: widget.language),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40),
-                  child: Image.asset('assets/images/community_meeting.jpg'),
-                ),
-                GallerySection(language: widget.language),
-                MapsSection(language: widget.language),
-                ReportsSection(key: _reportsKey, language: widget.language),
-                FAQSection(key: _faqKey, language: widget.language),
-                DonateSection(key: _donateKey, language: widget.language),
-                FooterSection(
-                  language: widget.language,
-                  onLanguageChanged: widget.onLanguageChanged,
-                ),
-              ],
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            if (!isMobile) _buildDesktopHeader(),
+            HeroSection(language: widget.language),
+            AboutSection(language: widget.language),
+            MeaningfulSection(language: widget.language),
+            AuthorizationSection(language: widget.language),
+            MethodologySection(language: widget.language),
+            GallerySection(language: widget.language),
+            MapsSection(language: widget.language),
+            ReportsSection(language: widget.language),
+            FAQSection(language: widget.language),
+            DonateSection(language: widget.language),
+            TeamSection(language: widget.language),
+            FooterSection(
+              language: widget.language,
+              onLanguageChanged: widget.onLanguageChanged,
             ),
-          ),
-          if (!isMobile)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: _buildDesktopHeader(),
-            ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: isMobile
           ? BottomNavigationBar(
@@ -171,57 +118,56 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   AppBar _buildMobileAppBar() {
     return AppBar(
-      title: Image.asset(
-        'assets/images/oval_logo.png',
-        height: 48,
-      ),
+      title: const Text('The Chagres Initiative'),
       backgroundColor: const Color(0xFF0C1328),
       elevation: 1,
-      centerTitle: true,
     );
   }
 
   Widget _buildDesktopHeader() {
     return Container(
       color: const Color(0xFF0C1328),
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Logo
-          Image.asset(
-            'assets/images/oval_logo.png',
-            height: 80,
-          ),
-          const SizedBox(width: 40),
-          // Navigation Links
-          Wrap(
-            spacing: 16,
-            children: [
-              _buildNavLink('About', _aboutKey),
-              _buildNavLink('Methodology', _methodologyKey),
-              _buildNavLink('Fieldwork', _reportsKey),
-              _buildNavLink('Donate', _donateKey),
-              _buildNavLink('Team', _teamKey, alignment: 0.20),
-              _buildNavLink('FAQ', _faqKey),
-              SizedBox(
-                height: 32,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    backgroundColor: const Color(0xFF0051BA),
-                  ),
-                  onPressed: () => widget.onLanguageChanged(
-                    widget.language == 'en' ? 'es' : 'en',
-                  ),
+          Expanded(
+            child: Row(
+              children: [
+                const Text(
+                  '🦅',
+                  style: TextStyle(fontSize: 24),
+                ),
+                const Spacer(),
+                Expanded(
+                  flex: 2,
                   child: Text(
-                    widget.language == 'en' ? 'ES' : 'EN',
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontFamily: 'serif',
-                    ),
+                    'The Chagres Initiative',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
+                const Spacer(),
+                const Text(
+                  '🦅',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 40),
+          Wrap(
+            spacing: 20,
+            children: [
+              _buildNavLink('About'),
+              _buildNavLink('Methodology'),
+              _buildNavLink('Fieldwork'),
+              _buildNavLink('Team'),
+              _buildNavLink('FAQ'),
+              ElevatedButton(
+                onPressed: () => widget.onLanguageChanged(
+                  widget.language == 'en' ? 'es' : 'en',
+                ),
+                child: Text(widget.language == 'en' ? 'ES' : 'EN'),
               ),
             ],
           ),
@@ -230,16 +176,16 @@ class _ChagresHomeState extends State<ChagresHome> {
     );
   }
 
-  Widget _buildNavLink(String label, GlobalKey key, {double alignment = 0.50}) {
+  Widget _buildNavLink(String label) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => _scrollToSection(key, alignment: alignment),
+        onTap: () {},
         child: Text(
           label,
           style: const TextStyle(
             color: Color(0xFFB9C6EA),
-            fontSize: 17,
+            fontSize: 14,
           ),
         ),
       ),
@@ -271,7 +217,7 @@ class HeroSection extends StatelessWidget {
           ],
         ),
         image: const DecorationImage(
-          image: AssetImage('assets/images/palms.jpg'),
+          image: AssetImage('assets/images/hero_background.JPG'),
           fit: BoxFit.cover,
           opacity: 0.3,
         ),
@@ -285,13 +231,6 @@ class HeroSection extends StatelessWidget {
             style: Theme.of(context).textTheme.displayMedium?.copyWith(
               fontFamily: 'serif',
               color: Colors.white,
-              shadows: [
-                Shadow(
-                  offset: const Offset(1.5, 1.5),
-                  blurRadius: 3.0,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ],
             ),
             textAlign: TextAlign.center,
           ),
@@ -311,74 +250,31 @@ class HeroSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const SizedBox(height: 30),
-          // Hero Strip Image
-          Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0xFF81C784),
-                    width: 4,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Image.asset(
-                  'assets/images/here_strip.jpg',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
-          // Poem Image
-          Image.asset(
-            'assets/images/poem.png',
-            width: isMobile ? 280 : 360,
-            fit: BoxFit.contain,
-            opacity: const AlwaysStoppedAnimation(0.95),
-          ),
-          const SizedBox(height: 40),
-          // Donation Section - Oval with transparent crimson background
           GestureDetector(
             onTap: () {
               launchUrl(Uri.parse('https://geog.ku.edu/donate'));
             },
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 600),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE8000D).withOpacity(0.35),
-                borderRadius: BorderRadius.circular(100),
+            child: Text(
+              language == 'en'
+                  ? 'You can be part of our team by donating.'
+                  : 'Puedes ser parte de nuestro equipo donando.',
+              style: const TextStyle(
+                color: Color(0xFFE8000D),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-              child: Column(
-                children: [
-                  Text(
-                    language == 'en'
-                        ? 'You can be part of our team by donating.'
-                        : 'Puedes ser parte de nuestro equipo donando.',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 21,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+              textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
           Text(
             language == 'en'
                 ? 'Your tax-deductible donation directly supports paid Indigenous research collaborators, participatory mapping workshops, watershed monitoring equipment, and field support for KU and UT-Arlington student researchers working to map Chagres National Park.'
                 : 'Tu donación deducible de impuestos apoya directamente a los colaboradores de investigación indígena remunerados, talleres de mapeo participativo, equipos de monitoreo de cuencas y apoyo de campo para investigadores estudiantes.',
             style: const TextStyle(
               color: Color(0xFFB9C6EA),
-              fontSize: 17,
+              fontSize: 14,
             ),
             textAlign: TextAlign.center,
           ),
@@ -428,18 +324,11 @@ class AboutSection extends StatelessWidget {
             child: Text(
               language == 'en'
                   ? 'The Chagres Initiative is a community-based participatory zoning and monitoring effort in the Río Pequení sub-basin of Chagres National Park, the most strategically important watershed in the Panama Canal system. The park supplies an estimated 40 percent of the water used in Canal operations and about 80 percent of Panama City\'s drinking water. Yet limited on-the-ground monitoring and enforcement in remote areas has enabled illegal settlement and deforestation, while the Emberá community of San Juan Pequení Indígena La Bonga remains in legal limbo as it seeks collective land recognition under Panama\'s 2008 Law 72. Working with Indigenous leaders, neighboring campesino residents, and Canal institutions, the project combines participatory research mapping with GIS and remote sensing to co-produce consensus land-use zones and locally grounded monitoring tools that can strengthen watershed governance and Canal water security.'
-                  : 'La Iniciativa Chagres es un esfuerzo comunitario participativo de zonificación y monitoreo en la subcuenca del Río Pequení del Parque Nacional Chagres, la cuenca más estratégicamente importante del sistema del Canal de Panamá. El parque proporciona aproximadamente el 40 por ciento del agua utilizada en las operaciones del Canal y aproximadamente el 80 por ciento del agua potable de la Ciudad de Panamá. Sin embargo, el monitoreo limitado en el terreno y la ejecución en áreas remotas ha permitido asentamientos ilegales y deforestación, mientras que la comunidad Emberá de San Juan Pequení Indígena La Bonga permanece en un limbo legal mientras busca reconocimiento de tierras colectivas bajo la Ley 72 de 2008 de Panamá. Trabajando con líderes indígenas, residentes campesinos vecinos e instituciones del Canal, el proyecto combina mapeo participativo de investigación con SIG y teledetección para coproducir zonas de uso del suelo por consenso y herramientas de monitoreo locales que pueden fortalecer la gobernanza de cuencas hidrográficas y la seguridad del agua del Canal.',
+                  : 'La Iniciativa Chagres es un esfuerzo participativo comunitario de zonificación y monitoreo en la subcuenca del Río Pequení del Parque Nacional Chagres, la cuenca más estratégicamente importante del sistema del Canal de Panamá...',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: const Color(0xFFB9C6EA),
               ),
             ),
-          ),
-          const SizedBox(height: 40),
-          Image.asset(
-            'assets/images/labonga_seal.png',
-            width: 200,
-            height: 200,
-            fit: BoxFit.contain,
           ),
         ],
       ),
@@ -488,7 +377,7 @@ class MeaningfulSection extends StatelessWidget {
                   language == 'en' ? '1. Co-Produced, Not Extractive' : '1. Co-Producido, No Extractivo',
                   language == 'en'
                       ? 'This project is built on a partnership with the Indigenous community of San Juan Pequeñí La Bonga, Panama. Community members are not research subjects; they are paid collaborators and co-producers of spatial knowledge.'
-                      : 'Este proyecto se basa en una asociación con la comunidad indígena de San Juan Pequeñí La Bonga, Panamá. Los miembros de la comunidad no son sujetos de investigación; son colaboradores pagados y coproductores de conocimiento espacial.',
+                      : 'Este proyecto se basa en una asociación con la comunidad indígena...',
                 ),
                 const SizedBox(height: 20),
                 _buildPrincipleCard(
@@ -496,7 +385,7 @@ class MeaningfulSection extends StatelessWidget {
                   language == 'en' ? '2. Public-Facing, Living Research' : '2. Investigación Pública y Viva',
                   language == 'en'
                       ? 'Rather than confining findings to academic journals or static reports, this initiative maintains a transparent and evolving public platform.'
-                      : 'En lugar de confinar hallazgos a revistas académicas o informes estáticos, esta iniciativa mantiene una plataforma pública transparente y en evolución.',
+                      : 'En lugar de confinar hallazgos...',
                 ),
                 const SizedBox(height: 20),
                 _buildPrincipleCard(
@@ -506,7 +395,7 @@ class MeaningfulSection extends StatelessWidget {
                       : '3. Anclado Institucionalmente',
                   language == 'en'
                       ? 'The project is endorsed by the University of Kansas Department of Geography and the KU Center for Latin American and Caribbean Studies.'
-                      : 'El proyecto está respaldado por el Departamento de Geografía de la Universidad de Kansas y el Centro de Estudios Latinoamericanos y del Caribe de KU.',
+                      : 'El proyecto está respaldado por...',
                 ),
                 const SizedBox(height: 20),
                 _buildPrincipleCard(
@@ -514,7 +403,7 @@ class MeaningfulSection extends StatelessWidget {
                   language == 'en' ? '4. Applied and Accountable' : '4. Aplicado y Responsable',
                   language == 'en'
                       ? 'The research is designed to produce tangible outcomes: participatory zoning frameworks, watershed monitoring strategies, and spatial tools.'
-                      : 'La investigación está diseñada para producir resultados tangibles: marcos de zonificación participativa, estrategias de monitoreo de cuencas hidrográficas y herramientas espaciales.',
+                      : 'La investigación está diseñada para producir...',
                 ),
               ],
             ),
@@ -588,7 +477,7 @@ class AuthorizationSection extends StatelessWidget {
                 Text(
                   language == 'en'
                       ? 'During our team\'s visit to La Bonga during the summer of 2025, we presented openly the participatory research methodology to the community in Spanish. After understanding the potential of such a project, they unanimously voted in support of our project.'
-                      : 'Durante la visita de nuestro equipo a La Bonga en el verano de 2025, presentamos abiertamente la metodología de investigación participativa a la comunidad en español. Después de entender el potencial de tal proyecto, votaron unánimemente en apoyo de nuestro proyecto.',
+                      : 'Durante la visita de nuestro equipo a La Bonga en el verano de 2025...',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFFB9C6EA),
                   ),
@@ -596,7 +485,7 @@ class AuthorizationSection extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    launchUrl(Uri.parse('/assets/documents/La_Bonga_Cartas.pdf'));
+                    launchUrl(Uri.file('/Users/capmcliney/Desktop/chagres_flutter_site/Documents/La_Bonga_Cartas.pdf'));
                   },
                   child: Text(
                     language == 'en'
@@ -631,10 +520,10 @@ class MethodologySection extends StatelessWidget {
             ('Stage Four: GIS Production', 'Digitize and standardize outputs for planning and governance use.'),
           ]
         : [
-            ('Etapa Uno: Codiseño', 'Definir objetivos de mapeo colaborativamente con el liderazgo comunitario.'),
-            ('Etapa Dos: Capacitación', 'Capacitar a investigadores locales con herramientas de GPS, mapeo y documentación.'),
-            ('Etapa Tres: Verificación de Campo', 'Recopilar puntos de verdad a través de visitas compartidas al sitio.'),
-            ('Etapa Cuatro: Producción SIG', 'Digitalizar y estandarizar los resultados para uso de planificación y gobernanza.'),
+            ('Etapa Uno: Codiseño', 'Definir objetivos de mapeo colaborativamente...'),
+            ('Etapa Dos: Capacitación', 'Equipar a investigadores locales...'),
+            ('Etapa Tres: Verificación de Campo', 'Recopilar puntos de verdad...)'),
+            ('Etapa Cuatro: Producción SIG', 'Digitalizar y estandarizar...'),
           ];
 
     return Container(
@@ -656,42 +545,35 @@ class MethodologySection extends StatelessWidget {
           const SizedBox(height: 24),
           GridView.count(
             crossAxisCount: isMobile ? 1 : 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 2.2,
             children: stages
                 .map(
                   (stage) => Container(
                     decoration: BoxDecoration(
                       color: const Color(0xFF101A2F),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                       border: Border.all(
                         color: Colors.white.withOpacity(0.12),
                       ),
                     ),
-                    padding: const EdgeInsets.all(14),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           stage.$1,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: Colors.white,
-                            fontFamily: 'serif',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 12),
                         Text(
                           stage.$2,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: const Color(0xFFB9C6EA),
-                            fontFamily: 'serif',
-                            fontSize: 15,
                           ),
                         ),
                       ],
@@ -724,21 +606,13 @@ class _GallerySectionState extends State<GallerySection> {
     'assets/images/indigenous_band.jpg',
     'assets/images/indigenous_girl_smiling.jpg',
     'assets/images/chief_checking.jpg',
-    'assets/images/site_analysis.jpg',
-    'assets/images/lizard.jpg',
-    'assets/images/monkey.jpg',
-    'assets/images/signing.jpeg',
   ];
-  final List<(String, String)> _captions = [
-    ('River lancha transport', 'Transporte en lancha por el río'),
-    ('Field tour in watershed', 'Gira de campo en la cuenca hidrográfica'),
-    ('Indigenous cultural performance', 'Presentación cultural indígena'),
-    ('Community member portrait', 'Retrato de miembro de la comunidad'),
-    ('Community leadership engagement', 'Participación del liderazgo comunitario'),
-    ('Site analysis at Panamanian Geographic Institute', 'Análisis del sitio en el Instituto Geográfico de Panamá'),
-    ('Rainforest lizard', 'Lagarto de la selva tropical'),
-    ('Rainforest monkey', 'Mono de la selva tropical'),
-    ('Chief Marcelino Guatico and President Elieser signing letter of endorsement', 'Jefe Marcelino Guatico y Presidente Elieser firmando carta de apoyo'),
+  final List<String> _captions = [
+    'River lancha transport',
+    'Field tour in watershed',
+    'Indigenous cultural performance',
+    'Community member portrait',
+    'Community leadership engagement',
   ];
 
   @override
@@ -781,9 +655,7 @@ class _GallerySectionState extends State<GallerySection> {
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    widget.language == 'en'
-                        ? _captions[_currentIndex % _captions.length].$1
-                        : _captions[_currentIndex % _captions.length].$2,
+                    _captions[_currentIndex % _captions.length],
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: const Color(0xFFB9C6EA),
                     ),
@@ -834,7 +706,8 @@ class MapsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 800;
     
-    return Padding(
+    return Container(
+      color: const Color(0xFF0C1328),
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
         vertical: 60,
@@ -847,45 +720,39 @@ class MapsSection extends StatelessWidget {
               color: Colors.white,
             ),
           ),
+          const SizedBox(height: 24),
           Container(
             decoration: BoxDecoration(
               color: const Color(0xFF101A2F),
               borderRadius: BorderRadius.circular(16),
             ),
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(30),
             child: Column(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 450,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      'assets/images/chagres_broadermap.jpg',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
                 Text(
                   language == 'en'
                       ? 'This overview map situates the Río Pequení watershed within Chagres National Park - the geographic setting for our participatory research mapping work with the community of La Bonga.'
-                      : 'Este mapa de descripción general sitúa la cuenca del Río Pequení dentro del Parque Nacional Chagres - el escenario geográfico para nuestro trabajo de mapeo de investigación participativa con la comunidad de La Bonga.',
+                      : 'Este mapa de descripción general...',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFFB9C6EA),
                   ),
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  height: 400,
-                  child: _GoogleMapEmbed(),
+                const SizedBox(height: 24),
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      'assets/images/chagres_broadermap.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
                     launchUrl(Uri.parse(
-                      'https://www.google.com/maps/place/San+Juan+de+Pequní+Indígena+(+La+Bonga)/@9.3827301,-79.5241626,17z/data=!3m1!4b1!4m6!3m5!1s0x8fab494a734c2493:0xe55e405b5412d0dc!8m2!3d9.3827301!4d-79.5215877!16s%2Fg%2F11mtjt0g7z?entry=ttu',
+                      'https://www.google.com/maps/place/San+Juan+de+Pequení+Indígena',
                     ));
                   },
                   child: Text(
@@ -903,30 +770,11 @@ class MapsSection extends StatelessWidget {
   }
 }
 
-// Google Maps Embed Widget
-class _GoogleMapEmbed extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const HtmlElementView(
-      viewType: 'google-maps-embed',
-    );
-  }
-}
-
-
 // Reports Section
-// Reports Section
-class ReportsSection extends StatefulWidget {
+class ReportsSection extends StatelessWidget {
   final String language;
 
   const ReportsSection({super.key, required this.language});
-
-  @override
-  State<ReportsSection> createState() => _ReportsSectionState();
-}
-
-class _ReportsSectionState extends State<ReportsSection> {
-  int _selectedTab = 0; // 0 = Blog, 1 = Official Reports
 
   @override
   Widget build(BuildContext context) {
@@ -940,85 +788,45 @@ class _ReportsSectionState extends State<ReportsSection> {
       child: Column(
         children: [
           Text(
-            widget.language == 'en' ? 'Field Reports' : 'Informes de Campo',
+            language == 'en' ? 'Field Reports' : 'Informes de Campo',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
             ),
           ),
           const SizedBox(height: 12),
           Text(
-            widget.language == 'en'
+            language == 'en'
                 ? 'Ongoing field reflections, research updates, and official project documentation from the Chagres Initiative.'
-                : 'Reflexiones continuas de campo, actualizaciones de investigación y documentación oficial del proyecto de la Iniciativa Chagres.',
+                : 'Reflexiones continuas de campo, actualizaciones de investigación...',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: const Color(0xFFB9C6EA),
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
-          // Tab Buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          GridView.count(
+            crossAxisCount: isMobile ? 1 : 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             children: [
-              GestureDetector(
-                onTap: () => setState(() => _selectedTab = 0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: _selectedTab == 0 ? const Color(0xFF0051BA) : const Color(0xFF101A2F),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    widget.language == 'en' ? 'Field Blog' : 'Blog de Campo',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'serif',
-                    ),
-                  ),
-                ),
+              _buildReportCard(
+                context,
+                language == 'en' ? 'Field Blog' : 'Blog de Campo',
+                language == 'en'
+                    ? 'Narrative updates from the field, participatory mapping workshops, and watershed engagement activities.'
+                    : 'Actualizaciones narrativas del campo...',
               ),
-              const SizedBox(width: 16),
-              GestureDetector(
-                onTap: () => setState(() => _selectedTab = 1),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: _selectedTab == 1 ? const Color(0xFF0051BA) : const Color(0xFF101A2F),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    widget.language == 'en' ? 'Official Reports' : 'Informes Oficiales',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'serif',
-                    ),
-                  ),
-                ),
+              _buildReportCard(
+                context,
+                language == 'en' ? 'Official Reports' : 'Informes Oficiales',
+                language == 'en'
+                    ? 'Formal reports, project summaries, grant documentation, and technical outputs.'
+                    : 'Informes formales, resúmenes de proyectos...',
               ),
             ],
           ),
-          const SizedBox(height: 24),
-          // Tab Content
-          if (_selectedTab == 0)
-            _buildReportCard(
-              context,
-              widget.language == 'en' ? 'Field Blog' : 'Blog de Campo',
-              widget.language == 'en'
-                  ? 'Narrative updates from the field, participatory mapping workshops, and watershed engagement activities.'
-                  : 'Actualizaciones narrativas del campo, talleres de mapeo participativo y actividades de compromiso de cuencas hidrográficas.',
-            )
-          else
-            _buildReportCard(
-              context,
-              widget.language == 'en' ? 'Official Reports' : 'Informes Oficiales',
-              widget.language == 'en'
-                  ? 'Formal reports, project summaries, grant documentation, and technical outputs.'
-                  : 'Informes formales, resúmenes de proyectos, documentación de subvenciones y resultados técnicos.',
-            ),
         ],
       ),
     );
@@ -1032,7 +840,7 @@ class _ReportsSectionState extends State<ReportsSection> {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF101A2F),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.45),
@@ -1041,25 +849,21 @@ class _ReportsSectionState extends State<ReportsSection> {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(24),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           Text(
             description,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFB9C6EA),
-              fontSize: 16,
             ),
           ),
         ],
@@ -1080,28 +884,40 @@ class FAQSection extends StatelessWidget {
     
     final faqs = language == 'en'
         ? [
-            ('Why does the health of Chagres National Park matter for people in the United States?', 'Chagres National Park provides approximately 40 percent of the freshwater used in Panama Canal operations and roughly 80 percent of the drinking water for Panama City. The Canal remains one of the most strategically important global trade corridors, moving a significant portion of U.S.-bound maritime commerce.\n\nRecent droughts have demonstrated that water scarcity is the Canal\'s greatest operational vulnerability. Long-term watershed health directly affects trade reliability, regional diplomatic stability, and economic security.'),
-            ('Who and what legal authority authorizes this project?', 'This initiative proceeds only with community consent and institutional coordination. During a reconnaissance expedition in Summer 2025, the research team met with the Indigenous community of San Juan Pequeñí, participated in a formal Local Congress, and received written approval.\n\nThis authorization aligns with Panama\'s 2008 Law 72 governing Collective Indigenous Lands. The project continues only through collaborative agreement with community leadership.'),
-            ('How does mapping help protect an area like this?', 'National park boundaries alone do not ensure protection. Effective stewardship requires understanding the ecological and social processes occurring within those boundaries.\n\nParticipatory research mapping translates Indigenous geographic knowledge into structured formats that can support zoning, monitoring, and long-term governance planning. At a fundamental level, it is difficult to protect what is not clearly understood.'),
-            ('How are community members involved and compensated?', 'Community members are trained as local geographers in GPS data collection and mapping techniques. Participants are compensated for their time and expertise.'),
-            ('How long will the project take?', 'The project is designed in three phases, depending on funding:\n\nYear 1: Participatory mapping and geospatial database development.\n\nYear 2: Consensus-driven zoning and development of community land-use guidelines.\n\nYear 3: Final map production, synthesis, and integration into management planning frameworks.\n\nThis phased approach prioritizes thoroughness and long-term impact over speed.'),
-            ('How will donated funds be used?', 'Donated funds directly support field-based research and community collaboration. Primary expenditures include workshops, equipment (GPS, drones, starlink), local geographer compensation, and researcher travel.\n\nAdministrative costs are minimized through institutional partnership with the University of Kansas. The project prioritizes directing resources toward community engagement and conservation outcomes.'),
-            ('Is this project political?', 'The project is non-partisan and research-driven. Its focus is watershed stewardship, participatory governance, and environmental monitoring.'),
-            ('Will the data be publicly available?', 'Final outputs will be shared publicly. Sensitive knowledge remains under community control in accordance with data sovereignty principles.'),
-            ('Can this model be replicated elsewhere?', 'Yes. The framework combines participatory GIS, zoning, and institutional collaboration in a structured format designed to be adaptable to other protected areas.'),
-            ('Hasn\'t the whole world been mapped already?', 'No. There is a difference between remote imagery of an area from satellites and the kinds of maps we are making. The level of detail combining physical geography with cultural-historical information in the community is unique and critical to our process.'),
+            (
+              'Why does the health of Chagres National Park matter for people in the United States?',
+              'Chagres National Park provides approximately 40 percent of the freshwater used in Panama Canal operations and roughly 80 percent of the drinking water for Panama City. The Canal remains one of the most strategically important global trade corridors.'
+            ),
+            (
+              'Who and what legal authority authorizes this project?',
+              'This initiative proceeds only with community consent and institutional coordination. During a reconnaissance expedition in Summer 2025, the research team met with the Indigenous community of San Juan Pequeñí.'
+            ),
+            (
+              'How does mapping help protect an area like this?',
+              'National park boundaries alone do not ensure protection. Effective stewardship requires understanding the ecological and social processes occurring within those boundaries.'
+            ),
+            (
+              'How are community members involved and compensated?',
+              'Community members are trained as local geographers in GPS data collection and mapping techniques. Participants are compensated for their time and expertise.'
+            ),
           ]
         : [
-            ('¿Por qué importa la salud del Parque Nacional Chagres?', 'El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panamá y aproximadamente el 80 por ciento del agua potable para la Ciudad de Panamá. El Canal sigue siendo uno de los corredores comerciales globales más estratégicamente importantes.\n\nLas sequías recientes han demostrado que la escasez de agua es la mayor vulnerabilidad operativa del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplomática regional y la seguridad económica.'),
-            ('¿Quién autoriza este proyecto?', 'Esta iniciativa procede solo con consentimiento comunitario y coordinación institucional. Durante una expedición de reconocimiento en verano de 2025, el equipo de investigación se reunió con la comunidad indígena de San Juan Pequeñí, participó en un Congreso Local formal y recibió aprobación escrita.\n\nEsta autorización se alinea con la Ley 72 de 2008 de Panamá que rige las Tierras Colectivas Indígenas. El proyecto continúa solo a través de acuerdo colaborativo con el liderazgo comunitario.'),
-            ('¿Cómo ayuda el mapeo a proteger un área?', 'Los límites del parque nacional por sí solos no garantizan la protección. El manejo efectivo requiere comprender los procesos ecológicos y sociales que ocurren dentro de esos límites.\n\nEl mapeo participativo de investigación traduce el conocimiento geográfico indígena a formatos estructurados que pueden apoyar la zonificación, el monitoreo y la planificación de gobernanza a largo plazo. En un nivel fundamental, es difícil proteger lo que no se entiende claramente.'),
-            ('¿Cómo se compensan a los miembros de la comunidad?', 'Los miembros de la comunidad se capacitan como geógrafos locales en recopilación de datos GPS y técnicas de mapeo. Los participantes reciben compensación por su tiempo y experiencia.'),
-            ('¿Cuánto tiempo tomará el proyecto?', 'El proyecto está diseñado en tres fases, dependiendo de la financiación:\n\nAño 1: Mapeo participativo y desarrollo de base de datos geoespacial.\n\nAño 2: Zonificación impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\n\nAño 3: Producción final del mapa, síntesis e integración en marcos de planificación de manejo.\n\nEste enfoque graduado prioriza la minuciosidad e impacto a largo plazo sobre la velocidad.'),
-            ('¿Cómo se usarán los fondos donados?', 'Los fondos donados apoyan directamente la investigación de campo y la colaboración comunitaria. Los gastos principales incluyen talleres, equipos (GPS, drones, starlink), compensación de geógrafos locales y viajes de investigadores.\n\nLos costos administrativos se minimizan a través de asociación institucional con la Universidad de Kansas. El proyecto prioriza dirigir recursos hacia el compromiso comunitario y resultados de conservación.'),
-            ('¿Es este proyecto político?', 'El proyecto es apartidista e impulsado por la investigación. Su enfoque es el manejo de cuencas hidrográficas, gobernanza participativa y monitoreo ambiental.'),
-            ('¿Estarán los datos disponibles públicamente?', 'Los resultados finales se compartirán públicamente. El conocimiento sensible permanece bajo control comunitario de acuerdo con los principios de soberanía de datos.'),
-            ('¿Se puede replicar este modelo en otros lugares?', 'Sí. El marco combina SIG participativo, zonificación y colaboración institucional en un formato estructurado diseñado para ser adaptable a otras áreas protegidas.'),
-            ('¿No ha sido mapeado ya todo el mundo?', 'No. Hay una diferencia entre las imágenes satelitales de un área desde satélites y los tipos de mapas que estamos haciendo. El nivel de detalle que combina geografía física con información cultural-histórica en la comunidad es único y crítico para nuestro proceso.'),
+            (
+              '¿Por qué importa la salud del Parque Nacional Chagres para las personas en Estados Unidos?',
+              'El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento...'
+            ),
+            (
+              '¿Quién y qué autoridad legal autoriza este proyecto?',
+              'Esta iniciativa procede solo con consentimiento comunitario...'
+            ),
+            (
+              '¿Cómo ayuda el mapeo a proteger un área como esta?',
+              'Los límites del parque nacional por sí solos no garantizan la protección...'
+            ),
+            (
+              '¿Cómo se involucran y se compensa a los miembros de la comunidad?',
+              'Los miembros de la comunidad se capacitan como geógrafos locales...'
+            ),
           ];
 
     return Container(
@@ -1133,7 +949,6 @@ class FAQSection extends StatelessWidget {
                   context,
                   faqs[index].$1,
                   faqs[index].$2,
-                  index,
                 );
               },
             ),
@@ -1147,33 +962,26 @@ class FAQSection extends StatelessWidget {
     BuildContext context,
     String question,
     String answer,
-    int index,
   ) {
-    return Theme(
-      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-      child: ExpansionTile(
-        title: Text(
-          question,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-          ),
+    return ExpansionTile(
+      title: Text(
+        question,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
         ),
-        childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        children: [
-          Text(
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(
             answer,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFB9C6EA),
-              height: 1.6,
             ),
           ),
-        ],
-        shape: Border.all(color: Colors.transparent),
-        backgroundColor: Colors.transparent,
-        collapsedBackgroundColor: Colors.transparent,
-      ),
+        ),
+      ],
     );
   }
 }
@@ -1222,7 +1030,7 @@ class DonateSection extends StatelessWidget {
                 Text(
                   language == 'en'
                       ? 'The Chagres Geographic Fund directly supports equitable, community-based research partnerships in Panama.'
-                      : 'El Fondo Geográfico Chagres apoya directamente asociaciones de investigación equitativas y basadas en la comunidad en Panamá.',
+                      : 'El Fondo Geográfico Chagres apoya directamente asociaciones de investigación equitativas y basadas en la comunidad...',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFFB9C6EA),
                   ),
@@ -1294,7 +1102,7 @@ class DonateSection extends StatelessWidget {
               text,
               style: const TextStyle(
                 color: Color(0xFFB9C6EA),
-                fontSize: 17,
+                fontSize: 14,
               ),
             ),
           ),
@@ -1314,6 +1122,15 @@ class TeamSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 800;
     
+    final team = [
+      ('Dr. Peter Herlihy', 'Professor of Geography', 'herlihy@ku.edu', 'University of Kansas'),
+      ('Cap McLiney', 'PhD Student', 'cmclineyjr@ku.edu', 'University of Kansas'),
+      ('Sam Morrow', 'MA Student', 'sam.morrow@ku.edu', 'University of Kansas'),
+      ('Amali Hipp', 'PhD Student', 'ahippe@ku.edu', 'University of Kansas'),
+      ('Dr. Taylor Tappan', 'Associate Professor of Geography', 'taylor.tappan@uta.edu', 'UT Arlington'),
+      ('Marcelino Guatico', 'Chief of La Bonga', '', 'La Bonga'),
+    ];
+
     return Container(
       color: const Color(0xFF0C1328),
       padding: EdgeInsets.symmetric(
@@ -1329,114 +1146,19 @@ class TeamSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          // Team Photo
-          SizedBox(
-            width: double.infinity,
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    'assets/images/team.jpg',
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    language == 'en'
-                        ? 'The Original Research Team from KU: Taylor Tappan, Sam Morrow, Peter Herlihy and Cap McLiney'
-                        : 'El Equipo de Investigación Original de KU: Taylor Tappan, Sam Morrow, Peter Herlihy y Cap McLiney',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: const Color(0xFF9BB1D6),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 40),
-          // La Bonga Section
-          _buildTeamSection(
-            context,
-            language == 'en' ? 'La Bonga Personnel' : 'Personal de La Bonga',
-            [
-              ('Marcelino Guatico', 'Chief of La Bonga', 'Nokó de La Bonga', '', 'labonga_seal.png'),
-              ('Elieser Adames', 'President of La Bonga', 'Presidente de La Bonga', '', 'labonga_seal.png'),
-            ],
-            language,
-            isMobile,
-          ),
-          const SizedBox(height: 40),
-          // University of Kansas Section
-          _buildTeamSection(
-            context,
-            language == 'en' ? 'University of Kansas Personnel' : 'Personal de la Universidad de Kansas',
-            [
-              ('Dr. Peter Herlihy', 'Professor of Geography', 'Profesor de Geografía', 'herlihy@ku.edu', 'peter1.jpg'),
-              ('Cap McLiney', 'PhD Student', 'Estudiante de Doctorado', 'cmclineyjr@ku.edu', 'cap.png'),
-              ('Sam Morrow', 'MA Student', 'Estudiante de Maestría', 'sam.morrow@ku.edu', 'sam.jpg'),
-              ('Amali Hipp', 'PhD Student', 'Estudiante de Doctorado', 'ahippe@ku.edu', 'Hipp_Headshot.jpg'),
-              ('Ollie Berwanger', 'Undergraduate Researcher', 'Investigador de Pregrado', 'cash.berwanger@ku.edu', 'geog_logo.jpg'),
-              ('Oliver Zigmund', 'Undergraduate Researcher', 'Investigador de Pregrado', 'oliverlzigmund@ku.edu', 'geog_logo.jpg'),
-            ],
-            language,
-            isMobile,
-          ),
-          const SizedBox(height: 40),
-          // UT Arlington Section
-          _buildTeamSection(
-            context,
-            language == 'en' ? 'University of Texas at Arlington Personnel' : 'Personal de la Universidad de Texas en Arlington',
-            [
-              ('Dr. Taylor Tappan', 'Associate Professor of Geography', 'Profesor Asociado de Geografía', 'taylor.tappan@uta.edu', 'taylor.jpg'),
-            ],
-            language,
-            isMobile,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTeamSection(
-    BuildContext context,
-    String title,
-    List<(String, String, String, String, String)> members,
-    String language,
-    bool isMobile,
-  ) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Colors.white,
-              fontSize: 19,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Wrap(
-            alignment: WrapAlignment.start,
-            spacing: 10,
-            runSpacing: 10,
-            children: members
+          GridView.count(
+            crossAxisCount: isMobile ? 1 : 3,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: team
                 .map(
-                  (member) => SizedBox(
-                    width: isMobile ? ((MediaQuery.of(context).size.width - 40) / 2) - 5 : 170,
-                    child: _buildTeamCard(
-                      context,
-                      member.$1,
-                      language == 'en' ? member.$2 : member.$3,
-                      member.$4,
-                      member.$5,
-                    ),
+                  (member) => _buildTeamCard(
+                    context,
+                    member.$1,
+                    member.$2,
+                    member.$3,
                   ),
                 )
                 .toList(),
@@ -1451,51 +1173,48 @@ class TeamSection extends StatelessWidget {
     String name,
     String position,
     String email,
-    String imageName,
   ) {
+    final imageMap = {
+      'Dr. Peter Herlihy': 'assets/images/peter1.jpg',
+      'Cap McLiney': 'assets/images/cap.png',
+      'Sam Morrow': 'assets/images/sam.jpg',
+      'Amali Hipp': 'assets/images/Hipp_Headshot.jpg',
+      'Dr. Taylor Tappan': 'assets/images/taylor.jpg',
+      'Marcelino Guatico': 'assets/images/labonga_seal.png',
+    };
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF101A2F),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withOpacity(0.08),
+          color: Colors.white.withOpacity(0.12),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      padding: const EdgeInsets.all(20),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 28,
+            radius: 36,
             backgroundColor: Colors.grey[700],
-            backgroundImage: AssetImage('assets/images/$imageName'),
+            backgroundImage: imageMap.containsKey(name) ? AssetImage(imageMap[name]!) : null,
+            child: imageMap.containsKey(name) ? null : const Icon(Icons.person),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 16),
           Text(
             name,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 1),
+          const SizedBox(height: 4),
           Text(
             position,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFB9C6EA),
-              fontSize: 16,
-              height: 1.2,
             ),
-            textAlign: TextAlign.center,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 8),
           if (email.isNotEmpty)
             GestureDetector(
               onTap: () {
@@ -1508,13 +1227,8 @@ class TeamSection extends StatelessWidget {
                 email,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: const Color(0xFF0051BA),
-                  fontSize: 14,
                   decoration: TextDecoration.underline,
-                  height: 1.0,
                 ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
             ),
         ],
