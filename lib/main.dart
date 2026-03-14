@@ -125,7 +125,6 @@ class _ChagresHomeState extends State<ChagresHome> {
   }
 
   void _updateActiveSection() {
-    final scrollPos = _scrollController.offset;
     final Map<GlobalKey, String> sections = {
       _teamKey: 'Team',
       _aboutKey: 'About',
@@ -135,20 +134,48 @@ class _ChagresHomeState extends State<ChagresHome> {
       _donateKey: 'Donate',
     };
 
+    String newActiveSection = '';
+    double closestDistance = double.infinity;
+    
+    // Find the section closest to the top of the viewport (around 150px)
     for (var entry in sections.entries) {
       final context = entry.key.currentContext;
       if (context != null) {
         final box = context.findRenderObject() as RenderBox?;
         if (box != null) {
           final offset = box.localToGlobal(Offset.zero);
-          if (offset.dy < 200) {
-            if (_activeSection != entry.value) {
-              setState(() => _activeSection = entry.value);
+          final distanceFromTop = (offset.dy - 150).abs();
+          
+          // Prioritize sections that are above the viewport marker (150px)
+          if (offset.dy < 150 && offset.dy > -box.size.height) {
+            if (distanceFromTop < closestDistance) {
+              closestDistance = distanceFromTop;
+              newActiveSection = entry.value;
             }
-            return;
           }
         }
       }
+    }
+    
+    // If no section found above marker, use the first one visible
+    if (newActiveSection.isEmpty) {
+      for (var entry in sections.entries) {
+        final context = entry.key.currentContext;
+        if (context != null) {
+          final box = context.findRenderObject() as RenderBox?;
+          if (box != null) {
+            final offset = box.localToGlobal(Offset.zero);
+            if (offset.dy < 300) {
+              newActiveSection = entry.value;
+              break;
+            }
+          }
+        }
+      }
+    }
+    
+    if (newActiveSection.isNotEmpty && _activeSection != newActiveSection) {
+      setState(() => _activeSection = newActiveSection);
     }
   }
 
