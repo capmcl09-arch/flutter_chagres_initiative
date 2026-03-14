@@ -113,6 +113,44 @@ class _ChagresHomeState extends State<ChagresHome> {
   void _scrollToTop(GlobalKey key) {
     _scrollToSection(key);
   }
+  
+  void _showLogoZoom() {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.black87,
+        child: Stack(
+          children: [
+            PhotoView(
+              imageProvider: const AssetImage('assets/images/Oval_Logo.png'),
+              minScale: PhotoViewComputedScale.contained * 0.8,
+              maxScale: PhotoViewComputedScale.covered * 2.0,
+              enableRotation: false,
+            ),
+            Positioned(
+              top: 16,
+              right: 16,
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,9 +208,15 @@ class _ChagresHomeState extends State<ChagresHome> {
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
       ),
-      title: Image.asset(
-        'assets/images/Oval_Logo.png',
-        height: 48,
+      title: GestureDetector(
+        onTap: _showLogoZoom,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Image.asset(
+            'assets/images/Oval_Logo.png',
+            height: 48,
+          ),
+        ),
       ),
       backgroundColor: const Color(0xFF0C1328),
       elevation: 1,
@@ -289,9 +333,15 @@ class _ChagresHomeState extends State<ChagresHome> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Logo
-          Image.asset(
-            'assets/images/Oval_Logo.png',
-            height: 80,
+          GestureDetector(
+            onTap: _showLogoZoom,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Image.asset(
+                'assets/images/Oval_Logo.png',
+                height: 80,
+              ),
+            ),
           ),
           const SizedBox(width: 40),
           // Navigation Links
