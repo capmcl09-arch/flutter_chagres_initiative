@@ -38561,7 +38561,7 @@ if(s!=null)A.aog(s,b,B.IR,B.hJ,B.AH)},
 a4t(){var s=this.c
 s.toString
 A.arg(new A.aaM(),s,t.z)},
-J(a){var s,r=this,q=null,p=A.bm(a,q,t.w).w.a.a<800,o=p?r.X6():q,n=p?r.X7():q,m=t.p,l=A.c([],m),k=!p
+J(a){var s,r=this,q=null,p=A.bm(a,q,t.w).w.a.a<900,o=p?r.X6():q,n=p?r.X7():q,m=t.p,l=A.c([],m),k=!p
 if(k)l.push(A.h7(q,100,q))
 l.push(new A.FC(r.a.c,q))
 l.push(new A.JJ(r.a.c,r.w))
@@ -38641,7 +38641,7 @@ A.aaK.prototype={
 $0(){return this.a.K9(this.b,this.c)},
 $S:0}
 A.FC.prototype={
-J(a){var s,r,q,p,o,n,m,l=null,k=A.bm(a,l,t.w).w.a.a<800,j=k?20:40,i=k?40:60,h=A.c([A.aC(166,B.k.C()>>>16&255,B.k.C()>>>8&255,B.k.C()&255),A.aC(166,B.k.C()>>>16&255,B.k.C()>>>8&255,B.k.C()&255)],t.t_),g=this.c==="en",f=g?"The Chagres Initiative":"La Iniciativa Chagres",e=A.a_(a).ok.b
+J(a){var s,r,q,p,o,n,m,l=null,k=A.bm(a,l,t.w).w.a.a<900,j=k?20:40,i=k?40:60,h=A.c([A.aC(166,B.k.C()>>>16&255,B.k.C()>>>8&255,B.k.C()&255),A.aC(166,B.k.C()>>>16&255,B.k.C()>>>8&255,B.k.C()&255)],t.t_),g=this.c==="en",f=g?"The Chagres Initiative":"La Iniciativa Chagres",e=A.a_(a).ok.b
 f=A.bl(f,l,l,e==null?l:e.a8d(B.f,"serif",A.c([new A.jL(A.aC(B.c.aq(127.5),B.k.C()>>>16&255,B.k.C()>>>8&255,B.k.C()&255),B.Gu,3)],t.kO)),B.aD)
 e=k?0:100
 s=g?"A KU and UT-Arlington Geographic, Participatory Research Mapping Project with the Indigenous Community of San Juan Pequen\xed Ind\xedgena La Bonga, Panama":"Un Proyecto de Mapeo Participativo del Departamento de Geograf\xeda de KU con la Comunidad Ind\xedgena de San Juan Pequen\xed Ind\xedgena La Bonga, Panam\xe1"
@@ -38662,7 +38662,7 @@ A.Yi.prototype={
 $0(){A.Cs(A.hO("https://geog.ku.edu/donate",0,null))},
 $S:0}
 A.CX.prototype={
-J(a){var s,r,q=null,p=A.bm(a,q,t.w).w.a.a<800?20:60,o=this.c==="en",n=o?"About the Initiative":"Sobre la Iniciativa",m=A.a_(a).ok.f
+J(a){var s,r,q=null,p=A.bm(a,q,t.w).w.a.a<900?20:60,o=this.c==="en",n=o?"About the Initiative":"Sobre la Iniciativa",m=A.a_(a).ok.f
 n=A.cV(q,A.eu(A.bl(n,q,q,m==null?q:m.bt(B.f),q),B.aJ,q,q,q),B.F,!1,q,q,q,q,q,q,q,q,q,q,q,q,q,new A.Te(),q,q,q)
 m=A.de(16)
 s=A.c([new A.dE(0,B.ek,A.aC(115,B.k.C()>>>16&255,B.k.C()>>>8&255,B.k.C()&255),B.iW,34)],t.sq)
@@ -38673,7 +38673,7 @@ A.Te.prototype={
 $0(){},
 $S:0}
 A.Gr.prototype={
-J(a){var s,r,q,p,o,n=this,m=null,l=A.bm(a,m,t.w).w.a.a<800?20:60,k=n.c==="en",j=k?"What Makes This Project Uniquely Meaningful?":"\xbfQu\xe9 hace que este proyecto sea \xfanico?",i=A.a_(a).ok.f
+J(a){var s,r,q,p,o,n=this,m=null,l=A.bm(a,m,t.w).w.a.a<900?20:60,k=n.c==="en",j=k?"What Makes This Project Uniquely Meaningful?":"\xbfQu\xe9 hace que este proyecto sea \xfanico?",i=A.a_(a).ok.f
 j=A.bl(j,m,m,i==null?m:i.bt(B.f),m)
 i=A.de(16)
 s=k?"1. Co-Produced, Not Extractive":"1. Co-Producido, No Extractivo"
@@ -38697,7 +38697,7 @@ this.aM()
 try{$.T7()
 $.kk().nU("auth-pdf-viewer-en",new A.a9K(),!0)}catch(s){}try{$.T7()
 $.kk().nU("auth-pdf-viewer-es",new A.a9L(),!0)}catch(s){}},
-J(a){var s,r,q,p=this,o=null,n=A.bm(a,o,t.w).w.a.a<800,m=n?20:60,l=p.a.c==="en"?"Project Authorization":"Autorizaci\xf3n del Proyecto",k=A.a_(a).ok.f
+J(a){var s,r,q,p=this,o=null,n=A.bm(a,o,t.w).w.a.a<900,m=n?20:60,l=p.a.c==="en"?"Project Authorization":"Autorizaci\xf3n del Proyecto",k=A.a_(a).ok.f
 l=A.cV(o,A.eu(A.bl(l,o,o,k==null?o:k.a81(B.f,B.e),o),B.aJ,o,o,o),B.F,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a9I(p,a),o,o,o)
 k=A.de(16)
 s=p.a.c==="en"?"During our team's visit to La Bonga during the summer of 2025, we presented openly the participatory research methodology to the community in Spanish. After understanding the potential of such a project, they unanimously voted in support of our project.":"Durante la visita de nuestro equipo a La Bonga en el verano de 2025, presentamos abiertamente la metodolog\xeda de investigaci\xf3n participativa a la comunidad en espa\xf1ol. Despu\xe9s de entender el potencial de tal proyecto, votaron un\xe1nimemente en apoyo de nuestro proyecto."
@@ -38748,7 +38748,7 @@ $0(){var s=this.a
 s.d=!s.d},
 $S:0}
 A.Gx.prototype={
-J(a){var s,r,q,p=null,o=A.bm(a,p,t.w).w.a.a<800,n=this.c==="en",m=t.Wy,l=n?A.c([B.HN,B.HR,B.I1,B.Ia],m):A.c([B.HV,B.I7,B.I9,B.HS],m)
+J(a){var s,r,q,p=null,o=A.bm(a,p,t.w).w.a.a<900,n=this.c==="en",m=t.Wy,l=n?A.c([B.HN,B.HR,B.I1,B.Ia],m):A.c([B.HV,B.I7,B.I9,B.HS],m)
 m=o?20:60
 n=n?"Stages of Participatory Research Mapping (PRM)":"Etapas del Mapeo de Investigaci\xf3n Participativa"
 s=A.a_(a).ok.f
@@ -38773,7 +38773,7 @@ $S:283}
 A.vn.prototype={
 af(){return new A.MM(A.c(["assets/images/lancha.jpg","assets/images/field_tour.jpg","assets/images/indigenous_band.jpg","assets/images/indigenous_girl_smiling.jpg","assets/images/chief_checking.jpg","assets/images/site_analysis.jpg","assets/images/lizard.jpg","assets/images/monkey.jpg","assets/images/signing.jpeg"],t.s),A.c([B.I2,B.HM,B.Ir,B.HP,B.Iq,B.Ix,B.HU,B.HZ,B.Iw],t.Wy))}}
 A.MM.prototype={
-J(a){var s,r,q,p,o,n,m=this,l=null,k=A.bm(a,l,t.w).w.a.a<800,j=k?20:60,i=m.a.c==="en"?"Fieldwork & Landscape":"Trabajo de Campo y Paisaje",h=A.a_(a).ok.f
+J(a){var s,r,q,p,o,n,m=this,l=null,k=A.bm(a,l,t.w).w.a.a<900,j=k?20:60,i=m.a.c==="en"?"Fieldwork & Landscape":"Trabajo de Campo y Paisaje",h=A.a_(a).ok.f
 i=A.cV(l,A.eu(A.bl(i,l,l,h==null?l:h.bt(B.f),l),B.aJ,l,l,l),B.F,!1,l,l,l,l,l,l,l,l,l,l,l,l,l,new A.aca(),l,l,l)
 h=A.de(16)
 s=A.oS(A.aC(31,B.f.C()>>>16&255,B.f.C()>>>8&255,B.f.C()&255),1)
@@ -38811,7 +38811,7 @@ A.ac8.prototype={
 $0(){return this.a.d++},
 $S:0}
 A.Gk.prototype={
-J(a){var s,r,q,p,o=null,n=A.bm(a,o,t.w).w.a.a<800?20:60,m=this.c==="en",l=m?"Project Maps":"Mapas del Proyecto",k=A.a_(a).ok.f
+J(a){var s,r,q,p,o=null,n=A.bm(a,o,t.w).w.a.a<900?20:60,m=this.c==="en",l=m?"Project Maps":"Mapas del Proyecto",k=A.a_(a).ok.f
 l=A.cV(o,A.eu(A.bl(l,o,o,k==null?o:k.bt(B.f),o),B.aJ,o,o,o),B.F,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.ZY(),o,o,o)
 k=A.de(16)
 s=A.h7(A.DW(A.de(12),new A.z6("assets/images/chagres_broadermap.jpg",450,1/0,B.cX,o)),450,1/0)
@@ -38832,7 +38832,7 @@ J(a){return B.Bh}}
 A.xp.prototype={
 af(){return new A.Ps()}}
 A.Ps.prototype={
-J(a){var s,r,q,p,o,n=this,m=null,l="Field Blog",k="Blog de Campo",j="Official Reports",i="Informes Oficiales",h=A.bm(a,m,t.w).w.a.a<800?20:60,g=n.a.c==="en"?"Field Reports":"Informes de Campo",f=A.a_(a).ok.f
+J(a){var s,r,q,p,o,n=this,m=null,l="Field Blog",k="Blog de Campo",j="Official Reports",i="Informes Oficiales",h=A.bm(a,m,t.w).w.a.a<900?20:60,g=n.a.c==="en"?"Field Reports":"Informes de Campo",f=A.a_(a).ok.f
 g=A.bl(g,m,m,f==null?m:f.bt(B.f),m)
 f=n.a.c==="en"?"Ongoing field reflections, research updates, and official project documentation from the Chagres Initiative.":"Reflexiones continuas de campo, actualizaciones de investigaci\xf3n y documentaci\xf3n oficial del proyecto de la Iniciativa Chagres."
 s=A.a_(a).ok.z
@@ -38871,7 +38871,7 @@ $0(){return this.a.d=1},
 $S:0}
 A.F9.prototype={
 J(a){var s=null,r=A.bm(a,s,t.w).w,q=this.c==="en",p=t.Wy,o=q?A.c([B.I_,B.Io,B.Iu,B.Ic,B.I3,B.HT,B.Id,B.HY,B.I4,B.In],p):A.c([B.I6,B.HW,B.HX,B.I0,B.HQ,B.Ig,B.Ih,B.I8,B.I5,B.Ib],p)
-r=r.a.a<800?20:60
+r=r.a.a<900?20:60
 q=q?"Frequently Asked Questions":"Preguntas Frecuentes"
 p=A.a_(a).ok.f
 q=A.cV(s,A.eu(A.bl(q,s,s,p==null?s:p.bt(B.f),s),B.aJ,s,s,s),B.F,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.WQ(),s,s,s)
@@ -38889,7 +38889,7 @@ s=s==null?r:s.a83(B.ac,1.6)
 return new A.o5(p,new A.v4(o,A.c([A.bl(q.b,r,r,s,r)],t.p),B.z,B.z,B.lg,A.oS(B.z,1),r),r)},
 $S:287}
 A.EQ.prototype={
-J(a){var s,r,q,p,o,n=this,m=null,l=A.bm(a,m,t.w).w.a.a<800?20:60,k=n.c==="en",j=k?"Support the Chagres Initiative":"Apoye la Iniciativa Chagres",i=A.a_(a).ok.f
+J(a){var s,r,q,p,o,n=this,m=null,l=A.bm(a,m,t.w).w.a.a<900?20:60,k=n.c==="en",j=k?"Support the Chagres Initiative":"Apoye la Iniciativa Chagres",i=A.a_(a).ok.f
 j=A.cV(m,A.eu(A.bl(j,m,m,i==null?m:i.bt(B.f),m),B.aJ,m,m,m),B.F,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.VR(),m,m,m)
 i=A.de(16)
 s=A.c([new A.dE(0,B.ek,A.aC(115,B.k.C()>>>16&255,B.k.C()>>>8&255,B.k.C()&255),B.iW,34)],t.sq)
@@ -38911,7 +38911,7 @@ A.VS.prototype={
 $0(){A.Cs(A.hO("https://geog.ku.edu/donate",0,null))},
 $S:0}
 A.JJ.prototype={
-J(a){var s,r,q,p,o=this,n=null,m=A.bm(a,n,t.w).w.a.a<800,l=m?20:60,k=o.c,j=k==="en",i=j?"Research Team":"Equipo de Investigaci\xf3n",h=A.a_(a).ok.f
+J(a){var s,r,q,p,o=this,n=null,m=A.bm(a,n,t.w).w.a.a<900,l=m?20:60,k=o.c,j=k==="en",i=j?"Research Team":"Equipo de Investigaci\xf3n",h=A.a_(a).ok.f
 i=A.bl(i,n,n,h==null?n:h.bt(B.f),n)
 h=A.DW(A.de(12),A.kH("assets/images/team.jpg",B.el,n,n,1/0))
 s=j?"The Original Research Team from KU: Taylor Tappan, Sam Morrow, Peter Herlihy and Cap McLiney":"El Equipo de Investigaci\xf3n Original de KU: Taylor Tappan, Sam Morrow, Peter Herlihy y Cap McLiney"
@@ -38944,7 +38944,7 @@ A.a7M.prototype={
 $0(){A.Cs(A.Rn(null,this.a,null,"mailto"))},
 $S:0}
 A.Fn.prototype={
-J(a){var s,r,q,p,o=null,n=A.bm(a,o,t.w).w.a.a<800?20:60,m=A.a_(a).ok.Q
+J(a){var s,r,q,p,o=null,n=A.bm(a,o,t.w).w.a.a<900?20:60,m=A.a_(a).ok.Q
 m=A.bl("\xa9 2026 The Chagres Initiative - KU Department of Geography",o,o,m==null?o:m.bt(B.ac),B.aD)
 s=this.c
 r=s==="en"

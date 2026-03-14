@@ -154,7 +154,7 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Scaffold(
       appBar: isMobile ? _buildMobileAppBar() : null,
@@ -405,7 +405,7 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Container(
       width: double.infinity,
@@ -550,7 +550,7 @@ class AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -617,7 +617,7 @@ class MeaningfulSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Container(
       color: const Color(0xFF0C1328),
@@ -765,7 +765,7 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -860,7 +860,7 @@ class MethodologySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     final stages = language == 'en'
         ? [
@@ -990,7 +990,7 @@ class _GallerySectionState extends State<GallerySection> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -1105,7 +1105,7 @@ class MapsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -1213,7 +1213,7 @@ class _ReportsSectionState extends State<ReportsSection> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -1359,7 +1359,7 @@ class FAQSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     final faqs = language == 'en'
         ? [
@@ -1477,7 +1477,7 @@ class DonateSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -1611,7 +1611,7 @@ class TeamSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Container(
       color: const Color(0xFF0C1328),
@@ -1835,7 +1835,7 @@ class FooterSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 800;
+    final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Container(
       color: const Color(0xFF0C1328),
