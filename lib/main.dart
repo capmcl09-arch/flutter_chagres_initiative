@@ -972,8 +972,10 @@ class MapsSection extends StatelessWidget {
                   height: 450,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      'assets/images/chagres_broadermap.jpg',
+                    child: ZoomableImage(
+                      imagePath: 'assets/images/chagres_broadermap.jpg',
+                      height: 450,
+                      width: double.infinity,
                       fit: BoxFit.contain,
                     ),
                   ),
