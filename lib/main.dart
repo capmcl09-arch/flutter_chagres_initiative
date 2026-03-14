@@ -586,7 +586,7 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
       ui.platformViewRegistry.registerViewFactory(
         _pdfViewerId,
         (int viewId) => html.IFrameElement()
-          ..src = 'Documents/La_Bonga_Cartas.pdf'
+          ..src = 'assets/Documents/La_Bonga_Cartas.pdf'
           ..style.border = 'none'
           ..style.width = '100%'
           ..style.height = '600px',
@@ -845,58 +845,76 @@ class _GallerySectionState extends State<GallerySection> {
             ),
           ),
           const SizedBox(height: 24),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFF101A2F),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: Colors.white.withOpacity(0.12),
-              ),
-            ),
+          SizedBox(
+            width: double.infinity,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: ZoomableImage(
-                    imagePath: _images[_currentIndex % _images.length],
-                    height: isMobile ? 250 : 400,
-                    width: double.infinity,
-                    fit: BoxFit.contain,
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF101A2F),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.12),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    widget.language == 'en'
-                        ? _captions[_currentIndex % _captions.length].$1
-                        : _captions[_currentIndex % _captions.length].$2,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: const Color(0xFFB9C6EA),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: ZoomableImage(
+                      imagePath: _images[_currentIndex % _images.length],
+                      height: isMobile ? 380 : 580,
+                      width: double.infinity,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF101A2F),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
+                    ),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.12),
+                    ),
+                  ),
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Column(
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.chevron_left),
-                        onPressed: () {
-                          setState(() => _currentIndex--);
-                        },
-                      ),
                       Text(
-                        '${_currentIndex % _captions.length + 1} / ${_captions.length}',
+                        widget.language == 'en'
+                            ? _captions[_currentIndex % _captions.length].$1
+                            : _captions[_currentIndex % _captions.length].$2,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: const Color(0xFFB9C6EA),
+                          fontSize: 16,
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.chevron_right),
-                        onPressed: () {
-                          setState(() => _currentIndex++);
-                        },
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.chevron_left),
+                            onPressed: () {
+                              setState(() => _currentIndex--);
+                            },
+                          ),
+                          Text(
+                            '${_currentIndex % _captions.length + 1} / ${_captions.length}',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: const Color(0xFFB9C6EA),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.chevron_right),
+                            onPressed: () {
+                              setState(() => _currentIndex++);
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
