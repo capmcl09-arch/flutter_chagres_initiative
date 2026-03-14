@@ -82,7 +82,6 @@ class ChagresHome extends StatefulWidget {
 
 class _ChagresHomeState extends State<ChagresHome> {
   final ScrollController _scrollController = ScrollController();
-  int _currentPageIndex = 0;
   
   // GlobalKey references for each section
   final GlobalKey _aboutKey = GlobalKey();
@@ -110,6 +109,10 @@ class _ChagresHomeState extends State<ChagresHome> {
       );
     }
   }
+  
+  void _scrollToTop(GlobalKey key) {
+    _scrollToSection(key);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +120,7 @@ class _ChagresHomeState extends State<ChagresHome> {
     
     return Scaffold(
       appBar: isMobile ? _buildMobileAppBar() : null,
+      drawer: isMobile ? _buildMobileDrawer() : null,
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -155,23 +159,17 @@ class _ChagresHomeState extends State<ChagresHome> {
             ),
         ],
       ),
-      bottomNavigationBar: isMobile
-          ? BottomNavigationBar(
-              backgroundColor: const Color(0xFF0C1328),
-              currentIndex: _currentPageIndex,
-              items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                BottomNavigationBarItem(icon: Icon(Icons.info), label: 'About'),
-                BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Team'),
-                BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Donate'),
-              ],
-            )
-          : null,
     );
   }
 
   AppBar _buildMobileAppBar() {
     return AppBar(
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
+      ),
       title: Image.asset(
         'assets/images/Oval_Logo.png',
         height: 48,
@@ -179,6 +177,107 @@ class _ChagresHomeState extends State<ChagresHome> {
       backgroundColor: const Color(0xFF0C1328),
       elevation: 1,
       centerTitle: true,
+    );
+  }
+
+  Widget _buildMobileDrawer() {
+    return Drawer(
+      backgroundColor: const Color(0xFF0C1328),
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Color(0xFF0051BA),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/Oval_Logo.png',
+                  height: 60,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  widget.language == 'en' ? 'Navigation' : 'Navegación',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          _buildDrawerItem(
+            widget.language == 'en' ? 'About' : 'Acerca de',
+            _aboutKey,
+          ),
+          _buildDrawerItem(
+            widget.language == 'en' ? 'Methodology' : 'Metodología',
+            _methodologyKey,
+          ),
+          _buildDrawerItem(
+            widget.language == 'en' ? 'Fieldwork' : 'Trabajo de Campo',
+            _reportsKey,
+          ),
+          _buildDrawerItem(
+            widget.language == 'en' ? 'Donate' : 'Donar',
+            _donateKey,
+          ),
+          _buildDrawerItem(
+            widget.language == 'en' ? 'Team' : 'Equipo',
+            _teamKey,
+            alignment: 0.20,
+          ),
+          _buildDrawerItem(
+            widget.language == 'en' ? 'FAQ' : 'Preguntas Frecuentes',
+            _faqKey,
+          ),
+          const Divider(color: Color(0xFF101A2F)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0051BA),
+                ),
+                onPressed: () => widget.onLanguageChanged(
+                  widget.language == 'en' ? 'es' : 'en',
+                ),
+                child: Text(
+                  widget.language == 'en' ? 'Español' : 'English',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'serif',
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerItem(
+    String label,
+    GlobalKey key, {
+    double alignment = 0.50,
+  }) {
+    return ListTile(
+      title: Text(
+        label,
+        style: const TextStyle(
+          color: Color(0xFFB9C6EA),
+          fontSize: 16,
+        ),
+      ),
+      onTap: () {
+        Navigator.of(context).pop(); // Close drawer
+        _scrollToSection(key, alignment: alignment);
+      },
     );
   }
 
