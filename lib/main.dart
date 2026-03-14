@@ -930,29 +930,11 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
                 ),
                 if (_showPDF) ...[
                   const SizedBox(height: 20),
-                  Stack(
-                    children: [
-                      SizedBox(
-                        height: isMobile ? 900 : 800,
-                        child: HtmlElementView(
-                          viewType: widget.language == 'en' ? _pdfViewerEnId : _pdfViewerEsId,
-                        ),
-                      ),
-                      // Loading indicator
-                      Positioned.fill(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Center(
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0051BA)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: isMobile ? 900 : 800,
+                    child: HtmlElementView(
+                      viewType: widget.language == 'en' ? _pdfViewerEnId : _pdfViewerEsId,
+                    ),
                   ),
                 ]
               ],
