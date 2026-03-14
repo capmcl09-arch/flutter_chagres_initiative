@@ -1557,6 +1557,7 @@ class FAQSection extends StatelessWidget {
         children: [
           Text(
             answer,
+            textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFB9C6EA),
               height: 1.6,
