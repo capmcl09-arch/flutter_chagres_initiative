@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:photo_view/photo_view.dart';
 import 'dart:html' as html;
@@ -82,6 +83,8 @@ class ChagresHome extends StatefulWidget {
 
 class _ChagresHomeState extends State<ChagresHome> {
   final ScrollController _scrollController = ScrollController();
+  bool _showBackToTop = false;
+  String _activeSection = '';
   
   // GlobalKey references for each section
   final GlobalKey _aboutKey = GlobalKey();
@@ -93,9 +96,68 @@ class _ChagresHomeState extends State<ChagresHome> {
   final GlobalKey _reportsKey = GlobalKey();
 
   @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_handleScroll);
+  }
+
+  @override
   void dispose() {
+    _scrollController.removeListener(_handleScroll);
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _handleScroll() {
+    // Show/hide back-to-top button
+    if (_scrollController.offset > 300) {
+      if (!_showBackToTop) {
+        setState(() => _showBackToTop = true);
+      }
+    } else {
+      if (_showBackToTop) {
+        setState(() => _showBackToTop = false);
+      }
+    }
+    
+    // Track active section
+    _updateActiveSection();
+  }
+
+  void _updateActiveSection() {
+    final scrollPos = _scrollController.offset;
+    final Map<GlobalKey, String> sections = {
+      _teamKey: 'Team',
+      _aboutKey: 'About',
+      _methodologyKey: 'Methodology',
+      _reportsKey: 'Fieldwork',
+      _faqKey: 'FAQ',
+      _donateKey: 'Donate',
+    };
+
+    for (var entry in sections.entries) {
+      final context = entry.key.currentContext;
+      if (context != null) {
+        final box = context.findRenderObject() as RenderBox?;
+        if (box != null) {
+          final offset = box.localToGlobal(Offset.zero);
+          if (offset.dy < 200) {
+            if (_activeSection != entry.value) {
+              setState(() => _activeSection = entry.value);
+            }
+            return;
+          }
+        }
+      }
+    }
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeInOut,
+    );
   }
   
   void _scrollToSection(GlobalKey key, {double alignment = 0.50}) {
@@ -110,7 +172,7 @@ class _ChagresHomeState extends State<ChagresHome> {
     }
   }
   
-  void _scrollToTop(GlobalKey key) {
+  void _scrollToTopOld(GlobalKey key) {
     _scrollToSection(key);
   }
   
@@ -159,6 +221,13 @@ class _ChagresHomeState extends State<ChagresHome> {
     return Scaffold(
       appBar: isMobile ? _buildMobileAppBar() : null,
       drawer: isMobile ? _buildMobileDrawer() : null,
+      floatingActionButton: _showBackToTop
+          ? FloatingActionButton(
+              onPressed: _scrollToTop,
+              backgroundColor: const Color(0xFF0051BA),
+              child: const Icon(Icons.arrow_upward),
+            )
+          : null,
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -172,19 +241,23 @@ class _ChagresHomeState extends State<ChagresHome> {
                 MeaningfulSection(language: widget.language),
                 AuthorizationSection(language: widget.language),
                 MethodologySection(key: _methodologyKey, language: widget.language),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40),
-                  child: Image.asset('assets/images/community_meeting.jpg'),
+                FadeInAnimation(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 40),
+                    child: Image.asset('assets/images/community_meeting.jpg'),
+                  ),
                 ),
                 GallerySection(language: widget.language),
                 MapsSection(language: widget.language),
                 ReportsSection(key: _reportsKey, language: widget.language),
                 FAQSection(key: _faqKey, language: widget.language),
                 DonateSection(key: _donateKey, language: widget.language),
+                NewsletterSection(language: widget.language),
                 FooterSection(
                   language: widget.language,
                   onLanguageChanged: widget.onLanguageChanged,
                 ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               ],
             ),
           ),
@@ -381,15 +454,17 @@ class _ChagresHomeState extends State<ChagresHome> {
   }
 
   Widget _buildNavLink(String label, GlobalKey key, {double alignment = 0.50}) {
+    final isActive = _activeSection == label;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => _scrollToSection(key, alignment: alignment),
         child: Text(
           label,
-          style: const TextStyle(
-            color: Color(0xFFB9C6EA),
+          style: TextStyle(
+            color: isActive ? Colors.white : const Color(0xFFB9C6EA),
             fontSize: 17,
+            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),
       ),
@@ -828,11 +903,29 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
                 ),
                 if (_showPDF) ...[
                   const SizedBox(height: 20),
-                  SizedBox(
-                    height: isMobile ? 900 : 800,
-                    child: HtmlElementView(
-                      viewType: widget.language == 'en' ? _pdfViewerEnId : _pdfViewerEsId,
-                    ),
+                  Stack(
+                    children: [
+                      SizedBox(
+                        height: isMobile ? 900 : 800,
+                        child: HtmlElementView(
+                          viewType: widget.language == 'en' ? _pdfViewerEnId : _pdfViewerEsId,
+                        ),
+                      ),
+                      // Loading indicator
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0051BA)),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ]
               ],
@@ -1892,8 +1985,177 @@ class FooterSection extends StatelessWidget {
   }
 }
 
-// Helper Widget for Zoomable Images
-class ZoomableImage extends StatelessWidget {
+// Newsletter Section
+class NewsletterSection extends StatefulWidget {
+  final String language;
+
+  const NewsletterSection({super.key, required this.language});
+
+  @override
+  State<NewsletterSection> createState() => _NewsletterSectionState();
+}
+
+class _NewsletterSectionState extends State<NewsletterSection> {
+  final _emailController = TextEditingController();
+  bool _isSubmitted = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  void _submitEmail() {
+    if (_emailController.text.isNotEmpty) {
+      setState(() => _isSubmitted = true);
+      // In a real app, you would send this to your backend
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          setState(() => _isSubmitted = false);
+          _emailController.clear();
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+
+    return Container(
+      color: const Color(0xFF101A2F),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 20 : 60,
+        vertical: 60,
+      ),
+      child: Column(
+        children: [
+          Text(
+            widget.language == 'en'
+                ? 'Stay Updated'
+                : 'Manténgase Actualizado',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            widget.language == 'en'
+                ? 'Subscribe to receive the latest updates about the Chagres Initiative.'
+                : 'Suscríbase para recibir las últimas actualizaciones sobre la Iniciativa Chagres.',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: const Color(0xFFB9C6EA),
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          Container(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      hintText: widget.language == 'en' ? 'Your email' : 'Tu correo',
+                      hintStyle: const TextStyle(color: Color(0xFF666666)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFF0051BA)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF0051BA),
+                          width: 2,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton(
+                  onPressed: _submitEmail,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0051BA),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 14,
+                    ),
+                  ),
+                  child: Text(
+                    _isSubmitted
+                        ? (widget.language == 'en' ? '✓' : '✓')
+                        : (widget.language == 'en' ? 'Subscribe' : 'Suscribirse'),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Fade-in Animation Wrapper
+class FadeInAnimation extends StatefulWidget {
+  final Widget child;
+  final Duration duration;
+
+  const FadeInAnimation({
+    super.key,
+    required this.child,
+    this.duration = const Duration(milliseconds: 600),
+  });
+
+  @override
+  State<FadeInAnimation> createState() => _FadeInAnimationState();
+}
+
+class _FadeInAnimationState extends State<FadeInAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacity;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+    );
+
+    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _opacity,
+      child: widget.child,
+    );
+  }
+}
+
+// Helper Widget for Zoomable Images with Keyboard Support
+class ZoomableImage extends StatefulWidget {
   final String imagePath;
   final double height;
   final double width;
@@ -1908,52 +2170,143 @@ class ZoomableImage extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ZoomableImage> createState() => _ZoomableImageState();
+}
+
+class _ZoomableImageState extends State<ZoomableImage> {
+  late FocusNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _showZoomDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => ZoomImageDialog(
+        imagePath: widget.imagePath,
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => Dialog(
-            backgroundColor: Colors.black87,
-            child: Stack(
-              children: [
-                PhotoView(
-                  imageProvider: AssetImage(imagePath),
-                  minScale: PhotoViewComputedScale.contained * 0.8,
-                  maxScale: PhotoViewComputedScale.covered * 2.0,
-                  enableRotation: false,
-                ),
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black54,
-                        shape: BoxShape.circle,
-                      ),
-                      padding: const EdgeInsets.all(8),
-                      child: const Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+      onTap: _showZoomDialog,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: Image.asset(
-          imagePath,
-          height: height,
-          width: width,
-          fit: fit,
+        child: FadeInAnimation(
+          child: Image.asset(
+            widget.imagePath,
+            height: widget.height,
+            width: widget.width,
+            fit: widget.fit,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Zoomable Image Dialog with Keyboard Support
+class ZoomImageDialog extends StatefulWidget {
+  final String imagePath;
+  final int initialIndex;
+  final List<String>? imageList;
+
+  const ZoomImageDialog({
+    required this.imagePath,
+    this.initialIndex = 0,
+    this.imageList,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<ZoomImageDialog> createState() => _ZoomImageDialogState();
+}
+
+class _ZoomImageDialogState extends State<ZoomImageDialog> {
+  late FocusNode _focusNode;
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+    _currentIndex = widget.initialIndex;
+    _focusNode.requestFocus();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _handleKeyEvent(RawKeyEvent event) {
+    if (event.isKeyPressed(LogicalKeyboardKey.escape)) {
+      Navigator.pop(context);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.black87,
+      child: RawKeyboardListener(
+        focusNode: _focusNode,
+        onKey: _handleKeyEvent,
+        child: Stack(
+          children: [
+            PhotoView(
+              imageProvider: AssetImage(widget.imagePath),
+              minScale: PhotoViewComputedScale.contained * 0.8,
+              maxScale: PhotoViewComputedScale.covered * 2.0,
+              enableRotation: false,
+            ),
+            Positioned(
+              top: 16,
+              right: 16,
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 16,
+              left: 16,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Text(
+                  'Press ESC to close',
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

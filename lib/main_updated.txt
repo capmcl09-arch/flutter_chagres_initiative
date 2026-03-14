@@ -1,0 +1,23 @@
+IMPLEMENTATION FEATURES TO ADD:
+
+1. **Floating Back to Top Button** - Add FAB that appears when scrolled past threshold
+2. **Active Section Indicator** - Highlight current section in navigation 
+3. **Gallery Keyboard Navigation** - Arrow keys to navigate, ESC to close zoom
+4. **Image Lazy Loading** - Fade-in animations as images load
+5. **PDF Loading Indicator** - Show spinner while PDF loads
+6. **Smooth Page Transitions** - Fade-in animations for sections
+7. **Mobile Bottom Padding** - Add significant padding at end of content
+8. **Newsletter Signup** - New section before footer with email signup
+
+These will be implemented in the following way:
+
+1. Add scroll position tracking to _ChagresHomeState
+2. Add FAB to Scaffold with back-to-top scroll
+3. Create FadeInAnimation wrapper widget
+4. Enhance ZoomableImage with keyboard listeners
+5. Add loading state to AuthorizationSection
+6. Create NewsletterSection widget
+7. Add bottom padding to content
+8. Update navigation to show active section
+
+This implementation is large and requires careful integration.
