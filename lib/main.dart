@@ -725,20 +725,38 @@ class AuthorizationSection extends StatefulWidget {
 
 class _AuthorizationSectionState extends State<AuthorizationSection> {
   bool _showPDF = false;
-  static const String _pdfViewerId = 'auth-pdf-viewer';
+  static const String _pdfViewerEnId = 'auth-pdf-viewer-en';
+  static const String _pdfViewerEsId = 'auth-pdf-viewer-es';
 
   @override
   void initState() {
     super.initState();
-    // Register PDF viewer factory once
+    // Register PDF viewer factories for English and Spanish
     try {
       ui.platformViewRegistry.registerViewFactory(
-        _pdfViewerId,
+        _pdfViewerEnId,
         (int viewId) => html.IFrameElement()
-          ..src = 'assets/Documents/La_Bonga_Cartas.pdf'
+          ..src = 'assets/Documents/La_Bonga_Cartas.pdf#page=1&toolbar=1'
           ..style.border = 'none'
           ..style.width = '100%'
-          ..style.height = '600px',
+          ..style.height = '800px'
+          ..setAttribute('allowfullscreen', 'true')
+          ..setAttribute('allow', 'fullscreen'),
+      );
+    } catch (e) {
+      // Already registered
+    }
+    
+    try {
+      ui.platformViewRegistry.registerViewFactory(
+        _pdfViewerEsId,
+        (int viewId) => html.IFrameElement()
+          ..src = 'assets/Documents/La_Bonga_Cartas.pdf#page=2&toolbar=1'
+          ..style.border = 'none'
+          ..style.width = '100%'
+          ..style.height = '800px'
+          ..setAttribute('allowfullscreen', 'true')
+          ..setAttribute('allow', 'fullscreen'),
       );
     } catch (e) {
       // Already registered
@@ -811,8 +829,10 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
                 if (_showPDF) ...[
                   const SizedBox(height: 20),
                   SizedBox(
-                    height: 600,
-                    child: HtmlElementView(viewType: _pdfViewerId),
+                    height: isMobile ? 900 : 800,
+                    child: HtmlElementView(
+                      viewType: widget.language == 'en' ? _pdfViewerEnId : _pdfViewerEsId,
+                    ),
                   ),
                 ]
               ],
