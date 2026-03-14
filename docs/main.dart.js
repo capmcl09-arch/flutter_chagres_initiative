@@ -38677,8 +38677,8 @@ s=A.bm(s,l,l,r==null?l:r.bu(B.ag),B.aC)
 r=A.da(8)
 q=A.tR(B.Ag,4)
 p=A.da(8)
-p=A.cj(l,A.E9(r,A.cj(l,A.kK("assets/images/here_strip.jpg",B.cY,l,l,1/0),B.q,l,l,new A.bZ(l,l,q,p,l,l,B.V),l,l,l,l,l,l,l)),B.q,l,B.y3,l,l,l,l,l,l,l,l)
-r=A.kK("assets/images/poem.png",B.em,l,B.xB,k?280:360)
+p=A.cj(l,A.E9(r,A.cj(l,A.kK("assets/images/here_strip.jpg",B.em,l,l,1/0),B.q,l,l,new A.bZ(l,l,q,p,l,l,B.V),l,l,l,l,l,l,l)),B.q,l,B.y3,l,l,l,l,l,l,l,l)
+r=A.kK("assets/images/poem.png",B.cY,l,B.xB,k?280:360)
 q=A.aD(B.c.aq(127.5),B.bI.C()>>>16&255,B.bI.C()>>>8&255,B.bI.C()&255)
 o=A.da(100)
 n=A.tR(A.aD(B.c.aq(178.5),B.bI.C()>>>16&255,B.bI.C()>>>8&255,B.bI.C()&255),2)
@@ -38695,7 +38695,7 @@ m=A.da(16)
 s=A.c([new A.dD(0,B.el,A.aD(115,B.k.C()>>>16&255,B.k.C()>>>8&255,B.k.C()&255),B.iS,34)],t.sq)
 o=o?"The Chagres Initiative is a community-based participatory zoning and monitoring effort in the R\xedo Pequen\xed sub-basin of Chagres National Park, the most strategically important watershed in the Panama Canal system. The park supplies an estimated 40 percent of the water used in Canal operations and about 80 percent of Panama City's drinking water. Yet limited on-the-ground monitoring and enforcement in remote areas has enabled illegal settlement and deforestation, while the Ember\xe1 community of San Juan Pequen\xed Ind\xedgena La Bonga remains in legal limbo as it seeks collective land recognition under Panama's 2008 Law 72. Working with Indigenous leaders, neighboring campesino residents, and Canal institutions, the project combines participatory research mapping with GIS and remote sensing to co-produce consensus land-use zones and locally grounded monitoring tools that can strengthen watershed governance and Canal water security.":"La Iniciativa Chagres es un esfuerzo comunitario participativo de zonificaci\xf3n y monitoreo en la subcuenca del R\xedo Pequen\xed del Parque Nacional Chagres, la cuenca m\xe1s estrat\xe9gicamente importante del sistema del Canal de Panam\xe1. El parque proporciona aproximadamente el 40 por ciento del agua utilizada en las operaciones del Canal y aproximadamente el 80 por ciento del agua potable de la Ciudad de Panam\xe1. Sin embargo, el monitoreo limitado en el terreno y la ejecuci\xf3n en \xe1reas remotas ha permitido asentamientos ilegales y deforestaci\xf3n, mientras que la comunidad Ember\xe1 de San Juan Pequen\xed Ind\xedgena La Bonga permanece en un limbo legal mientras busca reconocimiento de tierras colectivas bajo la Ley 72 de 2008 de Panam\xe1. Trabajando con l\xedderes ind\xedgenas, residentes campesinos vecinos e instituciones del Canal, el proyecto combina mapeo participativo de investigaci\xf3n con SIG y teledetecci\xf3n para coproducir zonas de uso del suelo por consenso y herramientas de monitoreo locales que pueden fortalecer la gobernanza de cuencas hidrogr\xe1ficas y la seguridad del agua del Canal."
 r=A.a0(a).ok.z
-return new A.cf(new A.aE(p,60,p,60),A.cb(A.c([n,B.aB,A.cj(q,A.bm(o,q,q,r==null?q:r.bu(B.ag),q),B.q,q,q,new A.bZ(B.aH,q,q,m,s,q,B.V),q,q,q,B.eQ,q,q,q),B.e0,A.kK("assets/images/labonga_seal.png",B.em,200,q,200)],t.p),B.B,B.C,B.D),q)}}
+return new A.cf(new A.aE(p,60,p,60),A.cb(A.c([n,B.aB,A.cj(q,A.bm(o,q,q,r==null?q:r.bu(B.ag),q),B.q,q,q,new A.bZ(B.aH,q,q,m,s,q,B.V),q,q,q,B.eQ,q,q,q),B.e0,A.kK("assets/images/labonga_seal.png",B.cY,200,q,200)],t.p),B.B,B.C,B.D),q)}}
 A.Tg.prototype={
 $0(){},
 $S:0}
@@ -38719,28 +38719,25 @@ return A.cb(A.c([q,B.jx,A.bm(c,r,r,s==null?r:s.bu(B.ag),r)],t.p),B.aq,B.C,B.D)}}
 A.tL.prototype={
 ag(){return new A.L_()}}
 A.L_.prototype={
-ap(){this.aO()
-$.ahW()
-var s=Date.now()
-$.m0().qT("pdf-viewer-"+s,new A.aa_(),!0)},
-J(a){var s,r,q,p,o,n=this,m=null,l=A.bl(a,m,t.w).w,k=Date.now()
-l=l.a.a<800?20:60
-s=n.a.c==="en"?"Project Authorization":"Autorizaci\xf3n del Proyecto"
-r=A.a0(a).ok.f
-s=A.e6(m,A.fz(A.bm(s,m,m,r==null?m:r.a7J(B.f,B.e),m),B.b_,m,m,m),B.Q,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.a9Y(n,a),m,m,m)
-r=A.da(16)
-q=n.a.c==="en"?"During our team's visit to La Bonga during the summer of 2025, we presented openly the participatory research methodology to the community in Spanish. After understanding the potential of such a project, they unanimously voted in support of our project.":"Durante la visita de nuestro equipo a La Bonga en el verano de 2025, presentamos abiertamente la metodolog\xeda de investigaci\xf3n participativa a la comunidad en espa\xf1ol. Despu\xe9s de entender el potencial de tal proyecto, votaron un\xe1nimemente en apoyo de nuestro proyecto."
-p=A.a0(a).ok.z
-q=A.bm(q,m,m,p==null?m:p.bu(B.ag),m)
-if(n.d)p=n.a.c==="en"?"Hide Authorization Documents":"Ocultar Documentos de Autorizaci\xf3n"
-else p=n.a.c==="en"?"View Authorization Documents":"Ver Documentos de Autorizaci\xf3n"
-o=t.p
-p=A.c([q,B.cg,A.Wv(A.bm(p,m,m,m,m),new A.a9Z(n),m)],o)
-if(n.d)B.b.N(p,A.c([B.cg,A.jN(A.awS(m,B.iZ,"pdf-viewer-"+k),600,m)],o))
-return new A.cf(new A.aE(l,60,l,60),A.cb(A.c([s,B.aB,A.cj(m,A.cb(p,B.B,B.C,B.D),B.q,m,m,new A.bZ(B.aH,m,m,r,m,m,B.V),m,m,m,B.eQ,m,m,m)],o),B.B,B.C,B.D),m)}}
+ap(){var s
+this.aO()
+try{$.ahW()
+$.m0().qT("auth-pdf-viewer",new A.aa_(),!0)}catch(s){}},
+J(a){var s,r,q,p=this,o=null,n=A.bl(a,o,t.w).w.a.a<800?20:60,m=p.a.c==="en"?"Project Authorization":"Autorizaci\xf3n del Proyecto",l=A.a0(a).ok.f
+m=A.e6(o,A.fz(A.bm(m,o,o,l==null?o:l.a7J(B.f,B.e),o),B.b_,o,o,o),B.Q,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a9Y(p,a),o,o,o)
+l=A.da(16)
+s=p.a.c==="en"?"During our team's visit to La Bonga during the summer of 2025, we presented openly the participatory research methodology to the community in Spanish. After understanding the potential of such a project, they unanimously voted in support of our project.":"Durante la visita de nuestro equipo a La Bonga en el verano de 2025, presentamos abiertamente la metodolog\xeda de investigaci\xf3n participativa a la comunidad en espa\xf1ol. Despu\xe9s de entender el potencial de tal proyecto, votaron un\xe1nimemente en apoyo de nuestro proyecto."
+r=A.a0(a).ok.z
+s=A.bm(s,o,o,r==null?o:r.bu(B.ag),o)
+if(p.d)r=p.a.c==="en"?"Hide Authorization Documents":"Ocultar Documentos de Autorizaci\xf3n"
+else r=p.a.c==="en"?"View Authorization Documents":"Ver Documentos de Autorizaci\xf3n"
+q=t.p
+r=A.c([s,B.cg,A.Wv(A.bm(r,o,o,o,o),new A.a9Z(p),o)],q)
+if(p.d)B.b.N(r,A.c([B.cg,A.jN(A.awS(o,B.iZ,"auth-pdf-viewer"),600,o)],q))
+return new A.cf(new A.aE(n,60,n,60),A.cb(A.c([m,B.aB,A.cj(o,A.cb(r,B.B,B.C,B.D),B.q,o,o,new A.bZ(B.aH,o,o,l,o,o,B.V),o,o,o,B.eQ,o,o,o)],q),B.B,B.C,B.D),o)}}
 A.aa_.prototype={
 $1(a){var s,r=document.createElement("iframe")
-r.src="/flutter_chagres_initiative/assets/documents/La_Bonga_Cartas.pdf"
+r.src="assets/documents/La_Bonga_Cartas.pdf"
 s=r.style
 s.border="none"
 s=r.style
@@ -38826,7 +38823,7 @@ A.GA.prototype={
 J(a){var s,r,q,p,o=null,n=A.bl(a,o,t.w).w.a.a<800?20:60,m=this.c==="en",l=m?"Project Maps":"Mapas del Proyecto",k=A.a0(a).ok.f
 l=A.e6(o,A.fz(A.bm(l,o,o,k==null?o:k.bu(B.f),o),B.b_,o,o,o),B.Q,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a_5(),o,o,o)
 k=A.da(16)
-s=A.jN(A.E9(A.da(12),A.kK("assets/images/chagres_broadermap.jpg",B.em,o,o,o)),450,1/0)
+s=A.jN(A.E9(A.da(12),A.kK("assets/images/chagres_broadermap.jpg",B.cY,o,o,o)),450,1/0)
 r=m?"This overview map situates the R\xedo Pequen\xed watershed within Chagres National Park - the geographic setting for our participatory research mapping work with the community of La Bonga.":"Este mapa de descripci\xf3n general sit\xfaa la cuenca del R\xedo Pequen\xed dentro del Parque Nacional Chagres - el escenario geogr\xe1fico para nuestro trabajo de mapeo de investigaci\xf3n participativa con la comunidad de La Bonga."
 q=A.a0(a).ok.z
 r=A.bm(r,o,o,q==null?o:q.bu(B.ag),o)
@@ -38925,7 +38922,7 @@ $S:0}
 A.JP.prototype={
 J(a){var s,r,q,p,o=this,n=null,m=A.bl(a,n,t.w).w.a.a<800,l=m?20:60,k=o.c,j=k==="en",i=j?"Research Team":"Equipo de Investigaci\xf3n",h=A.a0(a).ok.f
 i=A.bm(i,n,n,h==null?n:h.bu(B.f),n)
-h=A.E9(A.da(12),A.kK("assets/images/team.jpg",B.cY,n,n,1/0))
+h=A.E9(A.da(12),A.kK("assets/images/team.jpg",B.em,n,n,1/0))
 s=j?"The Original Research Team from KU: Taylor Tappan, Sam Morrow, Peter Herlihy and Cap McLiney":"El Equipo de Investigaci\xf3n Original de KU: Taylor Tappan, Sam Morrow, Peter Herlihy y Cap McLiney"
 r=A.a0(a).ok.Q
 q=t.p
@@ -43689,7 +43686,7 @@ break
 case 1:s.bu(l.dy)
 break}}r=q}p=n.ga1H()
 o=n.ga1u()
-j=A.avy(B.cY,n.f,m)
+j=A.avy(B.em,n.f,m)
 return new A.tv(m,new A.bZ(r,j,m,m,m,m,B.cZ),m,new A.ae(p,o,p,o),B.ai,B.R,m,m)}}
 A.Wd.prototype={
 H(){return"DynamicSchemeVariant."+this.b}}
@@ -72679,7 +72676,7 @@ return new A.yv(new A.a2F(q),s,new A.ck(r,A.o(r).h("ck<1>")),null,t.lZ)},
 WN(){var s,r=this.a,q=r.d
 q.toString
 s=r.db
-s=new A.pB(q,r.z.e.a*this.gcj(0),null,null,s,B.em,!1,null)
+s=new A.pB(q,r.z.e.a*this.gcj(0),null,null,s,B.cY,!1,null)
 r=s
 return r}}
 A.a2F.prototype={
@@ -75704,8 +75701,8 @@ B.ka=new A.ae(36,1/0,36,1/0)
 B.hg=new A.ae(1/0,1/0,1/0,1/0)
 B.V=new A.DH(0,"rectangle")
 B.y4=new A.bZ(B.k,null,null,null,null,null,B.V)
-B.em=new A.tY(1,"contain")
-B.cY=new A.tY(2,"cover")
+B.cY=new A.tY(1,"contain")
+B.em=new A.tY(2,"cover")
 B.kb=new A.tY(6,"scaleDown")
 B.kc=new A.tZ(0,"tight")
 B.y5=new A.tZ(1,"max")
@@ -76165,7 +76162,7 @@ B.RX=new A.Vm(1,"traversalOrder")
 B.xE=new A.ko("assets/images/palms.jpg",null,null)
 B.bp=new A.pE(3,"noRepeat")
 B.b9=new A.mC(2,"medium")
-B.Av=new A.ms(B.xE,null,B.cY,0.3)
+B.Av=new A.ms(B.xE,null,B.em,0.3)
 B.eO=new A.EE(0,"background")
 B.la=new A.EE(1,"foreground")
 B.Ry=new A.NZ(null)
