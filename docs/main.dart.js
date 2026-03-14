@@ -38737,7 +38737,7 @@ if(p.d)B.b.N(r,A.c([B.cg,A.jN(A.awS(o,B.iZ,"auth-pdf-viewer"),600,o)],q))
 return new A.cf(new A.aE(n,60,n,60),A.cb(A.c([m,B.aB,A.cj(o,A.cb(r,B.B,B.C,B.D),B.q,o,o,new A.bZ(B.aH,o,o,l,o,o,B.V),o,o,o,B.eQ,o,o,o)],q),B.B,B.C,B.D),o)}}
 A.aa_.prototype={
 $1(a){var s,r=document.createElement("iframe")
-r.src="assets/documents/La_Bonga_Cartas.pdf"
+r.src="Documents/La_Bonga_Cartas.pdf"
 s=r.style
 s.border="none"
 s=r.style

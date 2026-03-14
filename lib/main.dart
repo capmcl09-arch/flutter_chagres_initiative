@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:photo_view/photo_view.dart';
 import 'dart:html' as html;
 import 'dart:ui_web' as ui;
 
@@ -172,7 +173,7 @@ class _ChagresHomeState extends State<ChagresHome> {
   AppBar _buildMobileAppBar() {
     return AppBar(
       title: Image.asset(
-        'assets/images/oval_logo.png',
+        'assets/images/Oval_Logo.png',
         height: 48,
       ),
       backgroundColor: const Color(0xFF0C1328),
@@ -190,7 +191,7 @@ class _ChagresHomeState extends State<ChagresHome> {
         children: [
           // Logo
           Image.asset(
-            'assets/images/oval_logo.png',
+            'assets/images/Oval_Logo.png',
             height: 80,
           ),
           const SizedBox(width: 40),
@@ -350,8 +351,12 @@ class HeroSection extends StatelessWidget {
             child: Container(
               constraints: const BoxConstraints(maxWidth: 600),
               decoration: BoxDecoration(
-                color: const Color(0xFFE8000D).withOpacity(0.35),
+                color: const Color(0xFFE8000D).withOpacity(0.50),
                 borderRadius: BorderRadius.circular(100),
+                border: Border.all(
+                  color: const Color(0xFFE8000D).withOpacity(0.7),
+                  width: 2,
+                ),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               child: Column(
@@ -405,10 +410,18 @@ class AboutSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            language == 'en' ? 'About the Initiative' : 'Sobre la Iniciativa',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              // Heading click effect
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                language == 'en' ? 'About the Initiative' : 'Sobre la Iniciativa',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -552,10 +565,36 @@ class MeaningfulSection extends StatelessWidget {
 }
 
 // Authorization Section
-class AuthorizationSection extends StatelessWidget {
+class AuthorizationSection extends StatefulWidget {
   final String language;
 
   const AuthorizationSection({super.key, required this.language});
+
+  @override
+  State<AuthorizationSection> createState() => _AuthorizationSectionState();
+}
+
+class _AuthorizationSectionState extends State<AuthorizationSection> {
+  bool _showPDF = false;
+  static const String _pdfViewerId = 'auth-pdf-viewer';
+
+  @override
+  void initState() {
+    super.initState();
+    // Register PDF viewer factory once
+    try {
+      ui.platformViewRegistry.registerViewFactory(
+        _pdfViewerId,
+        (int viewId) => html.IFrameElement()
+          ..src = 'Documents/La_Bonga_Cartas.pdf'
+          ..style.border = 'none'
+          ..style.width = '100%'
+          ..style.height = '600px',
+      );
+    } catch (e) {
+      // Already registered
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -568,12 +607,22 @@ class AuthorizationSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            language == 'en'
-                ? 'Project Authorization'
-                : 'Autorización del Proyecto',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+          GestureDetector(
+            onTap: () => _scrollToTop(context),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                widget.language == 'en'
+                    ? 'Project Authorization'
+                    : 'Autorización del Proyecto',
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                    ),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -586,7 +635,7 @@ class AuthorizationSection extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  language == 'en'
+                  widget.language == 'en'
                       ? 'During our team\'s visit to La Bonga during the summer of 2025, we presented openly the participatory research methodology to the community in Spanish. After understanding the potential of such a project, they unanimously voted in support of our project.'
                       : 'Durante la visita de nuestro equipo a La Bonga en el verano de 2025, presentamos abiertamente la metodología de investigación participativa a la comunidad en español. Después de entender el potencial de tal proyecto, votaron unánimemente en apoyo de nuestro proyecto.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -596,20 +645,41 @@ class AuthorizationSection extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    launchUrl(Uri.parse('/assets/documents/La_Bonga_Cartas.pdf'));
+                    setState(() {
+                      _showPDF = !_showPDF;
+                    });
                   },
                   child: Text(
-                    language == 'en'
-                        ? 'View Authorization Documents'
-                        : 'Ver Documentos de Autorización',
+                    _showPDF
+                        ? (widget.language == 'en'
+                            ? 'Hide Authorization Documents'
+                            : 'Ocultar Documentos de Autorización')
+                        : (widget.language == 'en'
+                            ? 'View Authorization Documents'
+                            : 'Ver Documentos de Autorización'),
                   ),
                 ),
+                if (_showPDF) ...[
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 600,
+                    child: HtmlElementView(viewType: _pdfViewerId),
+                  ),
+                ]
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  void _scrollToTop(BuildContext context) {
+    // Scroll to top of the page
+    ScaffoldState? scaffoldState = Scaffold.maybeOf(context);
+    if (scaffoldState != null) {
+      scaffoldState.appBarMaxHeight;
+    }
   }
 }
 
@@ -645,12 +715,20 @@ class MethodologySection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            language == 'en'
-                ? 'Stages of Participatory Research Mapping (PRM)'
-                : 'Etapas del Mapeo de Investigación Participativa',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              // Heading click effect
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                language == 'en'
+                    ? 'Stages of Participatory Research Mapping (PRM)'
+                    : 'Etapas del Mapeo de Investigación Participativa',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -752,10 +830,18 @@ class _GallerySectionState extends State<GallerySection> {
       ),
       child: Column(
         children: [
-          Text(
-            widget.language == 'en' ? 'Fieldwork & Landscape' : 'Trabajo de Campo y Paisaje',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              // Scroll or click effect for heading
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                widget.language == 'en' ? 'Fieldwork & Landscape' : 'Trabajo de Campo y Paisaje',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -771,11 +857,11 @@ class _GallerySectionState extends State<GallerySection> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    _images[_currentIndex % _images.length],
+                  child: ZoomableImage(
+                    imagePath: _images[_currentIndex % _images.length],
                     height: isMobile ? 250 : 400,
                     width: double.infinity,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Padding(
@@ -841,10 +927,18 @@ class MapsSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            language == 'en' ? 'Project Maps' : 'Mapas del Proyecto',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              // Heading click effect
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                language == 'en' ? 'Project Maps' : 'Mapas del Proyecto',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
           Container(
@@ -1112,10 +1206,18 @@ class FAQSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            language == 'en' ? 'Frequently Asked Questions' : 'Preguntas Frecuentes',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              // Heading click effect
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                language == 'en' ? 'Frequently Asked Questions' : 'Preguntas Frecuentes',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -1195,12 +1297,20 @@ class DonateSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            language == 'en'
-                ? 'Support the Chagres Initiative'
-                : 'Apoye la Iniciativa Chagres',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              // Heading click effect
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                language == 'en'
+                    ? 'Support the Chagres Initiative'
+                    : 'Apoye la Iniciativa Chagres',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -1588,6 +1698,74 @@ class FooterSection extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+// Helper Widget for Zoomable Images
+class ZoomableImage extends StatelessWidget {
+  final String imagePath;
+  final double height;
+  final double width;
+  final BoxFit fit;
+
+  const ZoomableImage({
+    required this.imagePath,
+    this.height = 400,
+    this.width = double.infinity,
+    this.fit = BoxFit.cover,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) => Dialog(
+            backgroundColor: Colors.black87,
+            child: Stack(
+              children: [
+                PhotoView(
+                  imageProvider: AssetImage(imagePath),
+                  minScale: PhotoViewComputedScale.contained * 0.8,
+                  maxScale: PhotoViewComputedScale.covered * 2.0,
+                  enableRotation: false,
+                ),
+                Positioned(
+                  top: 16,
+                  right: 16,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Image.asset(
+          imagePath,
+          height: height,
+          width: width,
+          fit: fit,
+        ),
       ),
     );
   }
