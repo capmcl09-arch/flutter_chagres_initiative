@@ -1749,8 +1749,8 @@ class TeamSection extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     language == 'en'
-                        ? 'The Original Research Team from KU: Taylor Tappan, Sam Morrow, Peter Herlihy and Cap McLiney'
-                        : 'El Equipo de Investigación Original de KU: Taylor Tappan, Sam Morrow, Peter Herlihy y Cap McLiney',
+                        ? 'The Original Research Team from KU: Taylor Tappan, Peter Herlihy and Cap McLiney'
+                        : 'El Equipo de Investigación Original de KU: Taylor Tappan, Peter Herlihy y Cap McLiney',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: const Color(0xFF9BB1D6),
                     ),
@@ -1780,7 +1780,6 @@ class TeamSection extends StatelessWidget {
             [
               ('Dr. Peter Herlihy', 'Professor of Geography', 'Profesor de Geografía', 'herlihy@ku.edu', 'peter1.jpg'),
               ('Cap McLiney', 'PhD Student', 'Estudiante de Doctorado', 'cmclineyjr@ku.edu', 'cap.png'),
-              ('Sam Morrow', 'MA Student', 'Estudiante de Maestría', 'sam.morrow@ku.edu', 'sam.jpg'),
               ('Amali Hipp', 'PhD Student', 'Estudiante de Doctorado', 'ahippe@ku.edu', 'Hipp_Headshot.jpg'),
               ('Ollie Berwanger', 'Undergraduate Researcher', 'Investigador de Pregrado', 'cash.berwanger@ku.edu', 'geog_logo.jpg'),
               ('Oliver Zigmund', 'Undergraduate Researcher', 'Investigador de Pregrado', 'oliverlzigmund@ku.edu', 'geog_logo.jpg'),
