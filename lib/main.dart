@@ -1896,28 +1896,6 @@ class TeamSection extends StatelessWidget {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 2),
-          if (email.isNotEmpty)
-            GestureDetector(
-              onTap: () {
-                launchUrl(Uri(
-                  scheme: 'mailto',
-                  path: email,
-                ));
-              },
-              child: Text(
-                email,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFF0051BA),
-                  fontSize: 14,
-                  decoration: TextDecoration.underline,
-                  height: 1.0,
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
         ],
       ),
     );
