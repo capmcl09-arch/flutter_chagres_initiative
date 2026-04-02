@@ -2060,7 +2060,19 @@ class _NewsletterSectionState extends State<NewsletterSection> {
           ),
           const SizedBox(height: 20),
           Container(
-            constraints: const BoxConstraints(maxWidth: 400),
+            constraints: const BoxConstraints(maxWidth: 500),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1A2847),
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(
+                color: const Color(0xFF0051BA).withOpacity(0.3),
+                width: 1,
+              ),
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
             child: Row(
               children: [
                 Expanded(
@@ -2069,17 +2081,7 @@ class _NewsletterSectionState extends State<NewsletterSection> {
                     decoration: InputDecoration(
                       hintText: widget.language == 'en' ? 'Your email' : 'Tu correo',
                       hintStyle: const TextStyle(color: Color(0xFF666666)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF0051BA)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Color(0xFF0051BA),
-                          width: 2,
-                        ),
-                      ),
+                      border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 12,
@@ -2088,14 +2090,16 @@ class _NewsletterSectionState extends State<NewsletterSection> {
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
-                const SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: _submitEmail,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0051BA),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 14,
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
                     ),
                   ),
                   child: Text(
