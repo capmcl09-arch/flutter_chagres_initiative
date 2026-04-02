@@ -532,7 +532,7 @@ class HeroSection extends StatelessWidget {
         children: [
           Text(
             language == 'en'
-                ? 'The Chagres Initiative'
+                ? 'Chagres Initiative'
                 : 'La Iniciativa Chagres',
             style: Theme.of(context).textTheme.displayMedium?.copyWith(
               fontFamily: 'serif',

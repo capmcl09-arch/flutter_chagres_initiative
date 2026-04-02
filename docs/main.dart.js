@@ -42713,7 +42713,7 @@ A.ajv.prototype={
 $0(){return this.a.Qh(this.b,this.c)},
 $S:0}
 A.Kq.prototype={
-K(a){var s,r,q,p,o,n,m,l=null,k=A.ba(a,l,t.w).w.a.a<900,j=k?20:40,i=k?40:60,h=A.c([A.av(166,B.l.C()>>>16&255,B.l.C()>>>8&255,B.l.C()&255),A.av(166,B.l.C()>>>16&255,B.l.C()>>>8&255,B.l.C()&255)],t.t_),g=this.c==="en",f=g?"The Chagres Initiative":"La Iniciativa Chagres",e=A.N(a).ok.b
+K(a){var s,r,q,p,o,n,m,l=null,k=A.ba(a,l,t.w).w.a.a<900,j=k?20:40,i=k?40:60,h=A.c([A.av(166,B.l.C()>>>16&255,B.l.C()>>>8&255,B.l.C()&255),A.av(166,B.l.C()>>>16&255,B.l.C()>>>8&255,B.l.C()&255)],t.t_),g=this.c==="en",f=g?"Chagres Initiative":"La Iniciativa Chagres",e=A.N(a).ok.b
 f=A.be(f,l,l,l,e==null?l:e.aki(B.h,"serif",A.c([new A.l7(A.av(B.c.aH(127.5),B.l.C()>>>16&255,B.l.C()>>>8&255,B.l.C()&255),B.Ku,3)],t.kO)),B.b0,l)
 e=k?0:100
 s=g?"A KU and UT-Arlington Geographic, Participatory Research Mapping Project with the Indigenous Community of San Juan Pequen\xed Ind\xedgena La Bonga, Panama":"Un Proyecto de Mapeo Participativo del Departamento de Geograf\xeda de KU con la Comunidad Ind\xedgena de San Juan Pequen\xed Ind\xedgena La Bonga, Panam\xe1"
