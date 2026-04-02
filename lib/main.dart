@@ -42,7 +42,7 @@ class _ChagresAppState extends State<ChagresApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'The Chagres Initiative',
+      title: 'Chagres Initiative',
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,

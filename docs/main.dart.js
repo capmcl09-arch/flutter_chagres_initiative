@@ -42574,7 +42574,7 @@ ag(){return new A.CX()}}
 A.CX.prototype={
 afq(a){this.ah(new A.ajp(this,a))},
 K(a){var s=null,r=A.uB(B.Ab,B.aa,A.ax2(B.mT,B.aa,s,s,B.by,B.aK),"serif",B.mT,!0)
-return new A.zi(new A.x0(this.d,this.gafp(),s),"The Chagres Initiative",r,s)}}
+return new A.zi(new A.x0(this.d,this.gafp(),s),"Chagres Initiative",r,s)}}
 A.ajp.prototype={
 $0(){this.a.d=this.b},
 $S:0}
