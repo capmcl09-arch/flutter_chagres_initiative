@@ -39065,7 +39065,7 @@ ae(){return new A.PV()}}
 A.PV.prototype={
 I(a){var s,r,q,p,o,n=this,m=null,l="Field Blog",k="Blog de Campo",j="Official Reports",i="Informes Oficiales",h=A.bd(a,m,t.w).w.a.a<900?20:60,g=n.a.c==="en"?"Field Reports":"Informes de Campo",f=A.W(a).ok.f
 g=A.be(g,m,m,f==null?m:f.bc(B.f),m)
-f=n.a.c==="en"?"Ongoing field reflections, research updates, and official project documentation from the Chagres Initiative.":"Reflexiones continuas de campo, actualizaciones de investigaci\xf3n y documentaci\xf3n oficial del proyecto de la Iniciativa Chagres."
+f=n.a.c==="en"?"Explore our gallery of Substack posts and field reflections. Official research reports will be available as PDFs on our site.":"Explora nuestra galer\xeda de posts de Substack y reflexiones de campo. Los informes de investigaci\xf3n oficiales estar\xe1n disponibles como PDF en nuestro sitio."
 s=A.W(a).ok.z
 f=A.be(f,m,m,s==null?m:s.bc(B.a7),B.aM)
 s=n.d===0?B.az:B.am

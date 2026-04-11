@@ -1339,8 +1339,8 @@ class _ReportsSectionState extends State<ReportsSection> {
           const SizedBox(height: 12),
           Text(
             widget.language == 'en'
-                ? 'Ongoing field reflections, research updates, and official project documentation from the Chagres Initiative.'
-                : 'Reflexiones continuas de campo, actualizaciones de investigación y documentación oficial del proyecto de la Iniciativa Chagres.',
+                ? 'Explore our gallery of Substack posts and field reflections. Official research reports will be available as PDFs on our site.'
+                : 'Explora nuestra galería de posts de Substack y reflexiones de campo. Los informes de investigación oficiales estarán disponibles como PDF en nuestro sitio.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: const Color(0xFFB9C6EA),
             ),
