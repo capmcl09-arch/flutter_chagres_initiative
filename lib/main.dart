@@ -94,6 +94,7 @@ class _ChagresHomeState extends State<ChagresHome> {
   final GlobalKey _faqKey = GlobalKey();
   final GlobalKey _donateKey = GlobalKey();
   final GlobalKey _reportsKey = GlobalKey();
+  final GlobalKey _partnershipsKey = GlobalKey();
 
   @override
   void initState() {
@@ -130,6 +131,7 @@ class _ChagresHomeState extends State<ChagresHome> {
       _aboutKey: 'About',
       _methodologyKey: 'Methodology',
       _reportsKey: 'Fieldwork',
+      _partnershipsKey: 'Partnerships',
       _faqKey: 'FAQ',
       _donateKey: 'Donate',
     };
@@ -263,7 +265,7 @@ class _ChagresHomeState extends State<ChagresHome> {
               children: [
                 if (!isMobile) SizedBox(height: 100), // Space for fixed header
                 HeroSection(language: widget.language),
-                PartnershipsSection(language: widget.language),
+                PartnershipsSection(key: _partnershipsKey, language: widget.language),
                 TeamSection(key: _teamKey, language: widget.language),
                 AboutSection(key: _aboutKey, language: widget.language),
                 MeaningfulSection(language: widget.language),
@@ -367,6 +369,10 @@ class _ChagresHomeState extends State<ChagresHome> {
             _reportsKey,
           ),
           _buildDrawerItem(
+            widget.language == 'en' ? 'Partnerships' : 'Asociaciones',
+            _partnershipsKey,
+          ),
+          _buildDrawerItem(
             widget.language == 'en' ? 'Donate' : 'Donar',
             _donateKey,
           ),
@@ -452,6 +458,7 @@ class _ChagresHomeState extends State<ChagresHome> {
               _buildNavLink('About', _aboutKey),
               _buildNavLink('Methodology', _methodologyKey),
               _buildNavLink('Fieldwork', _reportsKey),
+              _buildNavLink('Partnerships', _partnershipsKey),
               _buildNavLink('Donate', _donateKey),
               _buildNavLink('Team', _teamKey, alignment: 0.20),
               _buildNavLink('FAQ', _faqKey),
@@ -548,26 +555,21 @@ class PartnershipsSection extends StatelessWidget {
     final isMobile = MediaQuery.of(context).size.width < 900;
     
     return Container(
+      color: const Color(0xFF0C1328),
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 40,
-        vertical: isMobile ? 40 : 60,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.black.withOpacity(0.65),
-            Colors.black.withOpacity(0.65),
-          ],
-        ),
-        image: const DecorationImage(
-          image: AssetImage('assets/images/palms.jpg'),
-          fit: BoxFit.cover,
-          opacity: 0.3,
-        ),
+        horizontal: isMobile ? 20 : 60,
+        vertical: 60,
       ),
       child: Column(
         children: [
+          Text(
+            language == 'en' ? 'Partnerships' : 'Asociaciones',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 24),
           // Hero Strip Image
           Container(
             constraints: const BoxConstraints(maxWidth: 800),
