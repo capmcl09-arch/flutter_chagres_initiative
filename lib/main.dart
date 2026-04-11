@@ -1672,99 +1672,118 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 40),
-          // Donation Button
-          GestureDetector(
-            onTap: () {
-              launchUrl(Uri.parse('https://geog.ku.edu/donate'));
-            },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE8000D).withOpacity(0.50),
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: const Color(0xFFE8000D).withOpacity(0.7),
-                    width: 2,
-                  ),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                child: Text(
-                  widget.language == 'en'
-                      ? 'Donate Now'
-                      : 'Donar Ahora',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 48),
-          // Giving Levels List
+          // Inner blue box container
           Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: givingLevels.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 0),
-              itemBuilder: (context, index) {
-                final level = givingLevels[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.white.withOpacity(0.12),
-                        width: 1,
+            decoration: BoxDecoration(
+              color: const Color(0xFF101A2F),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.45),
+                  blurRadius: 34,
+                  offset: const Offset(0, 14),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              children: [
+                // Donation Button
+                GestureDetector(
+                  onTap: () {
+                    launchUrl(Uri.parse('https://geog.ku.edu/donate'));
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE8000D).withOpacity(0.50),
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(
+                          color: const Color(0xFFE8000D).withOpacity(0.7),
+                          width: 2,
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                      child: Text(
+                        widget.language == 'en'
+                            ? 'Donate Now'
+                            : 'Donar Ahora',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(splashColor: Colors.transparent),
-                    child: ExpansionTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            level.$1,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            level.$2,
-                            style: const TextStyle(
-                              color: Color(0xFF81C784),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      collapsedIconColor: const Color(0xFFB9C6EA),
-                      iconColor: const Color(0xFF81C784),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                          child: Text(
-                            level.$3,
-                            style: const TextStyle(
-                              color: Color(0xFFB9C6EA),
-                              fontSize: 14,
-                              height: 1.6,
+                ),
+                const SizedBox(height: 32),
+                // Giving Levels List
+                Container(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: givingLevels.length,
+                    separatorBuilder: (context, index) => const SizedBox(height: 0),
+                    itemBuilder: (context, index) {
+                      final level = givingLevels[index];
+                      return Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.white.withOpacity(0.12),
+                              width: 1,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                        child: Theme(
+                          data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+                          child: ExpansionTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  level.$1,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  level.$2,
+                                  style: const TextStyle(
+                                    color: Color(0xFF81C784),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            collapsedIconColor: const Color(0xFFB9C6EA),
+                            iconColor: const Color(0xFF81C784),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                child: Text(
+                                  level.$3,
+                                  style: const TextStyle(
+                                    color: Color(0xFFB9C6EA),
+                                    fontSize: 14,
+                                    height: 1.6,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
         ],
