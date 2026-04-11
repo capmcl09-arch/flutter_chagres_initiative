@@ -1997,26 +1997,8 @@ class NewsletterSection extends StatefulWidget {
 }
 
 class _NewsletterSectionState extends State<NewsletterSection> {
-  final _emailController = TextEditingController();
-  bool _isSubmitted = false;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
-
-  void _submitEmail() {
-    if (_emailController.text.isNotEmpty) {
-      setState(() => _isSubmitted = true);
-      // In a real app, you would send this to your backend
-      Future.delayed(const Duration(seconds: 2), () {
-        if (mounted) {
-          setState(() => _isSubmitted = false);
-          _emailController.clear();
-        }
-      });
-    }
+  void _subscribeToSubstack() {
+    launchUrl(Uri.parse('https://chagresinitiative.substack.com/'));
   }
 
   @override
@@ -2042,66 +2024,61 @@ class _NewsletterSectionState extends State<NewsletterSection> {
           const SizedBox(height: 12),
           Text(
             widget.language == 'en'
-                ? 'Subscribe to receive the latest updates about the Chagres Initiative.'
-                : 'Suscríbase para recibir las últimas actualizaciones sobre la Iniciativa Chagres.',
+                ? 'Subscribe to our Substack for the latest research updates, field reflections, and news from the Chagres Initiative.'
+                : 'Suscríbase a nuestro Substack para recibir las últimas actualizaciones de investigación, reflexiones de campo y noticias de la Iniciativa Chagres.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: const Color(0xFFB9C6EA),
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 20),
-          Container(
-            constraints: const BoxConstraints(maxWidth: 500),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1A2847),
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                color: const Color(0xFF0051BA).withOpacity(0.3),
-                width: 1,
+          const SizedBox(height: 24),
+          GestureDetector(
+            onTap: _subscribeToSubstack,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(0xFF0051BA),
+                      const Color(0xFF0051BA).withOpacity(0.8),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF0051BA).withOpacity(0.4),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 14,
+                ),
+                child: Text(
+                  widget.language == 'en'
+                      ? 'Subscribe on Substack'
+                      : 'Suscribirse en Substack',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            widget.language == 'en'
+                ? '@chagresinitiative'
+                : '@chagresinitiative',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: const Color(0xFF81C784),
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: widget.language == 'en' ? 'Your email' : 'Tu correo',
-                      hintStyle: const TextStyle(color: Color(0xFF666666)),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: _submitEmail,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0051BA),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 12,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                  child: Text(
-                    _isSubmitted
-                        ? (widget.language == 'en' ? '✓' : '✓')
-                        : (widget.language == 'en' ? 'Subscribe' : 'Suscribirse'),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
