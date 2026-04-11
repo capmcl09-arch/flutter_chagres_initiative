@@ -95,6 +95,7 @@ class _ChagresHomeState extends State<ChagresHome> {
   final GlobalKey _donateKey = GlobalKey();
   final GlobalKey _reportsKey = GlobalKey();
   final GlobalKey _partnershipsKey = GlobalKey();
+  final GlobalKey _givingLevelsKey = GlobalKey();
 
   @override
   void initState() {
@@ -132,6 +133,7 @@ class _ChagresHomeState extends State<ChagresHome> {
       _methodologyKey: 'Methodology',
       _reportsKey: 'Fieldwork',
       _partnershipsKey: 'Partnerships',
+      _givingLevelsKey: 'Support',
       _faqKey: 'FAQ',
       _donateKey: 'Donate',
     };
@@ -281,6 +283,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                 MapsSection(language: widget.language),
                 ReportsSection(key: _reportsKey, language: widget.language),
                 FAQSection(key: _faqKey, language: widget.language),
+                GivingLevelsSection(key: _givingLevelsKey, language: widget.language),
                 DonateSection(key: _donateKey, language: widget.language),
                 NewsletterSection(language: widget.language),
                 FooterSection(
@@ -373,6 +376,10 @@ class _ChagresHomeState extends State<ChagresHome> {
             _partnershipsKey,
           ),
           _buildDrawerItem(
+            widget.language == 'en' ? 'Support' : 'Apoyo',
+            _givingLevelsKey,
+          ),
+          _buildDrawerItem(
             widget.language == 'en' ? 'Donate' : 'Donar',
             _donateKey,
           ),
@@ -459,6 +466,7 @@ class _ChagresHomeState extends State<ChagresHome> {
               _buildNavLink('Methodology', _methodologyKey),
               _buildNavLink('Fieldwork', _reportsKey),
               _buildNavLink('Partnerships', _partnershipsKey),
+              _buildNavLink('Support', _givingLevelsKey),
               _buildNavLink('Donate', _donateKey),
               _buildNavLink('Team', _teamKey, alignment: 0.20),
               _buildNavLink('FAQ', _faqKey),
@@ -1573,6 +1581,164 @@ class FAQSection extends StatelessWidget {
         shape: Border.all(color: Colors.transparent),
         backgroundColor: Colors.transparent,
         collapsedBackgroundColor: Colors.transparent,
+      ),
+    );
+  }
+}
+
+// Giving Levels Section
+class GivingLevelsSection extends StatelessWidget {
+  final String language;
+
+  const GivingLevelsSection({super.key, required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+    
+    final givingLevels = [
+      (
+        language == 'en' ? 'Community Supporter' : 'Apoyo Comunitario',
+        language == 'en' ? 'Bronze Partner' : 'Socio de Bronce',
+        language == 'en' ? '< \$100' : '< \$100',
+        language == 'en'
+            ? 'Donors funding field essentials - first aid kits, Skynet link, dry bags, notebooks, river travel, batteries, tents, housing when working far from infrastructure.'
+            : 'Donantes que financian elementos esenciales de campo: botiquines de primeros auxilios, enlace Skynet, bolsas secas, cuadernos, viajes por río, baterías, tiendas de campaña, alojamiento en infraestructura remota.',
+      ),
+      (
+        language == 'en' ? 'Action Supporter' : 'Apoyo de Acción',
+        language == 'en' ? 'Silver Partner' : 'Socio de Plata',
+        language == 'en' ? '\$100 - \$250' : '\$100 - \$250',
+        language == 'en'
+            ? 'Donors supporting in-country logistics - travel between Panama City and the field, transporting equipment, and coordinating with local partners and institutions. Pays for fuel and boat travel. There are no roads in - everything moves by river.'
+            : 'Donantes que apoyan la logística en el país: viajes entre la Ciudad de Panamá y el campo, transporte de equipos y coordinación con socios locales e instituciones. Paga combustible y viajes en barco. No hay carreteras - todo se mueve por río.',
+      ),
+      (
+        language == 'en' ? 'Stewardship Supporter' : 'Apoyo de Administración',
+        language == 'en' ? 'Gold Partner' : 'Socio de Oro',
+        language == 'en' ? '\$250 - \$1,000' : '\$250 - \$1,000',
+        language == 'en'
+            ? 'International travel for university students and professors.'
+            : 'Viajes internacionales para estudiantes y profesores universitarios.',
+      ),
+      (
+        language == 'en' ? 'Wisdom Supporter' : 'Apoyo de Sabiduría',
+        language == 'en' ? 'Platinum Partner' : 'Socio de Platino',
+        language == 'en' ? '\$1,000 - \$5,000' : '\$1,000 - \$5,000',
+        language == 'en'
+            ? 'Workshops and participatory mapping session costs – renting locale, tables, chairs; meals and housing for participants, printing mapping materials.'
+            : 'Costos de talleres y sesiones de mapeo participativo: alquiler de local, mesas, sillas; comidas y alojamiento para participantes, impresión de materiales de mapeo.',
+      ),
+      (
+        language == 'en' ? 'Visionary & Institutional' : 'Visionario e Institucional',
+        language == 'en' ? 'Visionary Partner' : 'Socio Visionario',
+        language == 'en' ? '> \$5,000' : '> \$5,000',
+        language == 'en'
+            ? 'Honorariums for community geographers, students, and faculty. No salaries are paid. Donor supports local costs of food, lodging, and transportation in Panama City and in the Chagres National Park.'
+            : 'Honorarios para geógrafos comunitarios, estudiantes y profesores. No se pagan salarios. El donante financia costos locales de comida, alojamiento y transporte en la Ciudad de Panamá y en el Parque Nacional Chagres.',
+      ),
+    ];
+
+    return Container(
+      color: const Color(0xFF0C1328),
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 20 : 60,
+        vertical: 60,
+      ),
+      child: Column(
+        children: [
+          Text(
+            language == 'en' ? 'How You Can Support' : 'Cómo Puedes Apoyar',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            language == 'en'
+                ? 'Your support directly funds field research in Panama and computer lab work at U.S. universities.'
+                : 'Tu apoyo financia directamente la investigación de campo en Panamá y el trabajo de laboratorio informático en universidades estadounidenses.',
+            style: const TextStyle(
+              color: Color(0xFFB9C6EA),
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 48),
+          GridView.count(
+            crossAxisCount: isMobile ? 1 : 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            childAspectRatio: 0.85,
+            children: givingLevels
+                .map(
+                  (level) => Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF101A2F),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.12),
+                        width: 1.5,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 16,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          level.$1,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          level.$2,
+                          style: const TextStyle(
+                            color: Color(0xFF81C784),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          level.$3,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Expanded(
+                          child: Text(
+                            level.$4,
+                            style: const TextStyle(
+                              color: Color(0xFFB9C6EA),
+                              fontSize: 14,
+                              height: 1.6,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ],
       ),
     );
   }
