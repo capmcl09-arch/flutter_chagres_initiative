@@ -530,38 +530,6 @@ class HeroSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Chagres Logo
-          Image.asset(
-            'assets/images/chagres_initiative_logo_hq.png',
-            width: isMobile ? 100 : 140,
-            height: isMobile ? 100 : 140,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(height: 20),
-          // Institution Logos
-          Wrap(
-            spacing: 20,
-            runSpacing: 20,
-            alignment: WrapAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/ku_signature.png',
-                height: isMobile ? 40 : 50,
-                fit: BoxFit.contain,
-              ),
-              Image.asset(
-                'assets/images/arlington_logo.png',
-                height: isMobile ? 40 : 50,
-                fit: BoxFit.contain,
-              ),
-              Image.asset(
-                'assets/images/labonga_seal.png',
-                height: isMobile ? 40 : 50,
-                fit: BoxFit.contain,
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isMobile ? 0 : 100,
