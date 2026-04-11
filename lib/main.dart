@@ -574,6 +574,21 @@ class PartnershipsSection extends StatelessWidget {
           // Hero Strip Image
           Container(
             constraints: const BoxConstraints(maxWidth: 800),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+                BoxShadow(
+                  color: const Color(0xFF81C784).withOpacity(0.2),
+                  blurRadius: 12,
+                  offset: const Offset(0, 0),
+                ),
+              ],
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Container(
@@ -583,6 +598,14 @@ class PartnershipsSection extends StatelessWidget {
                     width: 4,
                   ),
                   borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF81C784).withOpacity(0.3),
+                      blurRadius: 16,
+                      offset: const Offset(0, 2),
+                      spreadRadius: 2,
+                    ),
+                  ],
                 ),
                 child: Image.asset(
                   'assets/images/here_strip.jpg',
