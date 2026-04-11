@@ -8061,7 +8061,7 @@ _.x=k
 _.y=l
 _.z=m},
 M5:function M5(){},
-be(a){var s=A.c([a],t.jl)
+bf(a){var s=A.c([a],t.jl)
 return new A.py(null,null,!1,s,null,B.at)},
 mt(a){var s=A.c([a],t.jl)
 return new A.Fo(null,null,!1,s,null,B.Az)},
@@ -12541,7 +12541,7 @@ _.x=i},
 Ph:function Ph(){},
 a5j(a){var s=a.ny(t.Np)
 if(s!=null)return s
-throw A.h(A.vn(A.c([A.mt("Scaffold.of() called with a context that does not contain a Scaffold."),A.be("No Scaffold ancestor could be found starting from the context that was passed to Scaffold.of(). This usually happens when the context provided is from the same StatefulWidget as that whose build function actually creates the Scaffold widget being sought."),A.v7('There are several ways to avoid this problem. The simplest is to use a Builder to get a context that is "under" the Scaffold. For an example of this, please see the documentation for Scaffold.of():\n  https://api.flutter.dev/flutter/material/Scaffold/of.html'),A.v7("A more efficient solution is to split your build function into several widgets. This introduces a new context from which you can obtain the Scaffold. In this solution, you would have an outer widget that creates the Scaffold populated by instances of your new inner widgets, and then in these inner widgets you would use Scaffold.of().\nA less elegant but more expedient solution is assign a GlobalKey to the Scaffold, then use the key.currentState property to obtain the ScaffoldState rather than using the Scaffold.of() function."),a.a97("The context used was")],t.E)))},
+throw A.h(A.vn(A.c([A.mt("Scaffold.of() called with a context that does not contain a Scaffold."),A.bf("No Scaffold ancestor could be found starting from the context that was passed to Scaffold.of(). This usually happens when the context provided is from the same StatefulWidget as that whose build function actually creates the Scaffold widget being sought."),A.v7('There are several ways to avoid this problem. The simplest is to use a Builder to get a context that is "under" the Scaffold. For an example of this, please see the documentation for Scaffold.of():\n  https://api.flutter.dev/flutter/material/Scaffold/of.html'),A.v7("A more efficient solution is to split your build function into several widgets. This introduces a new context from which you can obtain the Scaffold. In this solution, you would have an outer widget that creates the Scaffold populated by instances of your new inner widgets, and then in these inner widgets you would use Scaffold.of().\nA less elegant but more expedient solution is assign a GlobalKey to the Scaffold, then use the key.currentState property to obtain the ScaffoldState rather than using the Scaffold.of() function."),a.a97("The context used was")],t.E)))},
 azh(a,b){return A.kp(b,new A.a5i(b),null)},
 aAP(a){var s,r,q,p=$.ac.ah$.x.k(0,a)
 if(p==null)return!1
@@ -14059,7 +14059,7 @@ q=a.d
 if(q.i(0,B.r)&&a.b.i(0,B.r))return new A.dO(A.aN(a.a,b.a,c),A.aN(B.r,s,c),A.aN(B.r,b.c,c),A.aN(a.c,b.d,c))
 if(c<0.5){s=c*2
 return new A.cL(A.aN(a.a,b.a,c),A.aN(a.b,B.r,s),A.aN(a.c,b.d,c),A.aN(q,B.r,s))}q=(c-0.5)*2
-return new A.dO(A.aN(a.a,b.a,c),A.aN(B.r,s,q),A.aN(B.r,b.c,q),A.aN(a.c,b.d,c))}throw A.h(A.vn(A.c([A.mt("BoxBorder.lerp can only interpolate Border and BorderDirectional classes."),A.be("BoxBorder.lerp() was called with two objects of type "+J.O(a).j(0)+" and "+J.O(b).j(0)+":\n  "+A.k(a)+"\n  "+A.k(b)+"\nHowever, only Border and BorderDirectional classes are supported by this method."),A.v7("For a more general interpolation method, consider using ShapeBorder.lerp instead.")],t.E)))},
+return new A.dO(A.aN(a.a,b.a,c),A.aN(B.r,s,q),A.aN(B.r,b.c,q),A.aN(a.c,b.d,c))}throw A.h(A.vn(A.c([A.mt("BoxBorder.lerp can only interpolate Border and BorderDirectional classes."),A.bf("BoxBorder.lerp() was called with two objects of type "+J.O(a).j(0)+" and "+J.O(b).j(0)+":\n  "+A.k(a)+"\n  "+A.k(b)+"\nHowever, only Border and BorderDirectional classes are supported by this method."),A.v7("For a more general interpolation method, consider using ShapeBorder.lerp instead.")],t.E)))},
 amc(a,b,c,d){var s,r,q,p
 $.a9()
 s=A.bk()
@@ -19716,7 +19716,7 @@ s=r.e
 s.toString
 d.a(s)
 return},
-bf(a,b,c){var s,r,q,p,o,n
+bd(a,b,c){var s,r,q,p,o,n
 if(b==null)return a.aa(c)
 s=A.c([],t.Fa)
 A.axj(a,b,s,c)
@@ -19908,9 +19908,9 @@ return b.h("0?").a(s)},
 a_n:function a_n(a,b){this.a=a
 this.b=b},
 wi(a,b){return new A.hB(b,a,null)},
-ao4(a,b,c,d,e,f){return new A.hB(A.bf(b,null,t.w).w.Qv(c,d,e,f),a,null)},
+ao4(a,b,c,d,e,f){return new A.hB(A.bd(b,null,t.w).w.Qv(c,d,e,f),a,null)},
 axP(a,b){return new A.dP(new A.a1P(0,b,a),null)},
-cE(a,b){var s=A.bf(a,b,t.w)
+cE(a,b){var s=A.bd(a,b,t.w)
 return s==null?null:s.w},
 Hk:function Hk(a,b){this.a=a
 this.b=b},
@@ -20243,7 +20243,7 @@ aB8(a){return a.ab(0)},
 ayg(a,b,c){return new A.wN(b,new A.a2M(c),a,B.GY,null)},
 aB7(a,b){var s,r=A.aB6(a,b)
 if(r!=null)return r
-s=A.c([A.mt("No Overlay widget found."),A.be(A.t(a.gaf_()).j(0)+" widgets require an Overlay widget ancestor.\nAn overlay lets widgets float on top of other widget children."),A.v7("To introduce an Overlay widget, you can either directly include one, or use a widget that contains an Overlay itself, such as a Navigator, WidgetApp, MaterialApp, or CupertinoApp.")],t.E)
+s=A.c([A.mt("No Overlay widget found."),A.bf(A.t(a.gaf_()).j(0)+" widgets require an Overlay widget ancestor.\nAn overlay lets widgets float on top of other widget children."),A.v7("To introduce an Overlay widget, you can either directly include one, or use a widget that contains an Overlay itself, such as a Navigator, WidgetApp, MaterialApp, or CupertinoApp.")],t.E)
 B.b.M(s,a.a98(B.Qb))
 throw A.h(A.vn(s))},
 aB6(a,b){var s,r
@@ -20828,7 +20828,7 @@ _.R$=0
 _.X$=a
 _.K$=_.v$=0},
 tc:function tc(){},
-wm(a,b,c){var s=A.bf(a,b,t.Fe)
+wm(a,b,c){var s=A.bd(a,b,t.Fe)
 s=s==null?null:s.Q
 return c.h("dx<0>?").a(s)},
 qj:function qj(){},
@@ -21785,7 +21785,7 @@ MC:function MC(){},
 po(a,b,c,d,e,f,g,h){return new A.pn(e,f,d,c,b,h,g,a,null)},
 amB(a){a.aa(t.XP)
 return null},
-bd(a,b,c,d,e){return new A.o6(a,null,d,e,c,b,null)},
+be(a,b,c,d,e){return new A.o6(a,null,d,e,c,b,null)},
 aBe(a,b){var s=A.dw(a.az(0,null),B.b.gP(a.gj3())),r=A.dw(b.az(0,null),B.b.gP(b.gj3())),q=A.aBf(s,r)
 if(q!==0)return q
 return A.aBd(s,r)},
@@ -38773,7 +38773,7 @@ if(s!=null)A.aoS(s,b,B.J2,B.eO,B.ln)},
 a4W(){var s=this.c
 s.toString
 A.arP(new A.abi(),s,t.z)},
-I(a){var s,r,q,p,o,n=this,m=null,l=t.w,k=A.bf(a,m,l).w.a.a<900,j=k?n.Xq():m,i=k?n.Xr():m
+I(a){var s,r,q,p,o,n=this,m=null,l=t.w,k=A.bd(a,m,l).w.a.a<900,j=k?n.Xq():m,i=k?n.Xr():m
 if(n.e)s=new A.FA(B.BI,B.az,n.ga4p(),B.R5,m)
 else s=m
 r=t.p
@@ -38797,14 +38797,14 @@ q.push(new A.F7(n.a.c,n.Q))
 q.push(new A.wE(n.a.c,m))
 o=n.a
 q.push(new A.FI(o.c,o.d,m))
-q.push(A.ez(m,A.bf(a,m,l).w.a.b*0.1,m))
+q.push(A.ez(m,A.bd(a,m,l).w.a.b*0.1,m))
 r=A.c([new A.Jy(n.d,A.c0(q,B.D,B.C,B.F),m)],r)
 if(p)r.push(A.x9(m,n.Xg(),m,m,0,0,0,m))
 return new A.xM(j,A.qT(B.co,r,B.cU),s,i,m)},
 Xq(){var s=null,r=A.cY(s,A.e8(A.js(u.v,s,48,s,s),B.aE,s,s,s),B.H,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,this.gKS(),s,s,s)
 return new A.tQ(new A.dP(new A.abc(),s),r,1,B.b3,!0,new A.Pb(s,s,1/0,56),s)},
 Xr(){var s,r,q,p,o,n,m,l,k=this,j=null,i=A.js(u.v,j,60,j,j),h=t.p
-i=A.c0(A.c([i,B.ce,A.bd(k.a.c==="en"?"Navigation":"Navegaci\xf3n",j,j,B.Pp,j)],h),B.D,B.dL,B.F)
+i=A.c0(A.c([i,B.ce,A.be(k.a.c==="en"?"Navigation":"Navegaci\xf3n",j,j,B.Pp,j)],h),B.D,B.dL,B.F)
 s=k.a.c==="en"
 r=s?"About":"Acerca de"
 r=k.mt(r,k.r)
@@ -38821,15 +38821,15 @@ m=k.Gz(m,k.y,0.2)
 s=s?"FAQ":"Preguntas Frecuentes"
 s=k.mt(s,k.z)
 l=A.aj6(j,j,B.az,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j)
-i=A.ap6(A.c([new A.Fb(B.y6,i,j),r,q,p,o,n,m,s,B.AG,new A.ct(B.lq,A.ez(A.Ff(A.bd(k.a.c==="en"?"Espa\xf1ol":"English",j,j,B.O2,j),new A.abd(k),l),j,1/0),j)],h),!0,!0,!0)
+i=A.ap6(A.c([new A.Fb(B.y6,i,j),r,q,p,o,n,m,s,B.AG,new A.ct(B.lq,A.ez(A.Ff(A.be(k.a.c==="en"?"Espa\xf1ol":"English",j,j,B.O2,j),new A.abd(k),l),j,1/0),j)],h),!0,!0,!0)
 return new A.F9(B.b3,new A.w5(i,B.au,B.aO,!1,j,j,B.xH,!1,j,10,B.H,j,j,B.ad,B.ao,j),j)},
 Gz(a,b,c){var s=null
-return A.anP(s,s,s,!0,!0,s,s,new A.aba(this,b,c),s,s,A.bd(a,s,s,B.O5,s),s,s)},
+return A.anP(s,s,s,!0,!0,s,s,new A.aba(this,b,c),s,s,A.be(a,s,s,B.O5,s),s,s)},
 mt(a,b){return this.Gz(a,b,0.5)},
 Xg(){var s=this,r=null,q=A.cY(r,A.e8(A.js(u.v,r,80,r,r),B.aE,r,r,r),B.H,!1,r,r,r,r,r,r,r,r,r,r,r,r,r,s.gKS(),r,r,r),p=s.mu("About",s.r),o=s.mu("Methodology",s.w),n=s.mu("Fieldwork",s.as),m=s.mu("Partnerships",s.at),l=s.mu("Donate",s.Q),k=s.GC("Team",s.y,0.2),j=s.mu("FAQ",s.z),i=A.aj6(r,r,B.az,r,r,r,r,r,r,r,r,r,B.AY,r,r,r,r,r,r,r),h=t.p
-return A.bL(r,A.xJ(A.c([q,B.KI,A.apw(B.ck,A.c([p,o,n,m,l,k,j,A.ez(A.Ff(A.bd(s.a.c==="en"?"ES":"EN",r,r,B.Od,r),new A.ab9(s),i),32,r)],h),0,16)],h),B.D,B.iP,B.F),B.o,B.b3,r,r,r,r,r,B.B6,r,r,r)},
+return A.bL(r,A.xJ(A.c([q,B.KI,A.apw(B.ck,A.c([p,o,n,m,l,k,j,A.ez(A.Ff(A.be(s.a.c==="en"?"ES":"EN",r,r,B.Od,r),new A.ab9(s),i),32,r)],h),0,16)],h),B.D,B.iP,B.F),B.o,B.b3,r,r,r,r,r,B.B6,r,r,r)},
 GC(a,b,c){var s=null,r=this.f===a,q=r?B.f:B.a7
-return A.e8(A.cY(s,A.bd(a,s,s,A.hQ(s,s,q,s,s,s,s,s,s,s,s,17,s,s,r?B.an:B.n,s,s,!0,s,s,s,s,s,s,s,s),s),B.H,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.abe(this,b,c),s,s,s),B.aE,s,s,s)},
+return A.e8(A.cY(s,A.be(a,s,s,A.hQ(s,s,q,s,s,s,s,s,s,s,s,17,s,s,r?B.an:B.n,s,s,!0,s,s,s,s,s,s,s,s),s),B.H,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.abe(this,b,c),s,s,s),B.aE,s,s,s)},
 mu(a,b){return this.GC(a,b,0.5)}}
 A.abf.prototype={
 $0(){return this.a.e=!0},
@@ -38873,11 +38873,11 @@ A.abe.prototype={
 $0(){return this.a.Kq(this.b,this.c)},
 $S:0}
 A.FW.prototype={
-I(a){var s=null,r=A.c([A.aE(166,B.k.B()>>>16&255,B.k.B()>>>8&255,B.k.B()&255),A.aE(166,B.k.B()>>>16&255,B.k.B()>>>8&255,B.k.B()&255)],t.t_)
-return A.bL(s,A.mk(A.bL(s,A.js(u.v,B.cq,s,s,s),B.o,s,B.ke,s,s,s,s,s,s,s,s),s,s),B.o,s,s,new A.bJ(s,B.Av,s,s,s,new A.n6(B.k0,B.hi,B.e8,r,s,s),B.O),s,600,s,s,s,s,1/0)}}
+I(a){var s=null,r=A.bd(a,s,t.w).w,q=A.c([A.aE(166,B.k.B()>>>16&255,B.k.B()>>>8&255,B.k.B()&255),A.aE(166,B.k.B()>>>16&255,B.k.B()>>>8&255,B.k.B()&255)],t.t_)
+return A.bL(s,A.mk(A.bL(s,A.js(u.v,B.cq,s,s,s),B.o,s,B.ke,s,s,s,s,s,s,s,s),s,s),B.o,s,s,new A.bJ(s,B.Av,s,s,s,new A.n6(B.k0,B.hi,B.e8,q,s,s),B.O),s,r.a.b,s,s,s,s,1/0)}}
 A.Ht.prototype={
-I(a){var s,r,q,p,o,n=null,m=A.bf(a,n,t.w).w.a.a<900,l=m?20:60,k=this.c==="en",j=k?"Partnerships":"Asociaciones",i=A.W(a).ok.f
-j=A.bd(j,n,n,i==null?n:i.bc(B.f),n)
+I(a){var s,r,q,p,o,n=null,m=A.bd(a,n,t.w).w.a.a<900,l=m?20:60,k=this.c==="en",j=k?"Partnerships":"Asociaciones",i=A.W(a).ok.f
+j=A.be(j,n,n,i==null?n:i.bc(B.f),n)
 i=A.cV(8)
 s=A.p0(B.l8,4)
 r=A.cV(8)
@@ -38887,25 +38887,25 @@ s=A.aE(B.c.av(127.5),B.bJ.B()>>>16&255,B.bJ.B()>>>8&255,B.bJ.B()&255)
 q=A.cV(100)
 p=A.p0(A.aE(B.c.av(178.5),B.bJ.B()>>>16&255,B.bJ.B()>>>8&255,B.bJ.B()&255),2)
 o=t.p
-q=A.cY(n,A.bL(n,A.c0(A.c([A.bd(k?"You can be part of our team by donating.":"Puedes ser parte de nuestro equipo donando.",n,n,B.O1,B.aM)],o),B.D,B.C,B.F),B.o,n,B.ke,new A.bJ(s,n,p,q,n,n,B.O),n,n,n,B.B9,n,n,n),B.H,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.a31(),n,n,n)
-return A.bL(n,A.c0(A.c([j,B.aD,r,B.KL,i,B.e5,q,B.aD,A.bd(k?"Your tax-deductible donation directly supports paid Indigenous research collaborators, participatory mapping workshops, watershed monitoring equipment, and field support for KU and UT-Arlington student researchers working to map Chagres National Park.":"Tu donaci\xf3n deducible de impuestos apoya directamente a los colaboradores de investigaci\xf3n ind\xedgena remunerados, talleres de mapeo participativo, equipos de monitoreo de cuencas y apoyo de campo para investigadores estudiantes.",n,n,B.wZ,B.aM)],o),B.D,B.C,B.F),B.o,B.b3,n,n,n,n,n,new A.ay(l,60,l,60),n,n,1/0)}}
+q=A.cY(n,A.bL(n,A.c0(A.c([A.be(k?"You can be part of our team by donating.":"Puedes ser parte de nuestro equipo donando.",n,n,B.O1,B.aM)],o),B.D,B.C,B.F),B.o,n,B.ke,new A.bJ(s,n,p,q,n,n,B.O),n,n,n,B.B9,n,n,n),B.H,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.a31(),n,n,n)
+return A.bL(n,A.c0(A.c([j,B.aD,r,B.KL,i,B.e5,q,B.aD,A.be(k?"Your tax-deductible donation directly supports paid Indigenous research collaborators, participatory mapping workshops, watershed monitoring equipment, and field support for KU and UT-Arlington student researchers working to map Chagres National Park.":"Tu donaci\xf3n deducible de impuestos apoya directamente a los colaboradores de investigaci\xf3n ind\xedgena remunerados, talleres de mapeo participativo, equipos de monitoreo de cuencas y apoyo de campo para investigadores estudiantes.",n,n,B.wZ,B.aM)],o),B.D,B.C,B.F),B.o,B.b3,n,n,n,n,n,new A.ay(l,60,l,60),n,n,1/0)}}
 A.a31.prototype={
 $0(){A.CJ(A.hc("https://geog.ku.edu/donate",0,null))},
 $S:0}
 A.De.prototype={
-I(a){var s,r,q=null,p=A.bf(a,q,t.w).w.a.a<900?20:60,o=this.c==="en",n=o?"About the Initiative":"Sobre la Iniciativa",m=A.W(a).ok.f
-n=A.cY(q,A.e8(A.bd(n,q,q,m==null?q:m.bc(B.f),q),B.aE,q,q,q),B.H,!1,q,q,q,q,q,q,q,q,q,q,q,q,q,new A.TI(),q,q,q)
+I(a){var s,r,q=null,p=A.bd(a,q,t.w).w.a.a<900?20:60,o=this.c==="en",n=o?"About the Initiative":"Sobre la Iniciativa",m=A.W(a).ok.f
+n=A.cY(q,A.e8(A.be(n,q,q,m==null?q:m.bc(B.f),q),B.aE,q,q,q),B.H,!1,q,q,q,q,q,q,q,q,q,q,q,q,q,new A.TI(),q,q,q)
 m=A.cV(16)
 s=A.c([new A.dr(0,B.d5,A.aE(115,B.k.B()>>>16&255,B.k.B()>>>8&255,B.k.B()&255),B.j_,34)],t.sq)
 o=o?"The Chagres Initiative is a community-based participatory zoning and monitoring effort in the R\xedo Pequen\xed sub-basin of Chagres National Park, the most strategically important watershed in the Panama Canal system. The park supplies an estimated 40 percent of the water used in Canal operations and about 80 percent of Panama City's drinking water. Yet limited on-the-ground monitoring and enforcement in remote areas has enabled illegal settlement and deforestation, while the Ember\xe1 community of San Juan Pequen\xed Ind\xedgena La Bonga remains in legal limbo as it seeks collective land recognition under Panama's 2008 Law 72. Working with Indigenous leaders, neighboring campesino residents, and Canal institutions, the project combines participatory research mapping with GIS and remote sensing to co-produce consensus land-use zones and locally grounded monitoring tools that can strengthen watershed governance and Canal water security.":"La Iniciativa Chagres es un esfuerzo comunitario participativo de zonificaci\xf3n y monitoreo en la subcuenca del R\xedo Pequen\xed del Parque Nacional Chagres, la cuenca m\xe1s estrat\xe9gicamente importante del sistema del Canal de Panam\xe1. El parque proporciona aproximadamente el 40 por ciento del agua utilizada en las operaciones del Canal y aproximadamente el 80 por ciento del agua potable de la Ciudad de Panam\xe1. Sin embargo, el monitoreo limitado en el terreno y la ejecuci\xf3n en \xe1reas remotas ha permitido asentamientos ilegales y deforestaci\xf3n, mientras que la comunidad Ember\xe1 de San Juan Pequen\xed Ind\xedgena La Bonga permanece en un limbo legal mientras busca reconocimiento de tierras colectivas bajo la Ley 72 de 2008 de Panam\xe1. Trabajando con l\xedderes ind\xedgenas, residentes campesinos vecinos e instituciones del Canal, el proyecto combina mapeo participativo de investigaci\xf3n con SIG y teledetecci\xf3n para coproducir zonas de uso del suelo por consenso y herramientas de monitoreo locales que pueden fortalecer la gobernanza de cuencas hidrogr\xe1ficas y la seguridad del agua del Canal."
 r=A.W(a).ok.z
-return new A.ct(new A.ay(p,60,p,60),A.c0(A.c([n,B.aD,A.bL(q,A.bd(o,q,q,r==null?q:r.bc(B.a7),q),B.o,q,q,new A.bJ(B.am,q,q,m,s,q,B.O),q,q,q,B.eV,q,q,q),B.e5,A.js("assets/images/labonga_seal.png",B.cq,200,q,200)],t.p),B.D,B.C,B.F),q)}}
+return new A.ct(new A.ay(p,60,p,60),A.c0(A.c([n,B.aD,A.bL(q,A.be(o,q,q,r==null?q:r.bc(B.a7),q),B.o,q,q,new A.bJ(B.am,q,q,m,s,q,B.O),q,q,q,B.eV,q,q,q),B.e5,A.js("assets/images/labonga_seal.png",B.cq,200,q,200)],t.p),B.D,B.C,B.F),q)}}
 A.TI.prototype={
 $0(){},
 $S:0}
 A.GN.prototype={
-I(a){var s,r,q,p,o,n=this,m=null,l=A.bf(a,m,t.w).w.a.a<900?20:60,k=n.c==="en",j=k?"What Makes This Project Uniquely Meaningful?":"\xbfQu\xe9 hace que este proyecto sea \xfanico?",i=A.W(a).ok.f
-j=A.bd(j,m,m,i==null?m:i.bc(B.f),m)
+I(a){var s,r,q,p,o,n=this,m=null,l=A.bd(a,m,t.w).w.a.a<900?20:60,k=n.c==="en",j=k?"What Makes This Project Uniquely Meaningful?":"\xbfQu\xe9 hace que este proyecto sea \xfanico?",i=A.W(a).ok.f
+j=A.be(j,m,m,i==null?m:i.bc(B.f),m)
 i=A.cV(16)
 s=k?"1. Co-Produced, Not Extractive":"1. Co-Producido, No Extractivo"
 s=n.rT(a,s,k?"This project is built on a partnership with the Indigenous community of San Juan Peque\xf1\xed La Bonga, Panama. Community members are not research subjects; they are paid collaborators and co-producers of spatial knowledge.":"Este proyecto se basa en una asociaci\xf3n con la comunidad ind\xedgena de San Juan Peque\xf1\xed La Bonga, Panam\xe1. Los miembros de la comunidad no son sujetos de investigaci\xf3n; son colaboradores pagados y coproductores de conocimiento espacial.")
@@ -38917,9 +38917,9 @@ p=k?"4. Applied and Accountable":"4. Aplicado y Responsable"
 o=t.p
 return A.bL(m,A.c0(A.c([j,B.aD,A.bL(m,A.c0(A.c([s,B.cf,r,B.cf,q,B.cf,n.rT(a,p,k?"The research is designed to produce tangible outcomes: participatory zoning frameworks, watershed monitoring strategies, and spatial tools.":"La investigaci\xf3n est\xe1 dise\xf1ada para producir resultados tangibles: marcos de zonificaci\xf3n participativa, estrategias de monitoreo de cuencas hidrogr\xe1ficas y herramientas espaciales.")],o),B.as,B.C,B.F),B.o,m,m,new A.bJ(B.am,m,m,i,m,m,B.O),m,m,m,B.eV,m,m,m)],o),B.D,B.C,B.F),B.o,B.b3,m,m,m,m,m,new A.ay(l,60,l,60),m,m,m)},
 rT(a,b,c){var s,r=null,q=A.W(a).ok.w
-q=A.bd(b,r,r,q==null?r:q.a8A(B.f,B.an),r)
+q=A.be(b,r,r,q==null?r:q.a8A(B.f,B.an),r)
 s=A.W(a).ok.Q
-return A.c0(A.c([q,B.jE,A.bd(c,r,r,s==null?r:s.bc(B.a7),r)],t.p),B.as,B.C,B.F)}}
+return A.c0(A.c([q,B.jE,A.be(c,r,r,s==null?r:s.bc(B.a7),r)],t.p),B.as,B.C,B.F)}}
 A.tU.prototype={
 ae(){return new A.Lg()}}
 A.Lg.prototype={
@@ -38928,16 +38928,16 @@ this.aE()
 try{$.TA()
 $.kl().nZ("auth-pdf-viewer-en",new A.aae(),!0)}catch(s){}try{$.TA()
 $.kl().nZ("auth-pdf-viewer-es",new A.aaf(),!0)}catch(s){}},
-I(a){var s,r,q,p=this,o=null,n=A.bf(a,o,t.w).w.a.a<900,m=n?20:60,l=p.a.c==="en"?"Project Authorization":"Autorizaci\xf3n del Proyecto",k=A.W(a).ok.f
-l=A.cY(o,A.e8(A.bd(l,o,o,k==null?o:k.a8z(B.f,B.e),o),B.aE,o,o,o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.aac(p,a),o,o,o)
+I(a){var s,r,q,p=this,o=null,n=A.bd(a,o,t.w).w.a.a<900,m=n?20:60,l=p.a.c==="en"?"Project Authorization":"Autorizaci\xf3n del Proyecto",k=A.W(a).ok.f
+l=A.cY(o,A.e8(A.be(l,o,o,k==null?o:k.a8z(B.f,B.e),o),B.aE,o,o,o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.aac(p,a),o,o,o)
 k=A.cV(16)
 s=p.a.c==="en"?"During our team's visit to La Bonga during the summer of 2025, we presented openly the participatory research methodology to the community in Spanish. After understanding the potential of such a project, they unanimously voted in support of our project.":"Durante la visita de nuestro equipo a La Bonga en el verano de 2025, presentamos abiertamente la metodolog\xeda de investigaci\xf3n participativa a la comunidad en espa\xf1ol. Despu\xe9s de entender el potencial de tal proyecto, votaron un\xe1nimemente en apoyo de nuestro proyecto."
 r=A.W(a).ok.z
-s=A.bd(s,o,o,r==null?o:r.bc(B.a7),o)
+s=A.be(s,o,o,r==null?o:r.bc(B.a7),o)
 if(p.d)r=p.a.c==="en"?"Hide Authorization Documents":"Ocultar Documentos de Autorizaci\xf3n"
 else r=p.a.c==="en"?"View Authorization Documents":"Ver Documentos de Autorizaci\xf3n"
 q=t.p
-r=A.c([s,B.cf,A.Ff(A.bd(r,o,o,o,o),new A.aad(p),o)],q)
+r=A.c([s,B.cf,A.Ff(A.be(r,o,o,o,o),new A.aad(p),o)],q)
 if(p.d){s=n?900:800
 B.b.M(r,A.c([B.cf,A.ez(A.axb(o,B.j5,p.a.c==="en"?"auth-pdf-viewer-en":"auth-pdf-viewer-es"),s,o)],q))}return new A.ct(new A.ay(m,60,m,60),A.c0(A.c([l,B.aD,A.bL(o,A.c0(r,B.D,B.C,B.F),B.o,o,o,new A.bJ(B.am,o,o,k,o,o,B.O),o,o,o,B.eV,o,o,o)],q),B.D,B.C,B.F),o)}}
 A.aae.prototype={
@@ -38979,11 +38979,11 @@ $0(){var s=this.a
 s.d=!s.d},
 $S:0}
 A.GT.prototype={
-I(a){var s,r,q,p=null,o=A.bf(a,p,t.w).w.a.a<900,n=this.c==="en",m=t.Wy,l=n?A.c([B.I_,B.I3,B.Ie,B.In],m):A.c([B.I7,B.Ik,B.Im,B.I4],m)
+I(a){var s,r,q,p=null,o=A.bd(a,p,t.w).w.a.a<900,n=this.c==="en",m=t.Wy,l=n?A.c([B.I_,B.I3,B.Ie,B.In],m):A.c([B.I7,B.Ik,B.Im,B.I4],m)
 m=o?20:60
 n=n?"Stages of Participatory Research Mapping (PRM)":"Etapas del Mapeo de Investigaci\xf3n Participativa"
 s=A.W(a).ok.f
-n=A.cY(p,A.e8(A.bd(n,p,p,s==null?p:s.bc(B.f),p),B.aE,p,p,p),B.H,!1,p,p,p,p,p,p,p,p,p,p,p,p,p,new A.a1U(),p,p,p)
+n=A.cY(p,A.e8(A.be(n,p,p,s==null?p:s.bc(B.f),p),B.aE,p,p,p),B.H,!1,p,p,p,p,p,p,p,p,p,p,p,p,p,new A.a1U(),p,p,p)
 s=o?1:2
 r=A.a6(l).h("ai<1,mo>")
 r=A.a2(new A.ai(l,new A.a1V(a),r),r.h("aA.E"))
@@ -38996,16 +38996,16 @@ $S:0}
 A.a1V.prototype={
 $1(a){var s=null,r=A.cV(12),q=A.p0(A.aE(31,B.f.B()>>>16&255,B.f.B()>>>8&255,B.f.B()&255),1),p=this.a,o=A.W(p).ok.x
 o=o==null?s:o.a8M(B.f,"serif",17,B.an)
-o=A.bd(a.a,s,s,o,s)
+o=A.be(a.a,s,s,o,s)
 p=A.W(p).ok.Q
 p=p==null?s:p.a8K(B.a7,"serif",15)
-return A.bL(s,A.c0(A.c([o,B.jE,A.bd(a.b,s,s,p,s)],t.p),B.as,B.dL,B.F),B.o,s,s,new A.bJ(B.am,s,q,r,s,s,B.O),s,s,s,B.lp,s,s,s)},
+return A.bL(s,A.c0(A.c([o,B.jE,A.be(a.b,s,s,p,s)],t.p),B.as,B.dL,B.F),B.o,s,s,new A.bJ(B.am,s,q,r,s,s,B.O),s,s,s,B.lp,s,s,s)},
 $S:211}
 A.vw.prototype={
 ae(){return new A.Na(A.c(["assets/images/lancha.jpg","assets/images/field_tour.jpg","assets/images/indigenous_band.jpg","assets/images/indigenous_girl_smiling.jpg","assets/images/chief_checking.jpg","assets/images/site_analysis.jpg","assets/images/lizard.jpg","assets/images/monkey.jpg","assets/images/signing.jpeg"],t.s),A.c([B.If,B.HZ,B.IE,B.I1,B.ID,B.IK,B.I6,B.Ib,B.IJ],t.Wy))}}
 A.Na.prototype={
-I(a){var s,r,q,p,o,n,m=this,l=null,k=A.bf(a,l,t.w).w.a.a<900,j=k?20:60,i=m.a.c==="en"?"Fieldwork & Landscape":"Trabajo de Campo y Paisaje",h=A.W(a).ok.f
-i=A.cY(l,A.e8(A.bd(i,l,l,h==null?l:h.bc(B.f),l),B.aE,l,l,l),B.H,!1,l,l,l,l,l,l,l,l,l,l,l,l,l,new A.acK(),l,l,l)
+I(a){var s,r,q,p,o,n,m=this,l=null,k=A.bd(a,l,t.w).w.a.a<900,j=k?20:60,i=m.a.c==="en"?"Fieldwork & Landscape":"Trabajo de Campo y Paisaje",h=A.W(a).ok.f
+i=A.cY(l,A.e8(A.be(i,l,l,h==null?l:h.bc(B.f),l),B.aE,l,l,l),B.H,!1,l,l,l,l,l,l,l,l,l,l,l,l,l,new A.acK(),l,l,l)
 h=A.cV(16)
 s=A.p0(A.aE(31,B.f.B()>>>16&255,B.f.B()>>>8&255,B.f.B()&255),1)
 r=A.cV(16)
@@ -39017,13 +39017,13 @@ q=m.f
 p=m.d
 r=r==="en"?q[B.h.b6(p,9)].a:q[B.h.b6(p,9)].b
 q=A.W(a).ok.Q
-r=A.bd(r,l,l,q==null?l:q.nd(B.a7,16),l)
+r=A.be(r,l,l,q==null?l:q.nd(B.a7,16),l)
 q=A.Z4(l,l,B.BH,l,l,new A.acL(m),l,l,l)
 p=B.h.b6(m.d,9)
 o=A.W(a).ok.Q
 o=o==null?l:o.bc(B.a7)
 n=t.p
-return new A.ct(new A.ay(j,60,j,60),A.c0(A.c([i,B.aD,A.ez(A.c0(A.c([h,A.bL(l,A.c0(A.c([r,B.ce,A.xJ(A.c([q,A.bd(""+(p+1)+" / 9",l,l,o,l),A.Z4(l,l,B.BG,l,l,new A.acM(m),l,l,l)],n),B.D,B.iP,B.F)],n),B.D,B.C,B.F),B.o,l,l,new A.bJ(B.am,l,s,B.xV,l,l,B.O),l,l,l,B.B2,l,l,1/0)],n),B.D,B.C,B.cE),l,1/0)],n),B.D,B.C,B.F),l)}}
+return new A.ct(new A.ay(j,60,j,60),A.c0(A.c([i,B.aD,A.ez(A.c0(A.c([h,A.bL(l,A.c0(A.c([r,B.ce,A.xJ(A.c([q,A.be(""+(p+1)+" / 9",l,l,o,l),A.Z4(l,l,B.BG,l,l,new A.acM(m),l,l,l)],n),B.D,B.iP,B.F)],n),B.D,B.C,B.F),B.o,l,l,new A.bJ(B.am,l,s,B.xV,l,l,B.O),l,l,l,B.B2,l,l,1/0)],n),B.D,B.C,B.cE),l,1/0)],n),B.D,B.C,B.F),l)}}
 A.acK.prototype={
 $0(){},
 $S:0}
@@ -39042,16 +39042,16 @@ A.acI.prototype={
 $0(){return this.a.d++},
 $S:0}
 A.GF.prototype={
-I(a){var s,r,q,p,o=null,n=A.bf(a,o,t.w).w.a.a<900?20:60,m=this.c==="en",l=m?"Project Maps":"Mapas del Proyecto",k=A.W(a).ok.f
-l=A.cY(o,A.e8(A.bd(l,o,o,k==null?o:k.bc(B.f),o),B.aE,o,o,o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a_r(),o,o,o)
+I(a){var s,r,q,p,o=null,n=A.bd(a,o,t.w).w.a.a<900?20:60,m=this.c==="en",l=m?"Project Maps":"Mapas del Proyecto",k=A.W(a).ok.f
+l=A.cY(o,A.e8(A.be(l,o,o,k==null?o:k.bc(B.f),o),B.aE,o,o,o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a_r(),o,o,o)
 k=A.cV(16)
 s=A.ez(A.Ed(A.cV(12),new A.rh("assets/images/chagres_broadermap.jpg",450,1/0,B.cq,o)),450,1/0)
 r=m?"This overview map situates the R\xedo Pequen\xed watershed within Chagres National Park - the geographic setting for our participatory research mapping work with the community of La Bonga.":"Este mapa de descripci\xf3n general sit\xfaa la cuenca del R\xedo Pequen\xed dentro del Parque Nacional Chagres - el escenario geogr\xe1fico para nuestro trabajo de mapeo de investigaci\xf3n participativa con la comunidad de La Bonga."
 q=A.W(a).ok.z
-r=A.bd(r,o,o,q==null?o:q.bc(B.a7),o)
+r=A.be(r,o,o,q==null?o:q.bc(B.a7),o)
 q=A.ez(new A.Nf(o),400,1/0)
 p=t.p
-return new A.ct(new A.ay(n,60,n,60),A.c0(A.c([l,A.bL(o,A.c0(A.c([s,B.wF,r,B.cf,q,B.ce,A.Ff(A.bd(m?"Open La Bonga in Google Maps":"Abrir La Bonga en Google Maps",o,o,o,o),new A.a_s(),o)],p),B.D,B.C,B.F),B.o,o,o,new A.bJ(B.am,o,o,k,o,o,B.O),o,o,o,B.B3,o,o,o)],p),B.D,B.C,B.F),o)}}
+return new A.ct(new A.ay(n,60,n,60),A.c0(A.c([l,A.bL(o,A.c0(A.c([s,B.wF,r,B.cf,q,B.ce,A.Ff(A.be(m?"Open La Bonga in Google Maps":"Abrir La Bonga en Google Maps",o,o,o,o),new A.a_s(),o)],p),B.D,B.C,B.F),B.o,o,o,new A.bJ(B.am,o,o,k,o,o,B.O),o,o,o,B.B3,o,o,o)],p),B.D,B.C,B.F),o)}}
 A.a_r.prototype={
 $0(){},
 $S:0}
@@ -39063,29 +39063,29 @@ I(a){return B.Bs}}
 A.xB.prototype={
 ae(){return new A.PV()}}
 A.PV.prototype={
-I(a){var s,r,q,p,o,n=this,m=null,l="Field Blog",k="Blog de Campo",j="Official Reports",i="Informes Oficiales",h=A.bf(a,m,t.w).w.a.a<900?20:60,g=n.a.c==="en"?"Field Reports":"Informes de Campo",f=A.W(a).ok.f
-g=A.bd(g,m,m,f==null?m:f.bc(B.f),m)
+I(a){var s,r,q,p,o,n=this,m=null,l="Field Blog",k="Blog de Campo",j="Official Reports",i="Informes Oficiales",h=A.bd(a,m,t.w).w.a.a<900?20:60,g=n.a.c==="en"?"Field Reports":"Informes de Campo",f=A.W(a).ok.f
+g=A.be(g,m,m,f==null?m:f.bc(B.f),m)
 f=n.a.c==="en"?"Ongoing field reflections, research updates, and official project documentation from the Chagres Initiative.":"Reflexiones continuas de campo, actualizaciones de investigaci\xf3n y documentaci\xf3n oficial del proyecto de la Iniciativa Chagres."
 s=A.W(a).ok.z
-f=A.bd(f,m,m,s==null?m:s.bc(B.a7),B.aM)
+f=A.be(f,m,m,s==null?m:s.bc(B.a7),B.aM)
 s=n.d===0?B.az:B.am
 r=A.cV(8)
 q=n.a.c==="en"?l:k
-r=A.cY(m,A.bL(m,A.bd(q,m,m,A.hQ(m,m,B.f,m,m,m,m,m,"serif",m,m,16,m,m,B.an,m,m,!0,m,m,m,m,m,m,m,m),m),B.o,m,m,new A.bJ(s,m,m,r,m,m,B.O),m,m,m,B.lr,m,m,m),B.H,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.afc(n),m,m,m)
+r=A.cY(m,A.bL(m,A.be(q,m,m,A.hQ(m,m,B.f,m,m,m,m,m,"serif",m,m,16,m,m,B.an,m,m,!0,m,m,m,m,m,m,m,m),m),B.o,m,m,new A.bJ(s,m,m,r,m,m,B.O),m,m,m,B.lr,m,m,m),B.H,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.afc(n),m,m,m)
 s=n.d===1?B.az:B.am
 q=A.cV(8)
 p=n.a.c==="en"?j:i
 o=t.p
-o=A.c([g,B.ce,f,B.aD,A.xJ(A.c([r,B.KH,A.cY(m,A.bL(m,A.bd(p,m,m,A.hQ(m,m,B.f,m,m,m,m,m,"serif",m,m,16,m,m,B.an,m,m,!0,m,m,m,m,m,m,m,m),m),B.o,m,m,new A.bJ(s,m,m,q,m,m,B.O),m,m,m,B.lr,m,m,m),B.H,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.afd(n),m,m,m)],o),B.D,B.dL,B.F),B.aD],o)
+o=A.c([g,B.ce,f,B.aD,A.xJ(A.c([r,B.KH,A.cY(m,A.bL(m,A.be(p,m,m,A.hQ(m,m,B.f,m,m,m,m,m,"serif",m,m,16,m,m,B.an,m,m,!0,m,m,m,m,m,m,m,m),m),B.o,m,m,new A.bJ(s,m,m,q,m,m,B.O),m,m,m,B.lr,m,m,m),B.H,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.afd(n),m,m,m)],o),B.D,B.dL,B.F),B.aD],o)
 if(n.d===0){g=n.a.c==="en"
 f=g?l:k
 o.push(n.GD(a,f,g?"Narrative updates from the field, participatory mapping workshops, and watershed engagement activities.":"Actualizaciones narrativas del campo, talleres de mapeo participativo y actividades de compromiso de cuencas hidrogr\xe1ficas."))}else{g=n.a.c==="en"
 f=g?j:i
 o.push(n.GD(a,f,g?"Formal reports, project summaries, grant documentation, and technical outputs.":"Informes formales, res\xfamenes de proyectos, documentaci\xf3n de subvenciones y resultados t\xe9cnicos."))}return new A.ct(new A.ay(h,60,h,60),A.c0(o,B.D,B.C,B.F),m)},
 GD(a,b,c){var s,r=null,q=A.cV(12),p=A.c([new A.dr(0,B.d5,A.aE(115,B.k.B()>>>16&255,B.k.B()>>>8&255,B.k.B()&255),B.j_,34)],t.sq),o=A.W(a).ok.x
-o=A.bd(b,r,r,o==null?r:o.Bc(B.f,18,B.an),r)
+o=A.be(b,r,r,o==null?r:o.Bc(B.f,18,B.an),r)
 s=A.W(a).ok.Q
-return A.bL(r,A.c0(A.c([o,B.jE,A.bd(c,r,r,s==null?r:s.nd(B.a7,16),r)],t.p),B.as,B.C,B.cE),B.o,r,r,new A.bJ(B.am,r,r,q,p,r,B.O),r,r,r,B.lp,r,r,r)}}
+return A.bL(r,A.c0(A.c([o,B.jE,A.be(c,r,r,s==null?r:s.nd(B.a7,16),r)],t.p),B.as,B.C,B.cE),B.o,r,r,new A.bJ(B.am,r,r,q,p,r,B.O),r,r,r,B.lp,r,r,r)}}
 A.afc.prototype={
 $0(){var s=this.a
 return s.ai(new A.afb(s))},
@@ -39101,11 +39101,11 @@ A.afa.prototype={
 $0(){return this.a.d=1},
 $S:0}
 A.Fs.prototype={
-I(a){var s=null,r=A.bf(a,s,t.w).w,q=this.c==="en",p=t.Wy,o=q?A.c([B.Ic,B.IB,B.IH,B.Ip,B.Ig,B.I5,B.Iq,B.Ia,B.Ih,B.IA],p):A.c([B.Ij,B.I8,B.I9,B.Id,B.I2,B.It,B.Iu,B.Il,B.Ii,B.Io],p)
+I(a){var s=null,r=A.bd(a,s,t.w).w,q=this.c==="en",p=t.Wy,o=q?A.c([B.Ic,B.IB,B.IH,B.Ip,B.Ig,B.I5,B.Iq,B.Ia,B.Ih,B.IA],p):A.c([B.Ij,B.I8,B.I9,B.Id,B.I2,B.It,B.Iu,B.Il,B.Ii,B.Io],p)
 r=r.a.a<900?20:60
 q=q?"Frequently Asked Questions":"Preguntas Frecuentes"
 p=A.W(a).ok.f
-q=A.cY(s,A.e8(A.bd(q,s,s,p==null?s:p.bc(B.f),s),B.aE,s,s,s),B.H,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.Xj(),s,s,s)
+q=A.cY(s,A.e8(A.be(q,s,s,p==null?s:p.bc(B.f),s),B.aE,s,s,s),B.H,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.Xj(),s,s,s)
 p=A.cV(16)
 return A.bL(s,A.c0(A.c([q,B.aD,A.bL(s,new A.w5(new A.a7x(new A.Xk(this,o),10,!0,!0,!0,s),s,B.aO,!1,s,s,B.rb,!0,s,10,B.H,s,s,B.ad,B.ao,s),B.o,s,s,new A.bJ(B.am,s,s,p,s,s,B.O),s,s,s,s,s,s,s)],t.p),B.D,B.C,B.F),B.o,B.b3,s,s,s,s,s,new A.ay(r,60,r,60),s,s,s)}}
 A.Xj.prototype={
@@ -39114,27 +39114,27 @@ $S:0}
 A.Xk.prototype={
 $2(a,b){var s,r=null,q=this.b[b],p=A.W(a).a81(B.z),o=A.W(a).ok.z
 o=o==null?r:o.Bc(B.f,18,B.lA)
-o=A.bd(q.a,r,r,o,r)
+o=A.be(q.a,r,r,o,r)
 s=A.W(a).ok.Q
 s=s==null?r:s.a8B(B.a7,1.6)
-return new A.oc(p,new A.vf(o,A.c([A.bd(q.b,r,r,s,B.bv)],t.p),B.z,B.z,B.lq,A.p0(B.z,1),r),r)},
+return new A.oc(p,new A.vf(o,A.c([A.be(q.b,r,r,s,B.bv)],t.p),B.z,B.z,B.lq,A.p0(B.z,1),r),r)},
 $S:212}
 A.F7.prototype={
-I(a){var s,r,q,p,o,n=this,m=null,l=A.bf(a,m,t.w).w.a.a<900?20:60,k=n.c==="en",j=k?"Support the Chagres Initiative":"Apoye la Iniciativa Chagres",i=A.W(a).ok.f
-j=A.cY(m,A.e8(A.bd(j,m,m,i==null?m:i.bc(B.f),m),B.aE,m,m,m),B.H,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.Wl(),m,m,m)
+I(a){var s,r,q,p,o,n=this,m=null,l=A.bd(a,m,t.w).w.a.a<900?20:60,k=n.c==="en",j=k?"Support the Chagres Initiative":"Apoye la Iniciativa Chagres",i=A.W(a).ok.f
+j=A.cY(m,A.e8(A.be(j,m,m,i==null?m:i.bc(B.f),m),B.aE,m,m,m),B.H,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.Wl(),m,m,m)
 i=A.cV(16)
 s=A.c([new A.dr(0,B.d5,A.aE(115,B.k.B()>>>16&255,B.k.B()>>>8&255,B.k.B()&255),B.j_,34)],t.sq)
 r=k?"The Chagres Geographic Fund directly supports equitable, community-based research partnerships in Panama.":"El Fondo Geogr\xe1fico Chagres apoya directamente asociaciones de investigaci\xf3n equitativas y basadas en la comunidad en Panam\xe1."
 q=A.W(a).ok.z
-r=A.bd(r,m,m,q==null?m:q.bc(B.a7),m)
+r=A.be(r,m,m,q==null?m:q.bc(B.a7),m)
 q=n.xH(k?"Workshops Expenses (GPS, Drones, Starlink, mapping materials, meals)":"Gastos de Talleres (GPS, Drones, Starlink, materiales de mapeo, comidas)")
 p=n.xH(k?"Local Geographer Honorariums and Travel":"Honorarios y Viajes de Ge\xf3grafos Locales")
 o=t.p
 p=A.c0(A.c([q,p,n.xH(k?"Researcher and Student Travel Expenses":"Gastos de Viaje de Investigadores y Estudiantes")],o),B.as,B.C,B.F)
 q=A.aj6(m,m,B.bJ,m,m,m,m,m,m,m,m,m,B.B5,m,m,m,m,m,m,m)
-return new A.ct(new A.ay(l,60,l,60),A.c0(A.c([j,B.aD,A.bL(m,A.c0(A.c([r,B.cf,p,B.aD,A.Ff(A.bd(k?"Donate to the Chagres Geographic Fund":"Donar al Fondo Geogr\xe1fico Chagres",m,m,B.Mz,m),new A.Wm(),q)],o),B.D,B.C,B.F),B.o,m,m,new A.bJ(B.am,m,m,i,s,m,B.O),m,m,m,B.eV,m,m,m)],o),B.D,B.C,B.F),m)},
+return new A.ct(new A.ay(l,60,l,60),A.c0(A.c([j,B.aD,A.bL(m,A.c0(A.c([r,B.cf,p,B.aD,A.Ff(A.be(k?"Donate to the Chagres Geographic Fund":"Donar al Fondo Geogr\xe1fico Chagres",m,m,B.Mz,m),new A.Wm(),q)],o),B.D,B.C,B.F),B.o,m,m,new A.bJ(B.am,m,m,i,s,m,B.O),m,m,m,B.eV,m,m,m)],o),B.D,B.C,B.F),m)},
 xH(a){var s=null
-return new A.ct(B.AX,A.xJ(A.c([B.H_,new A.Fr(1,B.lx,A.bd(a,s,s,B.wZ,s),s)],t.p),B.as,B.C,B.F),s)}}
+return new A.ct(B.AX,A.xJ(A.c([B.H_,new A.Fr(1,B.lx,A.be(a,s,s,B.wZ,s),s)],t.p),B.as,B.C,B.F),s)}}
 A.Wl.prototype={
 $0(){},
 $S:0}
@@ -39142,13 +39142,13 @@ A.Wm.prototype={
 $0(){A.CJ(A.hc("https://geog.ku.edu/donate",0,null))},
 $S:0}
 A.K3.prototype={
-I(a){var s,r,q,p,o=this,n=null,m=A.bf(a,n,t.w).w.a.a<900,l=m?20:60,k=o.c,j=k==="en",i=j?"Research Team":"Equipo de Investigaci\xf3n",h=A.W(a).ok.f
-i=A.bd(i,n,n,h==null?n:h.bc(B.f),n)
+I(a){var s,r,q,p,o=this,n=null,m=A.bd(a,n,t.w).w.a.a<900,l=m?20:60,k=o.c,j=k==="en",i=j?"Research Team":"Equipo de Investigaci\xf3n",h=A.W(a).ok.f
+i=A.be(i,n,n,h==null?n:h.bc(B.f),n)
 h=A.Ed(A.cV(12),A.js("assets/images/team.jpg",B.eo,n,n,1/0))
 s=j?"The Original Research Team from KU: Taylor Tappan, Peter Herlihy and Cap McLiney":"El Equipo de Investigaci\xf3n Original de KU: Taylor Tappan, Peter Herlihy y Cap McLiney"
 r=A.W(a).ok.Q
 q=t.p
-r=A.ez(A.c0(A.c([h,B.ce,new A.ct(B.B1,A.bd(s,n,n,r==null?n:r.bc(B.zJ),B.aM),n)],q),B.D,B.C,B.F),n,1/0)
+r=A.ez(A.c0(A.c([h,B.ce,new A.ct(B.B1,A.be(s,n,n,r==null?n:r.bc(B.zJ),B.aM),n)],q),B.D,B.C,B.F),n,1/0)
 h=j?"La Bonga Personnel":"Personal de La Bonga"
 s=t.Fo
 h=o.xJ(a,h,A.c([B.IM,B.IN],s),k,m)
@@ -39157,31 +39157,31 @@ p=o.xJ(a,p,A.c([B.IQ,B.IL,B.IO,B.IR,B.IS],s),k,m)
 j=j?"University of Texas at Arlington Personnel":"Personal de la Universidad de Texas en Arlington"
 return A.bL(n,A.c0(A.c([i,B.aD,r,B.e5,h,B.e5,p,B.e5,o.xJ(a,j,A.c([B.IP],s),k,m)],q),B.D,B.C,B.F),B.o,B.b3,n,n,n,n,n,new A.ay(l,60,l,60),n,n,n)},
 xJ(a,b,c,d,e){var s,r=null,q=A.W(a).ok.w
-q=A.bd(b,r,r,q==null?r:q.nd(B.f,19),r)
+q=A.be(b,r,r,q==null?r:q.nd(B.f,19),r)
 s=A.a6(c).h("ai<1,d_>")
 s=A.a2(new A.ai(c,new A.a8k(this,e,a,d),s),s.h("aA.E"))
 return A.ez(A.c0(A.c([q,B.KJ,A.apw(B.ck,s,10,10)],t.p),B.as,B.C,B.F),r,1/0)}}
 A.a8k.prototype={
-$1(a){var s,r,q,p=this,o=null,n=p.b?(A.bf(p.c,o,t.w).w.a.a-40)/2-5:170,m=p.c,l=a.a,k=l[0],j=p.d==="en"?l[1]:l[2]
+$1(a){var s,r,q,p=this,o=null,n=p.b?(A.bd(p.c,o,t.w).w.a.a-40)/2-5:170,m=p.c,l=a.a,k=l[0],j=p.d==="en"?l[1]:l[2]
 l=l[4]
 s=A.cV(8)
 r=A.p0(A.aE(20,B.f.B()>>>16&255,B.f.B()>>>8&255,B.f.B()&255),1)
 q=A.W(m).ok.Q
-k=A.bd(k,2,B.bw,q==null?o:q.Bc(B.f,18,B.an),B.aM)
+k=A.be(k,2,B.bw,q==null?o:q.Bc(B.f,18,B.an),B.aM)
 m=A.W(m).ok.Q
-return A.ez(A.bL(o,A.c0(A.c([new A.DX(B.cw,new A.ja("assets/images/"+l,o,o),28,o),B.KM,k,B.KK,A.bd(j,3,B.bw,m==null?o:m.a8L(B.a7,16,1.2),B.aM)],t.p),B.D,B.C,B.cE),B.o,o,o,new A.bJ(B.am,o,r,s,o,o,B.O),o,o,o,B.Bb,o,o,o),o,n)},
+return A.ez(A.bL(o,A.c0(A.c([new A.DX(B.cw,new A.ja("assets/images/"+l,o,o),28,o),B.KM,k,B.KK,A.be(j,3,B.bw,m==null?o:m.a8L(B.a7,16,1.2),B.aM)],t.p),B.D,B.C,B.cE),B.o,o,o,new A.bJ(B.am,o,r,s,o,o,B.O),o,o,o,B.Bb,o,o,o),o,n)},
 $S:214}
 A.FI.prototype={
-I(a){var s,r,q,p,o=null,n=A.bf(a,o,t.w).w.a.a<900?20:60,m=A.W(a).ok.Q
-m=A.bd("\xa9 2026 The Chagres Initiative - KU Department of Geography",o,o,m==null?o:m.bc(B.a7),B.aM)
+I(a){var s,r,q,p,o=null,n=A.bd(a,o,t.w).w.a.a<900?20:60,m=A.W(a).ok.Q
+m=A.be("\xa9 2026 The Chagres Initiative - KU Department of Geography",o,o,m==null?o:m.bc(B.a7),B.aM)
 s=this.c
 r=s==="en"
 q=r?B.f:B.a7
-q=A.cY(o,A.bd("English",o,o,A.hQ(o,o,q,o,o,o,o,o,o,o,o,o,o,o,r?B.an:B.n,o,o,!0,o,o,o,o,o,o,o,o),o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.XY(this),o,o,o)
+q=A.cY(o,A.be("English",o,o,A.hQ(o,o,q,o,o,o,o,o,o,o,o,o,o,o,r?B.an:B.n,o,o,!0,o,o,o,o,o,o,o,o),o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.XY(this),o,o,o)
 s=s==="es"
 r=s?B.f:B.a7
 p=t.p
-return A.bL(o,A.c0(A.c([m,B.wF,A.xJ(A.c([q,B.PI,A.cY(o,A.bd("Espa\xf1ol",o,o,A.hQ(o,o,r,o,o,o,o,o,o,o,o,o,o,o,s?B.an:B.n,o,o,!0,o,o,o,o,o,o,o,o),o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.XZ(this),o,o,o)],p),B.D,B.dL,B.F)],p),B.D,B.C,B.F),B.o,B.b3,o,o,o,o,o,new A.ay(n,40,n,40),o,o,o)}}
+return A.bL(o,A.c0(A.c([m,B.wF,A.xJ(A.c([q,B.PI,A.cY(o,A.be("Espa\xf1ol",o,o,A.hQ(o,o,r,o,o,o,o,o,o,o,o,o,o,o,s?B.an:B.n,o,o,!0,o,o,o,o,o,o,o,o),o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.XZ(this),o,o,o)],p),B.D,B.dL,B.F)],p),B.D,B.C,B.F),B.o,B.b3,o,o,o,o,o,new A.ay(n,40,n,40),o,o,o)}}
 A.XY.prototype={
 $0(){return this.a.d.$1("en")},
 $S:0}
@@ -39192,17 +39192,17 @@ A.wE.prototype={
 ae(){return new A.Ay()}}
 A.Ay.prototype={
 a5e(){A.CJ(A.hc("https://chagresinitiative.substack.com/",0,null))},
-I(a){var s,r,q,p=this,o=null,n=A.bf(a,o,t.w).w.a.a<900?20:60,m=p.a.c==="en"?"Stay Updated":"Mant\xe9ngase Actualizado",l=A.W(a).ok.f
-m=A.bd(m,o,o,l==null?o:l.bc(B.f),o)
+I(a){var s,r,q,p=this,o=null,n=A.bd(a,o,t.w).w.a.a<900?20:60,m=p.a.c==="en"?"Stay Updated":"Mant\xe9ngase Actualizado",l=A.W(a).ok.f
+m=A.be(m,o,o,l==null?o:l.bc(B.f),o)
 l=p.a.c==="en"?"Subscribe to our Substack for the latest research updates, field reflections, and news from the Chagres Initiative.":"Suscr\xedbase a nuestro Substack para recibir las \xfaltimas actualizaciones de investigaci\xf3n, reflexiones de campo y noticias de la Iniciativa Chagres."
 s=A.W(a).ok.z
-l=A.bd(l,o,o,s==null?o:s.bc(B.a7),B.aM)
+l=A.be(l,o,o,s==null?o:s.bc(B.a7),B.aM)
 s=A.c([B.az,A.aE(204,B.az.B()>>>16&255,B.az.B()>>>8&255,B.az.B()&255)],t.t_)
 r=A.cV(50)
 q=A.c([new A.dr(0,B.d5,A.aE(102,B.az.B()>>>16&255,B.az.B()>>>8&255,B.az.B()&255),B.Gx,16)],t.sq)
-s=A.cY(o,A.e8(A.bL(o,A.bd(p.a.c==="en"?"Subscribe on Substack":"Suscribirse en Substack",o,o,B.NE,o),B.o,o,o,new A.bJ(o,o,o,r,q,new A.n6(B.k0,B.hi,B.e8,s,o,o),B.O),o,o,o,B.B7,o,o,o),B.aE,o,o,o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,p.ga5d(),o,o,o)
+s=A.cY(o,A.e8(A.bL(o,A.be(p.a.c==="en"?"Subscribe on Substack":"Suscribirse en Substack",o,o,B.NE,o),B.o,o,o,new A.bJ(o,o,o,r,q,new A.n6(B.k0,B.hi,B.e8,s,o,o),B.O),o,o,o,B.B7,o,o,o),B.aE,o,o,o),B.H,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,p.ga5d(),o,o,o)
 r=A.W(a).ok.Q
-return A.bL(o,A.c0(A.c([m,B.ce,l,B.aD,s,B.ce,A.bd("@chagresinitiative",o,o,r==null?o:r.bc(B.l8),B.aM)],t.p),B.D,B.C,B.F),B.o,B.am,o,o,o,o,o,new A.ay(n,60,n,60),o,o,o)}}
+return A.bL(o,A.c0(A.c([m,B.ce,l,B.aD,s,B.ce,A.be("@chagresinitiative",o,o,r==null?o:r.bc(B.l8),B.aM)],t.p),B.D,B.C,B.F),B.o,B.am,o,o,o,o,o,new A.ay(n,60,n,60),o,o,o)}}
 A.pC.prototype={
 ae(){return new A.MM(null,null)}}
 A.MM.prototype={
@@ -39889,7 +39889,7 @@ for(o=i.length,j=j.a,n=0;n<i.length;i.length===o||(0,A.w)(i),++n){s=i[n]
 r=null
 try{if(j.ad(0,s))s.$0()}catch(m){q=A.au(m)
 p=A.aS(m)
-l=A.be("while notifying listeners for "+A.t(this).j(0))
+l=A.bf("while notifying listeners for "+A.t(this).j(0))
 k=$.fT
 if(k!=null)k.$1(new A.bF(q,p,"animation library",l,r,!1))}}}}
 A.kq.prototype={
@@ -39904,7 +39904,7 @@ for(j=i.length,o=0;o<i.length;i.length===j||(0,A.w)(i),++o){s=i[o]
 try{if(k.u(0,s))s.$1(a)}catch(n){r=A.au(n)
 q=A.aS(n)
 p=null
-m=A.be("while notifying status listeners for "+A.t(this).j(0))
+m=A.bf("while notifying status listeners for "+A.t(this).j(0))
 l=$.fT
 if(l!=null)l.$1(new A.bF(r,q,"animation library",m,p,!1))}}}}
 A.aa.prototype={
@@ -40256,9 +40256,9 @@ case 1:s=a
 break
 default:s=null}return s},
 I(a){var s,r=null
-switch(a.aa(t.I).w.a){case 0:s=A.bf(a,B.aN,t.w).w.r.c
+switch(a.aa(t.I).w.a){case 0:s=A.bd(a,B.aN,t.w).w.r.c
 break
-case 1:s=A.bf(a,B.aN,t.w).w.r.a
+case 1:s=A.bd(a,B.aN,t.w).w.r.a
 break
 default:s=r}return A.qT(B.co,A.c([this.a.c,new A.HL(0,0,0,Math.max(s,20),A.w6(B.ds,r,r,this.ga4b(),r,r,r),r)],t.p),B.KV)}}
 A.abx.prototype={
@@ -40385,7 +40385,7 @@ q.toString
 o.sqW(q)
 q=p.c
 q.toString
-o.sbU(0,A.bf(q,B.aN,t.w).w.r)
+o.sbU(0,A.bd(q,B.aN,t.w).w.r)
 o.sCX(0,36)
 o.sPM(8)
 o.swU(p.a.db)},
@@ -40562,7 +40562,7 @@ s=J.alU(s)}else s="FlutterError"
 return s},
 $im6:1}
 A.XF.prototype={
-$1(a){return A.be(a)},
+$1(a){return A.bf(a)},
 $S:300}
 A.XG.prototype={
 $1(a){return a+1},
@@ -40591,7 +40591,7 @@ $0(){var s,r,q,p=this.a
 if(--p.c<=0)try{p.VF()
 if(p.fy$.c!==0)p.HK()}catch(q){s=A.au(q)
 r=A.aS(q)
-p=A.be("while handling pending events")
+p=A.bf("while handling pending events")
 A.d5(new A.bF(s,r,"foundation",p,null,!1))}},
 $S:28}
 A.af.prototype={}
@@ -40625,7 +40625,7 @@ p=f.gcH(f)
 for(s=0;s<p;++s)try{o=f.gc0()[s]
 if(o!=null)o.$0()}catch(n){r=A.au(n)
 q=A.aS(n)
-o=A.be("while dispatching notifications for "+A.t(f).j(0))
+o=A.bf("while dispatching notifications for "+A.t(f).j(0))
 m=$.fT
 if(m!=null)m.$1(new A.bF(r,q,"foundation library",o,new A.UX(f),!1))}f.siX(f.giX()-1)
 if(f.giX()===0&&f.gjU()>0){l=f.gcH(f)-f.gjU()
@@ -41018,7 +41018,7 @@ a0A(a){var s,r,q,p,o=this
 try{o.V$.M(0,A.ayq(a.a,o.gYI()))
 if(o.c<=0)o.yA()}catch(q){s=A.au(q)
 r=A.aS(q)
-p=A.be("while handling a pointer data packet")
+p=A.bf("while handling a pointer data packet")
 A.d5(new A.bF(s,r,"gestures library",p,null,!1))}},
 YJ(a){var s,r
 if($.aD().gc_().b.k(0,a)==null)s=null
@@ -41044,10 +41044,10 @@ qn(a,b,c){a.E(0,new A.fU(this,t.AL))},
 a9k(a,b,c){var s,r,q,p,o,n,m,l,k,j,i="gesture library"
 if(c==null){try{this.a9$.QI(b)}catch(p){s=A.au(p)
 r=A.aS(p)
-A.d5(A.awU(A.be("while dispatching a non-hit-tested pointer event"),b,s,null,new A.Ym(b),i,r))}return}for(n=c.a,m=n.length,l=0;l<n.length;n.length===m||(0,A.w)(n),++l){q=n[l]
+A.d5(A.awU(A.bf("while dispatching a non-hit-tested pointer event"),b,s,null,new A.Ym(b),i,r))}return}for(n=c.a,m=n.length,l=0;l<n.length;n.length===m||(0,A.w)(n),++l){q=n[l]
 try{q.a.iq(b.aS(q.b),q)}catch(s){p=A.au(s)
 o=A.aS(s)
-k=A.be("while dispatching a pointer event")
+k=A.bf("while dispatching a pointer event")
 j=$.fT
 if(j!=null)j.$1(new A.vo(p,o,i,k,new A.Yn(b,q),!1))}}},
 iq(a,b){var s=this
@@ -41946,7 +41946,7 @@ try{a=a.aS(c)
 b.$1(a)}catch(p){s=A.au(p)
 r=A.aS(p)
 q=null
-o=A.be("while routing a pointer event")
+o=A.bf("while routing a pointer event")
 A.d5(new A.bF(s,r,"gesture library",o,q,!1))}},
 QI(a){var s=this,r=s.a.k(0,a.gaF()),q=s.b,p=t.Ld,o=t.iD,n=A.jx(q,p,o)
 if(r!=null)s.Hu(a,r,A.jx(r,p,o))
@@ -41969,7 +41969,7 @@ p.toString
 m.$1(p)}catch(o){s=A.au(o)
 r=A.aS(o)
 q=null
-m=A.be("while resolving a PointerSignalEvent")
+m=A.bf("while resolving a PointerSignalEvent")
 A.d5(new A.bF(s,r,"gesture library",m,q,!1))}n.b=n.a=null}}
 A.F8.prototype={
 G(){return"DragStartBehavior."+this.b}}
@@ -41992,7 +41992,7 @@ Pc(a,b,c){var s,r,q,p,o,n=null
 try{n=b.$0()}catch(p){s=A.au(p)
 r=A.aS(p)
 q=null
-o=A.be("while handling a gesture")
+o=A.bf("while handling a gesture")
 A.d5(new A.bF(s,r,"gesture",o,q,!1))}return n},
 cX(a,b){return this.Pc(a,b,null,t.z)},
 ac2(a,b,c){return this.Pc(a,b,c,t.z)}}
@@ -44041,7 +44041,7 @@ I(a){var s,r,q,p,o,n,m,l,k,j,i,h,g=null
 A.W(a)
 s=A.amE(a)
 r=t.w
-q=A.bf(a,B.h1,r).w
+q=A.bd(a,B.h1,r).w
 p=s.Q
 if(p==null)p=B.B8
 o=q.f.a_(0,p)
@@ -44061,7 +44061,7 @@ if(j==null){j=n.e
 j.toString}i=s.as
 if(i==null){i=n.as
 i.toString}h=new A.fo(q,g,g,new A.eP(m,A.q7(!1,B.W,!0,this.as,i,this.c,p,g,l,j,k,g,B.iS),g),g)
-return A.c9(g,g,new A.tG(o,new A.hB(A.bf(a,g,r).w.Qy(!0,!0,!0,!0),h,g),B.kJ,B.b5,g,g),!1,g,!1,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,B.Jv,g,g,g,g,g,g,g,g)}}
+return A.c9(g,g,new A.tG(o,new A.hB(A.bd(a,g,r).w.Qy(!0,!0,!0,!0),h,g),B.kJ,B.b5,g,g),!1,g,!1,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,B.Jv,g,g,g,g,g,g,g,g)}}
 A.uP.prototype={
 n2(a,b,c,d){var s=this.uV,r=s==null
 if((r?null:s.a)!==b){if(!r)s.l()
@@ -44334,7 +44334,7 @@ k=!0
 j=!0}else{l=a3
 k=!1
 j=!1
-r=!1}if(r){r=A.bf(a5,B.aN,t.w).w.r.a
+r=!1}if(r){r=A.bd(a5,B.aN,t.w).w.r.a
 break B}i=a3
 if(n){if(j)r=l
 else{r=o
@@ -44342,7 +44342,7 @@ l=r
 j=!0}i=B.a2===r
 r=i
 h=!0}else{h=!1
-r=!1}if(r){r=A.bf(a5,B.aN,t.w).w.r.c
+r=!1}if(r){r=A.bd(a5,B.aN,t.w).w.r.c
 break B}g=B.eT===p
 r=g
 if(r)if(h)r=i
@@ -44351,11 +44351,11 @@ else{r=o
 l=r
 j=!0}i=B.a2===r
 r=i}else r=!1
-if(r){r=A.bf(a5,B.aN,t.w).w.r.a
+if(r){r=A.bd(a5,B.aN,t.w).w.r.a
 break B}if(g)if(k)r=m
 else{m=B.L===(j?l:o)
 r=m}else r=!1
-if(r){r=A.bf(a5,B.aN,t.w).w.r.c
+if(r){r=A.bd(a5,B.aN,t.w).w.r.c
 break B}r=a3}q=20+r
 r=a2.f
 r===$&&A.a()
@@ -44408,7 +44408,7 @@ bu(){this.cT()
 this.cw()
 this.i6()}}
 A.Fb.prototype={
-I(a){var s=null,r=A.W(a),q=A.bf(a,B.aN,t.w).w.r.b,p=A.amP(a,s,s),o=B.B_.E(0,new A.ay(0,q,0,0)),n=r.ok.y
+I(a){var s=null,r=A.W(a),q=A.bd(a,B.aN,t.w).w.r.b,p=A.amP(a,s,s),o=B.B_.E(0,new A.ay(0,q,0,0)),n=r.ok.y
 n.toString
 n=A.po(A.ao4(this.w,a,!1,!1,!1,!0),s,B.cW,!0,n,s,s,B.aZ)
 return A.bL(s,A.am0(n,s,B.b4,this.c,B.lj,s,o),B.o,s,s,new A.bJ(s,s,new A.cL(B.r,B.r,p,B.r),s,s,s,B.O),s,q+161,B.AU,s,s,s,s)}}
@@ -46948,13 +46948,13 @@ if(r.a.d!==a.d)r.LJ()
 s=r.a.f
 if(s!==a.f&&s===B.cm){s=r.c
 s.toString
-r.JG(A.bf(s,B.xo,t.w).w.a)}},
+r.JG(A.bd(s,B.xo,t.w).w.a)}},
 b3(){var s,r=this
 r.cU()
 r.LJ()
 s=r.c
 s.toString
-r.JG(A.bf(s,B.xo,t.w).w.a)},
+r.JG(A.bd(s,B.xo,t.w).w.a)},
 l(){this.z.l()
 this.Q.l()
 this.VY()},
@@ -46972,7 +46972,7 @@ r=q
 break A}r=o.as
 r===$&&A.a()
 q=r.a
-q=o.at=new A.n(r.b.a6(0,q.gn(q)).a,o.tc(A.bf(a,B.xr,t.w).w.a.b))
+q=o.at=new A.n(r.b.a6(0,q.gn(q)).a,o.tc(A.bd(a,B.xr,t.w).w.a.b))
 r=q
 break A}q=o.e.a6(0,o.r.gn(0))
 q=A.aye(A.Ed(A.cV(o.d.a6(0,n.gn(0))),b),q)
@@ -47171,10 +47171,10 @@ return new A.IR(A.iv(t.Np),A.kT(s,t.nY),A.kT(s,t.BL),s,s)}}
 A.IR.prototype={
 b3(){var s=this.c
 s.toString
-this.y=A.bf(s,B.xp,t.w).w.z
+this.y=A.bd(s,B.xp,t.w).w.z
 this.cU()},
 I(a){var s,r=this
-r.y=A.bf(a,B.xp,t.w).w.z
+r.y=A.bd(a,B.xp,t.w).w.z
 if(!r.r.gS(0)){s=A.wm(a,null,t.X)
 if(s==null||s.ghz())null.gafJ()}return new A.Bf(r,r.a.c,null)},
 l(){var s=this.x
@@ -47478,7 +47478,7 @@ r.l()
 s.Vv()},
 xy(a,b,c,d,e,f,g,h,i){var s,r=this.c
 r.toString
-s=A.bf(r,null,t.w).w.Qv(f,g,h,i)
+s=A.bd(r,null,t.w).w.Qv(f,g,h,i)
 if(e)s=s.ae9(!0)
 if(d&&s.f.d!==0)s=s.Ba(s.r.B7(s.w.d))
 if(b!=null)a.push(A.a_8(A.wi(b,s),c))},
@@ -47499,7 +47499,7 @@ if(k.fx){e=k.a
 e.toString
 d=k.fr
 d===$&&A.a()
-k.mp(f,e.a7b(a,d),B.h7,!0,!0,!0,!0)}if(k.a.f!=null){e=A.bf(a,B.aN,t.w).w
+k.mp(f,e.a7b(a,d),B.h7,!0,!0,!0,!0)}if(k.a.f!=null){e=A.bd(a,B.aN,t.w).w
 e=k.w=A.av4(a,k.a.f.fy)+e.r.b
 d=k.a.f
 d.toString
@@ -47555,13 +47555,13 @@ d=e.y
 if(d==null?A.o(e).h("bB.T").a(d):d){k.Gy(f,g)
 k.GA(f,g)}else{k.GA(f,g)
 k.Gy(f,g)}e=t.w
-d=A.bf(a,B.aN,e).w
+d=A.bd(a,B.aN,e).w
 k.gmK()
-q=A.bf(a,B.h1,e).w
+q=A.bd(a,B.h1,e).w
 m=d.r.B7(q.f.d)
-d=A.bf(a,B.Ra,e).w
+d=A.bd(a,B.Ra,e).w
 k.gmK()
-e=A.bf(a,B.h1,e).w
+e=A.bd(a,B.h1,e).w
 e=e.f.d!==0?0:j
 l=d.w.B7(e)
 e=k.a.at
@@ -47763,7 +47763,7 @@ s=r.id.z
 q.sCX(0,s==null?48:s)
 s=r.c
 s.toString
-q.sbU(0,A.bf(s,B.aN,t.w).w.r)
+q.sbU(0,A.bd(s,B.aN,t.w).w.r)
 q.swU(r.a.db)
 q.sP2(!r.glk())},
 vm(a){this.FK(a)
@@ -49606,7 +49606,7 @@ case 2:p=q.b
 if(p.a==null)p.ES(new A.ac8(A.c([],t.XZ),A.c([],t.SM),A.c([],t.qj)))
 p=p.a
 p.toString
-p.wk(A.be("while resolving an image"),b,null,!0,c)
+p.wk(A.bf("while resolving an image"),b,null,!0,c)
 return A.Q(null,r)}})
 return A.R($async$$3,r)},
 $S(){return A.o(this.a).h("aj<~>(hw.T?,F,cH?)")}}
@@ -49779,10 +49779,10 @@ m.a.push(b)
 o=m.c
 if(o!=null)try{b.a.$2(o.a7G(0),!m.f)}catch(n){s=A.au(n)
 r=A.aS(n)
-m.QA(A.be("by a synchronously-called image listener"),s,r)}o=m.d
+m.QA(A.bf("by a synchronously-called image listener"),s,r)}o=m.d
 if(o!=null&&b.c!=null)try{b.c.$2(o.a,o.b)}catch(s){q=A.au(s)
 p=A.aS(s)
-if(!J.d(q,m.d.a))A.d5(new A.bF(q,p,"image resource service",A.be("by a synchronously-called image error listener"),null,!1))}},
+if(!J.d(q,m.d.a))A.d5(new A.bF(q,p,"image resource service",A.bf("by a synchronously-called image error listener"),null,!1))}},
 L(a,b){var s,r,q,p,o,n=this
 if(n.w)A.ag(A.a8(u.V))
 for(s=n.a,r=0;r<s.length;++r)if(s[r].i(0,b)){B.b.js(s,r)
@@ -49814,7 +49814,7 @@ h=new A.id(i,m)
 h.Wb(i,m)
 s.adh(new A.hv(h,l,k),!1)}catch(g){r=A.au(g)
 q=A.aS(g)
-f.QA(A.be("by an image listener"),r,q)}}},
+f.QA(A.bf("by an image listener"),r,q)}}},
 wk(a,b,c,d,e){var s,r,q,p,o,n,m,l,k,j,i=this,h="image resource service"
 i.d=new A.bF(b,e,h,a,c,d)
 o=i.a
@@ -49827,7 +49827,7 @@ for(n=o.length,m=0;m<o.length;o.length===n||(0,A.w)(o),++m){r=o[m]
 try{r.$2(b,e)
 s=!0}catch(l){q=A.au(l)
 p=A.aS(l)
-if(!J.d(q,b)){k=A.be("when reporting an error to an image listener")
+if(!J.d(q,b)){k=A.bf("when reporting an error to an image listener")
 j=$.fT
 if(j!=null)j.$1(new A.bF(q,p,h,k,null,!1))}}}if(!s){o=i.d
 o.toString
@@ -49884,7 +49884,7 @@ case 4:p=3
 h=o.pop()
 m=A.au(h)
 l=A.aS(h)
-n.wk(A.be("resolving an image frame"),m,n.as,!0,l)
+n.wk(A.bf("resolving an image frame"),m,n.as,!0,l)
 s=1
 break
 s=6
@@ -49930,7 +49930,7 @@ s=r.z
 if(s!=null)s.l()
 r.z=null}}}
 A.a2i.prototype={
-$2(a,b){this.a.wk(A.be("resolving an image codec"),a,this.b,!0,b)},
+$2(a,b){this.a.wk(A.bf("resolving an image codec"),a,this.b,!0,b)},
 $S:32}
 A.a2h.prototype={
 $0(){this.a.Kh()},
@@ -50739,7 +50739,7 @@ n=this.b
 if(n!=null)try{a.pw(n)}catch(q){n=A.au(q)
 if(n instanceof A.fN){s=n
 r=A.aS(q)
-A.d5(new A.bF(s,r,"painting library",A.be("while building a TextSpan"),null,!0))
+A.d5(new A.bF(s,r,"painting library",A.bf("while building a TextSpan"),null,!0))
 a.pw("\ufffd")}else throw q}p=this.c
 if(p!=null)for(n=p.length,o=0;o<p.length;p.length===n||(0,A.w)(p),++o)p[o].MR(a,b,c)
 if(m)a.f_()},
@@ -52511,7 +52511,7 @@ s.a4()
 s.iw()
 s.aK()},
 bj(a){},
-tG(a,b,c){A.d5(new A.bF(b,c,"rendering library",A.be("during "+a+"()"),new A.a4p(this),!1))},
+tG(a,b,c){A.d5(new A.bF(b,c,"rendering library",A.bf("during "+a+"()"),new A.a4p(this),!1))},
 ak(a){var s,r=this
 r.y=a
 if(r.z&&r.Q!=null){r.z=!1
@@ -57248,7 +57248,7 @@ for(o=i.length,n=0;n<i.length;i.length===o||(0,A.w)(i),++n){s=i[n]
 try{if(B.b.u(j,s))s.$1(a)}catch(m){r=A.au(m)
 q=A.aS(m)
 p=null
-l=A.be("while executing callbacks for FrameTiming")
+l=A.bf("while executing callbacks for FrameTiming")
 k=$.fT
 if(k!=null)k.$1(new A.bF(r,q,"Flutter framework",l,p,!1))}}},
 C4(a){var s=this
@@ -57278,7 +57278,7 @@ if(o>0)i.X9(n,0)
 s.afX()}catch(m){r=A.au(m)
 q=A.aS(m)
 p=null
-h=A.be("during a task callback")
+h=A.bf("during a task callback")
 l=p==null?null:new A.a5v(p)
 A.d5(new A.bF(r,q,"scheduler library",h,l,!1))}return i.c!==0}return!0},
 wT(a,b,c){var s,r=this
@@ -57382,7 +57382,7 @@ j.ry$=null}},
 IZ(a,b,c){var s,r,q,p
 try{a.$1(b)}catch(q){s=A.au(q)
 r=A.aS(q)
-p=A.be("during a scheduler callback")
+p=A.bf("during a scheduler callback")
 A.d5(new A.bF(s,r,"scheduler library",p,null,!1))}},
 IY(a,b){return this.IZ(a,b,null)}}
 A.a5v.prototype={
@@ -58451,7 +58451,7 @@ break
 case 1:return A.Q(q,r)}})
 return A.R($async$vA,r)}}
 A.a3l.prototype={
-$1(a){if(a==null)throw A.h(A.vn(A.c([A.aCe(this.a),A.be("The asset does not exist or has empty data.")],t.E)))
+$1(a){if(a==null)throw A.h(A.vn(A.c([A.aCe(this.a),A.bf("The asset does not exist or has empty data.")],t.E)))
 return a},
 $S:310}
 A.Ug.prototype={
@@ -58625,7 +58625,7 @@ A.abI.prototype={
 $1(a){var s,r,q,p
 try{this.a.ic(0,a)}catch(q){s=A.au(q)
 r=A.aS(q)
-p=A.be("during a platform message response callback")
+p=A.bf("during a platform message response callback")
 A.d5(new A.bF(s,r,"services library",p,null,!1))}},
 $S:14}
 A.abJ.prototype={
@@ -58645,7 +58645,7 @@ case 3:q=2
 h=p.pop()
 m=A.au(h)
 l=A.aS(h)
-k=A.be("during a platform message callback")
+k=A.bf("during a platform message callback")
 A.d5(new A.bF(m,l,"services library",k,null,!1))
 o.push(5)
 s=4
@@ -58683,7 +58683,7 @@ try{r=s.$1(a)
 i=i||r}catch(l){q=A.au(l)
 p=A.aS(l)
 o=null
-k=A.be("while processing a key handler")
+k=A.bf("while processing a key handler")
 j=$.fT
 if(j!=null)j.$1(new A.bF(q,p,"services library",k,o,!1))}}return i},
 OG(a){var s,r,q=this,p=a.a,o=a.b
@@ -58711,7 +58711,7 @@ try{n=n.$1(s)
 return n}catch(o){r=A.au(o)
 q=A.aS(o)
 p=null
-n=A.be("while processing the key message handler")
+n=A.bf("while processing the key message handler")
 A.d5(new A.bF(r,q,"services library",n,p,!1))}}return!1},
 Cd(a){var s=0,r=A.S(t.a),q,p=this,o,n,m,l,k,j,i
 var $async$Cd=A.T(function(b,c){if(b===1)return A.P(c,r)
@@ -59212,7 +59212,7 @@ for(;l<n.length;n.length===m||(0,A.w)(n),++l){s=n[l]
 try{if(B.b.u(o,s))s.$1(a)}catch(k){r=A.au(k)
 q=A.aS(k)
 p=null
-j=A.be("while processing a raw key listener")
+j=A.bf("while processing a raw key listener")
 i=$.fT
 if(i!=null)i.$1(new A.bF(r,q,"services library",j,p,!1))}}return!1},
 a5g(a1){var s,r,q,p,o,n,m,l,k,j,i,h,g=a1.c,f=g.gad3(),e=t.v3,d=A.u(e,t.G),c=A.aI(e),b=this.d,a=A.d8(new A.b4(b,A.o(b).h("b4<1>")),e),a0=a1 instanceof A.lb
@@ -59555,7 +59555,7 @@ case 4:p=3
 i=o.pop()
 m=A.au(i)
 l=A.aS(i)
-k=A.be("during method call "+a.a)
+k=A.bf("during method call "+a.a)
 A.d5(new A.bF(m,l,"services library",k,new A.a8I(a),!1))
 throw i
 s=6
@@ -60699,7 +60699,7 @@ h=0
 for(;h<j.length;j.length===i||(0,A.w)(j),++h){p=j[h]
 try{p.Cf()}catch(g){o=A.au(g)
 n=A.aS(g)
-k=A.be("handling status bar action")
+k=A.bf("handling status bar action")
 m=new A.bF(o,n,"widgets library",k,null,!1)
 k=$.fT
 if(k!=null)k.$1(m)}}return A.Q(null,r)}})
@@ -60878,7 +60878,7 @@ o=m.e
 o.toString
 m.ay=m.cv(p,t.ad.a(o).b,null)}catch(n){s=A.au(n)
 r=A.aS(n)
-p=A.be("attaching to the render tree")
+p=A.bf("attaching to the render tree")
 q=new A.bF(s,r,"widgets library",p,null,!1)
 A.d5(q)
 m.ay=null}}}
@@ -61151,7 +61151,7 @@ I(a){var s=this.c,r=this.ZX()
 if(r!=null)s=A.ajY(s,"<Web Disabling Text Editing Shortcuts>",r)
 return A.ajY(s,"<Default Text Editing Shortcuts>",A.avV())}}
 A.EX.prototype={
-I(a){var s=A.bf(a,null,t.w).w,r=s.a,q=r.a,p=r.b,o=A.aw5(a),n=A.aw3(o,r),m=A.aw4(A.aw7(new A.x(0,0,0+q,0+p),A.aw6(s)),n)
+I(a){var s=A.bd(a,null,t.w).w,r=s.a,q=r.a,p=r.b,o=A.aw5(a),n=A.aw3(o,r),m=A.aw4(A.aw7(new A.x(0,0,0+q,0+p),A.aw6(s)),n)
 return new A.ct(new A.ay(m.a,m.b,q-m.c,p-m.d),A.wi(this.d,s.ae7(m)),null)}}
 A.Wa.prototype={
 $1(a){var s=a.gk0(a).gdT().afb(0,0)
@@ -61580,7 +61580,7 @@ if(m==null)m=A.acY()
 s.$1(m)}}catch(l){r=A.au(l)
 q=A.aS(l)
 p=null
-m=A.be("while dispatching notifications for "+A.t(this).j(0))
+m=A.bf("while dispatching notifications for "+A.t(this).j(0))
 k=$.fT
 if(k!=null)k.$1(new A.bF(r,q,"widgets library",m,p,!1))}}},
 Cc(a){switch(a.gbT(a).a){case 0:case 2:case 3:if(this.a!==!0){this.a=!0
@@ -62265,7 +62265,7 @@ A.DO.prototype={
 a5t(a){var s,r,q
 try{a.Qk()}catch(q){s=A.au(q)
 r=A.aS(q)
-A.ahu(A.be("while rebuilding dirty elements"),s,r,new A.UC(a))}},
+A.ahu(A.bf("while rebuilding dirty elements"),s,r,new A.UC(a))}},
 ZE(a){var s,r,q,p,o,n=this,m=n.e
 B.b.eJ(m,A.al4())
 n.d=!1
@@ -62333,7 +62333,7 @@ a98(a){var s=null,r=A.c([],t.E),q=A.c([],t.lX)
 this.kz(new A.WI(q))
 r.push(A.ij("The specific widget that could not find a "+a.j(0)+" ancestor was",this,!0,B.aS,s,s,s,B.at,!1,!0,!0,B.bk,s))
 if(q.length!==0)r.push(A.awv("The ancestors of this widget were",q))
-else r.push(A.be('This widget is the root of the tree, so it has no ancestors, let alone a "'+a.j(0)+'" ancestor.'))
+else r.push(A.bf('This widget is the root of the tree, so it has no ancestors, let alone a "'+a.j(0)+'" ancestor.'))
 return r},
 a97(a){var s=null
 return A.ij(a,this,!0,B.aS,s,s,s,B.at,!1,!0,!0,B.bk,s)},
@@ -62606,10 +62606,10 @@ hf(){var s,r,q,p,o,n,m,l=this,k=null
 try{k=l.i9()
 l.e.toString}catch(o){s=A.au(o)
 r=A.aS(o)
-n=A.v8(A.ahu(A.be("building "+l.j(0)),s,r,new A.Vn()))
+n=A.v8(A.ahu(A.bf("building "+l.j(0)),s,r,new A.Vn()))
 k=n}finally{l.kG()}try{l.ay=l.cv(l.ay,k,l.c)}catch(o){q=A.au(o)
 p=A.aS(o)
-n=A.v8(A.ahu(A.be("building "+l.j(0)),q,p,new A.Vo()))
+n=A.v8(A.ahu(A.bf("building "+l.j(0)),q,p,new A.Vo()))
 k=n
 try{m=l.ay
 if(m!=null)m.cA()}catch(o){}l.ay=l.cv(null,k,l.c)}},
@@ -64028,12 +64028,12 @@ n.toString
 j=o.$ti.h("fM<1>").a(n).guf().$2(o,k.b)
 o.e.toString}catch(m){s=A.au(m)
 r=A.aS(m)
-l=A.v8(A.aqZ(A.be("building "+k.a.e.j(0)),s,r,new A.adx()))
+l=A.v8(A.aqZ(A.bf("building "+k.a.e.j(0)),s,r,new A.adx()))
 j=l}try{o=k.a
 o.p1=o.cv(o.p1,j,null)}catch(m){q=A.au(m)
 p=A.aS(m)
 o=k.a
-l=A.v8(A.aqZ(A.be("building "+o.e.j(0)),q,p,new A.ady()))
+l=A.v8(A.aqZ(A.bf("building "+o.e.j(0)),q,p,new A.ady()))
 j=l
 o.p1=o.cv(null,j,o.c)}finally{o=k.a
 o.R8=!1
@@ -64255,7 +64255,7 @@ A.hB.prototype={
 bC(a){return!this.w.i(0,a.w)},
 E6(a,b){return b.j0(0,new A.a1O(this,a))}}
 A.a1P.prototype={
-$1(a){var s=A.bf(a,null,t.w).w
+$1(a){var s=A.bd(a,null,t.w).w
 return A.wi(this.c,s.a8u(s.gdh().ui(0,this.b,this.a)))},
 $S:395}
 A.a1O.prototype={
@@ -65622,7 +65622,7 @@ s.a(r)
 q=r.at
 q=q==null?null:q.d
 if(q===!0&&!r.gnK())return o
-o=r.bX$}throw A.h(A.vn(A.c([A.mt("Overlay was given infinite constraints and cannot be sized by a suitable child."),A.be("The constraints given to the overlay ("+p.gU().j(0)+") would result in an illegal infinite size ("+p.gU().ga76().j(0)+"). To avoid that, the Overlay tried to size itself to one of its children, but no suitable non-positioned child that belongs to an OverlayEntry with canSizeOverlay set to true could be found."),A.v7("Try wrapping the Overlay in a SizedBox to give it a finite size or use an OverlayEntry with canSizeOverlay set to true.")],t.E)))},
+o=r.bX$}throw A.h(A.vn(A.c([A.mt("Overlay was given infinite constraints and cannot be sized by a suitable child."),A.bf("The constraints given to the overlay ("+p.gU().j(0)+") would result in an illegal infinite size ("+p.gU().ga76().j(0)+"). To avoid that, the Overlay tried to size itself to one of its children, but no suitable non-positioned child that belongs to an OverlayEntry with canSizeOverlay set to true could be found."),A.v7("Try wrapping the Overlay in a SizedBox to give it a finite size or use an OverlayEntry with canSizeOverlay set to true.")],t.E)))},
 aI(a,b){var s,r,q=this,p=q.af
 if(q.ac!==B.o){s=q.cx
 s===$&&A.a()
@@ -66262,9 +66262,9 @@ this.W6()},
 I(a){return new A.dj(this.gzt(),A.kp(this.gkS(),new A.ag4(this),null),null,t.WA)}}
 A.ag4.prototype={
 $2(a,b){var s,r,q,p,o,n=this.a,m=n.gkS().c.a
-switch(A.aQ(n.a.c).a){case 0:s=A.bf(a,B.R9,t.w).w.a.a
+switch(A.aQ(n.a.c).a){case 0:s=A.bd(a,B.R9,t.w).w.a.a
 break
-case 1:s=A.bf(a,B.xr,t.w).w.a.b
+case 1:s=A.bd(a,B.xr,t.w).w.a.b
 break
 default:s=null}r=n.f
 if(r==null)q=null
@@ -67491,7 +67491,7 @@ if(q.ft$.length===0||r)q.ib()
 return!1}q.UI(a)
 return!0}}
 A.IP.prototype={
-I(a){var s,r,q,p=this,o=A.bf(a,B.aN,t.w).w.r,n=p.r,m=Math.max(o.a,n.a),l=p.d,k=l?o.b:0
+I(a){var s,r,q,p=this,o=A.bd(a,B.aN,t.w).w.r,n=p.r,m=Math.max(o.a,n.a),l=p.d,k=l?o.b:0
 k=Math.max(k,n.b)
 s=Math.max(o.c,n.c)
 r=p.f
@@ -67738,7 +67738,7 @@ if(p)return k
 s=null
 try{s=this.a.$2(a,b)}catch(o){r=A.au(o)
 q=A.aS(o)
-n=new A.bF(r,q,"widgets library",A.be("building"),k,!1)
+n=new A.bF(r,q,"widgets library",A.bf("building"),k,!1)
 A.d5(n)
 s=A.v8(n)}if(s==null)return k
 if(s.a!=null){p=s.a
@@ -67922,7 +67922,7 @@ p=A.a2(k,t.Sx)
 for(k=p.length,o=0;o<p.length;p.length===k||(0,A.w)(p),++o){s=p[o]
 try{if(s.h2$!=null)J.auQ(s,a)}catch(n){r=A.au(n)
 q=A.aS(n)
-m=A.be("while dispatching notifications for "+A.t(this).j(0))
+m=A.bf("while dispatching notifications for "+A.t(this).j(0))
 l=$.fT
 if(l!=null)l.$1(new A.bF(r,q,"widget library",m,new A.a5I(this),!1))}}},
 I(a){var s=this
@@ -69722,7 +69722,7 @@ p.sqW(r.a.r)
 r.a.toString
 s=r.c
 s.toString
-s=A.bf(s,B.aN,t.w).w
+s=A.bd(s,B.aN,t.w).w
 p.sbU(0,s.r)
 p.swU(r.a.db)
 p.sCQ(r.a.dx)
@@ -71242,14 +71242,14 @@ skX(a){if(a===this.a)return
 this.a=a
 this.ap()}}
 A.JM.prototype={
-au(a){var s=new A.rW(A.bf(a,B.h0,t.w).w.b,this.w,this.e,this.f,!0,null,new A.aZ(),A.ao())
+au(a){var s=new A.rW(A.bd(a,B.h0,t.w).w.b,this.w,this.e,this.f,!0,null,new A.aZ(),A.ao())
 s.aw()
 s.saG(null)
 return s},
 aD(a,b){t.xL.a(b)
 b.sie(0,this.e)
 b.sad2(0,this.f)
-b.snf(0,A.bf(a,B.h0,t.w).w.b)
+b.snf(0,A.bd(a,B.h0,t.w).w.b)
 b.svX(this.w)
 b.sa73(!0)}}
 A.rW.prototype={
@@ -71946,7 +71946,7 @@ n.toString
 s=t.bR.a(n).d.$2(l,l.giV())
 l.ac=l.cv(l.ac,s,null)}catch(m){r=A.au(m)
 q=A.aS(m)
-n=A.be("building "+l.j(0))
+n=A.bf("building "+l.j(0))
 p=new A.bF(r,q,"widgets library",n,null,!1)
 A.d5(p)
 o=A.v8(p)
@@ -72150,7 +72150,7 @@ i(a,b){if(b==null)return!1
 return this.$ti.b(b)&&A.CL(this.a,b.a)},
 gq(a){return new A.nc(B.kl,B.kl,t.S6.b2(this.$ti.c).h("nc<1,2>")).fw(0,this.a)},
 j(a){return"WidgetStateMapper<"+A.bH(this.$ti.c).j(0)+">("+this.a.j(0)+")"},
-H(a,b){throw A.h(A.vn(A.c([A.mt('There was an attempt to access the "'+b.gPJ().j(0)+'" field of a WidgetStateMapper<'+A.bH(this.$ti.c).j(0)+"> object."),A.be(this.j(0)),A.be("WidgetStateProperty objects should only be used in places that document their support."),A.v7('Double-check whether the map was used in a place that documents support for WidgetStateProperty objects. If so, please file a bug report. (The https://pub.dev/ page for a package contains a link to "View/report issues".)')],t.E)))},
+H(a,b){throw A.h(A.vn(A.c([A.mt('There was an attempt to access the "'+b.gPJ().j(0)+'" field of a WidgetStateMapper<'+A.bH(this.$ti.c).j(0)+"> object."),A.bf(this.j(0)),A.bf("WidgetStateProperty objects should only be used in places that document their support."),A.v7('Double-check whether the map was used in a place that documents support for WidgetStateProperty objects. If so, please file a bug report. (The https://pub.dev/ page for a package contains a link to "View/report issues".)')],t.E)))},
 $ibD:1}
 A.bK.prototype={
 Y(a){return this.a},
@@ -72185,7 +72185,7 @@ case 3:q=2
 g=p.pop()
 l=A.au(g)
 k=A.aS(g)
-j=A.be("during a framework-to-plugin message")
+j=A.bf("during a framework-to-plugin message")
 A.d5(new A.bF(l,k,"flutter web plugins",j,null,!1))
 o.push(5)
 s=4
