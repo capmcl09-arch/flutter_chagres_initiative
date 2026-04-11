@@ -92,7 +92,6 @@ class _ChagresHomeState extends State<ChagresHome> {
   final GlobalKey _fieldworkKey = GlobalKey();
   final GlobalKey _teamKey = GlobalKey();
   final GlobalKey _faqKey = GlobalKey();
-  final GlobalKey _donateKey = GlobalKey();
   final GlobalKey _reportsKey = GlobalKey();
   final GlobalKey _partnershipsKey = GlobalKey();
   final GlobalKey _givingLevelsKey = GlobalKey();
@@ -135,7 +134,6 @@ class _ChagresHomeState extends State<ChagresHome> {
       _partnershipsKey: 'Partnerships',
       _givingLevelsKey: 'Support',
       _faqKey: 'FAQ',
-      _donateKey: 'Donate',
     };
 
     String newActiveSection = '';
@@ -284,7 +282,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                 ReportsSection(key: _reportsKey, language: widget.language),
                 FAQSection(key: _faqKey, language: widget.language),
                 GivingLevelsSection(key: _givingLevelsKey, language: widget.language),
-                DonateSection(key: _donateKey, language: widget.language),
                 NewsletterSection(language: widget.language),
                 FooterSection(
                   language: widget.language,
@@ -380,10 +377,6 @@ class _ChagresHomeState extends State<ChagresHome> {
             _givingLevelsKey,
           ),
           _buildDrawerItem(
-            widget.language == 'en' ? 'Donate' : 'Donar',
-            _donateKey,
-          ),
-          _buildDrawerItem(
             widget.language == 'en' ? 'Team' : 'Equipo',
             _teamKey,
             alignment: 0.20,
@@ -467,7 +460,6 @@ class _ChagresHomeState extends State<ChagresHome> {
               _buildNavLink('Fieldwork', _reportsKey),
               _buildNavLink('Partnerships', _partnershipsKey),
               _buildNavLink('Support', _givingLevelsKey),
-              _buildNavLink('Donate', _donateKey),
               _buildNavLink('Team', _teamKey, alignment: 0.20),
               _buildNavLink('FAQ', _faqKey),
               SizedBox(
@@ -1773,140 +1765,6 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                   ),
                 );
               },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// Donate Section
-class DonateSection extends StatelessWidget {
-  final String language;
-
-  const DonateSection({super.key, required this.language});
-
-  @override
-  Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 900;
-    
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 60,
-        vertical: 60,
-      ),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: () {
-              // Heading click effect
-            },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Text(
-                language == 'en'
-                    ? 'Support the Chagres Initiative'
-                    : 'Apoye la Iniciativa Chagres',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFF101A2F),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.45),
-                  blurRadius: 34,
-                  offset: const Offset(0, 14),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              children: [
-                Text(
-                  language == 'en'
-                      ? 'The Chagres Geographic Fund directly supports equitable, community-based research partnerships in Panama.'
-                      : 'El Fondo Geográfico Chagres apoya directamente asociaciones de investigación equitativas y basadas en la comunidad en Panamá.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFFB9C6EA),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildListItem(
-                      language == 'en'
-                          ? 'Workshops Expenses (GPS, Drones, Starlink, mapping materials, meals)'
-                          : 'Gastos de Talleres (GPS, Drones, Starlink, materiales de mapeo, comidas)',
-                    ),
-                    _buildListItem(
-                      language == 'en'
-                          ? 'Local Geographer Honorariums and Travel'
-                          : 'Honorarios y Viajes de Geógrafos Locales',
-                    ),
-                    _buildListItem(
-                      language == 'en'
-                          ? 'Researcher and Student Travel Expenses'
-                          : 'Gastos de Viaje de Investigadores y Estudiantes',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    launchUrl(Uri.parse('https://geog.ku.edu/donate'));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFE8000D),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 12,
-                    ),
-                  ),
-                  child: Text(
-                    language == 'en'
-                        ? 'Donate to the Chagres Geographic Fund'
-                        : 'Donar al Fondo Geográfico Chagres',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildListItem(String text) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(right: 12, top: 4),
-            child: Icon(
-              Icons.check_circle,
-              size: 16,
-              color: Color(0xFFE8000D),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(
-                color: Color(0xFFB9C6EA),
-                fontSize: 17,
-              ),
             ),
           ),
         ],
