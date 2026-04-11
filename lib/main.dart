@@ -726,14 +726,48 @@ class AboutSection extends StatelessWidget {
 }
 
 // Meaningful Section
-class MeaningfulSection extends StatelessWidget {
+class MeaningfulSection extends StatefulWidget {
   final String language;
 
   const MeaningfulSection({super.key, required this.language});
 
   @override
+  State<MeaningfulSection> createState() => _MeaningfulSectionState();
+}
+
+class _MeaningfulSectionState extends State<MeaningfulSection> {
+  @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
+    
+    final principles = [
+      (
+        widget.language == 'en' ? '1. Authorized by Indigenous Congress' : '1. Autorizado por el Congreso Indígena',
+        widget.language == 'en'
+            ? 'This project proceeds only with formal community consent. Leaders from the Indigenous communities voted unanimously to collaborate with us. The work is grounded in trust built over decades of geographic research in the region.'
+            : 'Este proyecto procede solo con consentimiento comunitario formal. Los líderes de las comunidades indígenas votaron unánimemente para colaborar con nosotros. El trabajo se basa en la confianza construida durante décadas de investigación geográfica en la región.',
+      ),
+      (
+        widget.language == 'en' ? '2. Public-Facing, Living Research' : '2. Investigación Pública y Viva',
+        widget.language == 'en'
+            ? 'Rather than confining findings to academic journals or static reports, this initiative maintains a transparent and evolving public platform.'
+            : 'En lugar de confinar hallazgos a revistas académicas o informes estáticos, esta iniciativa mantiene una plataforma pública transparente y en evolución.',
+      ),
+      (
+        widget.language == 'en'
+            ? '3. Training Community Geographers'
+            : '3. Entrenamiento de Geógrafos Comunitarios',
+        widget.language == 'en'
+            ? 'We train community members as active researchers and geographers. Through hands-on fieldwork, they learn GPS use, cartography, imagery analysis, and geographic methods. They become co-producers of the maps and data that protect their lands.'
+            : 'Entrenamos a miembros de la comunidad como investigadores y geógrafos activos. A través del trabajo de campo práctico, aprenden el uso de GPS, cartografía, análisis de imágenes y métodos geográficos. Se convierten en coproductores de los mapas y datos que protegen sus tierras.',
+      ),
+      (
+        widget.language == 'en' ? '4. Applied and Accountable' : '4. Aplicado y Responsable',
+        widget.language == 'en'
+            ? 'The research is designed to produce tangible outcomes: participatory zoning frameworks, watershed monitoring strategies, and spatial tools.'
+            : 'La investigación está diseñada para producir resultados tangibles: marcos de zonificación participativa, estrategias de monitoreo de cuencas hidrográficas y herramientas espaciales.',
+      ),
+    ];
     
     return Container(
       color: const Color(0xFF0C1328),
@@ -744,7 +778,7 @@ class MeaningfulSection extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            language == 'en'
+            widget.language == 'en'
                 ? 'What Makes This Project Uniquely Meaningful?'
                 : '¿Qué hace que este proyecto sea único?',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -753,78 +787,57 @@ class MeaningfulSection extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFF101A2F),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildPrincipleCard(
-                  context,
-                  language == 'en' ? '1. Authorized by Indigenous Congress' : '1. Autorizado por el Congreso Indígena',
-                  language == 'en'
-                      ? 'This project proceeds only with formal community consent. Leaders from the Indigenous communities voted unanimously to collaborate with us. The work is grounded in trust built over decades of geographic research in the region.'
-                      : 'Este proyecto procede solo con consentimiento comunitario formal. Los líderes de las comunidades indígenas votaron unánimemente para colaborar con nosotros. El trabajo se basa en la confianza construida durante décadas de investigación geográfica en la región.',
-                ),
-                const SizedBox(height: 20),
-                _buildPrincipleCard(
-                  context,
-                  language == 'en' ? '2. Public-Facing, Living Research' : '2. Investigación Pública y Viva',
-                  language == 'en'
-                      ? 'Rather than confining findings to academic journals or static reports, this initiative maintains a transparent and evolving public platform.'
-                      : 'En lugar de confinar hallazgos a revistas académicas o informes estáticos, esta iniciativa mantiene una plataforma pública transparente y en evolución.',
-                ),
-                const SizedBox(height: 20),
-                _buildPrincipleCard(
-                  context,
-                  language == 'en'
-                      ? '3. Training Community Geographers'
-                      : '3. Entrenamiento de Geógrafos Comunitarios',
-                  language == 'en'
-                      ? 'We train community members as active researchers and geographers. Through hands-on fieldwork, they learn GPS use, cartography, imagery analysis, and geographic methods. They become co-producers of the maps and data that protect their lands.'
-                      : 'Entrenamos a miembros de la comunidad como investigadores y geógrafos activos. A través del trabajo de campo práctico, aprenden el uso de GPS, cartografía, análisis de imágenes y métodos geográficos. Se convierten en coproductores de los mapas y datos que protegen sus tierras.',
-                ),
-                const SizedBox(height: 20),
-                _buildPrincipleCard(
-                  context,
-                  language == 'en' ? '4. Applied and Accountable' : '4. Aplicado y Responsable',
-                  language == 'en'
-                      ? 'The research is designed to produce tangible outcomes: participatory zoning frameworks, watershed monitoring strategies, and spatial tools.'
-                      : 'La investigación está diseñada para producir resultados tangibles: marcos de zonificación participativa, estrategias de monitoreo de cuencas hidrográficas y herramientas espaciales.',
-                ),
-              ],
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: principles.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 0),
+              itemBuilder: (context, index) {
+                final principle = principles[index];
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.white.withOpacity(0.12),
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+                    child: ExpansionTile(
+                      title: Text(
+                        principle.$1,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      collapsedIconColor: const Color(0xFFB9C6EA),
+                      iconColor: const Color(0xFF81C784),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                          child: Text(
+                            principle.$2,
+                            style: const TextStyle(
+                              color: Color(0xFFB9C6EA),
+                              fontSize: 14,
+                              height: 1.6,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildPrincipleCard(
-    BuildContext context,
-    String title,
-    String description,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          description,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: const Color(0xFFB9C6EA),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -969,16 +982,21 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
 }
 
 // Methodology Section
-class MethodologySection extends StatelessWidget {
+class MethodologySection extends StatefulWidget {
   final String language;
 
   const MethodologySection({super.key, required this.language});
 
   @override
+  State<MethodologySection> createState() => _MethodologySectionState();
+}
+
+class _MethodologySectionState extends State<MethodologySection> {
+  @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
     
-    final stages = language == 'en'
+    final stages = widget.language == 'en'
         ? [
             ('Stage One: Co-design', 'Define mapping goals collaboratively with community leadership.'),
             ('Stage Two: Training', 'Equip local researchers with GPS, mapping, and documentation tools.'),
@@ -1000,68 +1018,64 @@ class MethodologySection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          GestureDetector(
-            onTap: () {
-              // Heading click effect
-            },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Text(
-                language == 'en'
-                    ? 'Stages of Participatory Research Mapping (PRM)'
-                    : 'Etapas del Mapeo de Investigación Participativa',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                ),
-              ),
+          Text(
+            widget.language == 'en'
+                ? 'Stages of Participatory Research Mapping (PRM)'
+                : 'Etapas del Mapeo de Investigación Participativa',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 24),
-          GridView.count(
-            crossAxisCount: isMobile ? 1 : 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 2.2,
-            children: stages
-                .map(
-                  (stage) => Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF101A2F),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
+          Container(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: stages.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 0),
+              itemBuilder: (context, index) {
+                final stage = stages[index];
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
                         color: Colors.white.withOpacity(0.12),
+                        width: 1,
                       ),
                     ),
-                    padding: const EdgeInsets.all(14),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          stage.$1,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: Colors.white,
-                            fontFamily: 'serif',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  ),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+                    child: ExpansionTile(
+                      title: Text(
+                        stage.$1,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          stage.$2,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: const Color(0xFFB9C6EA),
-                            fontFamily: 'serif',
-                            fontSize: 15,
+                      ),
+                      collapsedIconColor: const Color(0xFFB9C6EA),
+                      iconColor: const Color(0xFF81C784),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                          child: Text(
+                            stage.$2,
+                            style: const TextStyle(
+                              color: Color(0xFFB9C6EA),
+                              fontSize: 14,
+                              height: 1.6,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                )
-                .toList(),
+                );
+              },
+            ),
           ),
         ],
       ),
