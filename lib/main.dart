@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:html' as html;
 import 'dart:ui_web' as ui;
 
@@ -210,11 +211,14 @@ class _ChagresHomeState extends State<ChagresHome> {
         backgroundColor: Colors.black87,
         child: Stack(
           children: [
-            PhotoView(
-              imageProvider: const AssetImage('assets/images/chagres_logo.svg'),
-              minScale: PhotoViewComputedScale.contained * 0.8,
-              maxScale: PhotoViewComputedScale.covered * 2.0,
-              enableRotation: false,
+            InteractiveViewer(
+              minScale: 0.5,
+              maxScale: 4.0,
+              child: SvgPicture.asset(
+                'assets/images/chagres_logo.svg',
+                width: 400,
+                height: 400,
+              ),
             ),
             Positioned(
               top: 16,
@@ -312,7 +316,7 @@ class _ChagresHomeState extends State<ChagresHome> {
         onTap: _showLogoZoom,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
-          child: Image.asset(
+          child: SvgPicture.asset(
             'assets/images/chagres_logo.svg',
             height: 48,
           ),
@@ -337,7 +341,7 @@ class _ChagresHomeState extends State<ChagresHome> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
+                SvgPicture.asset(
                   'assets/images/chagres_logo.svg',
                   height: 60,
                 ),
@@ -437,7 +441,7 @@ class _ChagresHomeState extends State<ChagresHome> {
             onTap: _showLogoZoom,
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
-              child: Image.asset(
+              child: SvgPicture.asset(
                 'assets/images/chagres_logo.svg',
                 height: 80,
               ),
@@ -530,11 +534,35 @@ class HeroSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Image.asset(
+          // Chagres Logo
+          SvgPicture.asset(
             'assets/images/chagres_logo.svg',
-            width: isMobile ? 120 : 160,
-            height: isMobile ? 120 : 160,
-            fit: BoxFit.contain,
+            width: isMobile ? 100 : 140,
+            height: isMobile ? 100 : 140,
+          ),
+          const SizedBox(height: 20),
+          // Institution Logos
+          Wrap(
+            spacing: 20,
+            runSpacing: 20,
+            alignment: WrapAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/ku_signature.png',
+                height: isMobile ? 40 : 50,
+                fit: BoxFit.contain,
+              ),
+              Image.asset(
+                'assets/images/arlington_logo.png',
+                height: isMobile ? 40 : 50,
+                fit: BoxFit.contain,
+              ),
+              Image.asset(
+                'assets/images/labonga_seal.png',
+                height: isMobile ? 40 : 50,
+                fit: BoxFit.contain,
+              ),
+            ],
           ),
           const SizedBox(height: 24),
           Padding(
