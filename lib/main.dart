@@ -211,7 +211,7 @@ class _ChagresHomeState extends State<ChagresHome> {
         child: Stack(
           children: [
             PhotoView(
-              imageProvider: const AssetImage('assets/images/Oval_Logo.png'),
+              imageProvider: const AssetImage('assets/images/chagres_logo.svg'),
               minScale: PhotoViewComputedScale.contained * 0.8,
               maxScale: PhotoViewComputedScale.covered * 2.0,
               enableRotation: false,
@@ -313,7 +313,7 @@ class _ChagresHomeState extends State<ChagresHome> {
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Image.asset(
-            'assets/images/Oval_Logo.png',
+            'assets/images/chagres_logo.svg',
             height: 48,
           ),
         ),
@@ -338,7 +338,7 @@ class _ChagresHomeState extends State<ChagresHome> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/Oval_Logo.png',
+                  'assets/images/chagres_logo.svg',
                   height: 60,
                 ),
                 const SizedBox(height: 12),
@@ -438,7 +438,7 @@ class _ChagresHomeState extends State<ChagresHome> {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Image.asset(
-                'assets/images/Oval_Logo.png',
+                'assets/images/chagres_logo.svg',
                 height: 80,
               ),
             ),
@@ -530,22 +530,11 @@ class HeroSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            language == 'en'
-                ? 'Chagres Initiative'
-                : 'La Iniciativa Chagres',
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-              fontFamily: 'serif',
-              color: Colors.white,
-              shadows: [
-                Shadow(
-                  offset: const Offset(1.5, 1.5),
-                  blurRadius: 3.0,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ],
-            ),
-            textAlign: TextAlign.center,
+          Image.asset(
+            'assets/images/chagres_logo.svg',
+            width: isMobile ? 120 : 160,
+            height: isMobile ? 120 : 160,
+            fit: BoxFit.contain,
           ),
           const SizedBox(height: 24),
           Padding(
