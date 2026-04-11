@@ -2077,82 +2077,98 @@ class _NewsletterSectionState extends State<NewsletterSection> {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
 
-    return Container(
-      color: const Color(0xFF101A2F),
+    return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
         vertical: 60,
       ),
-      child: Column(
-        children: [
-          Text(
-            widget.language == 'en'
-                ? 'Stay Updated'
-                : 'Manténgase Actualizado',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF101A2F),
+          borderRadius: BorderRadius.circular(40),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
             ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            widget.language == 'en'
-                ? 'Subscribe to our Substack for the latest research updates, field reflections, and news from the Chagres Initiative.'
-                : 'Suscríbase a nuestro Substack para recibir las últimas actualizaciones de investigación, reflexiones de campo y noticias de la Iniciativa Chagres.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFFB9C6EA),
+          ],
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 20 : 60,
+          vertical: 50,
+        ),
+        child: Column(
+          children: [
+            Text(
+              widget.language == 'en'
+                  ? 'Stay Updated'
+                  : 'Manténgase Actualizado',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Colors.white,
+              ),
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          GestureDetector(
-            onTap: _subscribeToSubstack,
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color(0xFF0051BA),
-                      const Color(0xFF0051BA).withOpacity(0.8),
+            const SizedBox(height: 12),
+            Text(
+              widget.language == 'en'
+                  ? 'Subscribe to our Substack for the latest research updates, field reflections, and news from the Chagres Initiative.'
+                  : 'Suscríbase a nuestro Substack para recibir las últimas actualizaciones de investigación, reflexiones de campo y noticias de la Iniciativa Chagres.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: const Color(0xFFB9C6EA),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            GestureDetector(
+              onTap: _subscribeToSubstack,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        const Color(0xFF0051BA),
+                        const Color(0xFF0051BA).withOpacity(0.8),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF0051BA).withOpacity(0.4),
+                        blurRadius: 16,
+                        offset: const Offset(0, 4),
+                      ),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(50),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF0051BA).withOpacity(0.4),
-                      blurRadius: 16,
-                      offset: const Offset(0, 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 14,
+                  ),
+                  child: Text(
+                    widget.language == 'en'
+                        ? 'Subscribe on Substack'
+                        : 'Suscribirse en Substack',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
-                  ],
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 14,
-                ),
-                child: Text(
-                  widget.language == 'en'
-                      ? 'Subscribe on Substack'
-                      : 'Suscribirse en Substack',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            widget.language == 'en'
-                ? '@chagresinitiative'
-                : '@chagresinitiative',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: const Color(0xFF81C784),
+            const SizedBox(height: 12),
+            Text(
+              widget.language == 'en'
+                  ? '@chagresinitiative'
+                  : '@chagresinitiative',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: const Color(0xFF81C784),
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
