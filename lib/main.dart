@@ -530,6 +530,15 @@ class HeroSection extends StatelessWidget {
       ),
       child: Column(
         children: [
+          // Chagres Logo - Large
+          Container(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Image.asset(
+              'assets/images/chagres_initiative_logo_hq.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+          const SizedBox(height: 40),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isMobile ? 0 : 100,
