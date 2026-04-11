@@ -1859,8 +1859,8 @@ class TeamSection extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     language == 'en'
-                        ? 'The Original Research Team from KU: Taylor Tappan, Peter Herlihy and Cap McLiney'
-                        : 'El Equipo de Investigación Original de KU: Taylor Tappan, Peter Herlihy y Cap McLiney',
+                        ? 'Original KU Research Team of Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow and Dr. Taylor Tappan'
+                        : 'Equipo de Investigación Original de KU del Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow y Dr. Taylor Tappan',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: const Color(0xFF9BB1D6),
                     ),

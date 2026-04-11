@@ -39089,7 +39089,7 @@ A.K_.prototype={
 I(a){var s,r,q,p,o=this,n=null,m=A.bd(a,n,t.w).w.a.a<900,l=m?20:60,k=o.c,j=k==="en",i=j?"Research Team":"Equipo de Investigaci\xf3n",h=A.X(a).ok.f
 i=A.b5(i,n,n,h==null?n:h.bc(B.f),n)
 h=A.Ef(A.cB(12),A.ju("assets/images/team.jpg",B.ep,n,n,1/0))
-s=j?"The Original Research Team from KU: Taylor Tappan, Peter Herlihy and Cap McLiney":"El Equipo de Investigaci\xf3n Original de KU: Taylor Tappan, Peter Herlihy y Cap McLiney"
+s=j?"Original KU Research Team of Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow and Dr. Taylor Tappan":"Equipo de Investigaci\xf3n Original de KU del Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow y Dr. Taylor Tappan"
 r=A.X(a).ok.Q
 q=t.p
 r=A.ey(A.cc(A.c([h,B.cg,new A.ch(B.B5,A.b5(s,n,n,r==null?n:r.bc(B.zO),B.ax),n)],q),B.A,B.G,B.L),n,1/0)
