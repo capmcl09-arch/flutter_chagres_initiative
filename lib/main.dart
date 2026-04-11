@@ -644,8 +644,8 @@ class PartnershipsSection extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             language == 'en'
-                ? 'Your tax-deductible donation directly supports paid Indigenous research collaborators, participatory mapping workshops, watershed monitoring equipment, and field support for KU and UT-Arlington student researchers working to map Chagres National Park.'
-                : 'Tu donación deducible de impuestos apoya directamente a los colaboradores de investigación indígena remunerados, talleres de mapeo participativo, equipos de monitoreo de cuencas y apoyo de campo para investigadores estudiantes.',
+                ? 'Your tax-deductible donation directly funds field research in Panama and computer lab work at U.S. universities. Federal and NGO funding for international conservation research is being cut, so we\'re turning to grassroots support. Over the next two years with approximately \$100,000 in funding, your donation pays for travel to Panama, transportation by river, workshop costs, field equipment, mapping materials, and most importantly—honorariums for community geographers and local collaborators.'
+                : 'Tu donación deducible de impuestos financia directamente la investigación de campo en Panamá y el trabajo de laboratorio informático en universidades estadounidenses. La financiación federal y de ONG para la investigación internacional de conservación se está reduciendo, por lo que recurrimos al apoyo comunitario. Durante los próximos dos años con aproximadamente \$100,000 en financiación, tu donación paga viajes a Panamá, transporte por río, costos de talleres, equipos de campo, materiales de mapeo y lo más importante: honorarios para geógrafos comunitarios y colaboradores locales.',
             style: const TextStyle(
               color: Color(0xFFB9C6EA),
               fontSize: 17,
@@ -705,8 +705,8 @@ class AboutSection extends StatelessWidget {
             padding: const EdgeInsets.all(30),
             child: Text(
               language == 'en'
-                  ? 'The Chagres Initiative is a community-based participatory zoning and monitoring effort in the Río Pequení sub-basin of Chagres National Park, the most strategically important watershed in the Panama Canal system. The park supplies an estimated 40 percent of the water used in Canal operations and about 80 percent of Panama City\'s drinking water. Yet limited on-the-ground monitoring and enforcement in remote areas has enabled illegal settlement and deforestation, while the Emberá community of San Juan Pequení Indígena La Bonga remains in legal limbo as it seeks collective land recognition under Panama\'s 2008 Law 72. Working with Indigenous leaders, neighboring campesino residents, and Canal institutions, the project combines participatory research mapping with GIS and remote sensing to co-produce consensus land-use zones and locally grounded monitoring tools that can strengthen watershed governance and Canal water security.'
-                  : 'La Iniciativa Chagres es un esfuerzo comunitario participativo de zonificación y monitoreo en la subcuenca del Río Pequení del Parque Nacional Chagres, la cuenca más estratégicamente importante del sistema del Canal de Panamá. El parque proporciona aproximadamente el 40 por ciento del agua utilizada en las operaciones del Canal y aproximadamente el 80 por ciento del agua potable de la Ciudad de Panamá. Sin embargo, el monitoreo limitado en el terreno y la ejecución en áreas remotas ha permitido asentamientos ilegales y deforestación, mientras que la comunidad Emberá de San Juan Pequení Indígena La Bonga permanece en un limbo legal mientras busca reconocimiento de tierras colectivas bajo la Ley 72 de 2008 de Panamá. Trabajando con líderes indígenas, residentes campesinos vecinos e instituciones del Canal, el proyecto combina mapeo participativo de investigación con SIG y teledetección para coproducir zonas de uso del suelo por consenso y herramientas de monitoreo locales que pueden fortalecer la gobernanza de cuencas hidrográficas y la seguridad del agua del Canal.',
+                  ? 'The Chagres Initiative was created in response to a formal request from an Indigenous Congress in Panama. It is a university and community-based research project to protect Chagres National Park, which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City. The park is also the historic homeland of the Emberá and Wounaan Indigenous communities who live there, use, and protect its biodiverse habitats.\n\nOur research team from the University of Kansas and the University of Texas-Arlington was invited by Indigenous leaders to help map and zone their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge with modern tools like GPS and satellite imagery. Importantly, we train community members as \"community geographers\" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning.\n\nThrough this collaboration, the community gains the mapping tools they need for land protection, and we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
+                  : 'La Iniciativa Chagres fue creada en respuesta a una solicitud formal de un Congreso Indígena en Panamá. Es un proyecto de investigación universitario y comunitario para proteger el Parque Nacional Chagres, que proporciona el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para 1.5 millones de personas en la Ciudad de Panamá. El parque también es la tierra natal histórica de las comunidades indígenas Emberá y Wounaan que viven allí, la utilizan y protegen sus hábitats biodiversos.\n\nNuestro equipo de investigación de la Universidad de Kansas y la Universidad de Texas-Arlington fue invitado por líderes indígenas para ayudar a mapear y zonificar su uso de la tierra dentro del parque. Utilizamos metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena con herramientas modernas como GPS e imágenes satelitales. Lo importante es que entrenamos a miembros de la comunidad como \"geógrafos comunitarios\" que aprenden habilidades de investigación de campo y trabajan junto con investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo.\n\nA través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: const Color(0xFFB9C6EA),
               ),
@@ -763,10 +763,10 @@ class MeaningfulSection extends StatelessWidget {
               children: [
                 _buildPrincipleCard(
                   context,
-                  language == 'en' ? '1. Co-Produced, Not Extractive' : '1. Co-Producido, No Extractivo',
+                  language == 'en' ? '1. Authorized by Indigenous Congress' : '1. Autorizado por el Congreso Indígena',
                   language == 'en'
-                      ? 'This project is built on a partnership with the Indigenous community of San Juan Pequeñí La Bonga, Panama. Community members are not research subjects; they are paid collaborators and co-producers of spatial knowledge.'
-                      : 'Este proyecto se basa en una asociación con la comunidad indígena de San Juan Pequeñí La Bonga, Panamá. Los miembros de la comunidad no son sujetos de investigación; son colaboradores pagados y coproductores de conocimiento espacial.',
+                      ? 'This project proceeds only with formal community consent. Leaders from the Indigenous communities voted unanimously to collaborate with us. The work is grounded in trust built over decades of geographic research in the region.'
+                      : 'Este proyecto procede solo con consentimiento comunitario formal. Los líderes de las comunidades indígenas votaron unánimemente para colaborar con nosotros. El trabajo se basa en la confianza construida durante décadas de investigación geográfica en la región.',
                 ),
                 const SizedBox(height: 20),
                 _buildPrincipleCard(
@@ -780,11 +780,11 @@ class MeaningfulSection extends StatelessWidget {
                 _buildPrincipleCard(
                   context,
                   language == 'en'
-                      ? '3. Institutionally Anchored, Grassroots Supported'
-                      : '3. Anclado Institucionalmente',
+                      ? '3. Training Community Geographers'
+                      : '3. Entrenamiento de Geógrafos Comunitarios',
                   language == 'en'
-                      ? 'The project is endorsed by the University of Kansas Department of Geography and the KU Center for Latin American and Caribbean Studies.'
-                      : 'El proyecto está respaldado por el Departamento de Geografía de la Universidad de Kansas y el Centro de Estudios Latinoamericanos y del Caribe de KU.',
+                      ? 'We train community members as active researchers and geographers. Through hands-on fieldwork, they learn GPS use, cartography, imagery analysis, and geographic methods. They become co-producers of the maps and data that protect their lands.'
+                      : 'Entrenamos a miembros de la comunidad como investigadores y geógrafos activos. A través del trabajo de campo práctico, aprenden el uso de GPS, cartografía, análisis de imágenes y métodos geográficos. Se convierten en coproductores de los mapas y datos que protegen sus tierras.',
                 ),
                 const SizedBox(height: 20),
                 _buildPrincipleCard(
