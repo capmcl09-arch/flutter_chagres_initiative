@@ -283,6 +283,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                 FAQSection(key: _faqKey, language: widget.language),
                 GivingLevelsSection(key: _givingLevelsKey, language: widget.language),
                 NewsletterSection(language: widget.language),
+                ContactUsSection(language: widget.language),
                 FooterSection(
                   language: widget.language,
                   onLanguageChanged: widget.onLanguageChanged,
@@ -1988,6 +1989,97 @@ class TeamSection extends StatelessWidget {
   }
 }
 
+// Contact Us Section
+class ContactUsSection extends StatelessWidget {
+  final String language;
+
+  const ContactUsSection({super.key, required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+    
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 20 : 60,
+        vertical: 60,
+      ),
+      child: Column(
+        children: [
+          Text(
+            language == 'en' ? 'Get in Touch' : 'Ponte en Contacto',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF101A2F),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.45),
+                  blurRadius: 34,
+                  offset: const Offset(0, 14),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              children: [
+                Text(
+                  language == 'en'
+                      ? 'Have questions about the Chagres Initiative? We\'d love to hear from you.'
+                      : '¿Tienes preguntas sobre la Iniciativa Chagres? Nos encantaría escucharte.',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFFB9C6EA),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                GestureDetector(
+                  onTap: () {
+                    launchUrl(Uri.parse('mailto:chagresinitiative@ku.edu'));
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF0051BA),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF0051BA).withOpacity(0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 14,
+                      ),
+                      child: Text(
+                        'chagresinitiative@ku.edu',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 // Footer Section
 class FooterSection extends StatelessWidget {
   final String language;
@@ -2012,7 +2104,7 @@ class FooterSection extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            '© 2026 The Chagres Initiative - KU Department of Geography',
+            '© 2026 Chagres Initiative',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFB9C6EA),
             ),
