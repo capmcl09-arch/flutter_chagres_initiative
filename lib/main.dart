@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:html' as html;
 import 'dart:ui_web' as ui;
 
@@ -211,14 +210,11 @@ class _ChagresHomeState extends State<ChagresHome> {
         backgroundColor: Colors.black87,
         child: Stack(
           children: [
-            InteractiveViewer(
-              minScale: 0.5,
-              maxScale: 4.0,
-              child: SvgPicture.asset(
-                'assets/images/chagres_logo.svg',
-                width: 400,
-                height: 400,
-              ),
+            PhotoView(
+              imageProvider: const AssetImage('assets/images/chagres_initiative_logo_hq.png'),
+              minScale: PhotoViewComputedScale.contained * 0.8,
+              maxScale: PhotoViewComputedScale.covered * 2.0,
+              enableRotation: false,
             ),
             Positioned(
               top: 16,
@@ -316,8 +312,8 @@ class _ChagresHomeState extends State<ChagresHome> {
         onTap: _showLogoZoom,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
-          child: SvgPicture.asset(
-            'assets/images/chagres_logo.svg',
+          child: Image.asset(
+            'assets/images/chagres_initiative_logo_hq.png',
             height: 48,
           ),
         ),
@@ -341,8 +337,8 @@ class _ChagresHomeState extends State<ChagresHome> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/images/chagres_logo.svg',
+                Image.asset(
+                  'assets/images/chagres_initiative_logo_hq.png',
                   height: 60,
                 ),
                 const SizedBox(height: 12),
@@ -441,8 +437,8 @@ class _ChagresHomeState extends State<ChagresHome> {
             onTap: _showLogoZoom,
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
-              child: SvgPicture.asset(
-                'assets/images/chagres_logo.svg',
+              child: Image.asset(
+                'assets/images/chagres_initiative_logo_hq.png',
                 height: 80,
               ),
             ),
@@ -535,10 +531,11 @@ class HeroSection extends StatelessWidget {
       child: Column(
         children: [
           // Chagres Logo
-          SvgPicture.asset(
-            'assets/images/chagres_logo.svg',
+          Image.asset(
+            'assets/images/chagres_initiative_logo_hq.png',
             width: isMobile ? 100 : 140,
             height: isMobile ? 100 : 140,
+            fit: BoxFit.contain,
           ),
           const SizedBox(height: 20),
           // Institution Logos
