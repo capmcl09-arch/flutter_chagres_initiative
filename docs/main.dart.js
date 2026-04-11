@@ -39116,7 +39116,7 @@ m=A.X(m).ok.Q
 return A.ey(A.bq(o,A.cc(A.c([new A.DZ(B.cx,new A.jc("assets/images/"+l,o,o),28,o),B.KQ,k,B.KN,A.b5(j,3,B.bz,m==null?o:m.a8u(B.a1,16,1.2),B.ax)],t.p),B.A,B.G,B.cF),B.m,o,o,new A.bt(B.as,o,r,s,o,o,B.E),o,o,o,B.Bg,o,o,o),o,n)},
 $S:215}
 A.Et.prototype={
-I(a){var s,r,q,p,o,n=null,m=A.bd(a,n,t.w).w.a.a<900?20:60,l=this.c==="en",k=l?"Get in Touch":"Ponte en Contacto",j=A.X(a).ok.f
+I(a){var s,r,q,p,o,n=null,m=A.bd(a,n,t.w).w.a.a<900?20:60,l=this.c==="en",k=l?"Contact Us":"Cont\xe1ctanos",j=A.X(a).ok.f
 k=A.b5(k,n,n,j==null?n:j.bc(B.f),n)
 j=A.cB(16)
 s=t.sq

@@ -2030,7 +2030,7 @@ class ContactUsSection extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            language == 'en' ? 'Get in Touch' : 'Ponte en Contacto',
+            language == 'en' ? 'Contact Us' : 'Contáctanos',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
             ),
