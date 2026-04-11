@@ -2084,7 +2084,9 @@ class ContactUsSection extends StatelessWidget {
                         vertical: 14,
                       ),
                       child: Text(
-                        'chagresinitiative@ku.edu',
+                        language == 'en'
+                            ? 'Email us at: chagresinitiative@ku.edu'
+                            : 'Envíanos un correo a: chagresinitiative@ku.edu',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,

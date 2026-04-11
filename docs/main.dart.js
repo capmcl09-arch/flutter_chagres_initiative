@@ -39116,18 +39116,18 @@ m=A.X(m).ok.Q
 return A.ey(A.bq(o,A.cc(A.c([new A.DZ(B.cx,new A.jc("assets/images/"+l,o,o),28,o),B.KQ,k,B.KN,A.b5(j,3,B.bz,m==null?o:m.a8u(B.a1,16,1.2),B.ax)],t.p),B.A,B.G,B.cF),B.m,o,o,new A.bt(B.as,o,r,s,o,o,B.E),o,o,o,B.Bg,o,o,o),o,n)},
 $S:215}
 A.Et.prototype={
-I(a){var s,r,q,p,o=null,n=A.bd(a,o,t.w).w.a.a<900?20:60,m=this.c==="en",l=m?"Get in Touch":"Ponte en Contacto",k=A.X(a).ok.f
-l=A.b5(l,o,o,k==null?o:k.bc(B.f),o)
-k=A.cB(16)
+I(a){var s,r,q,p,o,n=null,m=A.bd(a,n,t.w).w.a.a<900?20:60,l=this.c==="en",k=l?"Get in Touch":"Ponte en Contacto",j=A.X(a).ok.f
+k=A.b5(k,n,n,j==null?n:j.bc(B.f),n)
+j=A.cB(16)
 s=t.sq
 r=A.c([new A.cC(0,B.aT,A.aq(115,B.k.q()>>>16&255,B.k.q()>>>8&255,B.k.q()&255),B.fn,34)],s)
-m=m?"Have questions about the Chagres Initiative? We'd love to hear from you.":"\xbfTienes preguntas sobre la Iniciativa Chagres? Nos encantar\xeda escucharte."
-q=A.X(a).ok.z
-m=A.b5(m,o,o,q==null?o:q.bc(B.a1),B.ax)
-q=A.cB(12)
+q=l?"Have questions about the Chagres Initiative? We'd love to hear from you.":"\xbfTienes preguntas sobre la Iniciativa Chagres? Nos encantar\xeda escucharte."
+p=A.X(a).ok.z
+q=A.b5(q,n,n,p==null?n:p.bc(B.a1),B.ax)
+p=A.cB(12)
 s=A.c([new A.cC(0,B.aT,A.aq(B.c.an(76.5),B.ai.q()>>>16&255,B.ai.q()>>>8&255,B.ai.q()&255),B.rg,12)],s)
-p=t.p
-return new A.ch(new A.ax(n,60,n,60),A.cc(A.c([l,B.aD,A.bq(o,A.cc(A.c([m,B.aD,A.d_(o,A.e7(A.bq(o,A.b5("chagresinitiative@ku.edu",o,o,B.fV,o),B.m,o,o,new A.bt(B.ai,o,o,q,s,o,B.E),o,o,o,B.Ba,o,o,o),B.aE,o,o,o),B.I,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.Vp(),o,o,o)],p),B.A,B.G,B.L),B.m,o,o,new A.bt(B.as,o,o,k,r,o,B.E),o,o,o,B.eV,o,o,o)],p),B.A,B.G,B.L),o)}}
+o=t.p
+return new A.ch(new A.ax(m,60,m,60),A.cc(A.c([k,B.aD,A.bq(n,A.cc(A.c([q,B.aD,A.d_(n,A.e7(A.bq(n,A.b5(l?"Email us at: chagresinitiative@ku.edu":"Env\xedanos un correo a: chagresinitiative@ku.edu",n,n,B.fV,n),B.m,n,n,new A.bt(B.ai,n,n,p,s,n,B.E),n,n,n,B.Ba,n,n,n),B.aE,n,n,n),B.I,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.Vp(),n,n,n)],o),B.A,B.G,B.L),B.m,n,n,new A.bt(B.as,n,n,j,r,n,B.E),n,n,n,B.eV,n,n,n)],o),B.A,B.G,B.L),n)}}
 A.Vp.prototype={
 $0(){A.ts(A.fF("mailto:chagresinitiative@ku.edu",0,null))},
 $S:0}
