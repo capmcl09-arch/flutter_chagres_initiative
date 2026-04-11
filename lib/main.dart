@@ -1587,53 +1587,53 @@ class FAQSection extends StatelessWidget {
 }
 
 // Giving Levels Section
-class GivingLevelsSection extends StatelessWidget {
+class GivingLevelsSection extends StatefulWidget {
   final String language;
 
   const GivingLevelsSection({super.key, required this.language});
 
+  @override
+  State<GivingLevelsSection> createState() => _GivingLevelsSectionState();
+}
+
+class _GivingLevelsSectionState extends State<GivingLevelsSection> {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
     
     final givingLevels = [
       (
-        language == 'en' ? 'Community Supporter' : 'Apoyo Comunitario',
-        language == 'en' ? 'Bronze Partner' : 'Socio de Bronce',
-        language == 'en' ? '< \$100' : '< \$100',
-        language == 'en'
+        widget.language == 'en' ? 'Community Supporter' : 'Apoyo Comunitario',
+        widget.language == 'en' ? '< \$100' : '< \$100',
+        widget.language == 'en'
             ? 'Donors funding field essentials - first aid kits, Skynet link, dry bags, notebooks, river travel, batteries, tents, housing when working far from infrastructure.'
             : 'Donantes que financian elementos esenciales de campo: botiquines de primeros auxilios, enlace Skynet, bolsas secas, cuadernos, viajes por río, baterías, tiendas de campaña, alojamiento en infraestructura remota.',
       ),
       (
-        language == 'en' ? 'Action Supporter' : 'Apoyo de Acción',
-        language == 'en' ? 'Silver Partner' : 'Socio de Plata',
-        language == 'en' ? '\$100 - \$250' : '\$100 - \$250',
-        language == 'en'
+        widget.language == 'en' ? 'Action Supporter' : 'Apoyo de Acción',
+        widget.language == 'en' ? '\$100 - \$250' : '\$100 - \$250',
+        widget.language == 'en'
             ? 'Donors supporting in-country logistics - travel between Panama City and the field, transporting equipment, and coordinating with local partners and institutions. Pays for fuel and boat travel. There are no roads in - everything moves by river.'
             : 'Donantes que apoyan la logística en el país: viajes entre la Ciudad de Panamá y el campo, transporte de equipos y coordinación con socios locales e instituciones. Paga combustible y viajes en barco. No hay carreteras - todo se mueve por río.',
       ),
       (
-        language == 'en' ? 'Stewardship Supporter' : 'Apoyo de Administración',
-        language == 'en' ? 'Gold Partner' : 'Socio de Oro',
-        language == 'en' ? '\$250 - \$1,000' : '\$250 - \$1,000',
-        language == 'en'
+        widget.language == 'en' ? 'Stewardship Supporter' : 'Apoyo de Administración',
+        widget.language == 'en' ? '\$250 - \$1,000' : '\$250 - \$1,000',
+        widget.language == 'en'
             ? 'International travel for university students and professors.'
             : 'Viajes internacionales para estudiantes y profesores universitarios.',
       ),
       (
-        language == 'en' ? 'Wisdom Supporter' : 'Apoyo de Sabiduría',
-        language == 'en' ? 'Platinum Partner' : 'Socio de Platino',
-        language == 'en' ? '\$1,000 - \$5,000' : '\$1,000 - \$5,000',
-        language == 'en'
+        widget.language == 'en' ? 'Wisdom Supporter' : 'Apoyo de Sabiduría',
+        widget.language == 'en' ? '\$1,000 - \$5,000' : '\$1,000 - \$5,000',
+        widget.language == 'en'
             ? 'Workshops and participatory mapping session costs – renting locale, tables, chairs; meals and housing for participants, printing mapping materials.'
             : 'Costos de talleres y sesiones de mapeo participativo: alquiler de local, mesas, sillas; comidas y alojamiento para participantes, impresión de materiales de mapeo.',
       ),
       (
-        language == 'en' ? 'Visionary & Institutional' : 'Visionario e Institucional',
-        language == 'en' ? 'Visionary Partner' : 'Socio Visionario',
-        language == 'en' ? '> \$5,000' : '> \$5,000',
-        language == 'en'
+        widget.language == 'en' ? 'Visionary & Institutional' : 'Visionario e Institucional',
+        widget.language == 'en' ? '> \$5,000' : '> \$5,000',
+        widget.language == 'en'
             ? 'Honorariums for community geographers, students, and faculty. No salaries are paid. Donor supports local costs of food, lodging, and transportation in Panama City and in the Chagres National Park.'
             : 'Honorarios para geógrafos comunitarios, estudiantes y profesores. No se pagan salarios. El donante financia costos locales de comida, alojamiento y transporte en la Ciudad de Panamá y en el Parque Nacional Chagres.',
       ),
@@ -1649,14 +1649,14 @@ class GivingLevelsSection extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            language == 'en' ? 'How You Can Support' : 'Cómo Puedes Apoyar',
+            widget.language == 'en' ? 'Support the Chagres Initiative' : 'Apoya la Iniciativa Chagres',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
             ),
           ),
           const SizedBox(height: 16),
           Text(
-            language == 'en'
+            widget.language == 'en'
                 ? 'Your support directly funds field research in Panama and computer lab work at U.S. universities.'
                 : 'Tu apoyo financia directamente la investigación de campo en Panamá y el trabajo de laboratorio informático en universidades estadounidenses.',
             style: const TextStyle(
@@ -1665,66 +1665,88 @@ class GivingLevelsSection extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
+          const SizedBox(height: 40),
+          // Donation Button
+          GestureDetector(
+            onTap: () {
+              launchUrl(Uri.parse('https://geog.ku.edu/donate'));
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8000D).withOpacity(0.50),
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                    color: const Color(0xFFE8000D).withOpacity(0.7),
+                    width: 2,
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                child: Text(
+                  widget.language == 'en'
+                      ? 'Donate Now'
+                      : 'Donar Ahora',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
           const SizedBox(height: 48),
-          GridView.count(
-            crossAxisCount: isMobile ? 1 : 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 0.85,
-            children: givingLevels
-                .map(
-                  (level) => Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF101A2F),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
+          // Giving Levels List
+          Container(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: givingLevels.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 0),
+              itemBuilder: (context, index) {
+                final level = givingLevels[index];
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
                         color: Colors.white.withOpacity(0.12),
-                        width: 1.5,
+                        width: 1,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 16,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
                     ),
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+                    child: ExpansionTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            level.$1,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            level.$2,
+                            style: const TextStyle(
+                              color: Color(0xFF81C784),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      collapsedIconColor: const Color(0xFFB9C6EA),
+                      iconColor: const Color(0xFF81C784),
                       children: [
-                        Text(
-                          level.$1,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          level.$2,
-                          style: const TextStyle(
-                            color: Color(0xFF81C784),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          level.$3,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Expanded(
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                           child: Text(
-                            level.$4,
+                            level.$3,
                             style: const TextStyle(
                               color: Color(0xFFB9C6EA),
                               fontSize: 14,
@@ -1735,8 +1757,9 @@ class GivingLevelsSection extends StatelessWidget {
                       ],
                     ),
                   ),
-                )
-                .toList(),
+                );
+              },
+            ),
           ),
         ],
       ),
