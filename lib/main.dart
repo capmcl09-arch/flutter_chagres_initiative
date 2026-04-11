@@ -263,6 +263,7 @@ class _ChagresHomeState extends State<ChagresHome> {
               children: [
                 if (!isMobile) SizedBox(height: 100), // Space for fixed header
                 HeroSection(language: widget.language),
+                PartnershipsSection(language: widget.language),
                 TeamSection(key: _teamKey, language: widget.language),
                 AboutSection(key: _aboutKey, language: widget.language),
                 MeaningfulSection(language: widget.language),
@@ -499,11 +500,48 @@ class _ChagresHomeState extends State<ChagresHome> {
   }
 }
 
-// Hero Section
+// Hero Section - Logo centered on palms
 class HeroSection extends StatelessWidget {
   final String language;
 
   const HeroSection({super.key, required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 600,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.black.withOpacity(0.65),
+            Colors.black.withOpacity(0.65),
+          ],
+        ),
+        image: const DecorationImage(
+          image: AssetImage('assets/images/palms.jpg'),
+          fit: BoxFit.cover,
+          opacity: 0.3,
+        ),
+      ),
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: Image.asset(
+            'assets/images/chagres_initiative_logo_hq.png',
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Partnerships Section
+class PartnershipsSection extends StatelessWidget {
+  final String language;
+
+  const PartnershipsSection({super.key, required this.language});
 
   @override
   Widget build(BuildContext context) {
@@ -530,31 +568,6 @@ class HeroSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Chagres Logo - Large
-          Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            child: Image.asset(
-              'assets/images/chagres_initiative_logo_hq.png',
-              fit: BoxFit.contain,
-            ),
-          ),
-          const SizedBox(height: 40),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isMobile ? 0 : 100,
-            ),
-            child: Text(
-              language == 'en'
-                  ? 'A KU and UT-Arlington Geographic, Participatory Research Mapping Project with the Indigenous Community of San Juan Pequení Indígena La Bonga, Panama'
-                  : 'Un Proyecto de Mapeo Participativo del Departamento de Geografía de KU con la Comunidad Indígena de San Juan Pequení Indígena La Bonga, Panamá',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: const Color(0xFFB9C6EA),
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 24),
-          const SizedBox(height: 30),
           // Hero Strip Image
           Container(
             constraints: const BoxConstraints(maxWidth: 800),
