@@ -38816,7 +38816,7 @@ $0(){return this.a.Ki(this.b,this.c)},
 $S:0}
 A.FV.prototype={
 I(a){var s=null,r=A.bd(a,s,t.w).w,q=A.c([A.aq(166,B.k.q()>>>16&255,B.k.q()>>>8&255,B.k.q()&255),A.aq(166,B.k.q()>>>16&255,B.k.q()>>>8&255,B.k.q()&255)],t.t_)
-return A.bq(s,A.mj(A.bq(s,A.ju(u.v,B.cr,s,s,s),B.m,s,B.ya,s,s,s,s,s,s,s,s),s,s),B.m,s,s,new A.bt(s,B.AA,s,s,s,new A.n4(B.k8,B.hn,B.e8,q,s,s),B.E),s,r.a.b,s,s,s,s,1/0)}}
+return A.bq(s,A.mj(A.bq(s,A.ju(u.v,B.cr,s,s,s),B.m,s,B.y8,s,s,s,s,s,s,s,s),s,s),B.m,s,s,new A.bt(s,B.AA,s,s,s,new A.n4(B.k8,B.hn,B.e8,q,s,s),B.E),s,r.a.b,s,s,s,s,1/0)}}
 A.Hq.prototype={
 I(a){var s,r,q,p,o,n=null,m=A.bd(a,n,t.w).w.a.a<900,l=m?20:60,k=this.c==="en",j=k?"Partnerships":"Asociaciones",i=A.X(a).ok.f
 j=A.b5(j,n,n,i==null?n:i.bc(B.f),n)
@@ -38833,7 +38833,7 @@ s=A.aq(B.c.an(127.5),B.aO.q()>>>16&255,B.aO.q()>>>8&255,B.aO.q()&255)
 q=A.cB(100)
 p=A.oZ(A.aq(B.c.an(178.5),B.aO.q()>>>16&255,B.aO.q()>>>8&255,B.aO.q()&255),2)
 o=t.p
-q=A.d_(n,A.bq(n,A.cc(A.c([A.b5(k?"You can be part of our team by donating.":"Puedes ser parte de nuestro equipo donando.",n,n,B.O7,B.ax)],o),B.A,B.G,B.L),B.m,n,B.y9,new A.bt(s,n,p,q,n,n,B.E),n,n,n,B.Be,n,n,n),B.I,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.a30(),n,n,n)
+q=A.d_(n,A.bq(n,A.cc(A.c([A.b5(k?"You can be part of our team by donating.":"Puedes ser parte de nuestro equipo donando.",n,n,B.O7,B.ax)],o),B.A,B.G,B.L),B.m,n,B.ya,new A.bt(s,n,p,q,n,n,B.E),n,n,n,B.Be,n,n,n),B.I,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.a30(),n,n,n)
 return A.bq(n,A.cc(A.c([j,B.aD,r,B.KO,i,B.cV,q,B.aD,A.b5(k?"Your tax-deductible donation directly funds field research in Panama and computer lab work at U.S. universities. Federal and NGO funding for international conservation research is being cut, so we're turning to grassroots support. Over the next two years with approximately $100,000 in funding, your donation pays for travel to Panama, transportation by river, workshop costs, field equipment, mapping materials, and most importantly\u2014honorariums for community geographers and local collaborators.":"Tu donaci\xf3n deducible de impuestos financia directamente la investigaci\xf3n de campo en Panam\xe1 y el trabajo de laboratorio inform\xe1tico en universidades estadounidenses. La financiaci\xf3n federal y de ONG para la investigaci\xf3n internacional de conservaci\xf3n se est\xe1 reduciendo, por lo que recurrimos al apoyo comunitario. Durante los pr\xf3ximos dos a\xf1os con aproximadamente $100,000 en financiaci\xf3n, tu donaci\xf3n paga viajes a Panam\xe1, transporte por r\xedo, costos de talleres, equipos de campo, materiales de mapeo y lo m\xe1s importante: honorarios para ge\xf3grafos comunitarios y colaboradores locales.",n,n,B.Nk,B.ax)],o),B.A,B.G,B.L),B.m,B.aV,n,n,n,n,n,new A.ax(l,60,l,60),n,n,1/0)}}
 A.a30.prototype={
 $0(){A.ts(A.fF("https://geog.ku.edu/donate",0,null))},
@@ -44007,7 +44007,7 @@ if(p==null)p=B.Bd
 o=q.f.a_(0,p)
 n=new A.abP(a,g,6,g,g,B.vX,B.R,g,g,g,g,g,g,B.m,g)
 m=s.at
-if(m==null)m=B.y8
+if(m==null)m=B.y9
 q=s.f
 if(q==null){q=n.f
 q.toString}p=s.b
@@ -75962,10 +75962,10 @@ B.ki=new A.ah(40,40,40,40)
 B.kj=new A.ah(56,56,56,56)
 B.kk=new A.ah(96,96,96,96)
 B.kl=new A.ah(0,1/0,56,56)
-B.y8=new A.ah(280,1/0,0,1/0)
-B.y9=new A.ah(0,600,0,1/0)
+B.y8=new A.ah(0,1350,0,1/0)
+B.y9=new A.ah(280,1/0,0,1/0)
+B.ya=new A.ah(0,600,0,1/0)
 B.eo=new A.ah(0,800,0,1/0)
-B.ya=new A.ah(0,1800,0,1/0)
 B.km=new A.ah(36,1/0,36,1/0)
 B.hu=new A.ah(1/0,1/0,1/0,1/0)
 B.ai=new A.D(1,0,0.3176470588235294,0.7294117647058823,B.h)
