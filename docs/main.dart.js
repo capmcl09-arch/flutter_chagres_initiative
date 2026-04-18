@@ -38867,7 +38867,7 @@ s=A.ai(B.c.an(127.5),B.aO.p()>>>16&255,B.aO.p()>>>8&255,B.aO.p()&255)
 q=A.bN(100)
 p=A.fP(A.ai(B.c.an(178.5),B.aO.p()>>>16&255,B.aO.p()>>>8&255,B.aO.p()&255),2)
 o=t.p
-q=A.d0(n,A.be(n,A.c_(A.c([A.b2(k?"Donate to the Chagres Initiative":"Donar a la Iniciativa Chagres",n,n,B.O7,B.ay)],o),B.y,B.C,B.G),B.l,n,B.yc,new A.bg(s,n,p,q,n,n,B.w),n,n,n,B.Bf,n,n,n),B.J,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.a33(),n,n,n)
+q=A.d0(n,A.be(n,A.c_(A.c([A.b2(k?"Donate to Chagres Initiative":"Donar a la Iniciativa Chagres",n,n,B.O7,B.ay)],o),B.y,B.C,B.G),B.l,n,B.yc,new A.bg(s,n,p,q,n,n,B.w),n,n,n,B.Bf,n,n,n),B.J,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.a33(),n,n,n)
 return A.be(n,A.c_(A.c([j,B.ao,r,B.KO,i,B.cV,q,B.ao,A.b2(k?"Your tax-deductible donation directly funds field research in Panama and computer lab work at U.S. universities. Federal and NGO funding for international conservation research is being cut, so we're turning to grassroots support. Over the next two years with approximately $100,000 in funding, your donation pays for travel to Panama, transportation by river, workshop costs, field equipment, mapping materials, and most importantly\u2014honorariums for community geographers and local collaborators.":"Tu donaci\xf3n deducible de impuestos financia directamente la investigaci\xf3n de campo en Panam\xe1 y el trabajo de laboratorio inform\xe1tico en universidades estadounidenses. La financiaci\xf3n federal y de ONG para la investigaci\xf3n internacional de conservaci\xf3n se est\xe1 reduciendo, por lo que recurrimos al apoyo comunitario. Durante los pr\xf3ximos dos a\xf1os con aproximadamente $100,000 en financiaci\xf3n, tu donaci\xf3n paga viajes a Panam\xe1, transporte por r\xedo, costos de talleres, equipos de campo, materiales de mapeo y lo m\xe1s importante: honorarios para ge\xf3grafos comunitarios y colaboradores locales.",n,n,B.Nk,B.ay)],o),B.y,B.C,B.G),B.l,B.aV,n,n,n,n,n,new A.ax(l,60,l,60),n,n,1/0)}}
 A.a33.prototype={
 $0(){A.tu(A.fG("https://geog.ku.edu/donate",0,null))},
@@ -39131,7 +39131,7 @@ k=A.ai(B.c.an(127.5),B.aO.p()>>>16&255,B.aO.p()>>>8&255,B.aO.p()&255)
 j=A.bN(100)
 i=A.fP(A.ai(B.c.an(178.5),B.aO.p()>>>16&255,B.aO.p()>>>8&255,B.aO.p()&255),2)
 h=t.p
-return A.be(q,A.c_(A.c([o,B.jL,n,B.cV,A.be(q,A.c_(A.c([A.d0(q,A.e8(A.be(q,A.b2(r.a.c==="en"?"Donate to the Chagres Initiative":"Donar a la Iniciativa Chagres",q,q,B.x7,q),B.l,q,q,new A.bg(k,q,i,j,q,q,B.w),q,q,q,B.Bd,q,q,q),B.aE,q,q,q),B.J,!1,q,q,q,q,q,q,q,q,q,q,q,q,q,new A.acL(),q,q,q),B.KP,A.be(q,A.ajB(new A.acM(s),5,B.fm,new A.acN(),!0),B.l,q,B.eo,q,q,q,q,q,q,q,q)],h),B.y,B.C,B.G),B.l,q,q,new A.bg(B.a2,q,q,m,l,q,B.w),q,q,q,B.eV,q,q,q)],h),B.y,B.C,B.G),B.l,B.aV,q,q,q,q,q,new A.ax(p,60,p,60),q,q,1/0)}}
+return A.be(q,A.c_(A.c([o,B.jL,n,B.cV,A.be(q,A.c_(A.c([A.d0(q,A.e8(A.be(q,A.b2(r.a.c==="en"?"Donate to Chagres Initiative":"Donar a la Iniciativa Chagres",q,q,B.x7,q),B.l,q,q,new A.bg(k,q,i,j,q,q,B.w),q,q,q,B.Bd,q,q,q),B.aE,q,q,q),B.J,!1,q,q,q,q,q,q,q,q,q,q,q,q,q,new A.acL(),q,q,q),B.KP,A.be(q,A.ajB(new A.acM(s),5,B.fm,new A.acN(),!0),B.l,q,B.eo,q,q,q,q,q,q,q,q)],h),B.y,B.C,B.G),B.l,q,q,new A.bg(B.a2,q,q,m,l,q,B.w),q,q,q,B.eV,q,q,q)],h),B.y,B.C,B.G),B.l,B.aV,q,q,q,q,q,new A.ax(p,60,p,60),q,q,1/0)}}
 A.acL.prototype={
 $0(){A.tu(A.fG("https://geog.ku.edu/donate",0,null))},
 $S:0}
