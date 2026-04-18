@@ -100,6 +100,16 @@ class _ChagresHomeState extends State<ChagresHome> {
   void initState() {
     super.initState();
     _scrollController.addListener(_handleScroll);
+    
+    // Precache images for faster loading
+    precacheImage(
+      const AssetImage('assets/images/chagres_initiative_logo_hq.png'),
+      context,
+    );
+    precacheImage(
+      const AssetImage('assets/images/palms.jpg'),
+      context,
+    );
   }
 
   @override
@@ -266,6 +276,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                 if (!isMobile) SizedBox(height: 100), // Space for fixed header
                 HeroSection(language: widget.language),
                 PartnershipsSection(key: _partnershipsKey, language: widget.language),
+                TeamAndSigningSection(language: widget.language),
                 TeamSection(key: _teamKey, language: widget.language),
                 AboutSection(key: _aboutKey, language: widget.language),
                 MeaningfulSection(language: widget.language),
@@ -278,7 +289,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                   ),
                 ),
                 GallerySection(language: widget.language),
-                TeamAndSigningSection(language: widget.language),
                 MapsSection(language: widget.language),
                 ReportsSection(key: _reportsKey, language: widget.language),
                 FAQSection(key: _faqKey, language: widget.language),
@@ -645,7 +655,7 @@ class PartnershipsSection extends StatelessWidget {
                 children: [
                   Text(
                     language == 'en'
-                        ? 'Donate to the Chagres Initiative'
+                        ? 'Donate to Chagres Initiative'
                         : 'Donar a la Iniciativa Chagres',
                     style: const TextStyle(
                       color: Colors.white,
@@ -1886,7 +1896,7 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                       child: Text(
                         widget.language == 'en'
-                            ? 'Donate to the Chagres Initiative'
+                            ? 'Donate to Chagres Initiative'
                             : 'Donar a la Iniciativa Chagres',
                         style: const TextStyle(
                           color: Colors.white,
