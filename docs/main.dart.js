@@ -39014,7 +39014,7 @@ A.acD.prototype={
 $0(){return this.a.d++},
 $S:0}
 A.BV.prototype={
-a9(){return new A.R7(A.c(["assets/images/signing.jpeg","assets/images/Team.JPG"],t.s))}}
+a9(){return new A.R7(A.c(["assets/images/signing.jpeg","assets/images/team_photo.jpg"],t.s))}}
 A.R7.prototype={
 I(a){var s,r=this,q=null,p=A.bb(a,q,t.w).w,o=B.h.b5(r.d,2),n=A.cq(16),m=A.ku(A.ap(31,B.f.q()>>>16&255,B.f.q()>>>8&255,B.f.q()&255),1),l=A.cq(16),k=r.e[o]
 n=A.bo(q,A.Ei(l,new A.oi(k,p.a.a<900?300:450,1/0,B.bV,q)),B.m,q,q,new A.bp(B.am,q,m,n,q,q,B.C),q,q,q,q,q,q,q)

@@ -1265,7 +1265,7 @@ class _TeamPhotoCarouselState extends State<_TeamPhotoCarousel> {
 
   final List<String> _images = [
     'assets/images/signing.jpeg',
-    'assets/images/Team.JPG',
+    'assets/images/team_photo.jpg',
   ];
 
   List<(String, String)> get _captions => [
