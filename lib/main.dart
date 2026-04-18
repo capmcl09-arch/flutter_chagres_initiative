@@ -276,7 +276,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                 if (!isMobile) SizedBox(height: 100), // Space for fixed header
                 HeroSection(language: widget.language),
                 PartnershipsSection(key: _partnershipsKey, language: widget.language),
-                TeamAndSigningSection(language: widget.language),
                 TeamSection(key: _teamKey, language: widget.language),
                 AboutSection(key: _aboutKey, language: widget.language),
                 MeaningfulSection(language: widget.language),
@@ -1252,158 +1251,102 @@ class _GallerySectionState extends State<GallerySection> {
   }
 }
 
-// Team and Signing Section
-class TeamAndSigningSection extends StatelessWidget {
+// Team Photo Carousel (signing + team photo)
+class _TeamPhotoCarousel extends StatefulWidget {
   final String language;
+  const _TeamPhotoCarousel({required this.language});
 
-  const TeamAndSigningSection({super.key, required this.language});
+  @override
+  State<_TeamPhotoCarousel> createState() => _TeamPhotoCarouselState();
+}
+
+class _TeamPhotoCarouselState extends State<_TeamPhotoCarousel> {
+  int _currentIndex = 0;
+
+  final List<String> _images = [
+    'assets/images/signing.jpeg',
+    'assets/images/Team.JPG',
+  ];
+
+  List<(String, String)> get _captions => [
+    (
+      'Embera Chief Marcelino Guatico in the center with Community President Elieser Adames signing formal project solicitation and approval with Chagres Initiative Research Team members geographers Taylor Tappan (UTA) and Cap McLiney (KU).',
+      'El jefe emberá Marcelino Guático en el centro con el presidente comunitario Elieser Adames firmando la solicitud y aprobación formal del proyecto con los miembros del equipo de investigación de la Iniciativa Chagres, los geógrafos Taylor Tappan (UTA) y Cap McLiney (KU).',
+    ),
+    (
+      'Original KU Research Team of Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow and Dr. Taylor Tappan',
+      'Equipo de Investigación Original de KU del Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow y Dr. Taylor Tappan',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 60,
-        vertical: 60,
-      ),
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: isMobile
-                ? Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF101A2F),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.12),
-                          ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: ZoomableImage(
-                            imagePath: 'assets/images/Team.JPG',
-                            height: 380,
-                            width: double.infinity,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF101A2F),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.12),
-                          ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: ZoomableImage(
-                            imagePath: 'assets/images/signing.jpeg',
-                            height: 380,
-                            width: double.infinity,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF101A2F),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.12),
-                          ),
-                        ),
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                        child: Text(
-                          'Embera Chief Marcelino Guatico in the center with Community President Elieser Adames signing formal project solicitation and approval with Chagres Initiative Research Team members geographers Taylor Tappan (UTA) and Cap McLiney (KU).',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: const Color(0xFFB9C6EA),
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF101A2F),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: Colors.white.withOpacity(0.12),
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: ZoomableImage(
-                              imagePath: 'assets/images/Team.JPG',
-                              height: 480,
-                              width: double.infinity,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 24),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF101A2F),
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: Colors.white.withOpacity(0.12),
-                                ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: ZoomableImage(
-                                  imagePath: 'assets/images/signing.jpeg',
-                                  height: 400,
-                                  width: double.infinity,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF101A2F),
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: Colors.white.withOpacity(0.12),
-                                ),
-                              ),
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                              child: Text(
-                                'Embera Chief Marcelino Guatico in the center with Community President Elieser Adames signing formal project solicitation and approval with Chagres Initiative Research Team members geographers Taylor Tappan (UTA) and Cap McLiney (KU).',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: const Color(0xFFB9C6EA),
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+    final idx = _currentIndex % _images.length;
+
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF101A2F),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.white.withOpacity(0.12)),
           ),
-        ],
-      ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: ZoomableImage(
+              imagePath: _images[idx],
+              height: isMobile ? 300 : 450,
+              width: double.infinity,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF101A2F),
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
+            ),
+            border: Border.all(color: Colors.white.withOpacity(0.12)),
+          ),
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Column(
+            children: [
+              Text(
+                widget.language == 'en' ? _captions[idx].$1 : _captions[idx].$2,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: const Color(0xFFB9C6EA),
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.chevron_left),
+                    onPressed: () => setState(() => _currentIndex--),
+                  ),
+                  Text(
+                    '${idx + 1} / ${_images.length}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: const Color(0xFFB9C6EA),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.chevron_right),
+                    onPressed: () => setState(() => _currentIndex++),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -2006,35 +1949,8 @@ class TeamSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          // Team Photo
-          SizedBox(
-            width: double.infinity,
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    'assets/images/team.jpg',
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    language == 'en'
-                        ? 'Original KU Research Team of Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow and Dr. Taylor Tappan'
-                        : 'Equipo de Investigación Original de KU del Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow y Dr. Taylor Tappan',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: const Color(0xFF9BB1D6),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Team Photo Carousel
+          _TeamPhotoCarousel(language: language),
           const SizedBox(height: 40),
           // La Bonga Section
           _buildTeamSection(
