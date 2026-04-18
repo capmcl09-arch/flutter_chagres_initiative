@@ -278,6 +278,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                   ),
                 ),
                 GallerySection(language: widget.language),
+                TeamAndSigningSection(language: widget.language),
                 MapsSection(language: widget.language),
                 ReportsSection(key: _reportsKey, language: widget.language),
                 FAQSection(key: _faqKey, language: widget.language),
@@ -534,7 +535,7 @@ class HeroSection extends StatelessWidget {
       ),
       child: Center(
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 1215),
+          constraints: const BoxConstraints(maxWidth: 600),
           child: Image.asset(
             'assets/images/chagres_initiative_logo_hq.png',
             fit: BoxFit.contain,
@@ -630,7 +631,7 @@ class PartnershipsSection extends StatelessWidget {
               launchUrl(Uri.parse('https://geog.ku.edu/donate'));
             },
             child: Container(
-              constraints: const BoxConstraints(maxWidth: 600),
+              constraints: const BoxConstraints(maxWidth: 350),
               decoration: BoxDecoration(
                 color: const Color(0xFFE8000D).withOpacity(0.50),
                 borderRadius: BorderRadius.circular(100),
@@ -644,8 +645,8 @@ class PartnershipsSection extends StatelessWidget {
                 children: [
                   Text(
                     language == 'en'
-                        ? 'You can be part of our team by donating.'
-                        : 'Puedes ser parte de nuestro equipo donando.',
+                        ? 'Donate to the Chagres Initiative'
+                        : 'Donar a la Iniciativa Chagres',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 21,
@@ -731,8 +732,8 @@ class AboutSection extends StatelessWidget {
           const SizedBox(height: 40),
           Image.asset(
             'assets/images/labonga_seal.png',
-            width: 200,
-            height: 200,
+            width: 120,
+            height: 120,
             fit: BoxFit.contain,
           ),
         ],
@@ -1120,7 +1121,6 @@ class _GallerySectionState extends State<GallerySection> {
     'assets/images/site_analysis.jpg',
     'assets/images/lizard.jpg',
     'assets/images/monkey.jpg',
-    'assets/images/signing.jpeg',
   ];
   final List<(String, String)> _captions = [
     ('River lancha transport', 'Transporte en lancha por el río'),
@@ -1131,7 +1131,6 @@ class _GallerySectionState extends State<GallerySection> {
     ('Site analysis at Panamanian Geographic Institute', 'Análisis del sitio en el Instituto Geográfico de Panamá'),
     ('Rainforest lizard', 'Lagarto de la selva tropical'),
     ('Rainforest monkey', 'Mono de la selva tropical'),
-    ('Chief Marcelino Guatico and President Elieser signing letter of endorsement', 'Jefe Marcelino Guatico y Presidente Elieser firmando carta de apoyo'),
   ];
 
   @override
@@ -1236,6 +1235,162 @@ class _GallerySectionState extends State<GallerySection> {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Team and Signing Section
+class TeamAndSigningSection extends StatelessWidget {
+  final String language;
+
+  const TeamAndSigningSection({super.key, required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+    
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 20 : 60,
+        vertical: 60,
+      ),
+      child: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: isMobile
+                ? Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF101A2F),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.12),
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: ZoomableImage(
+                            imagePath: 'assets/images/Team.JPG',
+                            height: 380,
+                            width: double.infinity,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF101A2F),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.12),
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: ZoomableImage(
+                            imagePath: 'assets/images/signing.jpeg',
+                            height: 380,
+                            width: double.infinity,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF101A2F),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.12),
+                          ),
+                        ),
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        child: Text(
+                          'Embera Chief Marcelino Guatico in the center with Community President Elieser Adames signing formal project solicitation and approval with Chagres Initiative Research Team members geographers Taylor Tappan (UTA) and Cap McLiney (KU).',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: const Color(0xFFB9C6EA),
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF101A2F),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.12),
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: ZoomableImage(
+                              imagePath: 'assets/images/Team.JPG',
+                              height: 480,
+                              width: double.infinity,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF101A2F),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: Colors.white.withOpacity(0.12),
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: ZoomableImage(
+                                  imagePath: 'assets/images/signing.jpeg',
+                                  height: 400,
+                                  width: double.infinity,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF101A2F),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: Colors.white.withOpacity(0.12),
+                                ),
+                              ),
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                              child: Text(
+                                'Embera Chief Marcelino Guatico in the center with Community President Elieser Adames signing formal project solicitation and approval with Chagres Initiative Research Team members geographers Taylor Tappan (UTA) and Cap McLiney (KU).',
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: const Color(0xFFB9C6EA),
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ],
       ),
@@ -1731,8 +1886,8 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                       child: Text(
                         widget.language == 'en'
-                            ? 'Donate Now'
-                            : 'Donar Ahora',
+                            ? 'Donate to the Chagres Initiative'
+                            : 'Donar a la Iniciativa Chagres',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -1903,7 +2058,7 @@ class TeamSection extends StatelessWidget {
             context,
             language == 'en' ? 'University of Texas at Arlington Personnel' : 'Personal de la Universidad de Texas en Arlington',
             [
-              ('Dr. Taylor Tappan', 'Associate Professor of Geography', 'Profesor Asociado de Geografía', 'taylor.tappan@uta.edu', 'taylor.jpg'),
+              ('Dr. Taylor Tappan', 'Assistant Professor of Geography', 'Profesor Asistente de Geografía', 'taylor.tappan@uta.edu', 'taylor.jpg'),
             ],
             language,
             isMobile,
@@ -1940,7 +2095,7 @@ class TeamSection extends StatelessWidget {
             children: members
                 .map(
                   (member) => SizedBox(
-                    width: isMobile ? ((MediaQuery.of(context).size.width - 40) / 2) - 5 : 170,
+                    width: isMobile ? ((MediaQuery.of(context).size.width - 40) / 2) - 5 : 140,
                     child: _buildTeamCard(
                       context,
                       member.$1,
