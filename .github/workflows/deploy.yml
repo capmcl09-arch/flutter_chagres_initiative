@@ -14,39 +14,40 @@ jobs:
       
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.x'
+          flutter-version: '3.24.x'
           channel: 'stable'
+          cache: true
 
-      - name: Get Flutter dependencies
+      - name: Get dependencies
         run: flutter pub get
 
       - name: Build Flutter Web
-        run: flutter build web --release
+        run: flutter build web --release --no-tree-shake-icons
 
-      - name: Copy build to docs folder
+      - name: Update docs folder
         run: |
+          rm -rf docs
           mkdir -p docs
-          rm -rf docs/* || true
           cp -r build/web/* docs/
 
-      - name: Configure git
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+      - name: Create .nojekyll file
+        run: touch docs/.nojekyll
 
-      - name: Commit and push changes
+      - name: Commit and push
         run: |
-          git add docs/
-          if ! git diff --quiet --cached; then
-            git commit -m "Build: Update Flutter web build [skip ci]"
-            git push
-          else
-            echo "No changes to commit"
-          fi
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "github-actions"
+          git add -A docs/
+          git diff --quiet --cached || git commit -m "chore: rebuild Flutter web [skip ci]"
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: false
+          branch: main
