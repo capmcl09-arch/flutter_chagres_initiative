@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:html' as html;
 import 'dart:ui_web' as ui;
 
@@ -10,7 +11,7 @@ void main() {
   ui.platformViewRegistry.registerViewFactory(
     'google-maps-embed',
     (int viewId) => html.IFrameElement()
-      ..src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.823992608622!2d-79.5241626!3d9.3827301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fab494a734c2493%3A0xe55e405b5412d0dc!2sSan%20Juan%20de%20Pequen%C3%AD%20Ind%C3%ADgena%20(La%20Bonga)!5e0!3m2!1sen!2sus!4v1730000000000'
+      ..src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.823992608622!2d-79.5241626!3d9.3827301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fab494a734c2493%3A0xe55e405b5412d0dc!2sSan%20Juan%20de%20Pequen%C3%AD%20Ind%C3%ADgena%20(La%20Bonga)!5e1!3m2!1sen!2sus!4v1730000000000'
       ..style.border = 'none'
       ..style.width = '100%'
       ..style.height = '100%'
@@ -21,6 +22,40 @@ void main() {
   );
   
   runApp(const ChagresApp());
+}
+
+// Helper: splits text on "Chagres Initiative" / "Iniciativa Chagres" and italicizes those spans.
+List<InlineSpan> _buildCISpans(String text, TextStyle? baseStyle) {
+  const ciEN = 'Chagres Initiative';
+  const ciES = 'Iniciativa Chagres';
+  final spans = <InlineSpan>[];
+  String remaining = text;
+  while (remaining.isNotEmpty) {
+    final enIdx = remaining.indexOf(ciEN);
+    final esIdx = remaining.indexOf(ciES);
+    int idx = -1;
+    String ciWord = '';
+    if (enIdx >= 0 && (esIdx < 0 || enIdx <= esIdx)) {
+      idx = enIdx;
+      ciWord = ciEN;
+    } else if (esIdx >= 0) {
+      idx = esIdx;
+      ciWord = ciES;
+    }
+    if (idx < 0) {
+      spans.add(TextSpan(text: remaining, style: baseStyle));
+      break;
+    }
+    if (idx > 0) {
+      spans.add(TextSpan(text: remaining.substring(0, idx), style: baseStyle));
+    }
+    spans.add(TextSpan(
+      text: ciWord,
+      style: (baseStyle ?? const TextStyle()).copyWith(fontStyle: FontStyle.italic),
+    ));
+    remaining = remaining.substring(idx + ciWord.length);
+  }
+  return spans;
 }
 
 class ChagresApp extends StatefulWidget {
@@ -85,6 +120,8 @@ class _ChagresHomeState extends State<ChagresHome> {
   final ScrollController _scrollController = ScrollController();
   bool _showBackToTop = false;
   String _activeSection = '';
+  bool _showJayhawk = true;
+  double _screenHeight = 800.0;
   
   // GlobalKey references for each section
   final GlobalKey _aboutKey = GlobalKey();
@@ -100,10 +137,23 @@ class _ChagresHomeState extends State<ChagresHome> {
   void initState() {
     super.initState();
     _scrollController.addListener(_handleScroll);
-    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() => _screenHeight = MediaQuery.of(context).size.height);
+      }
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     // Precache images for faster loading
     precacheImage(
       const AssetImage('assets/images/chagres_initiative_logo_hq.png'),
+      context,
+    );
+    precacheImage(
+      const AssetImage('assets/images/jayhawk.png'),
       context,
     );
     precacheImage(
@@ -130,6 +180,12 @@ class _ChagresHomeState extends State<ChagresHome> {
         setState(() => _showBackToTop = false);
       }
     }
+
+    // Show jayhawk in nav while hero logo is still on screen
+    final showJayhawk = _scrollController.offset < _screenHeight * 0.75;
+    if (showJayhawk != _showJayhawk) {
+      setState(() => _showJayhawk = showJayhawk);
+    }
     
     // Track active section
     _updateActiveSection();
@@ -137,55 +193,34 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   void _updateActiveSection() {
     final Map<GlobalKey, String> sections = {
+      _partnershipsKey: 'Collaborators',
       _teamKey: 'Team',
       _aboutKey: 'About',
       _methodologyKey: 'Methodology',
       _reportsKey: 'Fieldwork',
-      _partnershipsKey: 'Partnerships',
-      _givingLevelsKey: 'Support',
       _faqKey: 'FAQ',
+      _givingLevelsKey: 'Support',
     };
 
+    // Find the section whose top has most recently passed the nav threshold (120px).
+    // That means: among all sections where top <= 120px, pick the one with the
+    // largest (least negative) dy — it's the one currently filling the viewport.
+    const double threshold = 120.0;
     String newActiveSection = '';
-    double closestDistance = double.infinity;
-    
-    // Find the section closest to the top of the viewport (around 150px)
-    for (var entry in sections.entries) {
-      final context = entry.key.currentContext;
-      if (context != null) {
-        final box = context.findRenderObject() as RenderBox?;
-        if (box != null) {
-          final offset = box.localToGlobal(Offset.zero);
-          final distanceFromTop = (offset.dy - 150).abs();
-          
-          // Prioritize sections that are above the viewport marker (150px)
-          if (offset.dy < 150 && offset.dy > -box.size.height) {
-            if (distanceFromTop < closestDistance) {
-              closestDistance = distanceFromTop;
-              newActiveSection = entry.value;
-            }
-          }
-        }
+    double bestY = double.negativeInfinity;
+
+    for (final entry in sections.entries) {
+      final ctx = entry.key.currentContext;
+      if (ctx == null) continue;
+      final box = ctx.findRenderObject() as RenderBox?;
+      if (box == null) continue;
+      final dy = box.localToGlobal(Offset.zero).dy;
+      if (dy <= threshold && dy > bestY) {
+        bestY = dy;
+        newActiveSection = entry.value;
       }
     }
-    
-    // If no section found above marker, use the first one visible
-    if (newActiveSection.isEmpty) {
-      for (var entry in sections.entries) {
-        final context = entry.key.currentContext;
-        if (context != null) {
-          final box = context.findRenderObject() as RenderBox?;
-          if (box != null) {
-            final offset = box.localToGlobal(Offset.zero);
-            if (offset.dy < 300) {
-              newActiveSection = entry.value;
-              break;
-            }
-          }
-        }
-      }
-    }
-    
+
     if (newActiveSection.isNotEmpty && _activeSection != newActiveSection) {
       setState(() => _activeSection = newActiveSection);
     }
@@ -278,6 +313,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                 PartnershipsSection(key: _partnershipsKey, language: widget.language),
                 TeamSection(key: _teamKey, language: widget.language),
                 AboutSection(key: _aboutKey, language: widget.language),
+                MapsSection(language: widget.language),
                 MeaningfulSection(language: widget.language),
                 AuthorizationSection(language: widget.language),
                 MethodologySection(key: _methodologyKey, language: widget.language),
@@ -288,7 +324,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                   ),
                 ),
                 GallerySection(language: widget.language),
-                MapsSection(language: widget.language),
                 ReportsSection(key: _reportsKey, language: widget.language),
                 FAQSection(key: _faqKey, language: widget.language),
                 GivingLevelsSection(key: _givingLevelsKey, language: widget.language),
@@ -309,6 +344,41 @@ class _ChagresHomeState extends State<ChagresHome> {
               right: 0,
               child: _buildDesktopHeader(),
             ),
+          Positioned(
+            right: 0,
+            top: MediaQuery.of(context).size.height * 0.62,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => launchUrl(Uri.parse('https://geog.ku.edu/donate')),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFA0291E),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black38, blurRadius: 8, offset: Offset(-2, 2)),
+                    ],
+                  ),
+                  child: const RotatedBox(
+                    quarterTurns: 3,
+                    child: Text(
+                      'Donate Now',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -326,9 +396,25 @@ class _ChagresHomeState extends State<ChagresHome> {
         onTap: _showLogoZoom,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
-          child: Image.asset(
-            'assets/images/chagres_initiative_logo_hq.png',
-            height: 48,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 450),
+            transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+            child: _showJayhawk
+                ? Image.asset(
+                    'assets/images/jayhawk.png',
+                    key: const ValueKey('jayhawk'),
+                    height: 48,
+                    fit: BoxFit.contain,
+                  )
+                : Image.asset(
+                    'assets/images/chagres_initiative_logo_hq.png',
+                    key: const ValueKey('logo'),
+                    height: 48,
+                    fit: BoxFit.contain,
+                  ),
           ),
         ),
       ),
@@ -380,7 +466,7 @@ class _ChagresHomeState extends State<ChagresHome> {
             _reportsKey,
           ),
           _buildDrawerItem(
-            widget.language == 'en' ? 'Partnerships' : 'Asociaciones',
+            widget.language == 'en' ? 'Collaborators' : 'Colaboradores',
             _partnershipsKey,
           ),
           _buildDrawerItem(
@@ -455,9 +541,25 @@ class _ChagresHomeState extends State<ChagresHome> {
             onTap: _showLogoZoom,
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
-              child: Image.asset(
-                'assets/images/chagres_initiative_logo_hq.png',
-                height: 80,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 450),
+                transitionBuilder: (child, animation) => FadeTransition(
+                  opacity: animation,
+                  child: child,
+                ),
+                child: _showJayhawk
+                    ? Image.asset(
+                        'assets/images/jayhawk.png',
+                        key: const ValueKey('jayhawk'),
+                        height: 80,
+                        fit: BoxFit.contain,
+                      )
+                    : Image.asset(
+                        'assets/images/chagres_initiative_logo_hq.png',
+                        key: const ValueKey('logo'),
+                        height: 80,
+                        fit: BoxFit.contain,
+                      ),
               ),
             ),
           ),
@@ -469,7 +571,7 @@ class _ChagresHomeState extends State<ChagresHome> {
               _buildNavLink('About', _aboutKey),
               _buildNavLink('Methodology', _methodologyKey),
               _buildNavLink('Fieldwork', _reportsKey),
-              _buildNavLink('Partnerships', _partnershipsKey),
+              _buildNavLink('Collaborators', _partnershipsKey),
               _buildNavLink('Support', _givingLevelsKey),
               _buildNavLink('Team', _teamKey, alignment: 0.20),
               _buildNavLink('FAQ', _faqKey),
@@ -526,6 +628,8 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+
     return Container(
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
@@ -542,13 +646,75 @@ class HeroSection extends StatelessWidget {
           opacity: 0.3,
         ),
       ),
-      child: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 600),
-          child: Image.asset(
-            'assets/images/chagres_initiative_logo_hq.png',
-            fit: BoxFit.contain,
-          ),
+      child: isMobile
+          // ── MOBILE: logo + phrases stacked in center ──────────────────
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  constraints: const BoxConstraints(maxWidth: 690),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Image.asset(
+                    'assets/images/chagres_initiative_logo_hq.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 40),
+                _buildPhrase(context, 'Trade & Water'),
+                const SizedBox(height: 16),
+                _buildPhrase(context, 'Conservation'),
+                const SizedBox(height: 16),
+                _buildPhrase(context, 'Community'),
+              ],
+            )
+          // ── DESKTOP: logo centered, phrases pinned to bottom row ──────
+          : Stack(
+              children: [
+                Center(
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 690),
+                    child: Image.asset(
+                      'assets/images/chagres_initiative_logo_hq.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: MediaQuery.of(context).size.height * 0.18,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildPhrase(context, 'Trade & Water'),
+                      _buildPhrase(context, 'Conservation'),
+                      _buildPhrase(context, 'Community'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+
+  Widget _buildPhrase(BuildContext context, String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.45),
+        borderRadius: BorderRadius.circular(40),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.18),
+          width: 1,
+        ),
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.cinzel(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 2.0,
         ),
       ),
     );
@@ -575,12 +741,35 @@ class PartnershipsSection extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            language == 'en' ? 'Partnerships' : 'Asociaciones',
+            language == 'en' ? 'Collaborators' : 'Colaboradores',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
             ),
           ),
           const SizedBox(height: 24),
+          // Prominent donation appeal text
+          Container(
+            constraints: const BoxConstraints(maxWidth: 800),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            decoration: BoxDecoration(
+              color: const Color(0xFF101A2F),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFF0051BA).withOpacity(0.4), width: 1.5),
+            ),
+            child: Text(
+              language == 'en'
+                  ? 'Your tax-deductible donations will contribute to our understanding and management of a geopolitical issue of USA and global importance: Water Security of the Panama Canal.\n\nFollow online and witness the research unfold on our website. You will see how your donations directly impact every aspect of the research which includes the support of Indigenous villagers and university researchers.'
+                  : 'Sus donaciones deducibles de impuestos contribuirán a nuestra comprensión y gestión de un asunto geopolítico de importancia para EE.UU. y el mundo: la Seguridad Hídrica del Canal de Panamá.\n\nSíganos en línea y sea testigo del desarrollo de la investigación en nuestro sitio web. Verá cómo sus donaciones impactan directamente cada aspecto de la investigación, lo que incluye el apoyo a los aldeanos indígenas y a los investigadores universitarios.',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                height: 1.6,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 30),
           // Hero Strip Image
           Container(
             constraints: const BoxConstraints(maxWidth: 800),
@@ -640,43 +829,72 @@ class PartnershipsSection extends StatelessWidget {
               launchUrl(Uri.parse('https://geog.ku.edu/donate'));
             },
             child: Container(
-              constraints: const BoxConstraints(maxWidth: 350),
+              constraints: const BoxConstraints(maxWidth: 280),
               decoration: BoxDecoration(
-                color: const Color(0xFFE8000D).withOpacity(0.50),
+                color: const Color(0xFFA0291E),
                 borderRadius: BorderRadius.circular(100),
                 border: Border.all(
-                  color: const Color(0xFFE8000D).withOpacity(0.7),
+                  color: const Color(0xFFA0291E),
                   width: 2,
                 ),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
               child: Column(
                 children: [
-                  Text(
-                    language == 'en'
-                        ? 'Donate to Chagres Initiative'
-                        : 'Donar a la Iniciativa Chagres',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 21,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+                  language == 'en'
+                    ? Text.rich(
+                        TextSpan(
+                          style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+                          children: [
+                            const TextSpan(text: 'Please '),
+                            const TextSpan(text: 'Click', style: TextStyle(fontStyle: FontStyle.italic)),
+                            const TextSpan(text: ' to '),
+                            const TextSpan(text: 'Contribute', style: TextStyle(fontStyle: FontStyle.italic)),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    : const Text(
+                        'Haga clic aquí para contribuir',
+                        style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 24),
-          Text(
-            language == 'en'
-                ? 'Your tax-deductible donation directly funds field research in Panama and computer lab work at U.S. universities. Federal and NGO funding for international conservation research is being cut, so we\'re turning to grassroots support. Over the next two years with approximately \$100,000 in funding, your donation pays for travel to Panama, transportation by river, workshop costs, field equipment, mapping materials, and most importantly—honorariums for community geographers and local collaborators.'
-                : 'Tu donación deducible de impuestos financia directamente la investigación de campo en Panamá y el trabajo de laboratorio informático en universidades estadounidenses. La financiación federal y de ONG para la investigación internacional de conservación se está reduciendo, por lo que recurrimos al apoyo comunitario. Durante los próximos dos años con aproximadamente \$100,000 en financiación, tu donación paga viajes a Panamá, transporte por río, costos de talleres, equipos de campo, materiales de mapeo y lo más importante: honorarios para geógrafos comunitarios y colaboradores locales.',
-            style: const TextStyle(
-              color: Color(0xFFB9C6EA),
-              fontSize: 17,
+          Container(
+            constraints: const BoxConstraints(maxWidth: 720),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  language == 'en'
+                      ? 'Make Dreams Possible – Fund KU Research Abroad'
+                      : 'Haga posibles los sueños – Financie la Investigación de KU en el Exterior',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Text.rich(
+                  TextSpan(
+                    style: const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
+                    children: _buildCISpans(
+                      language == 'en'
+                          ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about two years and U.S. \$150,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
+                          : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nCon los fondos federales de EE.UU., las ONG e incluso la financiación universitaria interna para la investigación internacional siendo drásticamente recortados, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres tomará aproximadamente dos años y U.S. \$150,000 para completar.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, pagando los costos directos del proyecto de los miembros de la comunidad, estudiantes y profesores de KU en el equipo de investigación, pagando vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios para cubrir su alimentación, alojamiento y viaje.',
+                      const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
+                    ),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -709,9 +927,12 @@ class AboutSection extends StatelessWidget {
               cursor: SystemMouseCursors.click,
               child: Text(
                 language == 'en' ? 'About the Initiative' : 'Sobre la Iniciativa',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
                   color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.5,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -728,13 +949,24 @@ class AboutSection extends StatelessWidget {
                 ),
               ],
             ),
-            padding: const EdgeInsets.all(30),
-            child: Text(
-              language == 'en'
-                  ? 'The Chagres Initiative was created in response to a formal request from an Indigenous Congress in Panama. It is a university and community-based research project to protect Chagres National Park, which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City. The park is also the historic homeland of the Emberá and Wounaan Indigenous communities who live there, use, and protect its biodiverse habitats.\n\nOur research team from the University of Kansas and the University of Texas-Arlington was invited by Indigenous leaders to help map and zone their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge with modern tools like GPS and satellite imagery. Importantly, we train community members as \"community geographers\" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning.\n\nThrough this collaboration, the community gains the mapping tools they need for land protection, and we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
-                  : 'La Iniciativa Chagres fue creada en respuesta a una solicitud formal de un Congreso Indígena en Panamá. Es un proyecto de investigación universitario y comunitario para proteger el Parque Nacional Chagres, que proporciona el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para 1.5 millones de personas en la Ciudad de Panamá. El parque también es la tierra natal histórica de las comunidades indígenas Emberá y Wounaan que viven allí, la utilizan y protegen sus hábitats biodiversos.\n\nNuestro equipo de investigación de la Universidad de Kansas y la Universidad de Texas-Arlington fue invitado por líderes indígenas para ayudar a mapear y zonificar su uso de la tierra dentro del parque. Utilizamos metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena con herramientas modernas como GPS e imágenes satelitales. Lo importante es que entrenamos a miembros de la comunidad como \"geógrafos comunitarios\" que aprenden habilidades de investigación de campo y trabajan junto con investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo.\n\nA través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: const Color(0xFFB9C6EA),
+            padding: const EdgeInsets.all(36),
+            child: Text.rich(
+              TextSpan(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: const Color(0xFFB9C6EA),
+                  fontSize: 17,
+                  height: 1.75,
+                ),
+                children: _buildCISpans(
+                  language == 'en'
+                      ? 'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
+                      : 'La Iniciativa Chagres responde a una solicitud legal de un Congreso Indígena en Panamá para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para 1,5 millones de personas en la Ciudad de Panamá.\n\nNuestro equipo de investigación de KU fue invitado por líderes indígenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena (CGI) con GPS, fotografía aérea e imágenes satelitales. Además, entrenamos a los aldeanos como "geógrafos comunitarios" que aprenden habilidades de investigación de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo. A través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y juntos producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
+                  Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFFB9C6EA),
+                    fontSize: 17,
+                    height: 1.75,
+                  ),
+                ),
               ),
             ),
           ),
@@ -770,28 +1002,20 @@ class _MeaningfulSectionState extends State<MeaningfulSection> {
       (
         widget.language == 'en' ? '1. Authorized by Indigenous Congress' : '1. Autorizado por el Congreso Indígena',
         widget.language == 'en'
-            ? 'This project proceeds only with formal community consent. Leaders from the Indigenous communities voted unanimously to collaborate with us. The work is grounded in trust built over decades of geographic research in the region.'
-            : 'Este proyecto procede solo con consentimiento comunitario formal. Los líderes de las comunidades indígenas votaron unánimemente para colaborar con nosotros. El trabajo se basa en la confianza construida durante décadas de investigación geográfica en la región.',
+            ? 'This project is grounded in decades of trust and expertise built by KU geography professors and students doing participatory research mapping (PRM) projects in Panama and Central America. At their governing Congreso Local in June 2025, Indigenous Emberá and Wounaan leaders from Chagres National Park (CNP) recognized our "KU know-how" from previous mapping projects with their relatives. The congreso then voted unanimously to invite us to map their lands and help them develop a management plan acceptable to the Panamanian government.'
+            : 'Este proyecto se basa en décadas de confianza y experiencia construida por profesores y estudiantes de geografía de KU realizando proyectos de mapeo participativo de investigación (PRM) en Panamá y Centroamérica. En su Congreso Local en junio de 2025, los líderes indígenas Emberá y Wounaan del Parque Nacional Chagres (PNC) reconocieron nuestro "know-how de KU" de proyectos de mapeo anteriores con sus parientes. El congreso luego votó unánimemente para invitarnos a mapear sus tierras y ayudarles a desarrollar un plan de manejo aceptable para el gobierno panameño.',
       ),
       (
-        widget.language == 'en' ? '2. Public-Facing, Living Research' : '2. Investigación Pública y Viva',
+        widget.language == 'en' ? '2. "Living Research" in Indigenous Rainforest Communities of the Panama Canal Watershed' : '2. "Investigación Viva" en Comunidades Indígenas de la Selva Tropical de la Cuenca del Canal de Panamá',
         widget.language == 'en'
-            ? 'Rather than confining findings to academic journals or static reports, this initiative maintains a transparent and evolving public platform.'
-            : 'En lugar de confinar hallazgos a revistas académicas o informes estáticos, esta iniciativa mantiene una plataforma pública transparente y en evolución.',
+            ? 'Rather than confining findings to academic journals or static reports, this initiative maintains a transparent and evolving public platform and collaborates directly with government agencies.'
+            : 'En lugar de confinar los hallazgos a revistas académicas o informes estáticos, esta iniciativa mantiene una plataforma pública transparente y en evolución y colabora directamente con agencias gubernamentales.',
       ),
       (
+        widget.language == 'en' ? '3. Training Community Geographers as Co-Producers of Scientific Results' : '3. Formación de Geógrafos Comunitarios como Co-Productores de Resultados Científicos',
         widget.language == 'en'
-            ? '3. Training Community Geographers'
-            : '3. Entrenamiento de Geógrafos Comunitarios',
-        widget.language == 'en'
-            ? 'We train community members as active researchers and geographers. Through hands-on fieldwork, they learn GPS use, cartography, imagery analysis, and geographic methods. They become co-producers of the maps and data that protect their lands.'
-            : 'Entrenamos a miembros de la comunidad como investigadores y geógrafos activos. A través del trabajo de campo práctico, aprenden el uso de GPS, cartografía, análisis de imágenes y métodos geográficos. Se convierten en coproductores de los mapas y datos que protegen sus tierras.',
-      ),
-      (
-        widget.language == 'en' ? '4. Applied and Accountable' : '4. Aplicado y Responsable',
-        widget.language == 'en'
-            ? 'The research is designed to produce tangible outcomes: participatory zoning frameworks, watershed monitoring strategies, and spatial tools.'
-            : 'La investigación está diseñada para producir resultados tangibles: marcos de zonificación participativa, estrategias de monitoreo de cuencas hidrográficas y herramientas espaciales.',
+            ? 'Unlike other projects, our results create community resources of sustained value: we formally certify community representatives as geographers who receive training, and do hands-on fieldwork, learn and use GPS, basic cartography, heads-up imagery analysis, and other geographic methods, including drone use for forest management. These "community geographers" — perhaps not surprisingly — are empowered as ideal co-producers and co-authors of project maps and data. All publication authorships are shared among team members and final cartographic information remain under the ownership of the local communities.'
+            : 'A diferencia de otros proyectos, nuestros resultados crean recursos comunitarios de valor sostenido: certificamos formalmente a representantes comunitarios como geógrafos que reciben formación y realizan trabajo de campo práctico, aprenden y utilizan GPS, cartografía básica, análisis de imágenes aéreas y otros métodos geográficos, incluyendo el uso de drones para la gestión forestal. Estos "geógrafos comunitarios" — quizás no sorprendentemente — están empoderados como co-productores y co-autores ideales de mapas y datos del proyecto. Todas las autorías de publicaciones se comparten entre los miembros del equipo y la información cartográfica final permanece bajo la propiedad de las comunidades locales.',
       ),
     ];
     
@@ -958,8 +1182,8 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
               children: [
                 Text(
                   widget.language == 'en'
-                      ? 'During our team\'s visit to La Bonga during the summer of 2025, we presented openly the participatory research methodology to the community in Spanish. After understanding the potential of such a project, they unanimously voted in support of our project.'
-                      : 'Durante la visita de nuestro equipo a La Bonga en el verano de 2025, presentamos abiertamente la metodología de investigación participativa a la comunidad en español. Después de entender el potencial de tal proyecto, votaron unánimemente en apoyo de nuestro proyecto.',
+                      ? 'During our exploratory expedition to the Indigenous Emberá/Wounaan community of La Bonga Pequení in the Panama Canal Watershed last summer 2025, community leaders invited us to return and present our participatory research methodology (PRM) to their governing congress because they understood the project\'s potential.\n\nAt their governing Congreso Local in June 2025, Indigenous Emberá and Wounaan leaders from communities inside the Chagres National Park (CNP) recognized "KU know-how" from previous successful mapping projects with their relatives in the eastern Darién Province back in the 1990s! The Congreso Local voted unanimously to ask our KU team of geographers to map their lands and help them develop a management plan acceptable to the Panamanian government.'
+                      : 'Durante nuestra expedición exploratoria a la comunidad indígena Emberá/Wounaan de La Bonga Pequení en la Cuenca del Canal de Panamá el verano pasado de 2025, los líderes comunitarios nos invitaron a regresar y presentar nuestra metodología de investigación participativa (PRM) a su congreso rector porque entendieron el potencial del proyecto.\n\nEn su Congreso Local en junio de 2025, los líderes indígenas Emberá y Wounaan de comunidades dentro del Parque Nacional Chagres (PNC) reconocieron el "know-how de KU" de proyectos de mapeo exitosos anteriores con sus parientes en la provincia oriental del Darién ¡en la década de 1990! El Congreso Local votó unánimemente para pedir a nuestro equipo de geógrafos de KU que mapearan sus tierras y les ayudaran a desarrollar un plan de manejo aceptable para el gobierno panameño.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFFB9C6EA),
                   ),
@@ -1024,16 +1248,18 @@ class _MethodologySectionState extends State<MethodologySection> {
     
     final stages = widget.language == 'en'
         ? [
-            ('Stage One: Co-design', 'Define mapping goals collaboratively with community leadership.'),
-            ('Stage Two: Training', 'Equip local researchers with GPS, mapping, and documentation tools.'),
-            ('Stage Three: Field Verification', 'Collect ground-truth points through shared site visits.'),
-            ('Stage Four: GIS Production', 'Digitize and standardize outputs for planning and governance use.'),
+            ('Stage One: Co-design', 'Define mapping goals with community leadership.'),
+            ('Stage Two: Training', 'Through instructional exercises, "community geographers" learn the use of GPS, mapping tools, and data-documentation techniques.'),
+            ('Stage Three: Field Verification and Mapping', 'Trained community geographers collect ground-truth points and data through shared site visits to do sketch mapping and questionnaire applications in communities.'),
+            ('Stage Four: Plot Field Data onto Cartographic Sheets', 'Plot field data onto standard cartographic sheets in community workshops. Designing Indigenous Land-use Management and zoning in workshops.'),
+            ('Stage Five: GIS and Computer Map Production', 'KU students with professors digitize and standardize outputs for planning and governance use.'),
           ]
         : [
-            ('Etapa Uno: Codiseño', 'Definir objetivos de mapeo colaborativamente con el liderazgo comunitario.'),
-            ('Etapa Dos: Capacitación', 'Capacitar a investigadores locales con herramientas de GPS, mapeo y documentación.'),
-            ('Etapa Tres: Verificación de Campo', 'Recopilar puntos de verdad a través de visitas compartidas al sitio.'),
-            ('Etapa Cuatro: Producción SIG', 'Digitalizar y estandarizar los resultados para uso de planificación y gobernanza.'),
+            ('Etapa Uno: Codiseño', 'Definir objetivos de mapeo con el liderazgo comunitario.'),
+            ('Etapa Dos: Capacitación', 'A través de ejercicios de instrucción, los "geógrafos comunitarios" aprenden el uso de GPS, herramientas de mapeo y técnicas de documentación de datos.'),
+            ('Etapa Tres: Verificación de Campo y Mapeo', 'Los geógrafos comunitarios capacitados recopilan puntos de verificación terrestre y datos a través de visitas compartidas al sitio para hacer mapas esquemáticos y aplicaciones de cuestionarios en las comunidades.'),
+            ('Etapa Cuatro: Trazar Datos de Campo en Hojas Cartográficas', 'Trazar datos de campo en hojas cartográficas estándar en talleres comunitarios. Diseño de la Gestión del Uso de Tierras Indígenas y zonificación en talleres.'),
+            ('Etapa Cinco: Producción de Mapas SIG y Computarizados', 'Estudiantes de KU con profesores digitalizan y estandarizan los resultados para uso de planificación y gobernanza.'),
           ];
 
     return Container(
@@ -1050,6 +1276,20 @@ class _MethodologySectionState extends State<MethodologySection> {
                 : 'Etapas del Mapeo de Investigación Participativa',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Text(
+              widget.language == 'en'
+                  ? 'Unlike most research, PRM releases the research function to trained "community geographers" who co-design and implement the project as they interpret geo-spatial information alongside KU geographers and students.'
+                  : 'A diferencia de la mayoría de las investigaciones, el PRM delega la función de investigación a "geógrafos comunitarios" capacitados que co-diseñan e implementan el proyecto mientras interpretan información geoespacial junto a geógrafos y estudiantes de KU.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: const Color(0xFFB9C6EA),
+                fontStyle: FontStyle.italic,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
           const SizedBox(height: 24),
@@ -1168,9 +1408,12 @@ class _GallerySectionState extends State<GallerySection> {
             ),
           ),
           const SizedBox(height: 24),
-          SizedBox(
-            width: double.infinity,
-            child: Column(
+          Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: isMobile ? 0 : 24),
+              child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 800),
+              child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
@@ -1243,6 +1486,8 @@ class _GallerySectionState extends State<GallerySection> {
                   ),
                 ),
               ],
+              ),
+            ),
             ),
           ),
         ],
@@ -1270,12 +1515,12 @@ class _TeamPhotoCarouselState extends State<_TeamPhotoCarousel> {
 
   List<(String, String)> get _captions => [
     (
-      'Embera Chief Marcelino Guatico in the center with Community President Elieser Adames signing formal project solicitation and approval with Chagres Initiative Research Team members geographers Taylor Tappan (UTA) and Cap McLiney (KU).',
-      'El jefe emberá Marcelino Guático en el centro con el presidente comunitario Elieser Adames firmando la solicitud y aprobación formal del proyecto con los miembros del equipo de investigación de la Iniciativa Chagres, los geógrafos Taylor Tappan (UTA) y Cap McLiney (KU).',
+      'Formal signing of Indigenous Local Congress inviting KU geographers to do participatory mapping of their communities in the Chagres National Park to develop a conservation zoning plan. Photo shows Emberá Chief Marcelino Guático and Community President Elieser Adames signing the legal request (pedido) formalizing the KU Chagres Initiative (Taylor Tappan and Cap McLiney are also shown).',
+      'Firma formal del Congreso Local Indígena invitando a los geógrafos de KU a realizar el mapeo participativo de sus comunidades en el Parque Nacional Chagres para desarrollar un plan de zonificación de conservación. La foto muestra al Jefe Emberá Marcelino Guático y al Presidente Comunitario Elieser Adames firmando la solicitud legal (pedido) que formaliza la Iniciativa Chagres de KU (Taylor Tappan y Cap McLiney también aparecen en la foto).',
     ),
     (
-      'Original KU Research Team of Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow and Dr. Taylor Tappan',
-      'Equipo de Investigación Original de KU del Dr. Peter Herlihy, Cap McLiney, Amalie Hippe, Sam Morrow y Dr. Taylor Tappan',
+      'Original KU Research Team of Dr. Peter Herlihy, Cap McLiney, Amalie Hipp, Sam Morrow and Dr. Taylor Tappan on Barro Colorado Island in Lake Gatún, Panama Canal Zone, June 2025.',
+      'Equipo de Investigación Original de KU del Dr. Peter Herlihy, Cap McLiney, Amalie Hipp, Sam Morrow y Dr. Taylor Tappan en la Isla Barro Colorado en el Lago Gatún, Zona del Canal de Panamá, junio de 2025.',
     ),
   ];
 
@@ -1284,7 +1529,10 @@ class _TeamPhotoCarouselState extends State<_TeamPhotoCarousel> {
     final isMobile = MediaQuery.of(context).size.width < 900;
     final idx = _currentIndex % _images.length;
 
-    return Column(
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 700),
+        child: Column(
       children: [
         Container(
           decoration: BoxDecoration(
@@ -1315,11 +1563,19 @@ class _TeamPhotoCarouselState extends State<_TeamPhotoCarousel> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Column(
             children: [
-              Text(
-                widget.language == 'en' ? _captions[idx].$1 : _captions[idx].$2,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFFB9C6EA),
-                  fontSize: 14,
+              Text.rich(
+                TextSpan(
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: const Color(0xFFB9C6EA),
+                    fontSize: 14,
+                  ),
+                  children: _buildCISpans(
+                    widget.language == 'en' ? _captions[idx].$1 : _captions[idx].$2,
+                    Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: const Color(0xFFB9C6EA),
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -1347,6 +1603,8 @@ class _TeamPhotoCarouselState extends State<_TeamPhotoCarousel> {
           ),
         ),
       ],
+        ),
+      ),
     );
   }
 }
@@ -1392,12 +1650,12 @@ class MapsSection extends StatelessWidget {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: 450,
+                  height: 563,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: ZoomableImage(
                       imagePath: 'assets/images/chagres_broadermap.jpg',
-                      height: 450,
+                      height: 563,
                       width: double.infinity,
                       fit: BoxFit.contain,
                     ),
@@ -1406,8 +1664,8 @@ class MapsSection extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   language == 'en'
-                      ? 'This overview map situates the Río Pequení watershed within Chagres National Park - the geographic setting for our participatory research mapping work with the community of La Bonga.'
-                      : 'Este mapa de descripción general sitúa la cuenca del Río Pequení dentro del Parque Nacional Chagres - el escenario geográfico para nuestro trabajo de mapeo de investigación participativa con la comunidad de La Bonga.',
+                      ? 'This maps show the Río Pequení Chagres National Park - the geographic setting and subsistence area of our participatory research mapping work with the resident Indigenous communities, including La Bonga.'
+                      : 'Este mapa muestra el Parque Nacional Chagres del Río Pequení - el escenario geográfico y área de subsistencia de nuestro trabajo de mapeo participativo de investigación con las comunidades indígenas residentes, incluyendo La Bonga.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFFB9C6EA),
                   ),
@@ -1485,8 +1743,8 @@ class _ReportsSectionState extends State<ReportsSection> {
           const SizedBox(height: 12),
           Text(
             widget.language == 'en'
-                ? 'Explore our gallery of Substack posts and field reflections. Official research reports will be available as PDFs on our site.'
-                : 'Explora nuestra galería de posts de Substack y reflexiones de campo. Los informes de investigación oficiales estarán disponibles como PDF en nuestro sitio.',
+                ? 'Explore our gallery of Substack posts and field reflections. Official research reports will be available as PDFs here.'
+                : 'Explora nuestra galería de posts de Substack y reflexiones de campo. Los informes de investigación oficiales estarán disponibles como PDF aquí.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: const Color(0xFFB9C6EA),
             ),
@@ -1617,27 +1875,27 @@ class FAQSection extends StatelessWidget {
     
     final faqs = language == 'en'
         ? [
-            ('Why does the health of Chagres National Park matter for people in the United States?', 'Chagres National Park provides approximately 40 percent of the freshwater used in Panama Canal operations and roughly 80 percent of the drinking water for Panama City. The Canal remains one of the most strategically important global trade corridors, moving a significant portion of U.S.-bound maritime commerce.\n\nRecent droughts have demonstrated that water scarcity is the Canal\'s greatest operational vulnerability. Long-term watershed health directly affects trade reliability, regional diplomatic stability, and economic security.'),
+            ('Why does the health of Chagres National Park matter for people in the United States?', 'Chagres National Park provides approximately 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City. The Canal remains one of the most strategically important global trade corridors, moving a significant portion of U.S.-bound maritime commerce.\n\nRecent droughts have demonstrated that water scarcity is one of the canal\'s greatest operational threats. Long-term watershed health directly affects trade reliability, regional diplomatic stability, and economic security.'),
             ('Who and what legal authority authorizes this project?', 'This initiative proceeds only with community consent and institutional coordination. During a reconnaissance expedition in Summer 2025, the research team met with the Indigenous community of San Juan Pequeñí, participated in a formal Local Congress, and received written approval.\n\nThis authorization aligns with Panama\'s 2008 Law 72 governing Collective Indigenous Lands. The project continues only through collaborative agreement with community leadership.'),
-            ('How does mapping help protect an area like this?', 'National park boundaries alone do not ensure protection. Effective stewardship requires understanding the ecological and social processes occurring within those boundaries.\n\nParticipatory research mapping translates Indigenous geographic knowledge into structured formats that can support zoning, monitoring, and long-term governance planning. At a fundamental level, it is difficult to protect what is not clearly understood.'),
-            ('How are community members involved and compensated?', 'Community members are trained as local geographers in GPS data collection and mapping techniques. Participants are compensated for their time and expertise.'),
-            ('How long will the project take?', 'The project is designed in three phases, depending on funding:\n\nYear 1: Participatory mapping and geospatial database development.\n\nYear 2: Consensus-driven zoning and development of community land-use guidelines.\n\nYear 3: Final map production, synthesis, and integration into management planning frameworks.\n\nThis phased approach prioritizes thoroughness and long-term impact over speed.'),
-            ('How will donated funds be used?', 'Donated funds directly support field-based research and community collaboration. Primary expenditures include workshops, equipment (GPS, drones, starlink), local geographer compensation, and researcher travel.\n\nAdministrative costs are minimized through institutional partnership with the University of Kansas. The project prioritizes directing resources toward community engagement and conservation outcomes.'),
+            ('How does "mapping" help protect an area like this?', 'National park boundaries alone do not ensure forest protection or water security. Effective stewardship requires understanding the ecological and social processes occurring within those boundaries.\n\nParticipatory research mapping translates Indigenous geographic knowledge into structured formats that can support zoning, monitoring, and long-term governance planning. At a fundamental level, it is difficult to protect what is not clearly understood.'),
+            ('How are community members involved and compensated?', 'Community representatives are trained and certified as local geographers in GPS data collection and mapping techniques. Participants are compensated for their time and expertise.'),
+            ('How long will the project take?', 'We estimate the Chagres Initiative will have 3 overlapping phases requiring about three years in total to complete depending on funding availability:\n\nYear 1-2: Participatory research mapping and geospatial database development.\nYear 1-2: Consensus-driven zoning and development of community land-use guidelines.\nYear 2-3: Final map production, synthesis, and integration into management planning frameworks.\n\nThe participatory research mapping approach is iterative, with alternating workshops and field research in Panama followed by GIS and computer mapping analyzes at the universities to obtain the most precise cartographic and spatial data on resource use in the Chagres National Park for developing an Indigenous and state approved management plan for land use in the park.'),
+            ('How will donated funds be used?', 'Your support funds all field-based research and community collaboration. Included are the workshops, equipment (GPS, drones, Starlink), and expenses of local geographers, researchers and students.'),
             ('Is this project political?', 'The project is non-partisan and research-driven. Its focus is watershed stewardship, participatory governance, and environmental monitoring.'),
-            ('Will the data be publicly available?', 'Final outputs will be shared publicly. Sensitive knowledge remains under community control in accordance with data sovereignty principles.'),
-            ('Can this model be replicated elsewhere?', 'Yes. The framework combines participatory GIS, zoning, and institutional collaboration in a structured format designed to be adaptable to other protected areas.'),
+            ('Will the data be publicly available?', 'Final authorship will be shared by team members, community and governmental participants. Sensitive knowledge remains under community control.'),
+            ('Can this model be replicated elsewhere?', 'Yes. This is a new framework for community-based research with a novel public-private funding formula combined with 21st century geospatial and A.I. innovations designed to engage the public ranging from Indigenous villages to metropolitan centers. We hope to connect people of all backgrounds and educations with our research.\n\nWe hope to channel the power of tax-deductible donations and connect the people and institutions that make them with the on-the-ground and in-the-university realities of fieldwork on a strategic, geopolitical issue of global importance: Water Security of the Panama Canal.'),
             ('Hasn\'t the whole world been mapped already?', 'No. There is a difference between remote imagery of an area from satellites and the kinds of maps we are making. The level of detail combining physical geography with cultural-historical information in the community is unique and critical to our process.'),
           ]
         : [
-            ('¿Por qué importa la salud del Parque Nacional Chagres?', 'El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panamá y aproximadamente el 80 por ciento del agua potable para la Ciudad de Panamá. El Canal sigue siendo uno de los corredores comerciales globales más estratégicamente importantes.\n\nLas sequías recientes han demostrado que la escasez de agua es la mayor vulnerabilidad operativa del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplomática regional y la seguridad económica.'),
+            ('¿Por qué importa la salud del Parque Nacional Chagres?', 'El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panamá y agua potable para 1,5 millones de personas en la Ciudad de Panamá. El Canal sigue siendo uno de los corredores comerciales globales más estratégicamente importantes.\n\nLas sequías recientes han demostrado que la escasez de agua es una de las mayores amenazas operativas del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplomática regional y la seguridad económica.'),
             ('¿Quién autoriza este proyecto?', 'Esta iniciativa procede solo con consentimiento comunitario y coordinación institucional. Durante una expedición de reconocimiento en verano de 2025, el equipo de investigación se reunió con la comunidad indígena de San Juan Pequeñí, participó en un Congreso Local formal y recibió aprobación escrita.\n\nEsta autorización se alinea con la Ley 72 de 2008 de Panamá que rige las Tierras Colectivas Indígenas. El proyecto continúa solo a través de acuerdo colaborativo con el liderazgo comunitario.'),
-            ('¿Cómo ayuda el mapeo a proteger un área?', 'Los límites del parque nacional por sí solos no garantizan la protección. El manejo efectivo requiere comprender los procesos ecológicos y sociales que ocurren dentro de esos límites.\n\nEl mapeo participativo de investigación traduce el conocimiento geográfico indígena a formatos estructurados que pueden apoyar la zonificación, el monitoreo y la planificación de gobernanza a largo plazo. En un nivel fundamental, es difícil proteger lo que no se entiende claramente.'),
-            ('¿Cómo se compensan a los miembros de la comunidad?', 'Los miembros de la comunidad se capacitan como geógrafos locales en recopilación de datos GPS y técnicas de mapeo. Los participantes reciben compensación por su tiempo y experiencia.'),
-            ('¿Cuánto tiempo tomará el proyecto?', 'El proyecto está diseñado en tres fases, dependiendo de la financiación:\n\nAño 1: Mapeo participativo y desarrollo de base de datos geoespacial.\n\nAño 2: Zonificación impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\n\nAño 3: Producción final del mapa, síntesis e integración en marcos de planificación de manejo.\n\nEste enfoque graduado prioriza la minuciosidad e impacto a largo plazo sobre la velocidad.'),
-            ('¿Cómo se usarán los fondos donados?', 'Los fondos donados apoyan directamente la investigación de campo y la colaboración comunitaria. Los gastos principales incluyen talleres, equipos (GPS, drones, starlink), compensación de geógrafos locales y viajes de investigadores.\n\nLos costos administrativos se minimizan a través de asociación institucional con la Universidad de Kansas. El proyecto prioriza dirigir recursos hacia el compromiso comunitario y resultados de conservación.'),
+            ('¿Cómo ayuda el mapeo a proteger un área?', 'Los límites del parque nacional por sí solos no garantizan la protección forestal ni la seguridad hídrica. El manejo efectivo requiere comprender los procesos ecológicos y sociales que ocurren dentro de esos límites.\n\nEl mapeo participativo de investigación traduce el conocimiento geográfico indígena a formatos estructurados que pueden apoyar la zonificación, el monitoreo y la planificación de gobernanza a largo plazo. En un nivel fundamental, es difícil proteger lo que no se entiende claramente.'),
+            ('¿Cómo se compensan a los miembros de la comunidad?', 'Los representantes comunitarios son capacitados y certificados como geógrafos locales en recopilación de datos GPS y técnicas de mapeo. Los participantes reciben compensación por su tiempo y experiencia.'),
+            ('¿Cuánto tiempo tomará el proyecto?', 'Estimamos que la Iniciativa Chagres tendrá 3 fases superpuestas que requerirán aproximadamente tres años en total para completarse dependiendo de la disponibilidad de fondos:\n\nAño 1-2: Mapeo participativo de investigación y desarrollo de base de datos geoespacial.\nAño 1-2: Zonificación impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\nAño 2-3: Producción final del mapa, síntesis e integración en marcos de planificación de manejo.\n\nEl enfoque de mapeo participativo de investigación es iterativo, con talleres e investigación de campo alternados en Panamá seguidos de análisis de SIG y mapeo computarizado en las universidades para obtener los datos cartográficos y espaciales más precisos sobre el uso de recursos en el Parque Nacional Chagres para desarrollar un plan de manejo de uso del suelo aprobado por las comunidades indígenas y el estado.'),
+            ('¿Cómo se usarán los fondos donados?', 'Su apoyo financia toda la investigación de campo y la colaboración comunitaria. Se incluyen los talleres, equipos (GPS, drones, Starlink) y los gastos de geógrafos locales, investigadores y estudiantes.'),
             ('¿Es este proyecto político?', 'El proyecto es apartidista e impulsado por la investigación. Su enfoque es el manejo de cuencas hidrográficas, gobernanza participativa y monitoreo ambiental.'),
-            ('¿Estarán los datos disponibles públicamente?', 'Los resultados finales se compartirán públicamente. El conocimiento sensible permanece bajo control comunitario de acuerdo con los principios de soberanía de datos.'),
-            ('¿Se puede replicar este modelo en otros lugares?', 'Sí. El marco combina SIG participativo, zonificación y colaboración institucional en un formato estructurado diseñado para ser adaptable a otras áreas protegidas.'),
+            ('¿Estarán los datos disponibles públicamente?', 'La autoría final será compartida por los miembros del equipo, participantes comunitarios y gubernamentales. El conocimiento sensible permanece bajo control comunitario.'),
+            ('¿Se puede replicar este modelo en otros lugares?', 'Sí. Este es un nuevo marco para la investigación comunitaria con una fórmula de financiación público-privada novedosa combinada con innovaciones geoespaciales y de I.A. del siglo XXI diseñadas para involucrar al público desde aldeas indígenas hasta centros metropolitanos. Esperamos conectar a personas de todos los orígenes y niveles de educación con nuestra investigación.\n\nEsperamos canalizar el poder de las donaciones deducibles de impuestos y conectar a las personas e instituciones que las realizan con las realidades sobre el terreno y en la universidad del trabajo de campo en un tema estratégico y geopolítico de importancia global: la Seguridad Hídrica del Canal de Panamá.'),
             ('¿No ha sido mapeado ya todo el mundo?', 'No. Hay una diferencia entre las imágenes satelitales de un área desde satélites y los tipos de mapas que estamos haciendo. El nivel de detalle que combina geografía física con información cultural-histórica en la comunidad es único y crítico para nuestro proceso.'),
           ];
 
@@ -1707,13 +1965,23 @@ class FAQSection extends StatelessWidget {
         ),
         childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         children: [
-          Text(
-            answer,
-            textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: const Color(0xFFB9C6EA),
-              height: 1.6,
+          Text.rich(
+            TextSpan(
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: const Color(0xFFB0B8C8),
+                height: 1.6,
+                fontSize: 16,
+              ),
+              children: _buildCISpans(
+                answer,
+                Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: const Color(0xFFB0B8C8),
+                  height: 1.6,
+                  fontSize: 16,
+                ),
+              ),
             ),
+            textAlign: TextAlign.left,
           ),
         ],
         shape: Border.all(color: Colors.transparent),
@@ -1772,8 +2040,8 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
         widget.language == 'en' ? 'Visionary & Institutional' : 'Visionario e Institucional',
         widget.language == 'en' ? '> \$5,000' : '> \$5,000',
         widget.language == 'en'
-            ? 'Honorariums for community geographers, students, and faculty. No salaries are paid. Donor supports local costs of food, lodging, and transportation in Panama City and in the Chagres National Park.'
-            : 'Honorarios para geógrafos comunitarios, estudiantes y profesores. No se pagan salarios. El donante financia costos locales de comida, alojamiento y transporte en la Ciudad de Panamá y en el Parque Nacional Chagres.',
+            ? 'Stipends for community geographers, students, and faculty. No salaries are paid. Donor supports local costs of food, lodging, and transportation in Panama City and in the Chagres National Park.'
+            : 'Estípendios para geógrafos comunitarios, estudiantes y profesores. No se pagan salarios. El donante financia costos locales de comida, alojamiento y transporte en la Ciudad de Panamá y en el Parque Nacional Chagres.',
       ),
     ];
 
@@ -1786,20 +2054,31 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
       ),
       child: Column(
         children: [
-          Text(
-            widget.language == 'en' ? 'Support the Chagres Initiative' : 'Apoya la Iniciativa Chagres',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+          Text.rich(
+            TextSpan(
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white),
+              children: _buildCISpans(
+                widget.language == 'en' ? 'Support the Chagres Initiative' : 'Apoya la Iniciativa Chagres',
+                Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white),
+              ),
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            widget.language == 'en'
-                ? 'Your support directly funds field research in Panama and computer lab work at U.S. universities.'
-                : 'Tu apoyo financia directamente la investigación de campo en Panamá y el trabajo de laboratorio informático en universidades estadounidenses.',
-            style: const TextStyle(
-              color: Color(0xFFB9C6EA),
-              fontSize: 16,
+          Text.rich(
+            TextSpan(
+              style: const TextStyle(
+                color: Color(0xFFB9C6EA),
+                fontSize: 16,
+              ),
+              children: _buildCISpans(
+                widget.language == 'en'
+                    ? 'All donated funds are used in the Chagres Initiative Research Fund to be used exclusively for project activities.\n\nThe descriptions of each supporter category are just examples of how funds could be used.'
+                    : 'Todos los fondos donados se utilizan en el Fondo de Investigación de la Iniciativa Chagres para ser utilizados exclusivamente para actividades del proyecto.\n\nLas descripciones de cada categoría de donante son solo ejemplos de cómo podrían utilizarse los fondos.',
+                const TextStyle(
+                  color: Color(0xFFB9C6EA),
+                  fontSize: 16,
+                ),
+              ),
             ),
             textAlign: TextAlign.center,
           ),
@@ -1829,24 +2108,30 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                     cursor: SystemMouseCursors.click,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE8000D).withOpacity(0.50),
+                        color: const Color(0xFFA0291E),
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(
-                          color: const Color(0xFFE8000D).withOpacity(0.7),
+                          color: const Color(0xFFA0291E),
                           width: 2,
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                      child: Text(
-                        widget.language == 'en'
-                            ? 'Donate to Chagres Initiative'
-                            : 'Donar a la Iniciativa Chagres',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+                      child: widget.language == 'en'
+                        ? Text.rich(
+                            TextSpan(
+                              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                              children: [
+                                const TextSpan(text: 'Please '),
+                                const TextSpan(text: 'Click', style: TextStyle(fontStyle: FontStyle.italic)),
+                                const TextSpan(text: ' to '),
+                                const TextSpan(text: 'Contribute', style: TextStyle(fontStyle: FontStyle.italic)),
+                              ],
+                            ),
+                          )
+                        : const Text(
+                            'Haga clic aquí para contribuir',
+                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
                     ),
                   ),
                 ),
@@ -2004,7 +2289,7 @@ class TeamSection extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             title,
@@ -2015,13 +2300,14 @@ class TeamSection extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Wrap(
-            alignment: WrapAlignment.start,
+            alignment: WrapAlignment.center,
             spacing: 10,
             runSpacing: 10,
             children: members
                 .map(
                   (member) => SizedBox(
-                    width: isMobile ? ((MediaQuery.of(context).size.width - 40) / 2) - 5 : 140,
+                    width: isMobile ? ((MediaQuery.of(context).size.width - 40) / 2) - 5 : 150,
+                    height: isMobile ? ((MediaQuery.of(context).size.width - 40) / 2) - 5 : 150,
                     child: _buildTeamCard(
                       context,
                       member.$1,
@@ -2053,9 +2339,9 @@ class TeamSection extends StatelessWidget {
           color: Colors.white.withOpacity(0.08),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      padding: const EdgeInsets.all(8),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
@@ -2063,24 +2349,24 @@ class TeamSection extends StatelessWidget {
             backgroundColor: Colors.grey[700],
             backgroundImage: AssetImage('assets/images/$imageName'),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(
             name,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 1),
+          const SizedBox(height: 2),
           Text(
             position,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: const Color(0xFFB9C6EA),
-              fontSize: 16,
+              fontSize: 12,
               height: 1.2,
             ),
             textAlign: TextAlign.center,
@@ -2132,12 +2418,19 @@ class ContactUsSection extends StatelessWidget {
             padding: const EdgeInsets.all(30),
             child: Column(
               children: [
-                Text(
-                  language == 'en'
-                      ? 'Have questions about the Chagres Initiative? We\'d love to hear from you.'
-                      : '¿Tienes preguntas sobre la Iniciativa Chagres? Nos encantaría escucharte.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFFB9C6EA),
+                Text.rich(
+                  TextSpan(
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: const Color(0xFFB9C6EA),
+                    ),
+                    children: _buildCISpans(
+                      language == 'en'
+                          ? 'Have questions about the Chagres Initiative? We\'d love to hear from you.'
+                          : '¿Tienes preguntas sobre la Iniciativa Chagres? Nos encantaría escucharte.',
+                      Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: const Color(0xFFB9C6EA),
+                      ),
+                    ),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -2209,10 +2502,17 @@ class FooterSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            '© 2026 Chagres Initiative',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: const Color(0xFFB9C6EA),
+          Text.rich(
+            TextSpan(
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: const Color(0xFFB9C6EA),
+              ),
+              children: _buildCISpans(
+                '© 2026 Chagres Initiative',
+                Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: const Color(0xFFB9C6EA),
+                ),
+              ),
             ),
             textAlign: TextAlign.center,
           ),
@@ -2307,12 +2607,19 @@ class _NewsletterSectionState extends State<NewsletterSection> {
               ),
             ),
             const SizedBox(height: 12),
-            Text(
-              widget.language == 'en'
-                  ? 'Subscribe to our Substack for the latest research updates, field reflections, and news from the Chagres Initiative.'
-                  : 'Suscríbase a nuestro Substack para recibir las últimas actualizaciones de investigación, reflexiones de campo y noticias de la Iniciativa Chagres.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: const Color(0xFFB9C6EA),
+            Text.rich(
+              TextSpan(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: const Color(0xFFB9C6EA),
+                ),
+                children: _buildCISpans(
+                  widget.language == 'en'
+                      ? 'Subscribe to our Substack for the latest research updates, field reflections, and news from the Chagres Initiative.'
+                      : 'Suscríbase a nuestro Substack para recibir las últimas actualizaciones de investigación, reflexiones de campo y noticias de la Iniciativa Chagres.',
+                  Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFFB9C6EA),
+                  ),
+                ),
               ),
               textAlign: TextAlign.center,
             ),
