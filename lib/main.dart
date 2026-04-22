@@ -84,7 +84,7 @@ class _ChagresAppState extends State<ChagresApp> {
         useMaterial3: true,
         brightness: Brightness.dark,
         fontFamily: 'serif',
-        scaffoldBackgroundColor: const Color(0xFF070C18),
+        scaffoldBackgroundColor: const Color(0xFF0C1328),
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF0C1328),
           elevation: 0,
@@ -92,7 +92,7 @@ class _ChagresAppState extends State<ChagresApp> {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF0051ba),
           brightness: Brightness.dark,
-          background: const Color(0xFF070C18),
+          background: const Color(0xFF0C1328),
           surface: const Color(0xFF101A2F),
         ),
       ),
@@ -312,52 +312,115 @@ class _ChagresHomeState extends State<ChagresHome> {
               children: [
                 if (!isMobile) SizedBox(height: 100), // Space for fixed header
                 HeroSection(language: widget.language),
-                PartnershipsSection(key: _partnershipsKey, language: widget.language),
-                TeamSection(key: _teamKey, language: widget.language),
-                AboutSection(key: _aboutKey, language: widget.language),
-                _WhyDonationsSection(language: widget.language),
-                MapsSection(language: widget.language),
-                MeaningfulSection(language: widget.language),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 48),
-                    child: Image.asset(
-                      'assets/images/labonga_seal.png',
-                      width: 156,
-                      height: 156,
-                      fit: BoxFit.contain,
+                RevealOnScroll(
+                  child: PartnershipsSection(key: _partnershipsKey, language: widget.language),
+                ),
+                RevealOnScroll(
+                  child: TeamSection(key: _teamKey, language: widget.language),
+                ),
+                RevealOnScroll(
+                  child: AboutSection(key: _aboutKey, language: widget.language),
+                ),
+                Container(
+                  width: double.infinity,
+                  // Soft 40px gradient fade from navy into the green band
+                  // so the transition after About reads as intentional.
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFF0C1328), Color(0xFF16402E)],
                     ),
                   ),
+                  height: 60,
                 ),
-                AuthorizationSection(language: widget.language),
-                MethodologySection(key: _methodologyKey, language: widget.language),
-                FadeInAnimation(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 60),
-                    child: Column(
-                      children: [
-                        Image.asset('assets/images/community_meeting.jpg'),
-                        const SizedBox(height: 10),
-                        const Text(
-                          'The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.',
-                          style: TextStyle(
-                            color: Color(0xFFB0B8C8),
-                            fontSize: 16,
-                            fontStyle: FontStyle.italic,
-                            height: 1.5,
+                Container(
+                  width: double.infinity,
+                  color: const Color(0xFF16402E),
+                  child: Stack(
+                    children: [
+                      if (!isMobile) Positioned(
+                        left: 0, top: 0, bottom: 0,
+                        child: _JungleSideStrip(mirror: false),
+                      ),
+                      if (!isMobile) Positioned(
+                        right: 0, top: 0, bottom: 0,
+                        child: _JungleSideStrip(mirror: true),
+                      ),
+                      Column(
+                    children: [
+                      RevealOnScroll(
+                        child: _WhyDonationsSection(language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: MapsSection(language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: MeaningfulSection(language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 48),
+                            child: Image.asset(
+                              'assets/images/labonga_seal.png',
+                              width: 156,
+                              height: 156,
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
+                      ),
+                      RevealOnScroll(
+                        child: AuthorizationSection(language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: MethodologySection(key: _methodologyKey, language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 60),
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/community_meeting.jpg'),
+                              const SizedBox(height: 10),
+                              const Text(
+                                'The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.',
+                                style: TextStyle(
+                                  color: Color(0xFFB0B8C8),
+                                  fontSize: 16,
+                                  fontStyle: FontStyle.italic,
+                                  height: 1.5,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      RevealOnScroll(
+                        child: GallerySection(language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: ReportsSection(key: _reportsKey, language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: FAQSection(key: _faqKey, language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: GivingLevelsSection(key: _givingLevelsKey, language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: NewsletterSection(language: widget.language),
+                      ),
+                      RevealOnScroll(
+                        child: ContactUsSection(language: widget.language),
+                      ),
+                    ],
+                  ),
+                    ],
                   ),
                 ),
-                GallerySection(language: widget.language),
-                ReportsSection(key: _reportsKey, language: widget.language),
-                FAQSection(key: _faqKey, language: widget.language),
-                GivingLevelsSection(key: _givingLevelsKey, language: widget.language),
-                NewsletterSection(language: widget.language),
-                ContactUsSection(language: widget.language),
                 FooterSection(
                   language: widget.language,
                   onLanguageChanged: widget.onLanguageChanged,
@@ -380,27 +443,34 @@ class _ChagresHomeState extends State<ChagresHome> {
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 onTap: () => launchUrl(Uri.parse('https://geog.ku.edu/donate')),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFA0291E),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                    ),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black38, blurRadius: 8, offset: Offset(-2, 2)),
-                    ],
+                child: _HoverGlow(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
                   ),
-                  child: const RotatedBox(
-                    quarterTurns: 3,
-                    child: Text(
-                      'Donate Now',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        letterSpacing: 1.2,
+                  scale: 1.04,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFA0291E),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                      ),
+                      boxShadow: [
+                        BoxShadow(color: Colors.black38, blurRadius: 8, offset: Offset(-2, 2)),
+                      ],
+                    ),
+                    child: const RotatedBox(
+                      quarterTurns: 3,
+                      child: Text(
+                        'Donate Now',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          letterSpacing: 1.2,
+                        ),
                       ),
                     ),
                   ),
@@ -741,16 +811,16 @@ class HeroSection extends StatelessWidget {
           bottom: 0,
           left: 0,
           right: 0,
-          height: 120,
+          height: 160,
           child: IgnorePointer(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    const Color(0xFF070C18),
+                    Color(0xFF0C1328),
                   ],
                 ),
               ),
@@ -762,23 +832,55 @@ class HeroSection extends StatelessWidget {
   }
 
   Widget _buildPhrase(BuildContext context, String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.45),
-        borderRadius: BorderRadius.circular(40),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.18),
-          width: 1,
+    return _HeroPhrasePill(text: text);
+  }
+}
+
+class _HeroPhrasePill extends StatefulWidget {
+  final String text;
+  const _HeroPhrasePill({required this.text});
+
+  @override
+  State<_HeroPhrasePill> createState() => _HeroPhrasePillState();
+}
+
+class _HeroPhrasePillState extends State<_HeroPhrasePill> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 260),
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(_hover ? 0.55 : 0.45),
+          borderRadius: BorderRadius.circular(40),
+          border: Border.all(
+            color: Colors.white.withOpacity(_hover ? 0.55 : 0.18),
+            width: 1,
+          ),
+          boxShadow: _hover
+              ? [
+                  BoxShadow(
+                    color: const Color(0xFF81C784).withOpacity(0.35),
+                    blurRadius: 22,
+                    spreadRadius: 1,
+                  ),
+                ]
+              : const [],
         ),
-      ),
-      child: Text(
-        text,
-        style: GoogleFonts.cinzel(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 2.0,
+        child: Text(
+          widget.text,
+          style: GoogleFonts.cinzel(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 2.0,
+          ),
         ),
       ),
     );
@@ -804,9 +906,6 @@ class PartnershipsSection extends StatelessWidget {
         // Lancha is 4032x3024 (4:3)
         final lanchaHeight = constraints.maxWidth * 3024 / 4032;
         final lanchaTop = imageHeight;
-        // La Bonga Vista is 4032x3024 (4:3)
-        final vistaHeight = constraints.maxWidth * 3024 / 4032;
-        final vistaTop = lanchaTop + lanchaHeight;
 
         return Stack(
       children: [
@@ -821,7 +920,7 @@ class PartnershipsSection extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               stops: [0.0, 0.75, 1.0],
-              colors: [Colors.white, Colors.white, Colors.transparent],
+              colors: [Colors.white, Colors.white, Color(0x55FFFFFF)],
             ).createShader(rect),
             blendMode: BlendMode.dstIn,
             child: Image.asset(
@@ -841,34 +940,13 @@ class PartnershipsSection extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               stops: [0.0, 0.15, 0.85, 1.0],
-              colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
+              colors: [Color(0x55FFFFFF), Colors.white, Colors.white, Color(0x55FFFFFF)],
             ).createShader(rect),
             blendMode: BlendMode.dstIn,
             child: Image.asset(
               'assets/images/long_lancha.jpeg',
               fit: BoxFit.cover,
               alignment: Alignment.bottomRight,
-              filterQuality: FilterQuality.high,
-              color: const Color(0xFF0C1328).withOpacity(0.30),
-              colorBlendMode: BlendMode.srcOver,
-            ),
-          ),
-        ),
-        if (!isPhone) Positioned(
-          top: vistaTop, left: 0, right: 0,
-          height: vistaHeight,
-          child: ShaderMask(
-            shaderCallback: (rect) => const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.0, 0.15, 0.85, 1.0],
-              colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
-            ).createShader(rect),
-            blendMode: BlendMode.dstIn,
-            child: Image.asset(
-              'assets/images/la_bonga_vista.jpeg',
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
               filterQuality: FilterQuality.high,
               color: const Color(0xFF0C1328).withOpacity(0.30),
               colorBlendMode: BlendMode.srcOver,
@@ -1025,42 +1103,47 @@ class PartnershipsSection extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           // Donation button — after Make Dreams section
-          GestureDetector(
-            onTap: () {
-              launchUrl(Uri.parse('https://geog.ku.edu/donate'));
-            },
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 280),
-              decoration: BoxDecoration(
-                color: const Color(0xFFA0291E),
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                  color: const Color(0xFFA0291E),
-                  width: 2,
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () {
+                launchUrl(Uri.parse('https://geog.ku.edu/donate'));
+              },
+              child: _HoverGlow(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 280),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFA0291E),
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(
+                      color: const Color(0xFFA0291E),
+                      width: 2,
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
+                  child: Column(
+                    children: [
+                      language == 'en'
+                        ? Text.rich(
+                            TextSpan(
+                              style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+                              children: [
+                                const TextSpan(text: 'Please '),
+                                const TextSpan(text: 'Click', style: TextStyle(fontStyle: FontStyle.italic)),
+                                const TextSpan(text: ' to '),
+                                const TextSpan(text: 'Contribute', style: TextStyle(fontStyle: FontStyle.italic)),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          )
+                        : const Text(
+                            'Haga clic aquí para contribuir',
+                            style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                    ],
+                  ),
                 ),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
-              child: Column(
-                children: [
-                  language == 'en'
-                    ? Text.rich(
-                        TextSpan(
-                          style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
-                          children: [
-                            const TextSpan(text: 'Please '),
-                            const TextSpan(text: 'Click', style: TextStyle(fontStyle: FontStyle.italic)),
-                            const TextSpan(text: ' to '),
-                            const TextSpan(text: 'Contribute', style: TextStyle(fontStyle: FontStyle.italic)),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    : const Text(
-                        'Haga clic aquí para contribuir',
-                        style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                ],
               ),
             ),
           ),
@@ -1279,74 +1362,97 @@ class _MeaningfulSectionState extends State<MeaningfulSection> {
       ),
     ];
     
-    return Container(
-      color: const Color(0xFF0C1328),
+    return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 60,
-        vertical: 60,
+        horizontal: isMobile ? 16 : 60,
+        vertical: 48,
       ),
-      child: Column(
-        children: [
-          Text(
-            widget.language == 'en'
-                ? 'What Makes This Project Uniquely Meaningful?'
-                : '¿Qué hace que este proyecto sea único?',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 900),
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF101A2F),
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: Colors.white.withOpacity(0.08)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.35),
+                  blurRadius: 30,
+                  offset: const Offset(0, 12),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: principles.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 0),
-              itemBuilder: (context, index) {
-                final principle = principles[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.white.withOpacity(0.12),
-                        width: 1,
-                      ),
-                    ),
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 20 : 40,
+              vertical: 40,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  widget.language == 'en'
+                      ? 'What Makes This Project Uniquely Meaningful?'
+                      : '¿Qué hace que este proyecto sea único?',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Colors.white,
                   ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(splashColor: Colors.transparent),
-                    child: ExpansionTile(
-                      title: Text(
-                        principle.$1,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: principles.length,
+                    separatorBuilder: (context, index) => Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Colors.white.withOpacity(0.08),
+                    ),
+                    itemBuilder: (context, index) {
+                      final principle = principles[index];
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          splashColor: Colors.transparent,
+                          dividerColor: Colors.transparent,
                         ),
-                      ),
-                      collapsedIconColor: const Color(0xFFB9C6EA),
-                      iconColor: const Color(0xFF81C784),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                          child: Text(
-                            principle.$2,
+                        child: ExpansionTile(
+                          title: Text(
+                            principle.$1,
                             style: const TextStyle(
-                              color: Color(0xFFB9C6EA),
-                              fontSize: 14,
-                              height: 1.6,
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
+                          collapsedIconColor: const Color(0xFFB9C6EA),
+                          iconColor: const Color(0xFF81C784),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 16,
+                              ),
+                              child: Text(
+                                principle.$2,
+                                style: const TextStyle(
+                                  color: Color(0xFFB9C6EA),
+                                  fontSize: 14,
+                                  height: 1.6,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -1524,92 +1630,110 @@ class _MethodologySectionState extends State<MethodologySection> {
             ('Etapa Cinco: Producción de Mapas SIG y Computarizados', 'Estudiantes de KU con profesores digitalizan y estandarizan los resultados para uso de planificación y gobernanza.'),
           ];
 
-    final inner = Container(
-      color: const Color(0xFF0C1328),
+    return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 60,
-        vertical: 60,
+        horizontal: isMobile ? 16 : 60,
+        vertical: 48,
       ),
-      child: Column(
-        children: [
-          Text(
-            widget.language == 'en'
-                ? 'Stages of Participatory Research Mapping (PRM)'
-                : 'Etapas del Mapeo de Investigación Participativa',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 900),
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF101A2F),
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: Colors.white.withOpacity(0.08)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.35),
+                  blurRadius: 30,
+                  offset: const Offset(0, 12),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 16),
-          Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            child: Text(
-              widget.language == 'en'
-                  ? 'Unlike most research, PRM releases the research function to trained "community geographers" who co-design and implement the project as they interpret geo-spatial information alongside KU geographers and students.'
-                  : 'A diferencia de la mayoría de las investigaciones, el PRM delega la función de investigación a "geógrafos comunitarios" capacitados que co-diseñan e implementan el proyecto mientras interpretan información geoespacial junto a geógrafos y estudiantes de KU.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: const Color(0xFFB9C6EA),
-                fontStyle: FontStyle.italic,
-              ),
-              textAlign: TextAlign.center,
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 20 : 40,
+              vertical: 40,
             ),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: stages.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 0),
-              itemBuilder: (context, index) {
-                final stage = stages[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.white.withOpacity(0.12),
-                        width: 1,
-                      ),
-                    ),
+            child: Column(
+              children: [
+                Text(
+                  widget.language == 'en'
+                      ? 'Stages of Participatory Research Mapping (PRM)'
+                      : 'Etapas del Mapeo de Investigación Participativa',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Colors.white,
                   ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(splashColor: Colors.transparent),
-                    child: ExpansionTile(
-                      title: Text(
-                        stage.$1,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  widget.language == 'en'
+                      ? 'Unlike most research, PRM releases the research function to trained "community geographers" who co-design and implement the project as they interpret geo-spatial information alongside KU geographers and students.'
+                      : 'A diferencia de la mayoría de las investigaciones, el PRM delega la función de investigación a "geógrafos comunitarios" capacitados que co-diseñan e implementan el proyecto mientras interpretan información geoespacial junto a geógrafos y estudiantes de KU.',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFFB9C6EA),
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: stages.length,
+                    separatorBuilder: (context, index) => Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Colors.white.withOpacity(0.08),
+                    ),
+                    itemBuilder: (context, index) {
+                      final stage = stages[index];
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          splashColor: Colors.transparent,
+                          dividerColor: Colors.transparent,
                         ),
-                      ),
-                      collapsedIconColor: const Color(0xFFB9C6EA),
-                      iconColor: const Color(0xFF81C784),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                          child: Text(
-                            stage.$2,
+                        child: ExpansionTile(
+                          title: Text(
+                            stage.$1,
                             style: const TextStyle(
-                              color: Color(0xFFB9C6EA),
-                              fontSize: 14,
-                              height: 1.6,
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
+                          collapsedIconColor: const Color(0xFFB9C6EA),
+                          iconColor: const Color(0xFF81C784),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 16,
+                              ),
+                              child: Text(
+                                stage.$2,
+                                style: const TextStyle(
+                                  color: Color(0xFFB9C6EA),
+                                  fontSize: 14,
+                                  height: 1.6,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
-
-    return inner;
   }
 }
 
@@ -2355,8 +2479,8 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
         widget.language == 'en' ? 'Community Supporter' : 'Apoyo Comunitario',
         widget.language == 'en' ? '< \$100' : '< \$100',
         widget.language == 'en'
-            ? 'Donors funding field essentials - first aid kits, Skynet link, dry bags, notebooks, river travel, batteries, tents, housing when working far from infrastructure.'
-            : 'Donantes que financian elementos esenciales de campo: botiquines de primeros auxilios, enlace Skynet, bolsas secas, cuadernos, viajes por río, baterías, tiendas de campaña, alojamiento en infraestructura remota.',
+            ? 'Donors funding field essentials - first aid kits, Starlink, dry bags, notebooks, river travel, batteries, tents, housing when working far from infrastructure.'
+            : 'Donantes que financian elementos esenciales de campo: botiquines de primeros auxilios, Starlink, bolsas secas, cuadernos, viajes por río, baterías, tiendas de campaña, alojamiento en infraestructura remota.',
       ),
       (
         widget.language == 'en' ? 'Action Supporter' : 'Apoyo de Acción',
@@ -2449,32 +2573,34 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                   },
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFA0291E),
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(
+                    child: _HoverGlow(
+                      child: Container(
+                        decoration: BoxDecoration(
                           color: const Color(0xFFA0291E),
-                          width: 2,
-                        ),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-                      child: widget.language == 'en'
-                        ? Text.rich(
-                            TextSpan(
-                              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                              children: [
-                                const TextSpan(text: 'Please '),
-                                const TextSpan(text: 'Click', style: TextStyle(fontStyle: FontStyle.italic)),
-                                const TextSpan(text: ' to '),
-                                const TextSpan(text: 'Contribute', style: TextStyle(fontStyle: FontStyle.italic)),
-                              ],
-                            ),
-                          )
-                        : const Text(
-                            'Haga clic aquí para contribuir',
-                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(
+                            color: const Color(0xFFA0291E),
+                            width: 2,
                           ),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+                        child: widget.language == 'en'
+                          ? Text.rich(
+                              TextSpan(
+                                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                children: [
+                                  const TextSpan(text: 'Please '),
+                                  const TextSpan(text: 'Click', style: TextStyle(fontStyle: FontStyle.italic)),
+                                  const TextSpan(text: ' to '),
+                                  const TextSpan(text: 'Contribute', style: TextStyle(fontStyle: FontStyle.italic)),
+                                ],
+                              ),
+                            )
+                          : const Text(
+                              'Haga clic aquí para contribuir',
+                              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -2567,12 +2693,21 @@ class TeamSection extends StatelessWidget {
     final content = Stack(
       children: [
         if (!isPhone) Positioned.fill(
-          child: Image.asset(
-            'assets/images/la_bonga_vista.jpeg',
-            fit: BoxFit.cover,
-            filterQuality: FilterQuality.high,
-            color: const Color(0xFF0C1328).withOpacity(0.55),
-            colorBlendMode: BlendMode.srcOver,
+          child: ShaderMask(
+            shaderCallback: (rect) => const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.0, 0.12, 0.88, 1.0],
+              colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
+            ).createShader(rect),
+            blendMode: BlendMode.dstIn,
+            child: Image.asset(
+              'assets/images/la_bonga_vista.jpeg',
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.high,
+              color: const Color(0xFF0C1328).withOpacity(0.55),
+              colorBlendMode: BlendMode.srcOver,
+            ),
           ),
         ),
         Container(
@@ -3087,6 +3222,244 @@ class _FadeInAnimationState extends State<FadeInAnimation>
     );
   }
 }
+
+// Decorative jungle silhouette running down one margin of the green band.
+// Uses palms.jpg, heavily green-tinted, faded toward the content center,
+// with a very slow vertical drift for subtle motion. Non-interactive.
+class _JungleSideStrip extends StatefulWidget {
+  final bool mirror;
+  final double width;
+
+  const _JungleSideStrip({required this.mirror, this.width = 260});
+
+  @override
+  State<_JungleSideStrip> createState() => _JungleSideStripState();
+}
+
+class _JungleSideStripState extends State<_JungleSideStrip>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _drift;
+
+  @override
+  void initState() {
+    super.initState();
+    _drift = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 24),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _drift.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: SizedBox(
+        width: widget.width,
+        height: double.infinity,
+        child: ShaderMask(
+          shaderCallback: (rect) => LinearGradient(
+            begin: widget.mirror ? Alignment.centerRight : Alignment.centerLeft,
+            end: widget.mirror ? Alignment.centerLeft : Alignment.centerRight,
+            colors: const [
+              Color(0xFFFFFFFF),
+              Color(0xAAFFFFFF),
+              Color(0x00FFFFFF),
+            ],
+            stops: const [0.0, 0.55, 1.0],
+          ).createShader(rect),
+          blendMode: BlendMode.dstIn,
+          child: AnimatedBuilder(
+            animation: _drift,
+            builder: (context, child) {
+              final t = Curves.easeInOut.transform(_drift.value);
+              return Transform.translate(
+                offset: Offset(0, (t - 0.5) * 30),
+                child: child,
+              );
+            },
+            child: Transform(
+              alignment: Alignment.center,
+              transform: widget.mirror
+                  ? Matrix4.diagonal3Values(-1, 1, 1)
+                  : Matrix4.identity(),
+              child: Opacity(
+                opacity: 0.38,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/palms.jpg'),
+                      repeat: ImageRepeat.repeatY,
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.topCenter,
+                      colorFilter: ColorFilter.mode(
+                        Color(0xCC16402E),
+                        BlendMode.multiply,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Adds a soft glow + gentle scale-up on hover. Shape-aware via borderRadius.
+class _HoverGlow extends StatefulWidget {
+  final Widget child;
+  final BorderRadiusGeometry borderRadius;
+  final Color glowColor;
+  final double blurRadius;
+  final double spreadRadius;
+  final double scale;
+
+  const _HoverGlow({
+    required this.child,
+    this.borderRadius = const BorderRadius.all(Radius.circular(100)),
+    this.glowColor = const Color(0xFFFFC766),
+    this.blurRadius = 26,
+    this.spreadRadius = 2,
+    this.scale = 1.03,
+  });
+
+  @override
+  State<_HoverGlow> createState() => _HoverGlowState();
+}
+
+class _HoverGlowState extends State<_HoverGlow> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOut,
+        transform: _hover
+            ? (Matrix4.identity()..scale(widget.scale))
+            : Matrix4.identity(),
+        transformAlignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: widget.borderRadius,
+          boxShadow: _hover
+              ? [
+                  BoxShadow(
+                    color: widget.glowColor.withOpacity(0.55),
+                    blurRadius: widget.blurRadius,
+                    spreadRadius: widget.spreadRadius,
+                  ),
+                ]
+              : const [],
+        ),
+        child: widget.child,
+      ),
+    );
+  }
+}
+
+// Scroll-triggered reveal: fades + slides the child up once its top
+// edge enters ~92% of the viewport. One-shot per section.
+class RevealOnScroll extends StatefulWidget {
+  final Widget child;
+  final double offsetY;
+  final Duration duration;
+  final Duration delay;
+
+  const RevealOnScroll({
+    super.key,
+    required this.child,
+    this.offsetY = 28,
+    this.duration = const Duration(milliseconds: 750),
+    this.delay = Duration.zero,
+  });
+
+  @override
+  State<RevealOnScroll> createState() => _RevealOnScrollState();
+}
+
+class _RevealOnScrollState extends State<RevealOnScroll>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  ScrollPosition? _position;
+  bool _triggered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: widget.duration,
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) => _attach());
+  }
+
+  void _attach() {
+    if (!mounted) return;
+    final scrollable = Scrollable.maybeOf(context);
+    if (scrollable == null) {
+      // No scrollable ancestor — just reveal immediately.
+      _fire();
+      return;
+    }
+    _position = scrollable.position;
+    _position!.addListener(_check);
+    _check();
+  }
+
+  void _check() {
+    if (_triggered || !mounted) return;
+    final box = context.findRenderObject() as RenderBox?;
+    if (box == null || !box.attached) return;
+    final screenH = MediaQuery.of(context).size.height;
+    final topY = box.localToGlobal(Offset.zero).dy;
+    if (topY < screenH * 0.92) _fire();
+  }
+
+  void _fire() {
+    if (_triggered) return;
+    _triggered = true;
+    _position?.removeListener(_check);
+    Future.delayed(widget.delay, () {
+      if (mounted) _controller.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _position?.removeListener(_check);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final t = Curves.easeOutCubic.transform(_controller.value);
+        return Opacity(
+          opacity: t,
+          child: Transform.translate(
+            offset: Offset(0, (1 - t) * widget.offsetY),
+            child: child,
+          ),
+        );
+      },
+      child: widget.child,
+    );
+  }
+}
+
 
 // Helper Widget for Zoomable Images with Keyboard Support
 class ZoomableImage extends StatefulWidget {
