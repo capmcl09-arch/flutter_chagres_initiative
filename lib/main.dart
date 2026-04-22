@@ -4,7 +4,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:html' as html;
+import 'dart:ui' as dart_ui;
 import 'dart:ui_web' as ui;
+import 'dart:math' as math;
 
 void main() {
   // Register the Google Maps iframe view factory for web
@@ -315,12 +317,38 @@ class _ChagresHomeState extends State<ChagresHome> {
                 AboutSection(key: _aboutKey, language: widget.language),
                 MapsSection(language: widget.language),
                 MeaningfulSection(language: widget.language),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 48),
+                    child: Image.asset(
+                      'assets/images/labonga_seal.png',
+                      width: 156,
+                      height: 156,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
                 AuthorizationSection(language: widget.language),
                 MethodologySection(key: _methodologyKey, language: widget.language),
                 FadeInAnimation(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 40),
-                    child: Image.asset('assets/images/community_meeting.jpg'),
+                    padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 60),
+                    child: Column(
+                      children: [
+                        Image.asset('assets/images/community_meeting.jpg'),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.',
+                          style: TextStyle(
+                            color: Color(0xFFB0B8C8),
+                            fontSize: 16,
+                            fontStyle: FontStyle.italic,
+                            height: 1.5,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 GallerySection(language: widget.language),
@@ -629,71 +657,106 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
-    return Container(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.black.withOpacity(0.65),
-            Colors.black.withOpacity(0.65),
-          ],
-        ),
-        image: const DecorationImage(
-          image: AssetImage('assets/images/palms.jpg'),
-          fit: BoxFit.cover,
-          opacity: 0.3,
-        ),
-      ),
-      child: isMobile
-          // ── MOBILE: logo + phrases stacked in center ──────────────────
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  constraints: const BoxConstraints(maxWidth: 690),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Image.asset(
-                    'assets/images/chagres_initiative_logo_hq.png',
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                const SizedBox(height: 40),
-                _buildPhrase(context, 'Trade & Water'),
-                const SizedBox(height: 16),
-                _buildPhrase(context, 'Conservation'),
-                const SizedBox(height: 16),
-                _buildPhrase(context, 'Community'),
-              ],
-            )
-          // ── DESKTOP: logo centered, phrases pinned to bottom row ──────
-          : Stack(
-              children: [
-                Center(
-                  child: Container(
-                    constraints: const BoxConstraints(maxWidth: 690),
-                    child: Image.asset(
-                      'assets/images/chagres_initiative_logo_hq.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: MediaQuery.of(context).size.height * 0.18,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildPhrase(context, 'Trade & Water'),
-                      _buildPhrase(context, 'Conservation'),
-                      _buildPhrase(context, 'Community'),
-                    ],
-                  ),
-                ),
+    return Stack(
+      children: [
+        // Background
+        Container(
+          width: double.infinity,
+          height: screenHeight,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.black.withOpacity(0.65),
+                Colors.black.withOpacity(0.65),
               ],
             ),
+            image: const DecorationImage(
+              image: AssetImage('assets/images/palms.jpg'),
+              fit: BoxFit.cover,
+              opacity: 0.3,
+            ),
+          ),
+        ),
+        // Logo — centered vertically (slightly above center) and horizontally
+        Positioned(
+          left: 0,
+          right: 0,
+          top: screenHeight * 0.18,
+          child: Center(
+            child: Container(
+              constraints: BoxConstraints(maxWidth: isMobile ? 340 : 700),
+              padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 0),
+              child: Image.asset(
+                'assets/images/chagres_initiative_logo_hq.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ),
+        // Three phrases at centers of each third of the screen width
+        if (!isMobile) ...[
+          Positioned(
+            left: screenWidth / 6,
+            bottom: screenHeight * 0.12,
+            child: Transform.translate(
+              offset: const Offset(-50, 0),
+              child: _buildPhrase(context, 'Water Security'),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: screenHeight * 0.12,
+            child: Center(child: _buildPhrase(context, 'Rainforest Conservation')),
+          ),
+          Positioned(
+            right: screenWidth / 6,
+            bottom: screenHeight * 0.12,
+            child: Transform.translate(
+              offset: const Offset(50, 0),
+              child: _buildPhrase(context, 'Indigenous Communities'),
+            ),
+          ),
+        ] else
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: screenHeight * 0.08,
+            child: Column(
+              children: [
+                _buildPhrase(context, 'Water Security'),
+                const SizedBox(height: 10),
+                _buildPhrase(context, 'Rainforest Conservation'),
+                const SizedBox(height: 10),
+                _buildPhrase(context, 'Indigenous Communities'),
+              ],
+            ),
+          ),
+        // Gradient fade at bottom blending into next section
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 120,
+          child: IgnorePointer(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    const Color(0xFF070C18),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -731,14 +794,96 @@ class PartnershipsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
     
-    return Container(
-      color: const Color(0xFF0C1328),
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 60,
-        vertical: 60,
-      ),
-      child: Column(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Image is 3999x2250; calculate its natural contained height
+        final imageHeight = constraints.maxWidth * 2250 / 3999;
+        // Lancha is 4032x3024 (4:3)
+        final lanchaHeight = constraints.maxWidth * 3024 / 4032;
+        final lanchaTop = imageHeight;
+        // La Bonga Vista is 4032x3024 (4:3)
+        final vistaHeight = constraints.maxWidth * 3024 / 4032;
+        final vistaTop = lanchaTop + lanchaHeight;
+
+        return Stack(
+      children: [
+        // Dark background for content that overflows past image
+        Container(width: double.infinity, color: const Color(0xFF0C1328)),
+        // Boat image at exact natural height
+        // Boat — fades out at bottom
+        Positioned(
+          top: 0, left: 0, right: 0,
+          height: imageHeight,
+          child: ShaderMask(
+            shaderCallback: (rect) => const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.0, 0.75, 1.0],
+              colors: [Colors.white, Colors.white, Colors.transparent],
+            ).createShader(rect),
+            blendMode: BlendMode.dstIn,
+            child: Image.asset(
+              'assets/images/Background_BOAT.jpg',
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.high,
+              color: const Color(0xFF0C1328).withOpacity(0.30),
+              colorBlendMode: BlendMode.srcOver,
+            ),
+          ),
+        ),
+        // Lancha — fades in at top, out at bottom
+        Positioned(
+          top: lanchaTop, left: 0, right: 0,
+          height: lanchaHeight,
+          child: ShaderMask(
+            shaderCallback: (rect) => const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.0, 0.15, 0.85, 1.0],
+              colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
+            ).createShader(rect),
+            blendMode: BlendMode.dstIn,
+            child: Image.asset(
+              'assets/images/long_lancha.jpeg',
+              fit: BoxFit.cover,
+              alignment: Alignment.bottomRight,
+              filterQuality: FilterQuality.high,
+              color: const Color(0xFF0C1328).withOpacity(0.30),
+              colorBlendMode: BlendMode.srcOver,
+            ),
+          ),
+        ),
+        // La Bonga Vista — fades in at top, out at bottom
+        Positioned(
+          top: vistaTop, left: 0, right: 0,
+          height: vistaHeight,
+          child: ShaderMask(
+            shaderCallback: (rect) => const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.0, 0.15, 0.85, 1.0],
+              colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
+            ).createShader(rect),
+            blendMode: BlendMode.dstIn,
+            child: Image.asset(
+              'assets/images/la_bonga_vista.jpeg',
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+              filterQuality: FilterQuality.high,
+              color: const Color(0xFF0C1328).withOpacity(0.30),
+              colorBlendMode: BlendMode.srcOver,
+            ),
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.fromLTRB(
+            isMobile ? 20.0 : 60.0,
+            140,
+            isMobile ? 20.0 : 60.0,
+            60,
+          ),
+          child: Column(
         children: [
           Text(
             language == 'en' ? 'Collaborators' : 'Colaboradores',
@@ -814,16 +959,72 @@ class PartnershipsSection extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 30),
-          // Poem Image
+          // Spacer to push Make Dreams below the boat photo's bottom blur
+          SizedBox(height: (imageHeight - 580).clamp(60.0, 800.0)),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: BackdropFilter(
+              filter: dart_ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+              child: Container(
+            constraints: const BoxConstraints(maxWidth: 720),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 28),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: const Color(0xFF1A4080).withOpacity(0.22),
+              border: Border.all(
+                color: const Color(0xFF4A90D9).withOpacity(0.28),
+                width: 1.2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF0D2550).withOpacity(0.45),
+                  blurRadius: 40,
+                  spreadRadius: 4,
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  language == 'en'
+                      ? 'Make Dreams Possible – Fund KU Research Abroad'
+                      : 'Haga posibles los sueños – Financie la Investigación de KU en el Exterior',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Text.rich(
+                  TextSpan(
+                    style: const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
+                    children: _buildCISpans(
+                      language == 'en'
+                          ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about two years and U.S. \$150,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
+                          : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nCon los fondos federales de EE.UU., las ONG e incluso la financiación universitaria interna para la investigación internacional siendo drásticamente recortados, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres tomará aproximadamente dos años y U.S. \$150,000 para completar.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, pagando los costos directos del proyecto de los miembros de la comunidad, estudiantes y profesores de KU en el equipo de investigación, pagando vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios para cubrir su alimentación, alojamiento y viaje.',
+                      const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
+                    ),
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+          ),
+            ),
+          ),
+          const SizedBox(height: 40),
+          // Poem Image — below boat photo seam
           Image.asset(
             'assets/images/poem.png',
             width: isMobile ? 280 : 360,
             fit: BoxFit.contain,
             opacity: const AlwaysStoppedAnimation(0.95),
           ),
-          const SizedBox(height: 40),
-          // Donation Section - Oval with transparent crimson background
+          const SizedBox(height: 32),
+          // Donation button — after Make Dreams section
           GestureDetector(
             onTap: () {
               launchUrl(Uri.parse('https://geog.ku.edu/donate'));
@@ -863,41 +1064,12 @@ class PartnershipsSection extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 24),
-          Container(
-            constraints: const BoxConstraints(maxWidth: 720),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  language == 'en'
-                      ? 'Make Dreams Possible – Fund KU Research Abroad'
-                      : 'Haga posibles los sueños – Financie la Investigación de KU en el Exterior',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                Text.rich(
-                  TextSpan(
-                    style: const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
-                    children: _buildCISpans(
-                      language == 'en'
-                          ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about two years and U.S. \$150,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
-                          : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nCon los fondos federales de EE.UU., las ONG e incluso la financiación universitaria interna para la investigación internacional siendo drásticamente recortados, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres tomará aproximadamente dos años y U.S. \$150,000 para completar.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, pagando los costos directos del proyecto de los miembros de la comunidad, estudiantes y profesores de KU en el equipo de investigación, pagando vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios para cubrir su alimentación, alojamiento y viaje.',
-                      const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
-                    ),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
         ],
       ),
+        ),
+      ],
+    );
+      },
     );
   }
 }
@@ -912,73 +1084,95 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
     
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 60,
-        vertical: 60,
-      ),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: () {
-              // Heading click effect
-            },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Text(
-                language == 'en' ? 'About the Initiative' : 'Sobre la Iniciativa',
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.5,
-                ),
-                textAlign: TextAlign.center,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Natural image height at full width (1600×1066)
+        final imageHeight = constraints.maxWidth * 1066.0 / 1600.0;
+        // Content sits in the top 1/3 of the photo
+        final topPadding = imageHeight * 0.05;
+
+        return Stack(
+          children: [
+            // Full ship photo, natural size, soft edges
+            ShaderMask(
+              shaderCallback: (rect) => const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, 0.08, 0.92, 1.0],
+                colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
+              ).createShader(rect),
+              blendMode: BlendMode.dstIn,
+              child: Image.asset(
+                'assets/images/container_ship_gatun.jpg',
+                width: double.infinity,
+                fit: BoxFit.fitWidth,
+                filterQuality: FilterQuality.high,
+                color: const Color(0xFF0C1328).withOpacity(0.50),
+                colorBlendMode: BlendMode.srcOver,
               ),
             ),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFF101A2F),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.45),
-                  blurRadius: 34,
-                  offset: const Offset(0, 14),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(36),
-            child: Text.rich(
-              TextSpan(
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: const Color(0xFFB9C6EA),
-                  fontSize: 17,
-                  height: 1.75,
-                ),
-                children: _buildCISpans(
-                  language == 'en'
-                      ? 'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
-                      : 'La Iniciativa Chagres responde a una solicitud legal de un Congreso Indígena en Panamá para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para 1,5 millones de personas en la Ciudad de Panamá.\n\nNuestro equipo de investigación de KU fue invitado por líderes indígenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena (CGI) con GPS, fotografía aérea e imágenes satelitales. Además, entrenamos a los aldeanos como "geógrafos comunitarios" que aprenden habilidades de investigación de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo. A través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y juntos producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
-                  Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFFB9C6EA),
-                    fontSize: 17,
-                    height: 1.75,
+            // Text overlaid in the top 1/3 of the photo, centered
+            Positioned(
+              top: topPadding,
+              left: isMobile ? 20 : 60,
+              right: isMobile ? 20 : 60,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Text(
+                        language == 'en' ? 'About the Initiative' : 'Sobre la Iniciativa',
+                        style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.5,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 24),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF101A2F).withOpacity(0.82),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.45),
+                          blurRadius: 34,
+                          offset: const Offset(0, 14),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(36),
+                    child: Text.rich(
+                      TextSpan(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: const Color(0xFFB9C6EA),
+                          fontSize: 17,
+                          height: 1.75,
+                        ),
+                        children: _buildCISpans(
+                          language == 'en'
+                              ? 'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
+                              : 'La Iniciativa Chagres responde a una solicitud legal de un Congreso Indígena en Panamá para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para 1,5 millones de personas en la Ciudad de Panamá.\n\nNuestro equipo de investigación de KU fue invitado por líderes indígenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena (CGI) con GPS, fotografía aérea e imágenes satelitales. Además, entrenamos a los aldeanos como "geógrafos comunitarios" que aprenden habilidades de investigación de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo. A través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y juntos producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
+                          Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: const Color(0xFFB9C6EA),
+                            fontSize: 17,
+                            height: 1.75,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          const SizedBox(height: 40),
-          Image.asset(
-            'assets/images/labonga_seal.png',
-            width: 120,
-            height: 120,
-            fit: BoxFit.contain,
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }
@@ -1145,8 +1339,8 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
-    return Padding(
+
+    final inner = Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
         vertical: 60,
@@ -1220,6 +1414,8 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
         ],
       ),
     );
+
+    return inner;
   }
 
   void _scrollToTop(BuildContext context) {
@@ -1262,7 +1458,7 @@ class _MethodologySectionState extends State<MethodologySection> {
             ('Etapa Cinco: Producción de Mapas SIG y Computarizados', 'Estudiantes de KU con profesores digitalizan y estandarizan los resultados para uso de planificación y gobernanza.'),
           ];
 
-    return Container(
+    final inner = Container(
       color: const Color(0xFF0C1328),
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
@@ -1346,6 +1542,8 @@ class _MethodologySectionState extends State<MethodologySection> {
         ],
       ),
     );
+
+    return inner;
   }
 }
 
@@ -1379,7 +1577,7 @@ class _GallerySectionState extends State<GallerySection> {
     ('Community leadership engagement', 'Participación del liderazgo comunitario'),
     ('Site analysis at Panamanian Geographic Institute', 'Análisis del sitio en el Instituto Geográfico de Panamá'),
     ('Rainforest lizard', 'Lagarto de la selva tropical'),
-    ('Rainforest monkey', 'Mono de la selva tropical'),
+    ('White-Faced Capuchin Monkey', 'Mono Capuchino de Cara Blanca'),
   ];
 
   @override
@@ -1640,57 +1838,136 @@ class MapsSection extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFF101A2F),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 563,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: ZoomableImage(
-                      imagePath: 'assets/images/chagres_broadermap.jpg',
-                      height: 563,
-                      width: double.infinity,
-                      fit: BoxFit.contain,
+          LayoutBuilder(
+            builder: (context, constraints) {
+              const mapAspectH = 1237.0 / 1600.0; // height/width ratio
+
+              final captionText = Text(
+                language == 'en'
+                    ? 'This map shows the Río Pequení Chagres National Park — the geographic setting and subsistence area of our participatory research mapping work with the resident Indigenous communities, including La Bonga.'
+                    : 'Este mapa muestra el Parque Nacional Chagres del Río Pequení — el escenario geográfico y área de subsistencia de nuestro trabajo de mapeo participativo de investigación con las comunidades indígenas residentes, incluyendo La Bonga.',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: const Color(0xFFB9C6EA),
+                ),
+              );
+
+              final openMapsButton = ElevatedButton(
+                onPressed: () {
+                  launchUrl(Uri.parse(
+                    'https://www.google.com/maps/place/San+Juan+de+Pequní+Indígena+(+La+Bonga)/@9.3827301,-79.5241626,17z/data=!3m1!4b1!4m6!3m5!1s0x8fab494a734c2493:0xe55e405b5412d0dc!8m2!3d9.3827301!4d-79.5215877!16s%2Fg%2F11mtjt0g7z?entry=ttu',
+                  ));
+                },
+                child: Text(
+                  language == 'en'
+                      ? 'Open La Bonga in Google Maps'
+                      : 'Abrir La Bonga en Google Maps',
+                ),
+              );
+
+              if (isMobile) {
+                // Mobile: stacked column
+                const displayHeight = 563.0;
+                const imageAspectRatio = 1600.0 / 1237.0;
+                final displayWidth = math.min(constraints.maxWidth, displayHeight * imageAspectRatio);
+                final iframeHeight = displayWidth / 1.6;
+                return Center(
+                  child: Container(
+                    width: displayWidth,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF101A2F),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: ZoomableImage(
+                            imagePath: 'assets/images/chagres_broadermap.jpg',
+                            height: displayHeight,
+                            width: displayWidth,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        captionText,
+                        const SizedBox(height: 20),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: SizedBox(
+                            width: displayWidth,
+                            height: iframeHeight,
+                            child: _GoogleMapEmbed(),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        openMapsButton,
+                      ],
                     ),
                   ),
+                );
+              }
+
+              // Desktop: side-by-side row
+              const gap = 16.0;
+              const cardPadding = 12.0;
+              final colWidth = (constraints.maxWidth - gap - cardPadding * 2) / 2;
+              final mapHeight = colWidth * mapAspectH;
+
+              return Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF101A2F),
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  language == 'en'
-                      ? 'This maps show the Río Pequení Chagres National Park - the geographic setting and subsistence area of our participatory research mapping work with the resident Indigenous communities, including La Bonga.'
-                      : 'Este mapa muestra el Parque Nacional Chagres del Río Pequení - el escenario geográfico y área de subsistencia de nuestro trabajo de mapeo participativo de investigación con las comunidades indígenas residentes, incluyendo La Bonga.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFFB9C6EA),
-                  ),
+                padding: const EdgeInsets.all(cardPadding),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left: project map image + caption
+                    SizedBox(
+                      width: colWidth,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: ZoomableImage(
+                              imagePath: 'assets/images/chagres_broadermap.jpg',
+                              height: mapHeight,
+                              width: colWidth,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          captionText,
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: gap),
+                    // Right: Google Maps iframe + open button
+                    SizedBox(
+                      width: colWidth,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: SizedBox(
+                              width: colWidth,
+                              height: mapHeight,
+                              child: _GoogleMapEmbed(),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          openMapsButton,
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  height: 400,
-                  child: _GoogleMapEmbed(),
-                ),
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () {
-                    launchUrl(Uri.parse(
-                      'https://www.google.com/maps/place/San+Juan+de+Pequní+Indígena+(+La+Bonga)/@9.3827301,-79.5241626,17z/data=!3m1!4b1!4m6!3m5!1s0x8fab494a734c2493:0xe55e405b5412d0dc!8m2!3d9.3827301!4d-79.5215877!16s%2Fg%2F11mtjt0g7z?entry=ttu',
-                    ));
-                  },
-                  child: Text(
-                    language == 'en'
-                        ? 'Open La Bonga in Google Maps'
-                        : 'Abrir La Bonga en Google Maps',
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),
@@ -2219,8 +2496,18 @@ class TeamSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
     
-    return Container(
-      color: const Color(0xFF0C1328),
+    final content = Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/la_bonga_vista.jpeg',
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.high,
+            color: const Color(0xFF0C1328).withOpacity(0.55),
+            colorBlendMode: BlendMode.srcOver,
+          ),
+        ),
+        Container(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
         vertical: 60,
@@ -2276,7 +2563,11 @@ class TeamSection extends StatelessWidget {
           ),
         ],
       ),
+        ),
+      ],
     );
+
+    return content;
   }
 
   Widget _buildTeamSection(
