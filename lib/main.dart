@@ -792,7 +792,9 @@ class PartnershipsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 900;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 900;
+    final isPhone = screenWidth < 600;
     
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -809,9 +811,8 @@ class PartnershipsSection extends StatelessWidget {
       children: [
         // Dark background for content that overflows past image
         Container(width: double.infinity, color: const Color(0xFF0C1328)),
-        // Boat image at exact natural height
-        // Boat — fades out at bottom
-        Positioned(
+        // Background photos: hidden on phones, shown on tablets/desktop
+        if (!isPhone) Positioned(
           top: 0, left: 0, right: 0,
           height: imageHeight,
           child: ShaderMask(
@@ -831,8 +832,7 @@ class PartnershipsSection extends StatelessWidget {
             ),
           ),
         ),
-        // Lancha — fades in at top, out at bottom
-        Positioned(
+        if (!isPhone) Positioned(
           top: lanchaTop, left: 0, right: 0,
           height: lanchaHeight,
           child: ShaderMask(
@@ -853,8 +853,7 @@ class PartnershipsSection extends StatelessWidget {
             ),
           ),
         ),
-        // La Bonga Vista — fades in at top, out at bottom
-        Positioned(
+        if (!isPhone) Positioned(
           top: vistaTop, left: 0, right: 0,
           height: vistaHeight,
           child: ShaderMask(
@@ -1082,7 +1081,9 @@ class AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 900;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 900;
+    final isPhone = screenWidth < 600;
     
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -1091,6 +1092,70 @@ class AboutSection extends StatelessWidget {
         // Content sits in the top 1/3 of the photo
         final topPadding = imageHeight * 0.05;
 
+        // Shared text content widget
+        final textContent = Column(
+          children: [
+            GestureDetector(
+              onTap: () {},
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Text(
+                  language == 'en' ? 'About the Initiative' : 'Sobre la Iniciativa',
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF101A2F).withOpacity(isPhone ? 1.0 : 0.82),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.45),
+                    blurRadius: 34,
+                    offset: const Offset(0, 14),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.all(36),
+              child: Text.rich(
+                TextSpan(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFFB9C6EA),
+                    fontSize: 17,
+                    height: 1.75,
+                  ),
+                  children: _buildCISpans(
+                    language == 'en'
+                        ? 'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
+                        : 'La Iniciativa Chagres responde a una solicitud legal de un Congreso Indígena en Panamá para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para 1,5 millones de personas en la Ciudad de Panamá.\n\nNuestro equipo de investigación de KU fue invitado por líderes indígenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena (CGI) con GPS, fotografía aérea e imágenes satelitales. Además, entrenamos a los aldeanos como "geógrafos comunitarios" que aprenden habilidades de investigación de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo. A través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y juntos producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
+                    Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: const Color(0xFFB9C6EA),
+                      fontSize: 17,
+                      height: 1.75,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+
+        // Phone: no background photo, just padded text
+        if (isPhone) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            child: textContent,
+          );
+        }
+
+        // Tablet/desktop: full photo with overlaid text
         return Stack(
           children: [
             // Full ship photo, natural size, soft edges
@@ -1111,64 +1176,12 @@ class AboutSection extends StatelessWidget {
                 colorBlendMode: BlendMode.srcOver,
               ),
             ),
-            // Text overlaid in the top 1/3 of the photo, centered
+            // Text overlaid in the top portion of the photo
             Positioned(
               top: topPadding,
               left: isMobile ? 20 : 60,
               right: isMobile ? 20 : 60,
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: Text(
-                        language == 'en' ? 'About the Initiative' : 'Sobre la Iniciativa',
-                        style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.5,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF101A2F).withOpacity(0.82),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.45),
-                          blurRadius: 34,
-                          offset: const Offset(0, 14),
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.all(36),
-                    child: Text.rich(
-                      TextSpan(
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: const Color(0xFFB9C6EA),
-                          fontSize: 17,
-                          height: 1.75,
-                        ),
-                        children: _buildCISpans(
-                          language == 'en'
-                              ? 'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
-                              : 'La Iniciativa Chagres responde a una solicitud legal de un Congreso Indígena en Panamá para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para 1,5 millones de personas en la Ciudad de Panamá.\n\nNuestro equipo de investigación de KU fue invitado por líderes indígenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena (CGI) con GPS, fotografía aérea e imágenes satelitales. Además, entrenamos a los aldeanos como "geógrafos comunitarios" que aprenden habilidades de investigación de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo. A través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y juntos producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
-                          Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: const Color(0xFFB9C6EA),
-                            fontSize: 17,
-                            height: 1.75,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              child: textContent,
             ),
           ],
         );
@@ -2494,11 +2507,13 @@ class TeamSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 900;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 900;
+    final isPhone = screenWidth < 600;
     
     final content = Stack(
       children: [
-        Positioned.fill(
+        if (!isPhone) Positioned.fill(
           child: Image.asset(
             'assets/images/la_bonga_vista.jpeg',
             fit: BoxFit.cover,
