@@ -724,7 +724,7 @@ class HeroSection extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            bottom: screenHeight * 0.08,
+            bottom: screenHeight * 0.22,
             child: Column(
               children: [
                 _buildPhrase(context, 'Water Security'),
