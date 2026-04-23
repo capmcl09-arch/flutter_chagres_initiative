@@ -359,17 +359,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                         child: MeaningfulSection(language: widget.language),
                       ),
                       RevealOnScroll(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 48),
-                            child: Image.asset(
-                              'assets/images/labonga_seal.png',
-                              width: 156,
-                              height: 156,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
+                        child: _SealWithStats(language: widget.language),
                       ),
                       RevealOnScroll(
                         child: AuthorizationSection(language: widget.language),
@@ -442,7 +432,7 @@ class _ChagresHomeState extends State<ChagresHome> {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: () => launchUrl(Uri.parse('https://geog.ku.edu/donate')),
+                onTap: () => launchUrl(Uri.parse('https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship')),
                 child: _HoverGlow(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
@@ -1107,7 +1097,7 @@ class PartnershipsSection extends StatelessWidget {
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
               onTap: () {
-                launchUrl(Uri.parse('https://geog.ku.edu/donate'));
+                launchUrl(Uri.parse('https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship'));
               },
               child: _HoverGlow(
                 child: Container(
@@ -1456,6 +1446,390 @@ class _MeaningfulSectionState extends State<MeaningfulSection> {
       ),
     );
   }
+}
+
+// Seal with surrounding blue stat figures (water stats + Chagres biodiversity)
+class _SealWithStats extends StatelessWidget {
+  final String language;
+  const _SealWithStats({required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+    final en = language == 'en';
+
+    final waterStat = _StatFigure(
+      painter: _WaterDropCanalPainter(),
+      value: '40%',
+      label: en
+          ? "of the Panama Canal's freshwater"
+          : 'del agua dulce del Canal de Panamá',
+    );
+    final peopleStat = _StatFigure(
+      painter: _PeopleDrinkingPainter(),
+      value: '1.5M',
+      label: en
+          ? "people's drinking water in Panama City"
+          : 'personas con agua potable en la Ciudad de Panamá',
+    );
+    final birdStat = _StatFigure(
+      painter: _HarpyEaglePainter(),
+      value: '430+',
+      label: en
+          ? 'bird species, including the endangered Harpy Eagle'
+          : 'especies de aves, incluyendo el amenazado Águila Harpía',
+    );
+    final plantStat = _StatFigure(
+      painter: _RainforestTreePainter(),
+      value: '1,500+',
+      label: en
+          ? 'documented vascular plant species across 129,000 hectares'
+          : 'especies de plantas vasculares documentadas en 129,000 hectáreas',
+    );
+
+    final seal = Image.asset(
+      'assets/images/labonga_seal.png',
+      width: 240,
+      height: 240,
+      fit: BoxFit.contain,
+    );
+
+    final content = isMobile
+        ? Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+            child: Column(
+              children: [
+                waterStat,
+                const SizedBox(height: 28),
+                peopleStat,
+                const SizedBox(height: 36),
+                seal,
+                const SizedBox(height: 36),
+                birdStat,
+                const SizedBox(height: 28),
+                plantStat,
+              ],
+            ),
+          )
+        : Padding(
+            padding: const EdgeInsets.symmetric(vertical: 72, horizontal: 40),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: Center(child: waterStat)),
+                    const SizedBox(width: 56),
+                    Expanded(child: Center(child: peopleStat)),
+                  ],
+                ),
+                const SizedBox(height: 56),
+                seal,
+                const SizedBox(height: 56),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: Center(child: birdStat)),
+                    const SizedBox(width: 56),
+                    Expanded(child: Center(child: plantStat)),
+                  ],
+                ),
+              ],
+            ),
+          );
+
+    // Faint jungle backdrop — same palms texture, green tint, and ~0.38 opacity
+    // used by the side strips, softly faded at the top/bottom edges so it
+    // blends into the surrounding green band.
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned.fill(
+          child: IgnorePointer(
+            child: ShaderMask(
+              shaderCallback: (rect) => const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0x00FFFFFF),
+                  Color(0xFFFFFFFF),
+                  Color(0xFFFFFFFF),
+                  Color(0x00FFFFFF),
+                ],
+                stops: [0.0, 0.12, 0.88, 1.0],
+              ).createShader(rect),
+              blendMode: BlendMode.dstIn,
+              child: Opacity(
+                opacity: 0.38,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/palms.jpg'),
+                      repeat: ImageRepeat.repeat,
+                      fit: BoxFit.none,
+                      alignment: Alignment.topCenter,
+                      colorFilter: ColorFilter.mode(
+                        Color(0xCC16402E),
+                        BlendMode.multiply,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        content,
+      ],
+    );
+  }
+}
+
+class _StatFigure extends StatelessWidget {
+  final CustomPainter painter;
+  final String value;
+  final String label;
+
+  const _StatFigure({
+    required this.painter,
+    required this.value,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 360),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 168,
+            height: 168,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFF5FB5FF).withOpacity(0.08),
+              border: Border.all(
+                color: const Color(0xFF5FB5FF).withOpacity(0.35),
+                width: 2.0,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(26),
+              child: CustomPaint(painter: painter),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            value,
+            style: GoogleFonts.inter(
+              color: const Color(0xFF7CC4FF),
+              fontSize: 62,
+              fontWeight: FontWeight.w800,
+              letterSpacing: -0.5,
+              height: 1.0,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFFB9C6EA),
+              fontSize: 17,
+              height: 1.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// --- Simple blue illustrations ---
+
+const Color _figureBlue = Color(0xFF7CC4FF);
+
+Paint _stroke({double width = 2.2}) => Paint()
+  ..color = _figureBlue
+  ..style = PaintingStyle.stroke
+  ..strokeCap = StrokeCap.round
+  ..strokeJoin = StrokeJoin.round
+  ..strokeWidth = width;
+
+Paint _fill({double opacity = 1.0}) => Paint()
+  ..color = _figureBlue.withOpacity(opacity)
+  ..style = PaintingStyle.fill;
+
+class _WaterDropCanalPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    // Water drop
+    final drop = Path()
+      ..moveTo(w * 0.5, h * 0.06)
+      ..cubicTo(w * 0.95, h * 0.55, w * 0.82, h * 0.95, w * 0.5, h * 0.95)
+      ..cubicTo(w * 0.18, h * 0.95, w * 0.05, h * 0.55, w * 0.5, h * 0.06)
+      ..close();
+    canvas.drawPath(drop, _fill(opacity: 0.18));
+    canvas.drawPath(drop, _stroke(width: 2.4));
+
+    // Little ship silhouette inside (canal reference)
+    final shipY = h * 0.62;
+    final ship = Path()
+      ..moveTo(w * 0.28, shipY)
+      ..lineTo(w * 0.72, shipY)
+      ..lineTo(w * 0.64, shipY + h * 0.10)
+      ..lineTo(w * 0.36, shipY + h * 0.10)
+      ..close();
+    canvas.drawPath(ship, _fill());
+    // Mast + funnel
+    canvas.drawLine(
+      Offset(w * 0.50, shipY),
+      Offset(w * 0.50, shipY - h * 0.14),
+      _stroke(width: 2.0),
+    );
+    canvas.drawRect(
+      Rect.fromLTWH(w * 0.44, shipY - h * 0.09, w * 0.06, h * 0.09),
+      _fill(),
+    );
+
+    // Waves below ship
+    final wave = Path()
+      ..moveTo(w * 0.22, h * 0.82)
+      ..quadraticBezierTo(w * 0.33, h * 0.76, w * 0.44, h * 0.82)
+      ..quadraticBezierTo(w * 0.55, h * 0.88, w * 0.66, h * 0.82)
+      ..quadraticBezierTo(w * 0.73, h * 0.78, w * 0.78, h * 0.82);
+    canvas.drawPath(wave, _stroke(width: 2.0));
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _PeopleDrinkingPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    void person(double cx, double cy, double scale) {
+      final headR = 0.09 * w * scale;
+      canvas.drawCircle(Offset(cx, cy - 0.22 * h * scale), headR, _fill());
+      final body = Path()
+        ..moveTo(cx - 0.16 * w * scale, cy + 0.30 * h * scale)
+        ..quadraticBezierTo(
+            cx - 0.16 * w * scale, cy - 0.08 * h * scale,
+            cx, cy - 0.08 * h * scale)
+        ..quadraticBezierTo(
+            cx + 0.16 * w * scale, cy - 0.08 * h * scale,
+            cx + 0.16 * w * scale, cy + 0.30 * h * scale)
+        ..close();
+      canvas.drawPath(body, _fill());
+    }
+
+    // Back figure (smaller, center)
+    person(w * 0.5, h * 0.48, 0.95);
+    // Left figure
+    person(w * 0.22, h * 0.55, 0.85);
+    // Right figure
+    person(w * 0.78, h * 0.55, 0.85);
+
+    // Water drop above center (drinking water motif)
+    final drop = Path()
+      ..moveTo(w * 0.5, h * 0.02)
+      ..cubicTo(w * 0.66, h * 0.15, w * 0.62, h * 0.28, w * 0.5, h * 0.28)
+      ..cubicTo(w * 0.38, h * 0.28, w * 0.34, h * 0.15, w * 0.5, h * 0.02)
+      ..close();
+    canvas.drawPath(drop, _fill(opacity: 0.25));
+    canvas.drawPath(drop, _stroke(width: 2.0));
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _HarpyEaglePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    // Stylized flying bird (gull/eagle silhouette)
+    final wings = Path()
+      ..moveTo(w * 0.04, h * 0.58)
+      ..quadraticBezierTo(w * 0.22, h * 0.30, w * 0.38, h * 0.55)
+      ..quadraticBezierTo(w * 0.44, h * 0.46, w * 0.50, h * 0.52)
+      ..quadraticBezierTo(w * 0.56, h * 0.46, w * 0.62, h * 0.55)
+      ..quadraticBezierTo(w * 0.78, h * 0.30, w * 0.96, h * 0.58);
+    canvas.drawPath(wings, _stroke(width: 3.0));
+
+    // Body
+    final body = Path()
+      ..moveTo(w * 0.44, h * 0.52)
+      ..quadraticBezierTo(w * 0.50, h * 0.82, w * 0.56, h * 0.52)
+      ..close();
+    canvas.drawPath(body, _fill());
+
+    // Head crest (harpy trademark)
+    canvas.drawCircle(Offset(w * 0.50, h * 0.50), h * 0.045, _fill());
+    canvas.drawLine(
+      Offset(w * 0.50, h * 0.47),
+      Offset(w * 0.46, h * 0.41),
+      _stroke(width: 2.0),
+    );
+    canvas.drawLine(
+      Offset(w * 0.50, h * 0.47),
+      Offset(w * 0.54, h * 0.41),
+      _stroke(width: 2.0),
+    );
+
+    // Tail
+    final tail = Path()
+      ..moveTo(w * 0.47, h * 0.70)
+      ..lineTo(w * 0.50, h * 0.92)
+      ..lineTo(w * 0.53, h * 0.70)
+      ..close();
+    canvas.drawPath(tail, _fill(opacity: 0.75));
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _RainforestTreePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    // Trunk
+    final trunk = Path()
+      ..moveTo(w * 0.46, h * 0.95)
+      ..lineTo(w * 0.48, h * 0.50)
+      ..lineTo(w * 0.52, h * 0.50)
+      ..lineTo(w * 0.54, h * 0.95)
+      ..close();
+    canvas.drawPath(trunk, _fill());
+
+    // Canopy (three overlapping cloud-like blobs)
+    canvas.drawCircle(Offset(w * 0.50, h * 0.30), h * 0.24, _fill(opacity: 0.85));
+    canvas.drawCircle(Offset(w * 0.28, h * 0.42), h * 0.18, _fill(opacity: 0.70));
+    canvas.drawCircle(Offset(w * 0.72, h * 0.42), h * 0.18, _fill(opacity: 0.70));
+    canvas.drawCircle(Offset(w * 0.50, h * 0.30), h * 0.24, _stroke(width: 2.0));
+    canvas.drawCircle(Offset(w * 0.28, h * 0.42), h * 0.18, _stroke(width: 2.0));
+    canvas.drawCircle(Offset(w * 0.72, h * 0.42), h * 0.18, _stroke(width: 2.0));
+
+    // A small leaf/frond accent
+    canvas.drawLine(
+      Offset(w * 0.50, h * 0.30),
+      Offset(w * 0.50, h * 0.50),
+      _stroke(width: 1.6),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 // Authorization Section
@@ -2569,7 +2943,7 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                 // Donation Button
                 GestureDetector(
                   onTap: () {
-                    launchUrl(Uri.parse('https://geog.ku.edu/donate'));
+                    launchUrl(Uri.parse('https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship'));
                   },
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
