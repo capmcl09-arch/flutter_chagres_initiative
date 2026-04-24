@@ -784,6 +784,8 @@ class HeroSection extends StatelessWidget {
     final isMobile = MediaQuery.of(context).size.width < 900;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final topInset = MediaQuery.paddingOf(context).top;
+    final logoWidth = isMobile ? screenWidth * 0.92 : screenWidth * 0.68;
 
     return Stack(
       children: [
@@ -805,27 +807,53 @@ class HeroSection extends StatelessWidget {
             ),
           ),
         ),
-        // Logo — sized to 68% of viewport width, centered. Tap/click to zoom.
-        Positioned(
-          left: 0,
-          right: 0,
-          top: screenHeight * 0.05,
-          child: Center(
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: onLogoTap,
-                child: SizedBox(
-                  width: screenWidth * 0.68,
-                  child: Image.asset(
-                    'assets/images/chagres_initiative_logo_hq.png',
-                    fit: BoxFit.fitWidth,
+        // Logo — on phones keep it large, but pin it into the upper hero so it stays clear of the phrase stack.
+        if (isMobile)
+          Positioned(
+            top: topInset + 24,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: onLogoTap,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: logoWidth,
+                      maxHeight: screenHeight * 0.34,
+                    ),
+                    child: Image.asset(
+                      'assets/images/chagres_initiative_logo_hq.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        else
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.05),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: onLogoTap,
+                    child: SizedBox(
+                      width: logoWidth,
+                      child: Image.asset(
+                        'assets/images/chagres_initiative_logo_hq.png',
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
         // Three phrases at centers of each third of the screen width
         if (!isMobile) ...[
           Positioned(
@@ -854,7 +882,7 @@ class HeroSection extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            bottom: screenHeight * 0.22,
+            bottom: screenHeight * 0.12,
             child: Column(
               children: [
                 _buildPhrase(context, 'Water Security'),
