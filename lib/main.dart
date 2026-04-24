@@ -786,6 +786,7 @@ class HeroSection extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
     final logoWidth = isMobile ? screenWidth * 0.92 : screenWidth * 0.68;
+    final heroTopPadding = isMobile ? topInset + 24 : screenHeight * 0.05;
 
     return Stack(
       children: [
@@ -807,92 +808,44 @@ class HeroSection extends StatelessWidget {
             ),
           ),
         ),
-        // Logo — on phones keep it large, but pin it into the upper hero so it stays clear of the phrase stack.
-        if (isMobile)
-          Positioned(
-            top: topInset + 24,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: onLogoTap,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: logoWidth,
-                      maxHeight: screenHeight * 0.34,
-                    ),
-                    child: Image.asset(
-                      'assets/images/chagres_initiative_logo_hq.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-        else
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: EdgeInsets.only(top: screenHeight * 0.05),
-                child: MouseRegion(
+        Positioned(
+          top: heroTopPadding,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: onLogoTap,
-                    child: SizedBox(
-                      width: logoWidth,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: logoWidth,
+                        maxHeight: isMobile ? screenHeight * 0.34 : screenHeight * 0.44,
+                      ),
                       child: Image.asset(
                         'assets/images/chagres_initiative_logo_hq.png',
-                        fit: BoxFit.fitWidth,
+                        fit: isMobile ? BoxFit.contain : BoxFit.fitWidth,
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
-        // Three phrases at centers of each third of the screen width
-        if (!isMobile) ...[
-          Positioned(
-            left: screenWidth / 6,
-            bottom: screenHeight * 0.12,
-            child: Transform.translate(
-              offset: const Offset(-50, 0),
-              child: _buildPhrase(context, 'Water Security'),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: screenHeight * 0.12,
-            child: Center(child: _buildPhrase(context, 'Rainforest Conservation')),
-          ),
-          Positioned(
-            right: screenWidth / 6,
-            bottom: screenHeight * 0.12,
-            child: Transform.translate(
-              offset: const Offset(50, 0),
-              child: _buildPhrase(context, 'Indigenous Communities'),
-            ),
-          ),
-        ] else
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: screenHeight * 0.12,
-            child: Column(
-              children: [
-                _buildPhrase(context, 'Water Security'),
-                const SizedBox(height: 10),
-                _buildPhrase(context, 'Rainforest Conservation'),
-                const SizedBox(height: 10),
-                _buildPhrase(context, 'Indigenous Communities'),
+                SizedBox(height: isMobile ? 20 : 28),
+                Column(
+                  children: [
+                    _buildPhrase(context, 'Water Security'),
+                    const SizedBox(height: 10),
+                    _buildPhrase(context, 'Rainforest Conservation'),
+                    const SizedBox(height: 10),
+                    _buildPhrase(context, 'Indigenous Communities'),
+                  ],
+                ),
               ],
             ),
           ),
+        ),
         // Gradient fade at bottom blending into next section
         Positioned(
           bottom: 0,
