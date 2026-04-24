@@ -786,7 +786,7 @@ class HeroSection extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
     final logoWidth = isMobile ? screenWidth * 0.92 : screenWidth * 0.68;
-    final heroTopPadding = isMobile ? topInset + 24 : screenHeight * 0.05;
+    final heroTopPadding = isMobile ? topInset + 56 : screenHeight * 0.09;
 
     return Stack(
       children: [
