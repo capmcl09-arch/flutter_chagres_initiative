@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:photo_view/photo_view.dart';
@@ -217,7 +218,7 @@ class _ChagresHomeState extends State<ChagresHome> {
       _teamKey: 'Team',
       _aboutKey: 'About',
       _methodologyKey: 'Methodology',
-      _reportsKey: 'Fieldwork',
+      _fieldworkKey: 'Fieldwork',
       _faqKey: 'FAQ',
       _givingLevelsKey: 'Support',
     };
@@ -254,20 +255,25 @@ class _ChagresHomeState extends State<ChagresHome> {
     );
   }
   
-  void _scrollToSection(GlobalKey key, {double alignment = 0.50}) {
-    final context = key.currentContext;
-    if (context != null) {
-      Scrollable.ensureVisible(
-        context,
-        duration: const Duration(milliseconds: 800),
-        curve: Curves.easeInOut,
-        alignment: alignment,
-      );
-    }
-  }
-  
-  void _scrollToTopOld(GlobalKey key) {
-    _scrollToSection(key);
+  void _scrollToSection(GlobalKey key) {
+    final ctx = key.currentContext;
+    if (ctx == null || !_scrollController.hasClients) return;
+    final box = ctx.findRenderObject();
+    if (box is! RenderBox) return;
+    final viewport = RenderAbstractViewport.of(box);
+    final reveal = viewport.getOffsetToReveal(box, 0.0).offset;
+    final isMobile = MediaQuery.of(this.context).size.width < 900;
+    // Desktop has a 100px fixed header overlay; add a small gap so the title
+    // clears the ribbon. Mobile uses a Scaffold AppBar so the body already
+    // begins below it.
+    final headerOffset = isMobile ? 0.0 : 124.0;
+    final target = (reveal - headerOffset)
+        .clamp(0.0, _scrollController.position.maxScrollExtent);
+    _scrollController.animateTo(
+      target,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeInOut,
+    );
   }
   
   void _showLogoZoom() {
@@ -452,7 +458,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                         ),
                       ),
                       RevealOnScroll(
-                        child: GallerySection(language: widget.language),
+                        child: GallerySection(key: _fieldworkKey, language: widget.language),
                       ),
                       RevealOnScroll(
                         child: ReportsSection(key: _reportsKey, language: widget.language),
@@ -615,7 +621,7 @@ class _ChagresHomeState extends State<ChagresHome> {
           ),
           _buildDrawerItem(
             widget.language == 'en' ? 'Fieldwork' : 'Trabajo de Campo',
-            _reportsKey,
+            _fieldworkKey,
           ),
           _buildDrawerItem(
             widget.language == 'en' ? 'Our Donors' : 'Nuestros Donantes',
@@ -628,7 +634,6 @@ class _ChagresHomeState extends State<ChagresHome> {
           _buildDrawerItem(
             widget.language == 'en' ? 'Team' : 'Equipo',
             _teamKey,
-            alignment: 0.20,
           ),
           _buildDrawerItem(
             widget.language == 'en' ? 'FAQ' : 'Preguntas Frecuentes',
@@ -663,9 +668,8 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   Widget _buildDrawerItem(
     String label,
-    GlobalKey key, {
-    double alignment = 0.50,
-  }) {
+    GlobalKey key,
+  ) {
     return ListTile(
       title: Text(
         label,
@@ -676,7 +680,7 @@ class _ChagresHomeState extends State<ChagresHome> {
       ),
       onTap: () {
         Navigator.of(context).pop(); // Close drawer
-        _scrollToSection(key, alignment: alignment);
+        _scrollToSection(key);
       },
     );
   }
@@ -722,10 +726,10 @@ class _ChagresHomeState extends State<ChagresHome> {
             children: [
               _buildNavLink('About', _aboutKey),
               _buildNavLink('Methodology', _methodologyKey),
-              _buildNavLink('Fieldwork', _reportsKey),
+              _buildNavLink('Fieldwork', _fieldworkKey),
               _buildNavLink('Our Donors', _partnershipsKey),
               _buildNavLink('Support', _givingLevelsKey),
-              _buildNavLink('Team', _teamKey, alignment: 0.20),
+              _buildNavLink('Team', _teamKey),
               _buildNavLink('FAQ', _faqKey),
               SizedBox(
                 height: 32,
@@ -753,12 +757,12 @@ class _ChagresHomeState extends State<ChagresHome> {
     );
   }
 
-  Widget _buildNavLink(String label, GlobalKey key, {double alignment = 0.50}) {
+  Widget _buildNavLink(String label, GlobalKey key) {
     final isActive = _activeSection == label;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => _scrollToSection(key, alignment: alignment),
+        onTap: () => _scrollToSection(key),
         child: Text(
           label,
           style: TextStyle(
@@ -1121,8 +1125,8 @@ class PartnershipsSection extends StatelessWidget {
                     style: const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
                     children: _buildCISpans(
                       language == 'en'
-                          ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about two years and U.S. \$150,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
-                          : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nCon los fondos federales de EE.UU., las ONG e incluso la financiación universitaria interna para la investigación internacional siendo drásticamente recortados, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres tomará aproximadamente dos años y U.S. \$150,000 para completar.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, pagando los costos directos del proyecto de los miembros de la comunidad, estudiantes y profesores de KU en el equipo de investigación, pagando vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios para cubrir su alimentación, alojamiento y viaje.',
+                          ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about three years and U.S. \$550,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
+                          : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nCon los fondos federales de EE.UU., las ONG e incluso la financiación universitaria interna para la investigación internacional siendo drásticamente recortados, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres tomará aproximadamente tres años y U.S. \$550,000 para completar.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, pagando los costos directos del proyecto de los miembros de la comunidad, estudiantes y profesores de KU en el equipo de investigación, pagando vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios para cubrir su alimentación, alojamiento y viaje.',
                       const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
                     ),
                   ),
@@ -1371,8 +1375,8 @@ class _WhyDonationsSection extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               language == 'en'
-                  ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$150,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and zone CNP lands for development, conservation, and watershed governance. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
-                  : 'En pocas palabras, como una alternativa novedosa de financiamiento de investigación privado-pública, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$150,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarle a usted, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
+                  ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and zone CNP lands for development, conservation, and watershed governance. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
+                  : 'En pocas palabras, como una alternativa novedosa de financiamiento de investigación privado-pública, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarle a usted, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: const Color(0xFFB9C6EA),
                 fontSize: 18,
@@ -1606,15 +1610,15 @@ class _SealWithStats extends StatelessWidget {
       painter: _PeopleDrinkingPainter(),
       value: '2M+',
       label: en
-        ? 'people in Panama City and Colon rely on its drinking water (MacroTrends).'
+        ? 'people in Panama City and Colón rely on its drinking water (MacroTrends).'
         : 'personas en la Ciudad de Panamá y Colón dependen de su agua potable (MacroTrends).',
     );
     final birdStat = _StatFigure(
       painter: _HarpyEaglePainter(),
       value: '396+',
       label: en
-        ? 'bird species, including the iconic Harpy Eagle, are documented here (Fundacion Chagres).'
-        : 'especies de aves, incluyendo la icónica Águila Harpía, están documentadas aquí (Fundacion Chagres).',
+        ? 'bird species, including the iconic Harpy Eagle, are documented here (Fundación Chagres).'
+        : 'especies de aves, incluyendo la icónica Águila Harpía, están documentadas aquí (Fundación Chagres).',
     );
     final plantStat = _StatFigure(
       painter: _RainforestTreePainter(),
