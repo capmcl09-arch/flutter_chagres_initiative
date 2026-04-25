@@ -39996,7 +39996,7 @@ return A.a0R(new A.Va(this,s<600,s<900))}}
 A.Va.prototype={
 $2(a,b){var s,r,q,p=null,o=this.a,n=A.cM(p,A.dg(new A.dL(new A.V7(o),p),B.au,p,p,p),B.J,!1,p,p,p,p,p,p,p,p,p,p,p,p,p,new A.V8(),p,p,p),m=this.b,l=A.ab(B.c.ao(255*(m?1:0.82)),B.a0.n()>>>16&255,B.a0.n()>>>8&255,B.a0.n()&255),k=A.bG(16),j=A.c([new A.bX(0,B.aj,A.ab(115,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),B.fG,34)],t.E),i=A.W(a).ok.z
 i=i==null?p:i.nn(B.M,17,1.75)
-o=o.c==="en"?'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.':'La Iniciativa Chagres responde a una solicitud legal de un Congreso Ind\xedgena en Panam\xe1 para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panam\xe1 y agua potable para 1,5 millones de personas en la Ciudad de Panam\xe1.\n\nNuestro equipo de investigaci\xf3n de KU fue invitado por l\xedderes ind\xedgenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodolog\xeda de mapeo participativo de investigaci\xf3n (PRM) que combina el conocimiento geoespacial ind\xedgena (CGI) con GPS, fotograf\xeda a\xe9rea e im\xe1genes satelitales. Adem\xe1s, entrenamos a los aldeanos como "ge\xf3grafos comunitarios" que aprenden habilidades de investigaci\xf3n de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificaci\xf3n de conservaci\xf3n y desarrollo. A trav\xe9s de esta colaboraci\xf3n, la comunidad obtiene las herramientas de mapeo que necesita para la protecci\xf3n de tierras, y juntos producimos datos cient\xedficamente rigurosos fundamentados en el conocimiento ind\xedgena y la experiencia local.'
+o=o.c==="en"?'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for more than 2 million people in Panama City and Col\xf3n.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.':'La Iniciativa Chagres responde a una solicitud legal de un Congreso Ind\xedgena en Panam\xe1 para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panam\xe1 y agua potable para m\xe1s de 2 millones de personas en la Ciudad de Panam\xe1 y Col\xf3n.\n\nNuestro equipo de investigaci\xf3n de KU fue invitado por l\xedderes ind\xedgenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodolog\xeda de mapeo participativo de investigaci\xf3n (PRM) que combina el conocimiento geoespacial ind\xedgena (CGI) con GPS, fotograf\xeda a\xe9rea e im\xe1genes satelitales. Adem\xe1s, entrenamos a los aldeanos como "ge\xf3grafos comunitarios" que aprenden habilidades de investigaci\xf3n de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificaci\xf3n de conservaci\xf3n y desarrollo. A trav\xe9s de esta colaboraci\xf3n, la comunidad obtiene las herramientas de mapeo que necesita para la protecci\xf3n de tierras, y juntos producimos datos cient\xedficamente rigurosos fundamentados en el conocimiento ind\xedgena y la experiencia local.'
 s=A.W(a).ok.z
 r=t.p
 q=A.bu(A.c([n,B.b0,A.b2(p,A.hv(A.ew(A.kO(o,s==null?p:s.nn(B.M,17,1.75)),p,p,p,p,p,p,p,p,i,p),p,p),B.l,p,p,new A.b3(l,p,p,k,j,p,B.v),p,p,p,B.CF,p,p,p)],r),B.t,B.u,B.w)
@@ -40250,7 +40250,7 @@ $S:0}
 A.x5.prototype={
 a8(){return new A.Pi()}}
 A.Pi.prototype={
-I(a){var s,r,q,p,o,n,m,l=null,k=A.aX(a,l,t.w).w.a.a<900,j=t.Wy,i=this.a.c==="en"?A.c([B.JV,B.JS,B.Kq,B.K4,B.JR],j):A.c([B.K3,B.JY,B.Ky,B.JO,B.JT],j)
+I(a){var s,r,q,p,o,n,m,l=null,k=A.aX(a,l,t.w).w.a.a<900,j=t.Wy,i=this.a.c==="en"?A.c([B.JV,B.JS,B.Kq,B.K4,B.JR],j):A.c([B.K3,B.JY,B.Kx,B.JO,B.JT],j)
 j=k?16:60
 s=A.bG(22)
 r=A.eE(A.ab(20,B.e.n()>>>16&255,B.e.n()>>>8&255,B.e.n()&255),1)
@@ -40403,7 +40403,7 @@ A.aho.prototype={
 $0(){return this.a.d=1},
 $S:0}
 A.GE.prototype={
-I(a){var s=null,r=A.aX(a,s,t.w).w,q=this.c==="en",p=t.Wy,o=q?A.c([B.Kr,B.Km,B.K2,B.K9,B.Kb,B.K0,B.K6,B.Ks,B.K8,B.Kj],p):A.c([B.Ki,B.JX,B.Kv,B.JU,B.Kx,B.Kk,B.Kc,B.K1,B.JZ,B.K5],p)
+I(a){var s=null,r=A.aX(a,s,t.w).w,q=this.c==="en",p=t.Wy,o=q?A.c([B.Ki,B.Km,B.K2,B.K9,B.Kb,B.K0,B.K6,B.Kr,B.K8,B.Kj],p):A.c([B.Ky,B.JX,B.Ku,B.JU,B.Kw,B.Kk,B.Kc,B.K1,B.JZ,B.K5],p)
 r=r.a.a<900?20:60
 q=q?"Frequently Asked Questions":"Preguntas Frecuentes"
 p=A.W(a).ok.f
@@ -55366,7 +55366,7 @@ for(a0=a0.wY(k),m=a0.length,i=0;i<a0.length;a0.length===m||(0,A.x)(a0),++i){h=a0
 j.push(new A.w(h.a,h.b,h.c,h.d))}A:{if(p){a0=B.JP
 break A}a0=l
 g=a0
-if(a0){a0=B.Kw
+if(a0){a0=B.Kv
 break A}a0=!1===g
 if(a0){a0=B.K7
 break A}a0=a}f=a0.a
@@ -63629,9 +63629,9 @@ A.t2.prototype={}
 A.NA.prototype={}
 A.XA.prototype={
 OI(a,b){var s,r,q={},p=a.gf6().gm5().dH(0),o=q.a=q.b=null
-switch(b){case B.bI:o=B.Kt
+switch(b){case B.bI:o=B.Ks
 break
-case B.bK:o=B.Ku
+case B.bK:o=B.Kt
 break
 case B.bL:o=B.Ke
 break
@@ -80143,7 +80143,7 @@ B.Kg=new A.a2(!1,!0)
 B.fX=new A.c9(16,"scrollUp")
 B.fY=new A.c9(32,"scrollDown")
 B.Kh=new A.a2(B.fX,B.fY)
-B.Ki=new A.a2("\xbfPor qu\xe9 importa la salud del Parque Nacional Chagres?","El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panam\xe1 y agua potable para 1,5 millones de personas en la Ciudad de Panam\xe1. El Canal sigue siendo uno de los corredores comerciales globales m\xe1s estrat\xe9gicamente importantes.\n\nLas sequ\xedas recientes han demostrado que la escasez de agua es una de las mayores amenazas operativas del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplom\xe1tica regional y la seguridad econ\xf3mica.")
+B.Ki=new A.a2("Why does the health of Chagres National Park matter for people in the United States?","Chagres National Park provides approximately 40 percent of the freshwater used by Panama Canal operations and drinking water for more than 2 million people in Panama City and Col\xf3n. The Canal remains one of the most strategically important global trade corridors, moving a significant portion of U.S.-bound maritime commerce.\n\nRecent droughts have demonstrated that water scarcity is one of the canal's greatest operational threats. Long-term watershed health directly affects trade reliability, regional diplomatic stability, and economic security.")
 B.Kj=new A.a2("Hasn't the whole world been mapped already?","No. There is a difference between remote imagery of an area from satellites and the kinds of maps we are making. The level of detail combining physical geography with cultural-historical information in the community is unique and critical to our process.")
 B.Kk=new A.a2("\xbfC\xf3mo se usar\xe1n los fondos donados?","Su apoyo financia toda la investigaci\xf3n de campo y la colaboraci\xf3n comunitaria. Se incluyen los talleres, equipos (GPS, drones, Starlink) y los gastos de ge\xf3grafos locales, investigadores y estudiantes.")
 B.Kl=new A.a2("White-Faced Capuchin Monkey","Mono Capuchino de Cara Blanca")
@@ -80152,14 +80152,14 @@ B.Kn=new A.a2(B.fY,B.fX)
 B.Ko=new A.a2("Community leadership engagement","Participaci\xf3n del liderazgo comunitario")
 B.Kp=new A.a2("Indigenous cultural performance","Presentaci\xf3n cultural ind\xedgena")
 B.Kq=new A.a2("Stage Three: Field Verification and Mapping","Trained community geographers collect ground-truth points and data through shared site visits to do sketch mapping and questionnaire applications in communities.")
-B.Kr=new A.a2("Why does the health of Chagres National Park matter for people in the United States?","Chagres National Park provides approximately 40 percent of the freshwater used by Panama Canal operations and drinking water for 1.5 million people in Panama City. The Canal remains one of the most strategically important global trade corridors, moving a significant portion of U.S.-bound maritime commerce.\n\nRecent droughts have demonstrated that water scarcity is one of the canal's greatest operational threats. Long-term watershed health directly affects trade reliability, regional diplomatic stability, and economic security.")
-B.Ks=new A.a2("Will the data be publicly available?","Final authorship will be shared by team members, community and governmental participants. Sensitive knowledge remains under community control.")
-B.Kt=new A.a2(!0,!1)
-B.Ku=new A.a2(!0,!0)
-B.Kv=new A.a2("\xbfC\xf3mo ayuda el mapeo a proteger un \xe1rea?","Los l\xedmites del parque nacional por s\xed solos no garantizan la protecci\xf3n forestal ni la seguridad h\xeddrica. El manejo efectivo requiere comprender los procesos ecol\xf3gicos y sociales que ocurren dentro de esos l\xedmites.\n\nEl mapeo participativo de investigaci\xf3n traduce el conocimiento geogr\xe1fico ind\xedgena a formatos estructurados que pueden apoyar la zonificaci\xf3n, el monitoreo y la planificaci\xf3n de gobernanza a largo plazo. En un nivel fundamental, es dif\xedcil proteger lo que no se entiende claramente.")
-B.Kw=new A.a2(B.xZ,B.xY)
-B.Kx=new A.a2("\xbfCu\xe1nto tiempo tomar\xe1 el proyecto?","Estimamos que la Iniciativa Chagres tendr\xe1 3 fases superpuestas que requerir\xe1n aproximadamente tres a\xf1os en total para completarse dependiendo de la disponibilidad de fondos:\n\nA\xf1o 1-2: Mapeo participativo de investigaci\xf3n y desarrollo de base de datos geoespacial.\nA\xf1o 1-2: Zonificaci\xf3n impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\nA\xf1o 2-3: Producci\xf3n final del mapa, s\xedntesis e integraci\xf3n en marcos de planificaci\xf3n de manejo.\n\nEl enfoque de mapeo participativo de investigaci\xf3n es iterativo, con talleres e investigaci\xf3n de campo alternados en Panam\xe1 seguidos de an\xe1lisis de SIG y mapeo computarizado en las universidades para obtener los datos cartogr\xe1ficos y espaciales m\xe1s precisos sobre el uso de recursos en el Parque Nacional Chagres para desarrollar un plan de manejo de uso del suelo aprobado por las comunidades ind\xedgenas y el estado.")
-B.Ky=new A.a2("Etapa Tres: Verificaci\xf3n de Campo y Mapeo","Los ge\xf3grafos comunitarios capacitados recopilan puntos de verificaci\xf3n terrestre y datos a trav\xe9s de visitas compartidas al sitio para hacer mapas esquem\xe1ticos y aplicaciones de cuestionarios en las comunidades.")
+B.Kr=new A.a2("Will the data be publicly available?","Final authorship will be shared by team members, community and governmental participants. Sensitive knowledge remains under community control.")
+B.Ks=new A.a2(!0,!1)
+B.Kt=new A.a2(!0,!0)
+B.Ku=new A.a2("\xbfC\xf3mo ayuda el mapeo a proteger un \xe1rea?","Los l\xedmites del parque nacional por s\xed solos no garantizan la protecci\xf3n forestal ni la seguridad h\xeddrica. El manejo efectivo requiere comprender los procesos ecol\xf3gicos y sociales que ocurren dentro de esos l\xedmites.\n\nEl mapeo participativo de investigaci\xf3n traduce el conocimiento geogr\xe1fico ind\xedgena a formatos estructurados que pueden apoyar la zonificaci\xf3n, el monitoreo y la planificaci\xf3n de gobernanza a largo plazo. En un nivel fundamental, es dif\xedcil proteger lo que no se entiende claramente.")
+B.Kv=new A.a2(B.xZ,B.xY)
+B.Kw=new A.a2("\xbfCu\xe1nto tiempo tomar\xe1 el proyecto?","Estimamos que la Iniciativa Chagres tendr\xe1 3 fases superpuestas que requerir\xe1n aproximadamente tres a\xf1os en total para completarse dependiendo de la disponibilidad de fondos:\n\nA\xf1o 1-2: Mapeo participativo de investigaci\xf3n y desarrollo de base de datos geoespacial.\nA\xf1o 1-2: Zonificaci\xf3n impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\nA\xf1o 2-3: Producci\xf3n final del mapa, s\xedntesis e integraci\xf3n en marcos de planificaci\xf3n de manejo.\n\nEl enfoque de mapeo participativo de investigaci\xf3n es iterativo, con talleres e investigaci\xf3n de campo alternados en Panam\xe1 seguidos de an\xe1lisis de SIG y mapeo computarizado en las universidades para obtener los datos cartogr\xe1ficos y espaciales m\xe1s precisos sobre el uso de recursos en el Parque Nacional Chagres para desarrollar un plan de manejo de uso del suelo aprobado por las comunidades ind\xedgenas y el estado.")
+B.Kx=new A.a2("Etapa Tres: Verificaci\xf3n de Campo y Mapeo","Los ge\xf3grafos comunitarios capacitados recopilan puntos de verificaci\xf3n terrestre y datos a trav\xe9s de visitas compartidas al sitio para hacer mapas esquem\xe1ticos y aplicaciones de cuestionarios en las comunidades.")
+B.Ky=new A.a2("\xbfPor qu\xe9 importa la salud del Parque Nacional Chagres?","El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panam\xe1 y agua potable para m\xe1s de 2 millones de personas en la Ciudad de Panam\xe1 y Col\xf3n. El Canal sigue siendo uno de los corredores comerciales globales m\xe1s estrat\xe9gicamente importantes.\n\nLas sequ\xedas recientes han demostrado que la escasez de agua es una de las mayores amenazas operativas del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplom\xe1tica regional y la seguridad econ\xf3mica.")
 B.Kz=new A.a2("Site analysis at Panamanian Geographic Institute","An\xe1lisis del sitio en el Instituto Geogr\xe1fico de Panam\xe1")
 B.KA=new A.ip(["Cap McLiney","PhD Student","Estudiante de Doctorado","cmclineyjr@ku.edu","cap.png"])
 B.KB=new A.ip(["Marcelino Guatico","Chief of La Bonga","Nok\xf3 de La Bonga","","labonga_seal.png"])
