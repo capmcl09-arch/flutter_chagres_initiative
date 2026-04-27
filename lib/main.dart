@@ -336,6 +336,7 @@ class _ChagresHomeState extends State<ChagresHome> {
               children: [
                 if (!isMobile) SizedBox(height: 100), // Space for fixed header
                 HeroSection(language: widget.language, onLogoTap: _showLogoZoom),
+                _WorkingDraftBanner(language: widget.language),
                 // First green band: the meaningful framing + the four-stat
                 // illustration band around the La Bonga seal, directly after
                 // the hero so the "why this matters" lands before Our Donors.
@@ -1584,12 +1585,12 @@ class _SealWithStats extends StatelessWidget {
         ? 'plant species, including 143 endemic species, are documented across 129,000 hectares (TNC-ANCON 2003).'
         : 'especies de plantas, incluidas 143 endémicas, están documentadas en 129,000 hectáreas (TNC-ANCON 2003).',
     );
-
-    final seal = Image.asset(
-      'assets/images/labonga_seal.png',
-      width: 240,
-      height: 240,
-      fit: BoxFit.contain,
+    final communitiesStat = _StatFigure(
+      painter: _IndigenousCommunitiesPainter(),
+      value: '~5',
+      label: en
+        ? 'Indigenous communities with thousands of residents call the park home (KU Field Research).'
+        : 'comunidades indígenas con miles de habitantes residen en el parque (Investigación de Campo de KU).',
     );
 
     final content = isMobile
@@ -1601,7 +1602,7 @@ class _SealWithStats extends StatelessWidget {
                 const SizedBox(height: 28),
                 peopleStat,
                 const SizedBox(height: 36),
-                seal,
+                communitiesStat,
                 const SizedBox(height: 36),
                 birdStat,
                 const SizedBox(height: 28),
@@ -1613,7 +1614,7 @@ class _SealWithStats extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 32),
             child: Column(
               children: [
-                seal,
+                communitiesStat,
                 const SizedBox(height: 56),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1918,6 +1919,67 @@ class _RainforestTreePainter extends CustomPainter {
       Offset(w * 0.50, h * 0.30),
       Offset(w * 0.50, h * 0.50),
       _stroke(width: 1.6),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _IndigenousCommunitiesPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    void hut(double cx, double baseY, double scale, {double opacity = 1.0}) {
+      final roofH = 0.32 * h * scale;
+      final wallH = 0.22 * h * scale;
+      final halfW = 0.16 * w * scale;
+      final apexY = baseY - wallH - roofH;
+      final eaveY = baseY - wallH;
+
+      final roof = Path()
+        ..moveTo(cx, apexY)
+        ..lineTo(cx + halfW + 0.03 * w * scale, eaveY)
+        ..lineTo(cx - halfW - 0.03 * w * scale, eaveY)
+        ..close();
+      canvas.drawPath(roof, _fill(opacity: 0.85 * opacity));
+      canvas.drawPath(roof, _stroke(width: 2.0));
+
+      final wall = Path()
+        ..moveTo(cx - halfW, eaveY)
+        ..lineTo(cx + halfW, eaveY)
+        ..lineTo(cx + halfW, baseY)
+        ..lineTo(cx - halfW, baseY)
+        ..close();
+      canvas.drawPath(wall, _fill(opacity: 0.18 * opacity));
+      canvas.drawPath(wall, _stroke(width: 2.0));
+
+      final doorTop = baseY - wallH * 0.65;
+      final doorHalfW = halfW * 0.32;
+      final door = Path()
+        ..moveTo(cx - doorHalfW, baseY)
+        ..lineTo(cx - doorHalfW, doorTop)
+        ..lineTo(cx + doorHalfW, doorTop)
+        ..lineTo(cx + doorHalfW, baseY);
+      canvas.drawPath(door, _stroke(width: 1.8));
+    }
+
+    // Back row (2 smaller huts, peeking from behind)
+    hut(w * 0.30, h * 0.66, 0.78, opacity: 0.85);
+    hut(w * 0.70, h * 0.66, 0.78, opacity: 0.85);
+
+    // Front row (3 huts)
+    hut(w * 0.18, h * 0.96, 0.95);
+    hut(w * 0.50, h * 0.96, 1.05);
+    hut(w * 0.82, h * 0.96, 0.95);
+
+    // Subtle ground line beneath the front row
+    canvas.drawLine(
+      Offset(w * 0.04, h * 0.97),
+      Offset(w * 0.96, h * 0.97),
+      _stroke(width: 1.4),
     );
   }
 
@@ -3677,6 +3739,69 @@ class _FadeInAnimationState extends State<FadeInAnimation>
     return FadeTransition(
       opacity: _opacity,
       child: widget.child,
+    );
+  }
+}
+
+class _WorkingDraftBanner extends StatelessWidget {
+  final String language;
+  const _WorkingDraftBanner({required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF0C1328),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 16 : 32,
+        vertical: 14,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 900),
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 14 : 20,
+              vertical: 12,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5B83D).withOpacity(0.10),
+              border: Border.all(
+                color: const Color(0xFFF5B83D).withOpacity(0.55),
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.construction,
+                  color: Color(0xFFF5B83D),
+                  size: 20,
+                ),
+                const SizedBox(width: 12),
+                Flexible(
+                  child: Text(
+                    language == 'en'
+                        ? 'While the project has launched and the fundraising platform is live, this website is still under construction and should be considered a working draft.'
+                        : 'Aunque el proyecto ya se lanzó y la plataforma de recaudación de fondos está activa, este sitio web aún se encuentra en construcción y debe considerarse un borrador en desarrollo.',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.92),
+                      fontSize: isMobile ? 13 : 14,
+                      fontStyle: FontStyle.italic,
+                      height: 1.4,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
