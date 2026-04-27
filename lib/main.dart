@@ -1036,51 +1036,6 @@ class PartnershipsSection extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 30),
-          // Hero Strip Image
-          Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.25),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-                BoxShadow(
-                  color: const Color(0xFF81C784).withOpacity(0.2),
-                  blurRadius: 12,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0xFF81C784),
-                    width: 4,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF81C784).withOpacity(0.3),
-                      blurRadius: 16,
-                      offset: const Offset(0, 2),
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: Image.asset(
-                  'assets/images/here_strip.jpg',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
-              ),
-            ),
-          ),
           // Spacer to push Make Dreams below the boat photo's bottom blur
           SizedBox(height: (imageHeight - 580).clamp(60.0, 800.0)),
           ClipRRect(
@@ -3261,17 +3216,6 @@ class TeamSection extends StatelessWidget {
               ('Amalie Hipp', 'PhD Student', 'Estudiante de Doctorado', 'ahippe@ku.edu', 'Hipp_Headshot.jpg'),
               ('Ollie Berwanger', 'Undergraduate Researcher', 'Investigador de Pregrado', 'cash.berwanger@ku.edu', 'geog_logo.jpg'),
               ('Oliver Zigmund', 'Undergraduate Researcher', 'Investigador de Pregrado', 'oliverlzigmund@ku.edu', 'geog_logo.jpg'),
-            ],
-            language,
-            isMobile,
-          ),
-          const SizedBox(height: 40),
-          // UT Arlington Section
-          _buildTeamSection(
-            context,
-            language == 'en' ? 'University of Texas at Arlington Personnel' : 'Personal de la Universidad de Texas en Arlington',
-            [
-              ('Dr. Taylor Tappan', 'Assistant Professor of Geography', 'Profesor Asistente de Geografía', 'taylor.tappan@uta.edu', 'taylor.jpg'),
             ],
             language,
             isMobile,
