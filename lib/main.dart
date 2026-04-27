@@ -443,9 +443,11 @@ class _ChagresHomeState extends State<ChagresHome> {
                             children: [
                               Image.asset('assets/images/community_meeting.jpg'),
                               const SizedBox(height: 10),
-                              const Text(
-                                'The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.',
-                                style: TextStyle(
+                              Text(
+                                widget.language == 'en'
+                                    ? 'The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.'
+                                    : 'La Junta Directiva Indígena de La Bonga escuchando la presentación de nuestro equipo sobre el PRM.',
+                                style: const TextStyle(
                                   color: Color(0xFFB0B8C8),
                                   fontSize: 16,
                                   fontStyle: FontStyle.italic,
@@ -520,11 +522,11 @@ class _ChagresHomeState extends State<ChagresHome> {
                         BoxShadow(color: Colors.black38, blurRadius: 8, offset: Offset(-2, 2)),
                       ],
                     ),
-                    child: const RotatedBox(
+                    child: RotatedBox(
                       quarterTurns: 3,
                       child: Text(
-                        'Donate Now',
-                        style: TextStyle(
+                        widget.language == 'en' ? 'Donate Now' : 'Donar Ahora',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -839,11 +841,11 @@ class HeroSection extends StatelessWidget {
                 SizedBox(height: isMobile ? 20 : 28),
                 Column(
                   children: [
-                    _buildPhrase(context, 'Water Security'),
+                    _buildPhrase(context, language == 'en' ? 'Water Security' : 'Seguridad Hídrica'),
                     const SizedBox(height: 10),
-                    _buildPhrase(context, 'Rainforest Conservation'),
+                    _buildPhrase(context, language == 'en' ? 'Rainforest Conservation' : 'Conservación de la Selva Tropical'),
                     const SizedBox(height: 10),
-                    _buildPhrase(context, 'Indigenous Communities'),
+                    _buildPhrase(context, language == 'en' ? 'Indigenous Communities' : 'Comunidades Indígenas'),
                   ],
                 ),
               ],
@@ -1026,7 +1028,7 @@ class PartnershipsSection extends StatelessWidget {
             child: Text(
               language == 'en'
                   ? 'Your tax-deductible donations will contribute to our understanding and management of a geopolitical issue of USA and global importance: Water Security of the Panama Canal.\n\nFollow online and witness the research unfold on our website. You will see how your donations directly impact every aspect of the research which includes the support of Indigenous villagers and university researchers.'
-                  : 'Sus donaciones deducibles de impuestos contribuirán a nuestra comprensión y gestión de un asunto geopolítico de importancia para EE.UU. y el mundo: la Seguridad Hídrica del Canal de Panamá.\n\nSíganos en línea y sea testigo del desarrollo de la investigación en nuestro sitio web. Verá cómo sus donaciones impactan directamente cada aspecto de la investigación, lo que incluye el apoyo a los aldeanos indígenas y a los investigadores universitarios.',
+                  : 'Sus donaciones deducibles de impuestos contribuirán a nuestra comprensión y gestión de un asunto geopolítico de importancia para EE.UU. y el mundo: la Seguridad Hídrica del Canal de Panamá.\n\nSíganos en línea y sea testigo del desarrollo de la investigación en nuestro sitio web. Verá cómo sus donaciones impactan directamente cada aspecto de la investigación, lo que incluye el apoyo a los pobladores indígenas y a los investigadores universitarios.',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -1081,7 +1083,7 @@ class PartnershipsSection extends StatelessWidget {
                     children: _buildCISpans(
                       language == 'en'
                           ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about three years and U.S. \$550,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
-                          : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nCon los fondos federales de EE.UU., las ONG e incluso la financiación universitaria interna para la investigación internacional siendo drásticamente recortados, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres tomará aproximadamente tres años y U.S. \$550,000 para completar.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, pagando los costos directos del proyecto de los miembros de la comunidad, estudiantes y profesores de KU en el equipo de investigación, pagando vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios para cubrir su alimentación, alojamiento y viaje.',
+                          : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nAnte los drásticos recortes en los fondos federales de EE.UU., los de las ONG e incluso la financiación universitaria interna para la investigación internacional, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres requerirá aproximadamente tres años y unos US\$550,000.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, ya que pagan los costos directos del proyecto para los miembros de la comunidad, los estudiantes y profesores de KU del equipo de investigación, así como vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios que cubren alimentación, alojamiento y transporte.',
                       const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
                     ),
                   ),
@@ -1225,7 +1227,7 @@ class AboutSection extends StatelessWidget {
                   children: _buildCISpans(
                     language == 'en'
                         ? 'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for more than 2 million people in Panama City and Colón.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
-                        : 'La Iniciativa Chagres responde a una solicitud legal de un Congreso Indígena en Panamá para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para más de 2 millones de personas en la Ciudad de Panamá y Colón.\n\nNuestro equipo de investigación de KU fue invitado por líderes indígenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena (CGI) con GPS, fotografía aérea e imágenes satelitales. Además, entrenamos a los aldeanos como "geógrafos comunitarios" que aprenden habilidades de investigación de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo. A través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y juntos producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
+                        : 'La Iniciativa Chagres responde a una solicitud legal de un Congreso Indígena en Panamá para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para más de 2 millones de personas en la Ciudad de Panamá y Colón.\n\nNuestro equipo de investigación de KU fue invitado por líderes indígenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena (CGI) con GPS, fotografía aérea e imágenes satelitales. Es importante señalar que capacitamos a los pobladores como "geógrafos comunitarios" que aprenden habilidades de investigación de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo. A través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y juntos producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
                     Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: const Color(0xFFB9C6EA),
                       fontSize: 17,
@@ -1331,7 +1333,7 @@ class _WhyDonationsSection extends StatelessWidget {
             Text(
               language == 'en'
                   ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and zone CNP lands for development, conservation, and watershed governance. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
-                  : 'En pocas palabras, como una alternativa novedosa de financiamiento de investigación privado-pública, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarle a usted, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
+                  : 'En pocas palabras, como una novedosa alternativa de financiamiento público-privado para la investigación, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarles a ustedes, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: const Color(0xFFB9C6EA),
                 fontSize: 18,
@@ -1444,7 +1446,7 @@ class _MeaningfulSectionState extends State<MeaningfulSection> {
         widget.language == 'en' ? '3. Training Community Geographers as Co-Producers of Scientific Results' : '3. Formación de Geógrafos Comunitarios como Co-Productores de Resultados Científicos',
         widget.language == 'en'
             ? 'Unlike other projects, our results create community resources of sustained value: we formally certify community representatives as geographers who receive training, and do hands-on fieldwork, learn and use GPS, basic cartography, heads-up imagery analysis, and other geographic methods, including drone use for forest management. These "community geographers" — perhaps not surprisingly — are empowered as ideal co-producers and co-authors of project maps and data. All publication authorships are shared among team members and final cartographic information remain under the ownership of the local communities.'
-            : 'A diferencia de otros proyectos, nuestros resultados crean recursos comunitarios de valor sostenido: certificamos formalmente a representantes comunitarios como geógrafos que reciben formación y realizan trabajo de campo práctico, aprenden y utilizan GPS, cartografía básica, análisis de imágenes aéreas y otros métodos geográficos, incluyendo el uso de drones para la gestión forestal. Estos "geógrafos comunitarios" — quizás no sorprendentemente — están empoderados como co-productores y co-autores ideales de mapas y datos del proyecto. Todas las autorías de publicaciones se comparten entre los miembros del equipo y la información cartográfica final permanece bajo la propiedad de las comunidades locales.',
+            : 'A diferencia de otros proyectos, nuestros resultados crean recursos comunitarios de valor sostenido: certificamos formalmente a representantes comunitarios como geógrafos que reciben formación y realizan trabajo de campo práctico, aprenden y utilizan GPS, cartografía básica, análisis de imágenes aéreas y otros métodos geográficos, incluyendo el uso de drones para la gestión forestal. Estos "geógrafos comunitarios" — como era de esperar — se convierten en los co-productores y co-autores ideales de los mapas y datos del proyecto. La autoría de todas las publicaciones se comparte entre los miembros del equipo, y la información cartográfica final queda en propiedad de las comunidades locales.',
       ),
     ];
     
@@ -2014,7 +2016,7 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
                 Text(
                   widget.language == 'en'
                       ? 'During our exploratory expedition to the Indigenous Emberá/Wounaan community of La Bonga Pequení in the Panama Canal Watershed last summer 2025, community leaders invited us to return and present our participatory research methodology (PRM) to their governing congress because they understood the project\'s potential.\n\nAt their governing Congreso Local in June 2025, Indigenous Emberá and Wounaan leaders from communities inside the Chagres National Park (CNP) recognized "KU know-how" from previous successful mapping projects with their relatives in the eastern Darién Province back in the 1990s! The Congreso Local voted unanimously to ask our KU team of geographers to map their lands and help them develop a management plan acceptable to the Panamanian government.'
-                      : 'Durante nuestra expedición exploratoria a la comunidad indígena Emberá/Wounaan de La Bonga Pequení en la Cuenca del Canal de Panamá el verano pasado de 2025, los líderes comunitarios nos invitaron a regresar y presentar nuestra metodología de investigación participativa (PRM) a su congreso rector porque entendieron el potencial del proyecto.\n\nEn su Congreso Local en junio de 2025, los líderes indígenas Emberá y Wounaan de comunidades dentro del Parque Nacional Chagres (PNC) reconocieron el "know-how de KU" de proyectos de mapeo exitosos anteriores con sus parientes en la provincia oriental del Darién ¡en la década de 1990! El Congreso Local votó unánimemente para pedir a nuestro equipo de geógrafos de KU que mapearan sus tierras y les ayudaran a desarrollar un plan de manejo aceptable para el gobierno panameño.',
+                      : 'Durante nuestra expedición exploratoria a la comunidad indígena Emberá/Wounaan de La Bonga Pequení en la Cuenca del Canal de Panamá el verano pasado de 2025, los líderes comunitarios nos invitaron a regresar y presentar nuestra metodología de investigación participativa (PRM) a su congreso rector porque entendieron el potencial del proyecto.\n\nEn su Congreso Local en junio de 2025, los líderes indígenas Emberá y Wounaan de comunidades dentro del Parque Nacional Chagres (PNC) reconocieron el "know-how de KU" gracias a proyectos de mapeo exitosos previos con sus parientes en la provincia oriental del Darién, ¡ya desde la década de 1990! El Congreso Local acordó por unanimidad solicitar a nuestro equipo de geógrafos de KU que mapearan sus tierras y les ayudaran a desarrollar un plan de manejo aceptable para el gobierno panameño.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFFB9C6EA),
                   ),
@@ -2090,8 +2092,8 @@ class _MethodologySectionState extends State<MethodologySection> {
         : [
             ('Etapa Uno: Codiseño', 'Definir objetivos de mapeo con el liderazgo comunitario.'),
             ('Etapa Dos: Capacitación', 'A través de ejercicios de instrucción, los "geógrafos comunitarios" aprenden el uso de GPS, herramientas de mapeo y técnicas de documentación de datos.'),
-            ('Etapa Tres: Verificación de Campo y Mapeo', 'Los geógrafos comunitarios capacitados recopilan puntos de verificación terrestre y datos a través de visitas compartidas al sitio para hacer mapas esquemáticos y aplicaciones de cuestionarios en las comunidades.'),
-            ('Etapa Cuatro: Trazar Datos de Campo en Hojas Cartográficas', 'Trazar datos de campo en hojas cartográficas estándar en talleres comunitarios. Diseño de la Gestión del Uso de Tierras Indígenas y zonificación en talleres.'),
+            ('Etapa Tres: Verificación de Campo y Mapeo', 'Los geógrafos comunitarios capacitados recopilan puntos de verificación en terreno y datos mediante visitas conjuntas al sitio para realizar mapas esquemáticos y aplicar cuestionarios en las comunidades.'),
+            ('Etapa Cuatro: Trazar Datos de Campo en Hojas Cartográficas', 'Trazar datos de campo en hojas cartográficas estándar en talleres comunitarios. Diseño del manejo del uso de tierras indígenas y zonificación en talleres.'),
             ('Etapa Cinco: Producción de Mapas SIG y Computarizados', 'Estudiantes de KU con profesores digitalizan y estandarizan los resultados para uso de planificación y gobernanza.'),
           ];
 
@@ -2135,7 +2137,7 @@ class _MethodologySectionState extends State<MethodologySection> {
                 Text(
                   widget.language == 'en'
                       ? 'Unlike most research, PRM releases the research function to trained "community geographers" who co-design and implement the project as they interpret geo-spatial information alongside KU geographers and students.'
-                      : 'A diferencia de la mayoría de las investigaciones, el PRM delega la función de investigación a "geógrafos comunitarios" capacitados que co-diseñan e implementan el proyecto mientras interpretan información geoespacial junto a geógrafos y estudiantes de KU.',
+                      : 'A diferencia de la mayoría de las investigaciones, el PRM delega la función de investigación en "geógrafos comunitarios" capacitados que co-diseñan e implementan el proyecto mientras interpretan información geoespacial junto a geógrafos y estudiantes de KU.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFFB9C6EA),
                     fontStyle: FontStyle.italic,
@@ -2676,7 +2678,7 @@ class _ReportsSectionState extends State<ReportsSection> {
           Text(
             widget.language == 'en'
                 ? 'Explore our gallery of Substack posts and field reflections. Official research reports will be available as PDFs here.'
-                : 'Explora nuestra galería de posts de Substack y reflexiones de campo. Los informes de investigación oficiales estarán disponibles como PDF aquí.',
+                : 'Explore nuestra galería de publicaciones de Substack y reflexiones de campo. Los informes de investigación oficiales estarán disponibles como PDF aquí.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: const Color(0xFFB9C6EA),
             ),
@@ -2736,7 +2738,7 @@ class _ReportsSectionState extends State<ReportsSection> {
               widget.language == 'en' ? 'Field Blog' : 'Blog de Campo',
               widget.language == 'en'
                   ? 'Narrative updates from the field, participatory mapping workshops, and watershed engagement activities.'
-                  : 'Actualizaciones narrativas del campo, talleres de mapeo participativo y actividades de compromiso de cuencas hidrográficas.',
+                  : 'Actualizaciones narrativas del campo, talleres de mapeo participativo y actividades de involucramiento con las cuencas hidrográficas.',
             )
           else
             _buildReportCard(
@@ -2819,16 +2821,16 @@ class FAQSection extends StatelessWidget {
             ('Hasn\'t the whole world been mapped already?', 'No. There is a difference between remote imagery of an area from satellites and the kinds of maps we are making. The level of detail combining physical geography with cultural-historical information in the community is unique and critical to our process.'),
           ]
         : [
-            ('¿Por qué importa la salud del Parque Nacional Chagres?', 'El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panamá y agua potable para más de 2 millones de personas en la Ciudad de Panamá y Colón. El Canal sigue siendo uno de los corredores comerciales globales más estratégicamente importantes.\n\nLas sequías recientes han demostrado que la escasez de agua es una de las mayores amenazas operativas del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplomática regional y la seguridad económica.'),
-            ('¿Quién autoriza este proyecto?', 'Esta iniciativa procede solo con consentimiento comunitario y coordinación institucional. Durante una expedición de reconocimiento en verano de 2025, el equipo de investigación se reunió con la comunidad indígena de San Juan Pequeñí, participó en un Congreso Local formal y recibió aprobación escrita.\n\nEsta autorización se alinea con la Ley 72 de 2008 de Panamá que rige las Tierras Colectivas Indígenas. El proyecto continúa solo a través de acuerdo colaborativo con el liderazgo comunitario.'),
-            ('¿Cómo ayuda el mapeo a proteger un área?', 'Los límites del parque nacional por sí solos no garantizan la protección forestal ni la seguridad hídrica. El manejo efectivo requiere comprender los procesos ecológicos y sociales que ocurren dentro de esos límites.\n\nEl mapeo participativo de investigación traduce el conocimiento geográfico indígena a formatos estructurados que pueden apoyar la zonificación, el monitoreo y la planificación de gobernanza a largo plazo. En un nivel fundamental, es difícil proteger lo que no se entiende claramente.'),
-            ('¿Cómo se compensan a los miembros de la comunidad?', 'Los representantes comunitarios son capacitados y certificados como geógrafos locales en recopilación de datos GPS y técnicas de mapeo. Los participantes reciben compensación por su tiempo y experiencia.'),
+            ('¿Por qué importa la salud del Parque Nacional Chagres para la gente de los Estados Unidos?', 'El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panamá y agua potable para más de 2 millones de personas en la Ciudad de Panamá y Colón. El Canal sigue siendo uno de los corredores comerciales globales más estratégicamente importantes, y por él circula una parte significativa del comercio marítimo con destino a EE.UU.\n\nLas sequías recientes han demostrado que la escasez de agua es una de las mayores amenazas operativas del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplomática regional y la seguridad económica.'),
+            ('¿Quién y qué autoridad legal autoriza este proyecto?', 'Esta iniciativa procede solo con consentimiento comunitario y coordinación institucional. Durante una expedición de reconocimiento en verano de 2025, el equipo de investigación se reunió con la comunidad indígena de San Juan Pequeñí, participó en un Congreso Local formal y recibió aprobación escrita.\n\nEsta autorización se alinea con la Ley 72 de 2008 de Panamá que rige las Tierras Colectivas Indígenas. El proyecto continúa solo mediante acuerdo colaborativo con el liderazgo comunitario.'),
+            ('¿Cómo ayuda el "mapeo" a proteger un área como esta?', 'Los límites del parque nacional por sí solos no garantizan la protección forestal ni la seguridad hídrica. El manejo efectivo requiere comprender los procesos ecológicos y sociales que ocurren dentro de esos límites.\n\nEl mapeo participativo de investigación traduce el conocimiento geográfico indígena a formatos estructurados que pueden apoyar la zonificación, el monitoreo y la planificación de gobernanza a largo plazo. En un nivel fundamental, es difícil proteger lo que no se entiende claramente.'),
+            ('¿Cómo participan y son compensados los miembros de la comunidad?', 'Los representantes comunitarios son capacitados y certificados como geógrafos locales en recopilación de datos GPS y técnicas de mapeo. Los participantes reciben compensación por su tiempo y experiencia.'),
             ('¿Cuánto tiempo tomará el proyecto?', 'Estimamos que la Iniciativa Chagres tendrá 3 fases superpuestas que requerirán aproximadamente tres años en total para completarse dependiendo de la disponibilidad de fondos:\n\nAño 1-2: Mapeo participativo de investigación y desarrollo de base de datos geoespacial.\nAño 1-2: Zonificación impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\nAño 2-3: Producción final del mapa, síntesis e integración en marcos de planificación de manejo.\n\nEl enfoque de mapeo participativo de investigación es iterativo, con talleres e investigación de campo alternados en Panamá seguidos de análisis de SIG y mapeo computarizado en las universidades para obtener los datos cartográficos y espaciales más precisos sobre el uso de recursos en el Parque Nacional Chagres para desarrollar un plan de manejo de uso del suelo aprobado por las comunidades indígenas y el estado.'),
             ('¿Cómo se usarán los fondos donados?', 'Su apoyo financia toda la investigación de campo y la colaboración comunitaria. Se incluyen los talleres, equipos (GPS, drones, Starlink) y los gastos de geógrafos locales, investigadores y estudiantes.'),
             ('¿Es este proyecto político?', 'El proyecto es apartidista e impulsado por la investigación. Su enfoque es el manejo de cuencas hidrográficas, gobernanza participativa y monitoreo ambiental.'),
             ('¿Estarán los datos disponibles públicamente?', 'La autoría final será compartida por los miembros del equipo, participantes comunitarios y gubernamentales. El conocimiento sensible permanece bajo control comunitario.'),
-            ('¿Se puede replicar este modelo en otros lugares?', 'Sí. Este es un nuevo marco para la investigación comunitaria con una fórmula de financiación público-privada novedosa combinada con innovaciones geoespaciales y de I.A. del siglo XXI diseñadas para involucrar al público desde aldeas indígenas hasta centros metropolitanos. Esperamos conectar a personas de todos los orígenes y niveles de educación con nuestra investigación.\n\nEsperamos canalizar el poder de las donaciones deducibles de impuestos y conectar a las personas e instituciones que las realizan con las realidades sobre el terreno y en la universidad del trabajo de campo en un tema estratégico y geopolítico de importancia global: la Seguridad Hídrica del Canal de Panamá.'),
-            ('¿No ha sido mapeado ya todo el mundo?', 'No. Hay una diferencia entre las imágenes satelitales de un área desde satélites y los tipos de mapas que estamos haciendo. El nivel de detalle que combina geografía física con información cultural-histórica en la comunidad es único y crítico para nuestro proceso.'),
+            ('¿Se puede replicar este modelo en otros lugares?', 'Sí. Este es un nuevo marco para la investigación comunitaria con una fórmula de financiación público-privada novedosa combinada con innovaciones geoespaciales y de I.A. del siglo XXI diseñadas para involucrar al público, desde comunidades indígenas hasta centros metropolitanos. Esperamos conectar a personas de todos los orígenes y niveles de educación con nuestra investigación.\n\nEsperamos canalizar el poder de las donaciones deducibles de impuestos y conectar a las personas e instituciones que las realizan con las realidades del trabajo de campo, tanto sobre el terreno como en la universidad, en un tema estratégico y geopolítico de importancia global: la Seguridad Hídrica del Canal de Panamá.'),
+            ('¿No ha sido mapeado ya todo el mundo?', 'No. Hay una diferencia entre la teledetección satelital de un área y los tipos de mapas que estamos haciendo. El nivel de detalle que combina geografía física con información cultural-histórica en la comunidad es único y crítico para nuestro proceso.'),
           ];
 
     return Container(
@@ -2942,28 +2944,28 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
     
     final givingLevels = [
       (
-        widget.language == 'en' ? 'Community Supporter' : 'Apoyo Comunitario',
+        widget.language == 'en' ? 'Community Supporter' : 'Donante Comunitario',
         widget.language == 'en' ? '< \$100' : '< \$100',
         widget.language == 'en'
             ? 'Donors funding field essentials - first aid kits, Starlink, dry bags, notebooks, river travel, batteries, tents, housing when working far from infrastructure.'
-            : 'Donantes que financian elementos esenciales de campo: botiquines de primeros auxilios, Starlink, bolsas secas, cuadernos, viajes por río, baterías, tiendas de campaña, alojamiento en infraestructura remota.',
+            : 'Donantes que financian elementos esenciales de campo: botiquines de primeros auxilios, Starlink, bolsas secas, cuadernos, viajes por río, baterías, tiendas de campaña y alojamiento al trabajar lejos de cualquier infraestructura.',
       ),
       (
-        widget.language == 'en' ? 'Action Supporter' : 'Apoyo de Acción',
+        widget.language == 'en' ? 'Action Supporter' : 'Donante de Acción',
         widget.language == 'en' ? '\$100 - \$250' : '\$100 - \$250',
         widget.language == 'en'
             ? 'Donors supporting in-country logistics - travel between Panama City and the field, transporting equipment, and coordinating with local partners and institutions. Pays for fuel and boat travel. There are no roads in - everything moves by river.'
-            : 'Donantes que apoyan la logística en el país: viajes entre la Ciudad de Panamá y el campo, transporte de equipos y coordinación con socios locales e instituciones. Paga combustible y viajes en barco. No hay carreteras - todo se mueve por río.',
+            : 'Donantes que apoyan la logística en el país: viajes entre la Ciudad de Panamá y el campo, transporte de equipos y coordinación con socios locales e instituciones. Cubre combustible y viajes en barco. No hay carreteras; todo se transporta por río.',
       ),
       (
-        widget.language == 'en' ? 'Stewardship Supporter' : 'Apoyo de Administración',
+        widget.language == 'en' ? 'Stewardship Supporter' : 'Donante de Custodia',
         widget.language == 'en' ? '\$250 - \$1,000' : '\$250 - \$1,000',
         widget.language == 'en'
             ? 'International travel for university students and professors.'
             : 'Viajes internacionales para estudiantes y profesores universitarios.',
       ),
       (
-        widget.language == 'en' ? 'Wisdom Supporter' : 'Apoyo de Sabiduría',
+        widget.language == 'en' ? 'Wisdom Supporter' : 'Donante Visionario',
         widget.language == 'en' ? '\$1,000 - \$5,000' : '\$1,000 - \$5,000',
         widget.language == 'en'
             ? 'Workshops and participatory mapping session costs – renting locale, tables, chairs; meals and housing for participants, printing mapping materials.'
@@ -2974,7 +2976,7 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
         widget.language == 'en' ? '> \$5,000' : '> \$5,000',
         widget.language == 'en'
             ? 'Stipends for community geographers, students, and faculty. No salaries are paid. Donor supports local costs of food, lodging, and transportation in Panama City and in the Chagres National Park.'
-            : 'Estípendios para geógrafos comunitarios, estudiantes y profesores. No se pagan salarios. El donante financia costos locales de comida, alojamiento y transporte en la Ciudad de Panamá y en el Parque Nacional Chagres.',
+            : 'Estipendios para geógrafos comunitarios, estudiantes y profesores. No se pagan salarios. El donante financia costos locales de comida, alojamiento y transporte en la Ciudad de Panamá y en el Parque Nacional Chagres.',
       ),
     ];
 
@@ -3347,7 +3349,7 @@ class ContactUsSection extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            language == 'en' ? 'Contact Us' : 'Contáctanos',
+            language == 'en' ? 'Contact Us' : 'Contáctenos',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
             ),
@@ -3376,7 +3378,7 @@ class ContactUsSection extends StatelessWidget {
                     children: _buildCISpans(
                       language == 'en'
                           ? 'Have questions about the Chagres Initiative? We\'d love to hear from you.'
-                          : '¿Tienes preguntas sobre la Iniciativa Chagres? Nos encantaría escucharte.',
+                          : '¿Tiene preguntas sobre la Iniciativa Chagres? Nos encantaría tener noticias suyas.',
                       Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: const Color(0xFFB9C6EA),
                       ),
@@ -3410,7 +3412,7 @@ class ContactUsSection extends StatelessWidget {
                       child: Text(
                         language == 'en'
                             ? 'Email us at: chagresinitiative@ku.edu'
-                            : 'Envíanos un correo a: chagresinitiative@ku.edu',
+                            : 'Envíenos un correo a: chagresinitiative@ku.edu',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
