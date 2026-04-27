@@ -393,6 +393,9 @@ class _ChagresHomeState extends State<ChagresHome> {
                   child: AboutSection(key: _aboutKey, language: widget.language),
                 ),
                 RevealOnScroll(
+                  child: MappingMethodSection(language: widget.language),
+                ),
+                RevealOnScroll(
                   child: _WhyDonationsBand(language: widget.language, isMobile: isMobile),
                 ),
                 RevealOnScroll(
@@ -1280,6 +1283,151 @@ class AboutSection extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+// Mapping Method Section — large-scale showcase of the PRM diagram.
+class MappingMethodSection extends StatelessWidget {
+  final String language;
+
+  const MappingMethodSection({super.key, required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 900;
+    final isPhone = screenWidth < 600;
+
+    final horizontalPad = isPhone ? 20.0 : (isMobile ? 40.0 : 60.0);
+    final verticalPad = isPhone ? 60.0 : 110.0;
+
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF0C1328),
+      padding: EdgeInsets.symmetric(
+        horizontal: horizontalPad,
+        vertical: verticalPad,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                language == 'en'
+                    ? 'PARTICIPATORY RESEARCH MAPPING'
+                    : 'MAPEO PARTICIPATIVO DE INVESTIGACIÓN',
+                style: TextStyle(
+                  color: const Color(0xFF7FB069),
+                  fontSize: isPhone ? 12 : 14,
+                  letterSpacing: 3.0,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 18),
+              Builder(builder: (context) {
+                final titleStyle = Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    );
+                return Text(
+                  language == 'en'
+                      ? 'How Our Maps Are Made'
+                      : 'Cómo se Elaboran Nuestros Mapas',
+                  style: titleStyle,
+                  textAlign: TextAlign.center,
+                );
+              }),
+              const SizedBox(height: 24),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 880),
+                child: Text(
+                  language == 'en'
+                      ? 'PRM blends Indigenous geospatial knowledge with GPS, aerial photography, and satellite imagery. The diagram below shows how lived experience becomes a shared tool for stewardship, dialogue, and protection — step by step.'
+                      : 'El PRM combina el conocimiento geoespacial indígena con GPS, fotografía aérea e imágenes satelitales. El siguiente diagrama muestra cómo la experiencia vivida se convierte, paso a paso, en una herramienta compartida para la administración, el diálogo y la protección.',
+                  style: TextStyle(
+                    color: const Color(0xFFB9C6EA),
+                    fontSize: isPhone ? 15 : 17,
+                    height: 1.7,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: isPhone ? 36 : 60),
+              MouseRegion(
+                cursor: SystemMouseCursors.zoomIn,
+                child: GestureDetector(
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (_) => const ZoomImageDialog(
+                      imagePath: 'assets/images/PRM_Explain.png',
+                    ),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(isPhone ? 12 : 20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.55),
+                          blurRadius: 44,
+                          offset: const Offset(0, 18),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(isPhone ? 12 : 20),
+                      child: Image.asset(
+                        'assets/images/PRM_Explain.png',
+                        fit: BoxFit.contain,
+                        width: double.infinity,
+                        filterQuality: FilterQuality.high,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: isPhone ? 14 : 18),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.zoom_in, color: const Color(0xFF7FB069), size: isPhone ? 16 : 18),
+                  const SizedBox(width: 8),
+                  Text(
+                    language == 'en'
+                        ? 'Click the diagram to zoom in'
+                        : 'Haz clic en el diagrama para ampliar',
+                    style: TextStyle(
+                      color: const Color(0xFF7FB069),
+                      fontSize: isPhone ? 13 : 14,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: isPhone ? 20 : 28),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 760),
+                child: Text(
+                  language == 'en'
+                      ? 'A good map does not replace local knowledge — it translates that knowledge into a form more people can understand, use, and act on.'
+                      : 'Un buen mapa no reemplaza el conocimiento local: traduce ese conocimiento a una forma que más personas puedan entender, usar y aplicar.',
+                  style: TextStyle(
+                    color: const Color(0xFFB0B8C8),
+                    fontSize: isPhone ? 14 : 16,
+                    fontStyle: FontStyle.italic,
+                    height: 1.6,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
