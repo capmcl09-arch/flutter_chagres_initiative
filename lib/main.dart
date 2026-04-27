@@ -225,6 +225,10 @@ class _ChagresHomeState extends State<ChagresHome> {
       context,
     );
     precacheImage(
+      const AssetImage('assets/images/ku_signature.png'),
+      context,
+    );
+    precacheImage(
       const AssetImage('assets/images/palms.jpg'),
       context,
     );
@@ -615,16 +619,27 @@ class _ChagresHomeState extends State<ChagresHome> {
             ),
             child: _showJayhawk
                 ? Image.asset(
-                    'assets/images/jayhawk.png',
-                    key: const ValueKey('jayhawk'),
-                    height: 48,
+                    'assets/images/ku_signature.png',
+                    key: const ValueKey('ku_signature'),
+                    height: 40,
                     fit: BoxFit.contain,
                   )
-                : Image.asset(
-                    'assets/images/chagres_initiative_logo_hq.png',
-                    key: const ValueKey('logo'),
-                    height: 48,
-                    fit: BoxFit.contain,
+                : Row(
+                    key: const ValueKey('logo_with_jayhawk'),
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/images/chagres_initiative_logo_hq.png',
+                        height: 48,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(width: 10),
+                      Image.asset(
+                        'assets/images/jayhawk.png',
+                        height: 40,
+                        fit: BoxFit.contain,
+                      ),
+                    ],
                   ),
           ),
         ),
@@ -758,16 +773,27 @@ class _ChagresHomeState extends State<ChagresHome> {
                 ),
                 child: _showJayhawk
                     ? Image.asset(
-                        'assets/images/jayhawk.png',
-                        key: const ValueKey('jayhawk'),
-                        height: 80,
+                        'assets/images/ku_signature.png',
+                        key: const ValueKey('ku_signature'),
+                        height: 64,
                         fit: BoxFit.contain,
                       )
-                    : Image.asset(
-                        'assets/images/chagres_initiative_logo_hq.png',
-                        key: const ValueKey('logo'),
-                        height: 80,
-                        fit: BoxFit.contain,
+                    : Row(
+                        key: const ValueKey('logo_with_jayhawk'),
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            'assets/images/chagres_initiative_logo_hq.png',
+                            height: 80,
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(width: 14),
+                          Image.asset(
+                            'assets/images/jayhawk.png',
+                            height: 64,
+                            fit: BoxFit.contain,
+                          ),
+                        ],
                       ),
               ),
             ),
@@ -1076,9 +1102,19 @@ class PartnershipsSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFF0051BA).withOpacity(0.4), width: 1.5),
             ),
-            child: Text.rich(
-              _buildAboutDonationsSpans(language),
-              textAlign: TextAlign.center,
+            child: Column(
+              children: [
+                Text.rich(
+                  _buildAboutDonationsSpans(language),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                Image.asset(
+                  'assets/images/jayhawk.png',
+                  height: 96,
+                  fit: BoxFit.contain,
+                ),
+              ],
             ),
           ),
           // Spacer to push Make Dreams below the boat photo's bottom blur
