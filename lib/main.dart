@@ -28,6 +28,53 @@ void main() {
 }
 
 // Helper: splits text on "Chagres Initiative" / "Iniciativa Chagres" and italicizes those spans.
+TextSpan _buildAboutDonationsSpans(String language) {
+  const baseStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 18,
+    height: 1.6,
+    fontWeight: FontWeight.w500,
+  );
+  final ciStyle = baseStyle.copyWith(
+    color: const Color(0xFF7FB069),
+    fontWeight: FontWeight.w800,
+    fontStyle: FontStyle.italic,
+  );
+  final lkuStyle = baseStyle.copyWith(
+    color: const Color(0xFF5FB5FF),
+    fontWeight: FontWeight.w800,
+  );
+
+  if (language == 'en') {
+    return TextSpan(style: baseStyle, children: [
+      const TextSpan(
+        text:
+            'Your tax-deductible donations will contribute to our understanding and management of a geopolitical issue of USA and global importance: Water Security of the Panama Canal.\n\nThe ',
+      ),
+      TextSpan(text: 'Chagres Initiative', style: ciStyle),
+      const TextSpan(text: ' is a '),
+      TextSpan(text: 'Launch KU', style: lkuStyle),
+      const TextSpan(
+        text:
+            ' project. LaunchKU is the KU Endowment\'s crowdfunding platform, helping faculty and students raise funds for their work to benefit KU.\n\nFollow online and witness the research unfold on our website. You will see how your donations directly impact every aspect of the research which includes the support of Indigenous villagers and university researchers.',
+      ),
+    ]);
+  }
+  return TextSpan(style: baseStyle, children: [
+    const TextSpan(
+      text:
+          'Sus donaciones deducibles de impuestos contribuirán a nuestra comprensión y gestión de un asunto geopolítico de importancia para EE.UU. y el mundo: la Seguridad Hídrica del Canal de Panamá.\n\nLa ',
+    ),
+    TextSpan(text: 'Iniciativa Chagres', style: ciStyle),
+    const TextSpan(text: ' es un proyecto de '),
+    TextSpan(text: 'Launch KU', style: lkuStyle),
+    const TextSpan(
+      text:
+          '. LaunchKU es la plataforma de crowdfunding del KU Endowment, que ayuda a profesores y estudiantes a recaudar fondos para sus proyectos en beneficio de KU.\n\nSíganos en línea y sea testigo del desarrollo de la investigación en nuestro sitio web. Verá cómo sus donaciones impactan directamente cada aspecto de la investigación, lo que incluye el apoyo a los pobladores indígenas y a los investigadores universitarios.',
+    ),
+  ]);
+}
+
 List<InlineSpan> _buildCISpans(String text, TextStyle? baseStyle) {
   const ciEN = 'Chagres Initiative';
   const ciES = 'Iniciativa Chagres';
@@ -214,7 +261,7 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   void _updateActiveSection() {
     final Map<GlobalKey, String> sections = {
-      _partnershipsKey: 'Our Donors',
+      _partnershipsKey: 'About Donations',
       _teamKey: 'Team',
       _aboutKey: 'About',
       _methodologyKey: 'Methodology',
@@ -337,9 +384,25 @@ class _ChagresHomeState extends State<ChagresHome> {
                 if (!isMobile) SizedBox(height: 100), // Space for fixed header
                 HeroSection(language: widget.language, onLogoTap: _showLogoZoom),
                 _WorkingDraftBanner(language: widget.language),
-                // First green band: the meaningful framing + the four-stat
-                // illustration band around the La Bonga seal, directly after
-                // the hero so the "why this matters" lands before Our Donors.
+                RevealOnScroll(
+                  child: AboutSection(key: _aboutKey, language: widget.language),
+                ),
+                // Stats band (5 figures) lifted out of the green band so it
+                // lands directly after About.
+                Container(
+                  width: double.infinity,
+                  color: const Color(0xFF0C1328),
+                  child: RevealOnScroll(
+                    child: _SealWithStats(language: widget.language),
+                  ),
+                ),
+                RevealOnScroll(
+                  child: _WhyDonationsBand(language: widget.language, isMobile: isMobile),
+                ),
+                RevealOnScroll(
+                  child: MappingMethodSection(language: widget.language),
+                ),
+                // Green band with meaningful framing, after the maps explainer.
                 Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
@@ -364,20 +427,13 @@ class _ChagresHomeState extends State<ChagresHome> {
                         right: 0, top: 0, bottom: 0,
                         child: _JungleSideStrip(mirror: true),
                       ),
-                      Column(
-                        children: [
-                          RevealOnScroll(
-                            child: _SealWithStats(language: widget.language),
-                          ),
-                          RevealOnScroll(
-                            child: MeaningfulSection(language: widget.language),
-                          ),
-                        ],
+                      RevealOnScroll(
+                        child: MeaningfulSection(language: widget.language),
                       ),
                     ],
                   ),
                 ),
-                // Transition back to navy for About.
+                // Transition back to navy for Partnerships.
                 Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
@@ -388,15 +444,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                     ),
                   ),
                   height: 60,
-                ),
-                RevealOnScroll(
-                  child: AboutSection(key: _aboutKey, language: widget.language),
-                ),
-                RevealOnScroll(
-                  child: MappingMethodSection(language: widget.language),
-                ),
-                RevealOnScroll(
-                  child: _WhyDonationsBand(language: widget.language, isMobile: isMobile),
                 ),
                 RevealOnScroll(
                   child: PartnershipsSection(key: _partnershipsKey, language: widget.language),
@@ -630,7 +677,7 @@ class _ChagresHomeState extends State<ChagresHome> {
             _fieldworkKey,
           ),
           _buildDrawerItem(
-            widget.language == 'en' ? 'Our Donors' : 'Nuestros Donantes',
+            widget.language == 'en' ? 'About Donations' : 'Acerca de las Donaciones',
             _partnershipsKey,
           ),
           _buildDrawerItem(
@@ -733,7 +780,7 @@ class _ChagresHomeState extends State<ChagresHome> {
               _buildNavLink('About', _aboutKey),
               _buildNavLink('Methodology', _methodologyKey),
               _buildNavLink('Fieldwork', _fieldworkKey),
-              _buildNavLink('Our Donors', _partnershipsKey),
+              _buildNavLink('About Donations', _partnershipsKey),
               _buildNavLink('Support', _givingLevelsKey),
               _buildNavLink('Team', _teamKey),
               _buildNavLink('FAQ', _faqKey),
@@ -1014,7 +1061,7 @@ class PartnershipsSection extends StatelessWidget {
           child: Column(
         children: [
           Text(
-            language == 'en' ? 'Our Donors' : 'Nuestros Donantes',
+            language == 'en' ? 'About Donations' : 'Acerca de las Donaciones',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
             ),
@@ -1029,16 +1076,8 @@ class PartnershipsSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFF0051BA).withOpacity(0.4), width: 1.5),
             ),
-            child: Text(
-              language == 'en'
-                  ? 'Your tax-deductible donations will contribute to our understanding and management of a geopolitical issue of USA and global importance: Water Security of the Panama Canal.\n\nFollow online and witness the research unfold on our website. You will see how your donations directly impact every aspect of the research which includes the support of Indigenous villagers and university researchers.'
-                  : 'Sus donaciones deducibles de impuestos contribuirán a nuestra comprensión y gestión de un asunto geopolítico de importancia para EE.UU. y el mundo: la Seguridad Hídrica del Canal de Panamá.\n\nSíganos en línea y sea testigo del desarrollo de la investigación en nuestro sitio web. Verá cómo sus donaciones impactan directamente cada aspecto de la investigación, lo que incluye el apoyo a los pobladores indígenas y a los investigadores universitarios.',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                height: 1.6,
-                fontWeight: FontWeight.w500,
-              ),
+            child: Text.rich(
+              _buildAboutDonationsSpans(language),
               textAlign: TextAlign.center,
             ),
           ),
@@ -1479,16 +1518,24 @@ class _WhyDonationsSection extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              language == 'en'
-                  ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and zone CNP lands for development, conservation, and watershed governance. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
-                  : 'En pocas palabras, como una novedosa alternativa de financiamiento público-privado para la investigación, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarles a ustedes, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: const Color(0xFFB9C6EA),
-                fontSize: 18,
-                height: 1.75,
-              ),
-            ),
+            Builder(builder: (context) {
+              final whyStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFFB9C6EA),
+                    fontSize: 18,
+                    height: 1.75,
+                  );
+              return Text.rich(
+                TextSpan(
+                  style: whyStyle,
+                  children: _buildCISpans(
+                    language == 'en'
+                        ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and zone CNP lands for development, conservation, and watershed governance. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
+                        : 'En pocas palabras, como una novedosa alternativa de financiamiento público-privado para la investigación, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarles a ustedes, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
+                    whyStyle,
+                  ),
+                ),
+              );
+            }),
           ],
         ),
       ),
