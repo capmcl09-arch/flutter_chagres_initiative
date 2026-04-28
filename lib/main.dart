@@ -424,12 +424,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                     isMobile: isMobile,
                   ),
                 ),
-                RevealOnScroll(
-                  child: MappingMethodSection(language: widget.language),
-                ),
-                RevealOnScroll(
-                  child: SatellitePrmStorySection(language: widget.language),
-                ),
                 Container(
                   width: double.infinity,
                   color: const Color(0xFF16402E),
