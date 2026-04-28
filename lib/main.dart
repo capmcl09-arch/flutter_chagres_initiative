@@ -9,12 +9,20 @@ import 'dart:ui' as dart_ui;
 import 'dart:ui_web' as ui;
 import 'dart:math' as math;
 
+const String _donationPageUrl =
+    'https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship';
+
+void _openDonationPage() {
+  launchUrl(Uri.parse(_donationPageUrl));
+}
+
 void main() {
   // Register the Google Maps iframe view factory for web
   ui.platformViewRegistry.registerViewFactory(
     'google-maps-embed',
     (int viewId) => html.IFrameElement()
-      ..src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.823992608622!2d-79.5241626!3d9.3827301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fab494a734c2493%3A0xe55e405b5412d0dc!2sSan%20Juan%20de%20Pequen%C3%AD%20Ind%C3%ADgena%20(La%20Bonga)!5e1!3m2!1sen!2sus!4v1730000000000'
+      ..src =
+          'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.823992608622!2d-79.5241626!3d9.3827301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fab494a734c2493%3A0xe55e405b5412d0dc!2sSan%20Juan%20de%20Pequen%C3%AD%20Ind%C3%ADgena%20(La%20Bonga)!5e1!3m2!1sen!2sus!4v1730000000000'
       ..style.border = 'none'
       ..style.width = '100%'
       ..style.height = '100%'
@@ -23,7 +31,7 @@ void main() {
       ..setAttribute('allowfullscreen', '')
       ..setAttribute('title', 'San Juan de Pequení Indígena (La Bonga)'),
   );
-  
+
   runApp(const ChagresApp());
 }
 
@@ -46,33 +54,39 @@ TextSpan _buildAboutDonationsSpans(String language) {
   );
 
   if (language == 'en') {
-    return TextSpan(style: baseStyle, children: [
+    return TextSpan(
+      style: baseStyle,
+      children: [
+        const TextSpan(
+          text:
+              'Your tax-deductible donations will contribute to our understanding and management of a geopolitical issue of USA and global importance: Water Security of the Panama Canal.\n\nThe ',
+        ),
+        TextSpan(text: 'Chagres Initiative', style: ciStyle),
+        const TextSpan(text: ' is a '),
+        TextSpan(text: 'Launch KU', style: lkuStyle),
+        const TextSpan(
+          text:
+              ' project. LaunchKU is the KU Endowment\'s crowdfunding platform, helping faculty and students raise funds for their work to benefit KU.\n\nFollow online and witness the research unfold on our website. You will see how your donations directly impact every aspect of the research which includes the support of Indigenous villagers and university researchers.',
+        ),
+      ],
+    );
+  }
+  return TextSpan(
+    style: baseStyle,
+    children: [
       const TextSpan(
         text:
-            'Your tax-deductible donations will contribute to our understanding and management of a geopolitical issue of USA and global importance: Water Security of the Panama Canal.\n\nThe ',
+            'Sus donaciones deducibles de impuestos contribuirán a nuestra comprensión y gestión de un asunto geopolítico de importancia para EE.UU. y el mundo: la Seguridad Hídrica del Canal de Panamá.\n\nLa ',
       ),
-      TextSpan(text: 'Chagres Initiative', style: ciStyle),
-      const TextSpan(text: ' is a '),
+      TextSpan(text: 'Iniciativa Chagres', style: ciStyle),
+      const TextSpan(text: ' es un proyecto de '),
       TextSpan(text: 'Launch KU', style: lkuStyle),
       const TextSpan(
         text:
-            ' project. LaunchKU is the KU Endowment\'s crowdfunding platform, helping faculty and students raise funds for their work to benefit KU.\n\nFollow online and witness the research unfold on our website. You will see how your donations directly impact every aspect of the research which includes the support of Indigenous villagers and university researchers.',
+            '. LaunchKU es la plataforma de crowdfunding del KU Endowment, que ayuda a profesores y estudiantes a recaudar fondos para sus proyectos en beneficio de KU.\n\nSíganos en línea y sea testigo del desarrollo de la investigación en nuestro sitio web. Verá cómo sus donaciones impactan directamente cada aspecto de la investigación, lo que incluye el apoyo a los pobladores indígenas y a los investigadores universitarios.',
       ),
-    ]);
-  }
-  return TextSpan(style: baseStyle, children: [
-    const TextSpan(
-      text:
-          'Sus donaciones deducibles de impuestos contribuirán a nuestra comprensión y gestión de un asunto geopolítico de importancia para EE.UU. y el mundo: la Seguridad Hídrica del Canal de Panamá.\n\nLa ',
-    ),
-    TextSpan(text: 'Iniciativa Chagres', style: ciStyle),
-    const TextSpan(text: ' es un proyecto de '),
-    TextSpan(text: 'Launch KU', style: lkuStyle),
-    const TextSpan(
-      text:
-          '. LaunchKU es la plataforma de crowdfunding del KU Endowment, que ayuda a profesores y estudiantes a recaudar fondos para sus proyectos en beneficio de KU.\n\nSíganos en línea y sea testigo del desarrollo de la investigación en nuestro sitio web. Verá cómo sus donaciones impactan directamente cada aspecto de la investigación, lo que incluye el apoyo a los pobladores indígenas y a los investigadores universitarios.',
-    ),
-  ]);
+    ],
+  );
 }
 
 List<InlineSpan> _buildCISpans(String text, TextStyle? baseStyle) {
@@ -99,10 +113,14 @@ List<InlineSpan> _buildCISpans(String text, TextStyle? baseStyle) {
     if (idx > 0) {
       spans.add(TextSpan(text: remaining.substring(0, idx), style: baseStyle));
     }
-    spans.add(TextSpan(
-      text: ciWord,
-      style: (baseStyle ?? const TextStyle()).copyWith(fontStyle: FontStyle.italic),
-    ));
+    spans.add(
+      TextSpan(
+        text: ciWord,
+        style: (baseStyle ?? const TextStyle()).copyWith(
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+    );
     remaining = remaining.substring(idx + ciWord.length);
   }
   return spans;
@@ -162,10 +180,7 @@ class _ChagresAppState extends State<ChagresApp> {
           ),
         ),
       ),
-      home: ChagresHome(
-        language: _language,
-        onLanguageChanged: _setLanguage,
-      ),
+      home: ChagresHome(language: _language, onLanguageChanged: _setLanguage),
     );
   }
 }
@@ -190,7 +205,7 @@ class _ChagresHomeState extends State<ChagresHome> {
   String _activeSection = '';
   bool _showJayhawk = true;
   double _screenHeight = 800.0;
-  
+
   // GlobalKey references for each section
   final GlobalKey _aboutKey = GlobalKey();
   final GlobalKey _methodologyKey = GlobalKey();
@@ -220,18 +235,14 @@ class _ChagresHomeState extends State<ChagresHome> {
       const AssetImage('assets/images/chagres_initiative_logo_hq.png'),
       context,
     );
+    precacheImage(const AssetImage('assets/images/jayhawk.png'), context);
+    precacheImage(const AssetImage('assets/images/ku_signature.png'), context);
+    precacheImage(const AssetImage('assets/images/Launch_KU.png'), context);
     precacheImage(
-      const AssetImage('assets/images/jayhawk.png'),
+      const AssetImage('assets/images/Spanish_PRM_Explain.png'),
       context,
     );
-    precacheImage(
-      const AssetImage('assets/images/ku_signature.png'),
-      context,
-    );
-    precacheImage(
-      const AssetImage('assets/images/palms.jpg'),
-      context,
-    );
+    precacheImage(const AssetImage('assets/images/palms.jpg'), context);
   }
 
   @override
@@ -258,7 +269,7 @@ class _ChagresHomeState extends State<ChagresHome> {
     if (showJayhawk != _showJayhawk) {
       setState(() => _showJayhawk = showJayhawk);
     }
-    
+
     // Track active section
     _updateActiveSection();
   }
@@ -305,7 +316,7 @@ class _ChagresHomeState extends State<ChagresHome> {
       curve: Curves.easeInOut,
     );
   }
-  
+
   void _scrollToSection(GlobalKey key) {
     final ctx = key.currentContext;
     if (ctx == null || !_scrollController.hasClients) return;
@@ -318,15 +329,17 @@ class _ChagresHomeState extends State<ChagresHome> {
     // clears the ribbon. Mobile uses a Scaffold AppBar so the body already
     // begins below it.
     final headerOffset = isMobile ? 0.0 : 124.0;
-    final target = (reveal - headerOffset)
-        .clamp(0.0, _scrollController.position.maxScrollExtent);
+    final target = (reveal - headerOffset).clamp(
+      0.0,
+      _scrollController.position.maxScrollExtent,
+    );
     _scrollController.animateTo(
       target,
       duration: const Duration(milliseconds: 800),
       curve: Curves.easeInOut,
     );
   }
-  
+
   void _showLogoZoom() {
     showDialog(
       context: context,
@@ -335,7 +348,9 @@ class _ChagresHomeState extends State<ChagresHome> {
         child: Stack(
           children: [
             PhotoView(
-              imageProvider: const AssetImage('assets/images/chagres_initiative_logo_hq.png'),
+              imageProvider: const AssetImage(
+                'assets/images/chagres_initiative_logo_hq.png',
+              ),
               minScale: PhotoViewComputedScale.contained * 0.8,
               maxScale: PhotoViewComputedScale.covered * 2.0,
               enableRotation: false,
@@ -351,11 +366,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                     shape: BoxShape.circle,
                   ),
                   padding: const EdgeInsets.all(8),
-                  child: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                    size: 28,
-                  ),
+                  child: const Icon(Icons.close, color: Colors.white, size: 28),
                 ),
               ),
             ),
@@ -368,7 +379,7 @@ class _ChagresHomeState extends State<ChagresHome> {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     return Scaffold(
       appBar: isMobile ? _buildMobileAppBar() : null,
       drawer: isMobile ? _buildMobileDrawer() : null,
@@ -385,11 +396,18 @@ class _ChagresHomeState extends State<ChagresHome> {
             controller: _scrollController,
             child: Column(
               children: [
-                if (!isMobile) SizedBox(height: 100), // Space for fixed header
-                HeroSection(language: widget.language, onLogoTap: _showLogoZoom),
+                if (!isMobile)
+                  const SizedBox(height: 58), // Space for fixed header
+                HeroSection(
+                  language: widget.language,
+                  onLogoTap: _showLogoZoom,
+                ),
                 _WorkingDraftBanner(language: widget.language),
                 RevealOnScroll(
-                  child: AboutSection(key: _aboutKey, language: widget.language),
+                  child: AboutSection(
+                    key: _aboutKey,
+                    language: widget.language,
+                  ),
                 ),
                 // Stats band (5 figures) lifted out of the green band so it
                 // lands directly after About.
@@ -401,7 +419,10 @@ class _ChagresHomeState extends State<ChagresHome> {
                   ),
                 ),
                 RevealOnScroll(
-                  child: _WhyDonationsBand(language: widget.language, isMobile: isMobile),
+                  child: _WhyDonationsBand(
+                    language: widget.language,
+                    isMobile: isMobile,
+                  ),
                 ),
                 RevealOnScroll(
                   child: MappingMethodSection(language: widget.language),
@@ -423,14 +444,20 @@ class _ChagresHomeState extends State<ChagresHome> {
                   color: const Color(0xFF16402E),
                   child: Stack(
                     children: [
-                      if (!isMobile) Positioned(
-                        left: 0, top: 0, bottom: 0,
-                        child: _JungleSideStrip(mirror: false),
-                      ),
-                      if (!isMobile) Positioned(
-                        right: 0, top: 0, bottom: 0,
-                        child: _JungleSideStrip(mirror: true),
-                      ),
+                      if (!isMobile)
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: _JungleSideStrip(mirror: false),
+                        ),
+                      if (!isMobile)
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: _JungleSideStrip(mirror: true),
+                        ),
                       RevealOnScroll(
                         child: MeaningfulSection(language: widget.language),
                       ),
@@ -450,7 +477,10 @@ class _ChagresHomeState extends State<ChagresHome> {
                   height: 60,
                 ),
                 RevealOnScroll(
-                  child: PartnershipsSection(key: _partnershipsKey, language: widget.language),
+                  child: PartnershipsSection(
+                    key: _partnershipsKey,
+                    language: widget.language,
+                  ),
                 ),
                 RevealOnScroll(
                   child: TeamSection(key: _teamKey, language: widget.language),
@@ -472,68 +502,96 @@ class _ChagresHomeState extends State<ChagresHome> {
                   color: const Color(0xFF16402E),
                   child: Stack(
                     children: [
-                      if (!isMobile) Positioned(
-                        left: 0, top: 0, bottom: 0,
-                        child: _JungleSideStrip(mirror: false),
-                      ),
-                      if (!isMobile) Positioned(
-                        right: 0, top: 0, bottom: 0,
-                        child: _JungleSideStrip(mirror: true),
-                      ),
-                      Column(
-                    children: [
-                      RevealOnScroll(
-                        child: MapsSection(language: widget.language),
-                      ),
-                      RevealOnScroll(
-                        child: AuthorizationSection(language: widget.language),
-                      ),
-                      RevealOnScroll(
-                        child: MethodologySection(key: _methodologyKey, language: widget.language),
-                      ),
-                      RevealOnScroll(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 60),
-                          child: Column(
-                            children: [
-                              Image.asset('assets/images/community_meeting.jpg'),
-                              const SizedBox(height: 10),
-                              Text(
-                                widget.language == 'en'
-                                    ? 'The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.'
-                                    : 'La Junta Directiva Indígena de La Bonga escuchando la presentación de nuestro equipo sobre el PRM.',
-                                style: const TextStyle(
-                                  color: Color(0xFFB0B8C8),
-                                  fontSize: 16,
-                                  fontStyle: FontStyle.italic,
-                                  height: 1.5,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
+                      if (!isMobile)
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: _JungleSideStrip(mirror: false),
                         ),
+                      if (!isMobile)
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: _JungleSideStrip(mirror: true),
+                        ),
+                      Column(
+                        children: [
+                          RevealOnScroll(
+                            child: MapsSection(language: widget.language),
+                          ),
+                          RevealOnScroll(
+                            child: AuthorizationSection(
+                              language: widget.language,
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: MethodologySection(
+                              key: _methodologyKey,
+                              language: widget.language,
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 40,
+                                horizontal: 60,
+                              ),
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/community_meeting.jpg',
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    widget.language == 'en'
+                                        ? 'The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.'
+                                        : 'La Junta Directiva Indígena de La Bonga escuchando la presentación de nuestro equipo sobre el PRM.',
+                                    style: const TextStyle(
+                                      color: Color(0xFFB0B8C8),
+                                      fontSize: 16,
+                                      fontStyle: FontStyle.italic,
+                                      height: 1.5,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: GallerySection(
+                              key: _fieldworkKey,
+                              language: widget.language,
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: ReportsSection(
+                              key: _reportsKey,
+                              language: widget.language,
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: FAQSection(
+                              key: _faqKey,
+                              language: widget.language,
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: GivingLevelsSection(
+                              key: _givingLevelsKey,
+                              language: widget.language,
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: NewsletterSection(language: widget.language),
+                          ),
+                          RevealOnScroll(
+                            child: ContactUsSection(language: widget.language),
+                          ),
+                        ],
                       ),
-                      RevealOnScroll(
-                        child: GallerySection(key: _fieldworkKey, language: widget.language),
-                      ),
-                      RevealOnScroll(
-                        child: ReportsSection(key: _reportsKey, language: widget.language),
-                      ),
-                      RevealOnScroll(
-                        child: FAQSection(key: _faqKey, language: widget.language),
-                      ),
-                      RevealOnScroll(
-                        child: GivingLevelsSection(key: _givingLevelsKey, language: widget.language),
-                      ),
-                      RevealOnScroll(
-                        child: NewsletterSection(language: widget.language),
-                      ),
-                      RevealOnScroll(
-                        child: ContactUsSection(language: widget.language),
-                      ),
-                    ],
-                  ),
                     ],
                   ),
                 ),
@@ -546,19 +604,14 @@ class _ChagresHomeState extends State<ChagresHome> {
             ),
           ),
           if (!isMobile)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: _buildDesktopHeader(),
-            ),
+            Positioned(top: 0, left: 0, right: 0, child: _buildDesktopHeader()),
           Positioned(
             right: 0,
             top: MediaQuery.of(context).size.height * 0.62,
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: () => launchUrl(Uri.parse('https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship')),
+                onTap: _openDonationPage,
                 child: _HoverGlow(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
@@ -566,7 +619,10 @@ class _ChagresHomeState extends State<ChagresHome> {
                   ),
                   scale: 1.04,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 20,
+                    ),
                     decoration: const BoxDecoration(
                       color: Color(0xFFA0291E),
                       borderRadius: BorderRadius.only(
@@ -574,7 +630,11 @@ class _ChagresHomeState extends State<ChagresHome> {
                         bottomLeft: Radius.circular(10),
                       ),
                       boxShadow: [
-                        BoxShadow(color: Colors.black38, blurRadius: 8, offset: Offset(-2, 2)),
+                        BoxShadow(
+                          color: Colors.black38,
+                          blurRadius: 8,
+                          offset: Offset(-2, 2),
+                        ),
                       ],
                     ),
                     child: RotatedBox(
@@ -599,6 +659,72 @@ class _ChagresHomeState extends State<ChagresHome> {
     );
   }
 
+  Widget _buildHeaderBrand({required bool isMobile}) {
+    final signatureHeight = isMobile ? 26.0 : 42.0;
+    final launchHeight = isMobile ? 26.0 : 42.0;
+    final gap = isMobile ? 10.0 : 14.0;
+
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 450),
+      transitionBuilder: (child, animation) =>
+          FadeTransition(opacity: animation, child: child),
+      child: _showJayhawk
+          ? Row(
+              key: const ValueKey('ku_launch_signature'),
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: _showLogoZoom,
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Image.asset(
+                      'assets/images/ku_signature.png',
+                      height: signatureHeight,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                SizedBox(width: gap),
+                GestureDetector(
+                  onTap: _openDonationPage,
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Image.asset(
+                      'assets/images/Launch_KU.png',
+                      height: launchHeight,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : GestureDetector(
+              key: const ValueKey('logo_with_jayhawk'),
+              onTap: _showLogoZoom,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      'assets/images/chagres_initiative_logo_hq.png',
+                      height: isMobile ? 48 : 80,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(width: isMobile ? 10 : 14),
+                    Image.asset(
+                      'assets/images/jayhawk.png',
+                      height: isMobile ? 40 : 64,
+                      fit: BoxFit.contain,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+    );
+  }
+
   AppBar _buildMobileAppBar() {
     return AppBar(
       leading: Builder(
@@ -607,43 +733,7 @@ class _ChagresHomeState extends State<ChagresHome> {
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
       ),
-      title: GestureDetector(
-        onTap: _showLogoZoom,
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 450),
-            transitionBuilder: (child, animation) => FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-            child: _showJayhawk
-                ? Image.asset(
-                    'assets/images/ku_signature.png',
-                    key: const ValueKey('ku_signature'),
-                    height: 40,
-                    fit: BoxFit.contain,
-                  )
-                : Row(
-                    key: const ValueKey('logo_with_jayhawk'),
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        'assets/images/chagres_initiative_logo_hq.png',
-                        height: 48,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(width: 10),
-                      Image.asset(
-                        'assets/images/jayhawk.png',
-                        height: 40,
-                        fit: BoxFit.contain,
-                      ),
-                    ],
-                  ),
-          ),
-        ),
-      ),
+      title: _buildHeaderBrand(isMobile: true),
       backgroundColor: const Color(0xFF0C1328),
       elevation: 1,
       centerTitle: true,
@@ -657,9 +747,7 @@ class _ChagresHomeState extends State<ChagresHome> {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Color(0xFF0051BA),
-            ),
+            decoration: const BoxDecoration(color: Color(0xFF0051BA)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -692,7 +780,9 @@ class _ChagresHomeState extends State<ChagresHome> {
             _fieldworkKey,
           ),
           _buildDrawerItem(
-            widget.language == 'en' ? 'About Donations' : 'Acerca de las Donaciones',
+            widget.language == 'en'
+                ? 'About Donations'
+                : 'Acerca de las Donaciones',
             _partnershipsKey,
           ),
           _buildDrawerItem(
@@ -721,10 +811,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                 ),
                 child: Text(
                   widget.language == 'en' ? 'Español' : 'English',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'serif',
-                  ),
+                  style: const TextStyle(fontSize: 16, fontFamily: 'serif'),
                 ),
               ),
             ),
@@ -734,17 +821,11 @@ class _ChagresHomeState extends State<ChagresHome> {
     );
   }
 
-  Widget _buildDrawerItem(
-    String label,
-    GlobalKey key,
-  ) {
+  Widget _buildDrawerItem(String label, GlobalKey key) {
     return ListTile(
       title: Text(
         label,
-        style: const TextStyle(
-          color: Color(0xFFB9C6EA),
-          fontSize: 16,
-        ),
+        style: const TextStyle(color: Color(0xFFB9C6EA), fontSize: 16),
       ),
       onTap: () {
         Navigator.of(context).pop(); // Close drawer
@@ -760,44 +841,7 @@ class _ChagresHomeState extends State<ChagresHome> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Logo
-          GestureDetector(
-            onTap: _showLogoZoom,
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 450),
-                transitionBuilder: (child, animation) => FadeTransition(
-                  opacity: animation,
-                  child: child,
-                ),
-                child: _showJayhawk
-                    ? Image.asset(
-                        'assets/images/ku_signature.png',
-                        key: const ValueKey('ku_signature'),
-                        height: 64,
-                        fit: BoxFit.contain,
-                      )
-                    : Row(
-                        key: const ValueKey('logo_with_jayhawk'),
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            'assets/images/chagres_initiative_logo_hq.png',
-                            height: 80,
-                            fit: BoxFit.contain,
-                          ),
-                          const SizedBox(width: 14),
-                          Image.asset(
-                            'assets/images/jayhawk.png',
-                            height: 64,
-                            fit: BoxFit.contain,
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ),
+          _buildHeaderBrand(isMobile: false),
           const SizedBox(width: 40),
           // Navigation Links
           Wrap(
@@ -822,10 +866,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                   ),
                   child: Text(
                     widget.language == 'en' ? 'ES' : 'EN',
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontFamily: 'serif',
-                    ),
+                    style: const TextStyle(fontSize: 15, fontFamily: 'serif'),
                   ),
                 ),
               ),
@@ -838,12 +879,13 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   Widget _buildNavLink(String label, GlobalKey key) {
     final isActive = _activeSection == label;
+    final displayLabel = _translatedNavLabel(label);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => _scrollToSection(key),
         child: Text(
-          label,
+          displayLabel,
           style: TextStyle(
             color: isActive ? Colors.white : const Color(0xFFB9C6EA),
             fontSize: 17,
@@ -852,6 +894,20 @@ class _ChagresHomeState extends State<ChagresHome> {
         ),
       ),
     );
+  }
+
+  String _translatedNavLabel(String label) {
+    if (widget.language == 'en') return label;
+    return switch (label) {
+      'About' => 'Acerca de',
+      'Methodology' => 'Metodología',
+      'Fieldwork' => 'Trabajo de Campo',
+      'About Donations' => 'Acerca de las Donaciones',
+      'Support' => 'Apoyo',
+      'Team' => 'Equipo',
+      'FAQ' => 'Preguntas Frecuentes',
+      _ => label,
+    };
   }
 }
 
@@ -906,7 +962,9 @@ class HeroSection extends StatelessWidget {
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                         maxWidth: logoWidth,
-                        maxHeight: isMobile ? screenHeight * 0.34 : screenHeight * 0.44,
+                        maxHeight: isMobile
+                            ? screenHeight * 0.34
+                            : screenHeight * 0.44,
                       ),
                       child: Image.asset(
                         'assets/images/chagres_initiative_logo_hq.png',
@@ -918,11 +976,24 @@ class HeroSection extends StatelessWidget {
                 SizedBox(height: isMobile ? 20 : 28),
                 Column(
                   children: [
-                    _buildPhrase(context, language == 'en' ? 'Water Security' : 'Seguridad Hídrica'),
+                    _buildPhrase(
+                      context,
+                      language == 'en' ? 'Water Security' : 'Seguridad Hídrica',
+                    ),
                     const SizedBox(height: 10),
-                    _buildPhrase(context, language == 'en' ? 'Rainforest Conservation' : 'Conservación de la Selva Tropical'),
+                    _buildPhrase(
+                      context,
+                      language == 'en'
+                          ? 'Rainforest Conservation'
+                          : 'Conservación del Bosque Tropical',
+                    ),
                     const SizedBox(height: 10),
-                    _buildPhrase(context, language == 'en' ? 'Indigenous Communities' : 'Comunidades Indígenas'),
+                    _buildPhrase(
+                      context,
+                      language == 'en'
+                          ? 'Indigenous Communities'
+                          : 'Comunidades Indígenas',
+                    ),
                   ],
                 ),
               ],
@@ -941,10 +1012,7 @@ class HeroSection extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Color(0xFF0C1328),
-                  ],
+                  colors: [Colors.transparent, Color(0xFF0C1328)],
                 ),
               ),
             ),
@@ -1021,7 +1089,7 @@ class PartnershipsSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isMobile = screenWidth < 900;
     final isPhone = screenWidth < 600;
-    
+
     return LayoutBuilder(
       builder: (context, constraints) {
         // Image is 3999x2250; calculate its natural contained height
@@ -1031,207 +1099,275 @@ class PartnershipsSection extends StatelessWidget {
         final lanchaTop = imageHeight;
 
         return Stack(
-      children: [
-        // Dark background for content that overflows past image
-        Container(width: double.infinity, color: const Color(0xFF0C1328)),
-        // Background photos: hidden on phones, shown on tablets/desktop
-        if (!isPhone) Positioned(
-          top: 0, left: 0, right: 0,
-          height: imageHeight,
-          child: ShaderMask(
-            shaderCallback: (rect) => const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.0, 0.75, 1.0],
-              colors: [Colors.white, Colors.white, Color(0x55FFFFFF)],
-            ).createShader(rect),
-            blendMode: BlendMode.dstIn,
-            child: Image.asset(
-              'assets/images/Background_BOAT.jpg',
-              fit: BoxFit.cover,
-              filterQuality: FilterQuality.high,
-              color: const Color(0xFF0C1328).withOpacity(0.30),
-              colorBlendMode: BlendMode.srcOver,
-            ),
-          ),
-        ),
-        if (!isPhone) Positioned(
-          top: lanchaTop, left: 0, right: 0,
-          height: lanchaHeight,
-          child: ShaderMask(
-            shaderCallback: (rect) => const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.0, 0.15, 0.85, 1.0],
-              colors: [Color(0x55FFFFFF), Colors.white, Colors.white, Color(0x55FFFFFF)],
-            ).createShader(rect),
-            blendMode: BlendMode.dstIn,
-            child: Image.asset(
-              'assets/images/long_lancha.jpeg',
-              fit: BoxFit.cover,
-              alignment: Alignment.bottomRight,
-              filterQuality: FilterQuality.high,
-              color: const Color(0xFF0C1328).withOpacity(0.30),
-              colorBlendMode: BlendMode.srcOver,
-            ),
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.fromLTRB(
-            isMobile ? 20.0 : 60.0,
-            140,
-            isMobile ? 20.0 : 60.0,
-            60,
-          ),
-          child: Column(
-        children: [
-          Text(
-            language == 'en' ? 'About Donations' : 'Acerca de las Donaciones',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 24),
-          // Prominent donation appeal text
-          Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            decoration: BoxDecoration(
-              color: const Color(0xFF101A2F),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFF0051BA).withOpacity(0.4), width: 1.5),
-            ),
-            child: Column(
-              children: [
-                Text.rich(
-                  _buildAboutDonationsSpans(language),
-                  textAlign: TextAlign.center,
+          children: [
+            // Dark background for content that overflows past image
+            Container(width: double.infinity, color: const Color(0xFF0C1328)),
+            // Background photos: hidden on phones, shown on tablets/desktop
+            if (!isPhone)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: imageHeight,
+                child: ShaderMask(
+                  shaderCallback: (rect) => const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.0, 0.75, 1.0],
+                    colors: [Colors.white, Colors.white, Color(0x55FFFFFF)],
+                  ).createShader(rect),
+                  blendMode: BlendMode.dstIn,
+                  child: Image.asset(
+                    'assets/images/Background_BOAT.jpg',
+                    fit: BoxFit.cover,
+                    filterQuality: FilterQuality.high,
+                    color: const Color(0xFF0C1328).withOpacity(0.30),
+                    colorBlendMode: BlendMode.srcOver,
+                  ),
                 ),
-                const SizedBox(height: 20),
-                Image.asset(
-                  'assets/images/jayhawk.png',
-                  height: 96,
-                  fit: BoxFit.contain,
-                ),
-              ],
-            ),
-          ),
-          // Spacer to push Make Dreams below the boat photo's bottom blur
-          SizedBox(height: (imageHeight - 580).clamp(60.0, 800.0)),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: BackdropFilter(
-              filter: dart_ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-              child: Container(
-            constraints: const BoxConstraints(maxWidth: 720),
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 28),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: const Color(0xFF1A4080).withOpacity(0.22),
-              border: Border.all(
-                color: const Color(0xFF4A90D9).withOpacity(0.28),
-                width: 1.2,
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF0D2550).withOpacity(0.45),
-                  blurRadius: 40,
-                  spreadRadius: 4,
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  language == 'en'
-                      ? 'Make Dreams Possible – Fund KU Research Abroad'
-                      : 'Haga posibles los sueños – Financie la Investigación de KU en el Exterior',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                Text.rich(
-                  TextSpan(
-                    style: const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
-                    children: _buildCISpans(
-                      language == 'en'
-                          ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about three years and U.S. \$550,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
-                          : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nAnte los drásticos recortes en los fondos federales de EE.UU., los de las ONG e incluso la financiación universitaria interna para la investigación internacional, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres requerirá aproximadamente tres años y unos US\$550,000.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, ya que pagan los costos directos del proyecto para los miembros de la comunidad, los estudiantes y profesores de KU del equipo de investigación, así como vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios que cubren alimentación, alojamiento y transporte.',
-                      const TextStyle(color: Color(0xFFB9C6EA), fontSize: 17, height: 1.7),
-                    ),
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-          ),
-            ),
-          ),
-          const SizedBox(height: 40),
-          // Poem Image — below boat photo seam
-          Image.asset(
-            'assets/images/poem.png',
-            width: isMobile ? 280 : 360,
-            fit: BoxFit.contain,
-            opacity: const AlwaysStoppedAnimation(0.95),
-          ),
-          const SizedBox(height: 32),
-          // Donation button — after Make Dreams section
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () {
-                launchUrl(Uri.parse('https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship'));
-              },
-              child: _HoverGlow(
-                child: Container(
-                  constraints: const BoxConstraints(maxWidth: 280),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFA0291E),
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      color: const Color(0xFFA0291E),
-                      width: 2,
-                    ),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
-                  child: Column(
-                    children: [
-                      language == 'en'
-                        ? Text.rich(
-                            TextSpan(
-                              style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
-                              children: [
-                                const TextSpan(text: 'Please '),
-                                const TextSpan(text: 'Click', style: TextStyle(fontStyle: FontStyle.italic)),
-                                const TextSpan(text: ' to '),
-                                const TextSpan(text: 'Contribute', style: TextStyle(fontStyle: FontStyle.italic)),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        : const Text(
-                            'Haga clic aquí para contribuir',
-                            style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
+            if (!isPhone)
+              Positioned(
+                top: lanchaTop,
+                left: 0,
+                right: 0,
+                height: lanchaHeight,
+                child: ShaderMask(
+                  shaderCallback: (rect) => const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.0, 0.15, 0.85, 1.0],
+                    colors: [
+                      Color(0x55FFFFFF),
+                      Colors.white,
+                      Colors.white,
+                      Color(0x55FFFFFF),
                     ],
+                  ).createShader(rect),
+                  blendMode: BlendMode.dstIn,
+                  child: Image.asset(
+                    'assets/images/long_lancha.jpeg',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.bottomRight,
+                    filterQuality: FilterQuality.high,
+                    color: const Color(0xFF0C1328).withOpacity(0.30),
+                    colorBlendMode: BlendMode.srcOver,
                   ),
                 ),
               ),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.fromLTRB(
+                isMobile ? 20.0 : 60.0,
+                140,
+                isMobile ? 20.0 : 60.0,
+                60,
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    language == 'en'
+                        ? 'About Donations'
+                        : 'Acerca de las Donaciones',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.headlineSmall?.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(height: 24),
+                  // Prominent donation appeal text
+                  Container(
+                    constraints: const BoxConstraints(maxWidth: 800),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 20,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF101A2F),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: const Color(0xFF0051BA).withOpacity(0.4),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Text.rich(
+                          _buildAboutDonationsSpans(language),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/jayhawk.png',
+                              height: isPhone ? 72 : 96,
+                              fit: BoxFit.contain,
+                            ),
+                            SizedBox(width: isPhone ? 14 : 22),
+                            GestureDetector(
+                              onTap: _openDonationPage,
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: Image.asset(
+                                  'assets/images/Launch_KU.png',
+                                  height: isPhone ? 54 : 72,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Spacer to push Make Dreams below the boat photo's bottom blur
+                  SizedBox(height: (imageHeight - 580).clamp(60.0, 800.0)),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: BackdropFilter(
+                      filter: dart_ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 720),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 28,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFF1A4080).withOpacity(0.22),
+                          border: Border.all(
+                            color: const Color(0xFF4A90D9).withOpacity(0.28),
+                            width: 1.2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF0D2550).withOpacity(0.45),
+                              blurRadius: 40,
+                              spreadRadius: 4,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              language == 'en'
+                                  ? 'Make Dreams Possible – Fund KU Research Abroad'
+                                  : 'Haga posibles los sueños – Financie la Investigación de KU en el Exterior',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            Text.rich(
+                              TextSpan(
+                                style: const TextStyle(
+                                  color: Color(0xFFB9C6EA),
+                                  fontSize: 17,
+                                  height: 1.7,
+                                ),
+                                children: _buildCISpans(
+                                  language == 'en'
+                                      ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about three years and U.S. \$550,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
+                                      : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nAnte los drásticos recortes en los fondos federales de EE.UU., los de las ONG e incluso la financiación universitaria interna para la investigación internacional, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres requerirá aproximadamente tres años y unos US\$550,000.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, ya que pagan los costos directos del proyecto para los miembros de la comunidad, los estudiantes y profesores de KU del equipo de investigación, así como vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios que cubren alimentación, alojamiento y transporte.',
+                                  const TextStyle(
+                                    color: Color(0xFFB9C6EA),
+                                    fontSize: 17,
+                                    height: 1.7,
+                                  ),
+                                ),
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  // Poem Image — below boat photo seam
+                  Image.asset(
+                    'assets/images/poem.png',
+                    width: isMobile ? 280 : 360,
+                    fit: BoxFit.contain,
+                    opacity: const AlwaysStoppedAnimation(0.95),
+                  ),
+                  const SizedBox(height: 32),
+                  // Donation button — after Make Dreams section
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: _openDonationPage,
+                      child: _HoverGlow(
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 280),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFA0291E),
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: const Color(0xFFA0291E),
+                              width: 2,
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 28,
+                            vertical: 18,
+                          ),
+                          child: Column(
+                            children: [
+                              language == 'en'
+                                  ? Text.rich(
+                                      TextSpan(
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        children: [
+                                          const TextSpan(text: 'Please '),
+                                          const TextSpan(
+                                            text: 'Click',
+                                            style: TextStyle(
+                                              fontStyle: FontStyle.italic,
+                                            ),
+                                          ),
+                                          const TextSpan(text: ' to '),
+                                          const TextSpan(
+                                            text: 'Contribute',
+                                            style: TextStyle(
+                                              fontStyle: FontStyle.italic,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    )
+                                  : const Text(
+                                      'Haga clic aquí para contribuir',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-        ),
-      ],
-    );
+          ],
+        );
       },
     );
   }
@@ -1248,7 +1384,7 @@ class AboutSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isMobile = screenWidth < 900;
     final isPhone = screenWidth < 600;
-    
+
     return LayoutBuilder(
       builder: (context, constraints) {
         // Natural image height at full width (1600×1066)
@@ -1263,29 +1399,33 @@ class AboutSection extends StatelessWidget {
               onTap: () {},
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                child: Builder(builder: (context) {
-                  final titleStyle = Theme.of(context).textTheme.displaySmall?.copyWith(
-                    color: Colors.white,
-                  );
-                  return Text.rich(
-                    TextSpan(
-                      style: titleStyle,
-                      children: _buildCISpans(
-                        language == 'en'
-                            ? 'About the Chagres Initiative'
-                            : 'Sobre la Iniciativa Chagres',
-                        titleStyle,
+                child: Builder(
+                  builder: (context) {
+                    final titleStyle = Theme.of(
+                      context,
+                    ).textTheme.displaySmall?.copyWith(color: Colors.white);
+                    return Text.rich(
+                      TextSpan(
+                        style: titleStyle,
+                        children: _buildCISpans(
+                          language == 'en'
+                              ? 'About the Chagres Initiative'
+                              : 'Sobre la Iniciativa Chagres',
+                          titleStyle,
+                        ),
                       ),
-                    ),
-                    textAlign: TextAlign.center,
-                  );
-                }),
+                      textAlign: TextAlign.center,
+                    );
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 24),
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF101A2F).withOpacity(isPhone ? 1.0 : 0.82),
+                color: const Color(
+                  0xFF101A2F,
+                ).withOpacity(isPhone ? 1.0 : 0.82),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -1336,7 +1476,12 @@ class AboutSection extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [0.0, 0.08, 0.92, 1.0],
-                colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
+                colors: [
+                  Colors.transparent,
+                  Colors.white,
+                  Colors.white,
+                  Colors.transparent,
+                ],
               ).createShader(rect),
               blendMode: BlendMode.dstIn,
               child: Image.asset(
@@ -1376,6 +1521,9 @@ class MappingMethodSection extends StatelessWidget {
 
     final horizontalPad = isPhone ? 20.0 : (isMobile ? 40.0 : 60.0);
     final verticalPad = isPhone ? 60.0 : 110.0;
+    final prmExplainImagePath = language == 'en'
+        ? 'assets/images/PRM_Explain.png'
+        : 'assets/images/Spanish_PRM_Explain.png';
 
     return Container(
       width: double.infinity,
@@ -1403,19 +1551,22 @@ class MappingMethodSection extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 18),
-              Builder(builder: (context) {
-                final titleStyle = Theme.of(context).textTheme.displaySmall?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    );
-                return Text(
-                  language == 'en'
-                      ? 'How Our Maps Are Made'
-                      : 'Cómo se Elaboran Nuestros Mapas',
-                  style: titleStyle,
-                  textAlign: TextAlign.center,
-                );
-              }),
+              Builder(
+                builder: (context) {
+                  final titleStyle = Theme.of(context).textTheme.displaySmall
+                      ?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      );
+                  return Text(
+                    language == 'en'
+                        ? 'How Our Maps Are Made'
+                        : 'Cómo se Elaboran Nuestros Mapas',
+                    style: titleStyle,
+                    textAlign: TextAlign.center,
+                  );
+                },
+              ),
               const SizedBox(height: 24),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 880),
@@ -1437,9 +1588,8 @@ class MappingMethodSection extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => showDialog(
                     context: context,
-                    builder: (_) => const ZoomImageDialog(
-                      imagePath: 'assets/images/PRM_Explain.png',
-                    ),
+                    builder: (_) =>
+                        ZoomImageDialog(imagePath: prmExplainImagePath),
                   ),
                   child: Container(
                     decoration: BoxDecoration(
@@ -1455,7 +1605,7 @@ class MappingMethodSection extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(isPhone ? 12 : 20),
                       child: Image.asset(
-                        'assets/images/PRM_Explain.png',
+                        prmExplainImagePath,
                         fit: BoxFit.contain,
                         width: double.infinity,
                         filterQuality: FilterQuality.high,
@@ -1468,7 +1618,11 @@ class MappingMethodSection extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.zoom_in, color: const Color(0xFF7FB069), size: isPhone ? 16 : 18),
+                  Icon(
+                    Icons.zoom_in,
+                    color: const Color(0xFF7FB069),
+                    size: isPhone ? 16 : 18,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     language == 'en'
@@ -1517,7 +1671,10 @@ class _WhyDonationsSection extends StatelessWidget {
     final isMobile = MediaQuery.of(context).size.width < 900;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 60, vertical: 48),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 20 : 60,
+        vertical: 48,
+      ),
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xFF0E261C).withOpacity(0.84),
@@ -1547,31 +1704,36 @@ class _WhyDonationsSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              language == 'en' ? 'Why are Donations Necessary?' : '¿Por qué son necesarias las donaciones?',
+              language == 'en'
+                  ? 'Why are Donations Necessary?'
+                  : '¿Por qué son necesarias las donaciones?',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(height: 20),
-            Builder(builder: (context) {
-              final whyStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFFB9C6EA),
-                    fontSize: 18,
-                    height: 1.75,
-                  );
-              return Text.rich(
-                TextSpan(
-                  style: whyStyle,
-                  children: _buildCISpans(
-                    language == 'en'
-                        ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and zone CNP lands for development, conservation, and watershed governance. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
-                        : 'En pocas palabras, como una novedosa alternativa de financiamiento público-privado para la investigación, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarles a ustedes, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
-                    whyStyle,
+            Builder(
+              builder: (context) {
+                final whyStyle = Theme.of(context).textTheme.bodyMedium
+                    ?.copyWith(
+                      color: const Color(0xFFB9C6EA),
+                      fontSize: 18,
+                      height: 1.75,
+                    );
+                return Text.rich(
+                  TextSpan(
+                    style: whyStyle,
+                    children: _buildCISpans(
+                      language == 'en'
+                          ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and zone CNP lands for development, conservation, and watershed governance. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
+                          : 'En pocas palabras, como una novedosa alternativa de financiamiento público-privado para la investigación, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarles a ustedes, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
+                      whyStyle,
+                    ),
                   ),
-                ),
-              );
-            }),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -1583,10 +1745,7 @@ class _WhyDonationsBand extends StatelessWidget {
   final String language;
   final bool isMobile;
 
-  const _WhyDonationsBand({
-    required this.language,
-    required this.isMobile,
-  });
+  const _WhyDonationsBand({required this.language, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
@@ -1622,11 +1781,7 @@ class _WhyDonationsBand extends StatelessWidget {
                   bottom: 0,
                   child: _JungleSideStrip(mirror: true),
                 ),
-              Column(
-                children: [
-                  _WhyDonationsSection(language: language),
-                ],
-              ),
+              Column(children: [_WhyDonationsSection(language: language)]),
             ],
           ),
         ),
@@ -1660,28 +1815,34 @@ class _MeaningfulSectionState extends State<MeaningfulSection> {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     final principles = [
       (
-        widget.language == 'en' ? '1. Authorized by Indigenous Congress' : '1. Autorizado por el Congreso Indígena',
+        widget.language == 'en'
+            ? '1. Authorized by Indigenous Congress'
+            : '1. Autorizado por el Congreso Indígena',
         widget.language == 'en'
             ? 'This project is grounded in decades of trust and expertise built by KU geography professors and students doing participatory research mapping (PRM) projects in Panama and Central America. At their governing Congreso Local in June 2025, Indigenous Emberá and Wounaan leaders from Chagres National Park (CNP) recognized our "KU know-how" from previous mapping projects with their relatives. The congreso then voted unanimously to invite us to map their lands and help them develop a management plan acceptable to the Panamanian government.'
             : 'Este proyecto se basa en décadas de confianza y experiencia construida por profesores y estudiantes de geografía de KU realizando proyectos de mapeo participativo de investigación (PRM) en Panamá y Centroamérica. En su Congreso Local en junio de 2025, los líderes indígenas Emberá y Wounaan del Parque Nacional Chagres (PNC) reconocieron nuestro "know-how de KU" de proyectos de mapeo anteriores con sus parientes. El congreso luego votó unánimemente para invitarnos a mapear sus tierras y ayudarles a desarrollar un plan de manejo aceptable para el gobierno panameño.',
       ),
       (
-        widget.language == 'en' ? '2. "Living Research" in Indigenous Rainforest Communities of the Panama Canal Watershed' : '2. "Investigación Viva" en Comunidades Indígenas de la Selva Tropical de la Cuenca del Canal de Panamá',
+        widget.language == 'en'
+            ? '2. "Living Research" in Indigenous Rainforest Communities of the Panama Canal Watershed'
+            : '2. "Investigación Viva" en Comunidades Indígenas del Bosque Tropical de la Cuenca del Canal de Panamá',
         widget.language == 'en'
             ? 'Rather than confining findings to academic journals or static reports, this initiative maintains a transparent and evolving public platform and collaborates directly with government agencies.'
             : 'En lugar de confinar los hallazgos a revistas académicas o informes estáticos, esta iniciativa mantiene una plataforma pública transparente y en evolución y colabora directamente con agencias gubernamentales.',
       ),
       (
-        widget.language == 'en' ? '3. Training Community Geographers as Co-Producers of Scientific Results' : '3. Formación de Geógrafos Comunitarios como Co-Productores de Resultados Científicos',
+        widget.language == 'en'
+            ? '3. Training Community Geographers as Co-Producers of Scientific Results'
+            : '3. Formación de Geógrafos Comunitarios como Co-Productores de Resultados Científicos',
         widget.language == 'en'
             ? 'Unlike other projects, our results create community resources of sustained value: we formally certify community representatives as geographers who receive training, and do hands-on fieldwork, learn and use GPS, basic cartography, heads-up imagery analysis, and other geographic methods, including drone use for forest management. These "community geographers" — perhaps not surprisingly — are empowered as ideal co-producers and co-authors of project maps and data. All publication authorships are shared among team members and final cartographic information remain under the ownership of the local communities.'
             : 'A diferencia de otros proyectos, nuestros resultados crean recursos comunitarios de valor sostenido: certificamos formalmente a representantes comunitarios como geógrafos que reciben formación y realizan trabajo de campo práctico, aprenden y utilizan GPS, cartografía básica, análisis de imágenes aéreas y otros métodos geográficos, incluyendo el uso de drones para la gestión forestal. Estos "geógrafos comunitarios" — como era de esperar — se convierten en los co-productores y co-autores ideales de los mapas y datos del proyecto. La autoría de todas las publicaciones se comparte entre los miembros del equipo, y la información cartográfica final queda en propiedad de las comunidades locales.',
       ),
     ];
-    
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 16 : 60,
@@ -1713,9 +1874,9 @@ class _MeaningfulSectionState extends State<MeaningfulSection> {
                   widget.language == 'en'
                       ? 'What Makes This Project Uniquely Meaningful?'
                       : '¿Qué hace que este proyecto sea único?',
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineSmall?.copyWith(color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
@@ -1792,36 +1953,36 @@ class _SealWithStats extends StatelessWidget {
       painter: _WaterDropCanalPainter(),
       value: '40%',
       label: en
-        ? "of the Panama Canal's freshwater comes from Chagres forests (MiAmbiente)."
-        : 'del agua dulce del Canal de Panamá proviene de los bosques de Chagres (MiAmbiente).',
+          ? "of the Panama Canal's freshwater comes from Chagres forests (MiAmbiente)."
+          : 'del agua dulce del Canal de Panamá proviene de los bosques de Chagres (MiAmbiente).',
     );
     final peopleStat = _StatFigure(
       painter: _PeopleDrinkingPainter(),
       value: '2M+',
       label: en
-        ? 'people in Panama City and Colón rely on its drinking water (MacroTrends).'
-        : 'personas en la Ciudad de Panamá y Colón dependen de su agua potable (MacroTrends).',
+          ? 'people in Panama City and Colón rely on its drinking water (MacroTrends).'
+          : 'personas en la Ciudad de Panamá y Colón dependen de su agua potable (MacroTrends).',
     );
     final birdStat = _StatFigure(
       painter: _HarpyEaglePainter(),
       value: '396+',
       label: en
-        ? 'bird species, including the iconic Harpy Eagle, are documented here (Fundación Chagres).'
-        : 'especies de aves, incluyendo la icónica Águila Harpía, están documentadas aquí (Fundación Chagres).',
+          ? 'bird species, including the iconic Harpy Eagle, are documented here (Fundación Chagres).'
+          : 'especies de aves, incluyendo la icónica Águila Harpía, están documentadas aquí (Fundación Chagres).',
     );
     final plantStat = _StatFigure(
       painter: _RainforestTreePainter(),
       value: '900+',
       label: en
-        ? 'plant species, including 143 endemic species, are documented across 129,000 hectares (TNC-ANCON 2003).'
-        : 'especies de plantas, incluidas 143 endémicas, están documentadas en 129,000 hectáreas (TNC-ANCON 2003).',
+          ? 'plant species, including 143 endemic species, are documented across 129,000 hectares (TNC-ANCON 2003).'
+          : 'especies de plantas, incluidas 143 endémicas, están documentadas en 129,000 hectáreas (TNC-ANCON 2003).',
     );
     final communitiesStat = _StatFigure(
       painter: _IndigenousCommunitiesPainter(),
       value: '~5',
       label: en
-        ? 'Indigenous communities with thousands of residents call the park home (KU Field Research).'
-        : 'comunidades indígenas con miles de habitantes residen en el parque (Investigación de Campo de KU).',
+          ? 'Indigenous communities with thousands of residents call the park home (KU Field Research).'
+          : 'comunidades indígenas con miles de habitantes residen en el parque (Investigación de Campo de KU).',
     );
 
     final content = isMobile
@@ -2045,11 +2206,17 @@ class _PeopleDrinkingPainter extends CustomPainter {
       final body = Path()
         ..moveTo(cx - 0.16 * w * scale, cy + 0.30 * h * scale)
         ..quadraticBezierTo(
-            cx - 0.16 * w * scale, cy - 0.08 * h * scale,
-            cx, cy - 0.08 * h * scale)
+          cx - 0.16 * w * scale,
+          cy - 0.08 * h * scale,
+          cx,
+          cy - 0.08 * h * scale,
+        )
         ..quadraticBezierTo(
-            cx + 0.16 * w * scale, cy - 0.08 * h * scale,
-            cx + 0.16 * w * scale, cy + 0.30 * h * scale)
+          cx + 0.16 * w * scale,
+          cy - 0.08 * h * scale,
+          cx + 0.16 * w * scale,
+          cy + 0.30 * h * scale,
+        )
         ..close();
       canvas.drawPath(body, _fill());
     }
@@ -2138,12 +2305,36 @@ class _RainforestTreePainter extends CustomPainter {
     canvas.drawPath(trunk, _fill());
 
     // Canopy (three overlapping cloud-like blobs)
-    canvas.drawCircle(Offset(w * 0.50, h * 0.30), h * 0.24, _fill(opacity: 0.85));
-    canvas.drawCircle(Offset(w * 0.28, h * 0.42), h * 0.18, _fill(opacity: 0.70));
-    canvas.drawCircle(Offset(w * 0.72, h * 0.42), h * 0.18, _fill(opacity: 0.70));
-    canvas.drawCircle(Offset(w * 0.50, h * 0.30), h * 0.24, _stroke(width: 2.0));
-    canvas.drawCircle(Offset(w * 0.28, h * 0.42), h * 0.18, _stroke(width: 2.0));
-    canvas.drawCircle(Offset(w * 0.72, h * 0.42), h * 0.18, _stroke(width: 2.0));
+    canvas.drawCircle(
+      Offset(w * 0.50, h * 0.30),
+      h * 0.24,
+      _fill(opacity: 0.85),
+    );
+    canvas.drawCircle(
+      Offset(w * 0.28, h * 0.42),
+      h * 0.18,
+      _fill(opacity: 0.70),
+    );
+    canvas.drawCircle(
+      Offset(w * 0.72, h * 0.42),
+      h * 0.18,
+      _fill(opacity: 0.70),
+    );
+    canvas.drawCircle(
+      Offset(w * 0.50, h * 0.30),
+      h * 0.24,
+      _stroke(width: 2.0),
+    );
+    canvas.drawCircle(
+      Offset(w * 0.28, h * 0.42),
+      h * 0.18,
+      _stroke(width: 2.0),
+    );
+    canvas.drawCircle(
+      Offset(w * 0.72, h * 0.42),
+      h * 0.18,
+      _stroke(width: 2.0),
+    );
 
     // A small leaf/frond accent
     canvas.drawLine(
@@ -2251,7 +2442,7 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
     } catch (e) {
       // Already registered
     }
-    
+
     try {
       ui.platformViewRegistry.registerViewFactory(
         _pdfViewerEsId,
@@ -2287,13 +2478,10 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
                 widget.language == 'en'
                     ? 'Project Authorization'
                     : 'Autorización del Proyecto',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall
-                    ?.copyWith(
-                      color: Colors.white,
-                      decoration: TextDecoration.none,
-                    ),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
               ),
             ),
           ),
@@ -2324,11 +2512,11 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
                   child: Text(
                     _showPDF
                         ? (widget.language == 'en'
-                            ? 'Hide Authorization Documents'
-                            : 'Ocultar Documentos de Autorización')
+                              ? 'Hide Authorization Documents'
+                              : 'Ocultar Documentos de Autorización')
                         : (widget.language == 'en'
-                            ? 'View Authorization Documents'
-                            : 'Ver Documentos de Autorización'),
+                              ? 'View Authorization Documents'
+                              : 'Ver Documentos de Autorización'),
                   ),
                 ),
                 if (_showPDF) ...[
@@ -2336,10 +2524,12 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
                   SizedBox(
                     height: isMobile ? 900 : 800,
                     child: HtmlElementView(
-                      viewType: widget.language == 'en' ? _pdfViewerEnId : _pdfViewerEsId,
+                      viewType: widget.language == 'en'
+                          ? _pdfViewerEnId
+                          : _pdfViewerEsId,
                     ),
                   ),
-                ]
+                ],
               ],
             ),
           ),
@@ -2373,21 +2563,51 @@ class _MethodologySectionState extends State<MethodologySection> {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     final stages = widget.language == 'en'
         ? [
-            ('Stage One: Co-design', 'Define mapping goals with community leadership.'),
-            ('Stage Two: Training', 'Through instructional exercises, "community geographers" learn the use of GPS, mapping tools, and data-documentation techniques.'),
-            ('Stage Three: Field Verification and Mapping', 'Trained community geographers collect ground-truth points and data through shared site visits to do sketch mapping and questionnaire applications in communities.'),
-            ('Stage Four: Plot Field Data onto Cartographic Sheets', 'Plot field data onto standard cartographic sheets in community workshops. Designing Indigenous Land-use Management and zoning in workshops.'),
-            ('Stage Five: GIS and Computer Map Production', 'KU students with professors digitize and standardize outputs for planning and governance use.'),
+            (
+              'Stage One: Co-design',
+              'Define mapping goals with community leadership.',
+            ),
+            (
+              'Stage Two: Training',
+              'Through instructional exercises, "community geographers" learn the use of GPS, mapping tools, and data-documentation techniques.',
+            ),
+            (
+              'Stage Three: Field Verification and Mapping',
+              'Trained community geographers collect ground-truth points and data through shared site visits to do sketch mapping and questionnaire applications in communities.',
+            ),
+            (
+              'Stage Four: Plot Field Data onto Cartographic Sheets',
+              'Plot field data onto standard cartographic sheets in community workshops. Designing Indigenous Land-use Management and zoning in workshops.',
+            ),
+            (
+              'Stage Five: GIS and Computer Map Production',
+              'KU students with professors digitize and standardize outputs for planning and governance use.',
+            ),
           ]
         : [
-            ('Etapa Uno: Codiseño', 'Definir objetivos de mapeo con el liderazgo comunitario.'),
-            ('Etapa Dos: Capacitación', 'A través de ejercicios de instrucción, los "geógrafos comunitarios" aprenden el uso de GPS, herramientas de mapeo y técnicas de documentación de datos.'),
-            ('Etapa Tres: Verificación de Campo y Mapeo', 'Los geógrafos comunitarios capacitados recopilan puntos de verificación en terreno y datos mediante visitas conjuntas al sitio para realizar mapas esquemáticos y aplicar cuestionarios en las comunidades.'),
-            ('Etapa Cuatro: Trazar Datos de Campo en Hojas Cartográficas', 'Trazar datos de campo en hojas cartográficas estándar en talleres comunitarios. Diseño del manejo del uso de tierras indígenas y zonificación en talleres.'),
-            ('Etapa Cinco: Producción de Mapas SIG y Computarizados', 'Estudiantes de KU con profesores digitalizan y estandarizan los resultados para uso de planificación y gobernanza.'),
+            (
+              'Etapa Uno: Codiseño',
+              'Definir objetivos de mapeo con el liderazgo comunitario.',
+            ),
+            (
+              'Etapa Dos: Capacitación',
+              'A través de ejercicios de instrucción, los "geógrafos comunitarios" aprenden el uso de GPS, herramientas de mapeo y técnicas de documentación de datos.',
+            ),
+            (
+              'Etapa Tres: Verificación de Campo y Mapeo',
+              'Los geógrafos comunitarios capacitados recopilan puntos de verificación en terreno y datos mediante visitas conjuntas al sitio para realizar mapas esquemáticos y aplicar cuestionarios en las comunidades.',
+            ),
+            (
+              'Etapa Cuatro: Trazar Datos de Campo en Hojas Cartográficas',
+              'Trazar datos de campo en hojas cartográficas estándar en talleres comunitarios. Diseño del manejo del uso de tierras indígenas y zonificación en talleres.',
+            ),
+            (
+              'Etapa Cinco: Producción de Mapas SIG y Computarizados',
+              'Estudiantes de KU con profesores digitalizan y estandarizan los resultados para uso de planificación y gobernanza.',
+            ),
           ];
 
     return Padding(
@@ -2421,9 +2641,9 @@ class _MethodologySectionState extends State<MethodologySection> {
                   widget.language == 'en'
                       ? 'Stages of Participatory Research Mapping (PRM)'
                       : 'Etapas del Mapeo de Investigación Participativa',
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.white,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineSmall?.copyWith(color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
@@ -2524,16 +2744,22 @@ class _GallerySectionState extends State<GallerySection> {
     ('Field tour in watershed', 'Gira de campo en la cuenca hidrográfica'),
     ('Indigenous cultural performance', 'Presentación cultural indígena'),
     ('Community member portrait', 'Retrato de miembro de la comunidad'),
-    ('Community leadership engagement', 'Participación del liderazgo comunitario'),
-    ('Site analysis at Panamanian Geographic Institute', 'Análisis del sitio en el Instituto Geográfico de Panamá'),
-    ('Rainforest lizard', 'Lagarto de la selva tropical'),
+    (
+      'Community leadership engagement',
+      'Participación del liderazgo comunitario',
+    ),
+    (
+      'Site analysis at Panamanian Geographic Institute',
+      'Análisis del sitio en el Instituto Geográfico de Panamá',
+    ),
+    ('Rainforest lizard', 'Lagarto del bosque tropical'),
     ('White-Faced Capuchin Monkey', 'Mono Capuchino de Cara Blanca'),
   ];
 
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
@@ -2548,10 +2774,12 @@ class _GallerySectionState extends State<GallerySection> {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Text(
-                widget.language == 'en' ? 'Fieldwork & Landscape' : 'Trabajo de Campo y Paisaje',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                ),
+                widget.language == 'en'
+                    ? 'Fieldwork & Landscape'
+                    : 'Trabajo de Campo y Paisaje',
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineSmall?.copyWith(color: Colors.white),
               ),
             ),
           ),
@@ -2560,82 +2788,88 @@ class _GallerySectionState extends State<GallerySection> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: isMobile ? 0 : 24),
               child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 800),
-              child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF101A2F),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.12),
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: ZoomableImage(
-                      imagePath: _images[_currentIndex % _images.length],
-                      height: isMobile ? 380 : 580,
-                      width: double.infinity,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                constraints: BoxConstraints(
+                  maxWidth: isMobile ? double.infinity : 800,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF101A2F),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(16),
-                      bottomRight: Radius.circular(16),
-                    ),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.12),
-                    ),
-                  ),
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: Column(
-                    children: [
-                      Text(
-                        widget.language == 'en'
-                            ? _captions[_currentIndex % _captions.length].$1
-                            : _captions[_currentIndex % _captions.length].$2,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: const Color(0xFFB9C6EA),
-                          fontSize: 16,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF101A2F),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.12),
                         ),
                       ),
-                      const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: ZoomableImage(
+                          imagePath: _images[_currentIndex % _images.length],
+                          height: isMobile ? 380 : 580,
+                          width: double.infinity,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF101A2F),
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16),
+                        ),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.12),
+                        ),
+                      ),
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      child: Column(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.chevron_left),
-                            onPressed: () {
-                              setState(() => _currentIndex--);
-                            },
-                          ),
                           Text(
-                            '${_currentIndex % _captions.length + 1} / ${_captions.length}',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: const Color(0xFFB9C6EA),
-                            ),
+                            widget.language == 'en'
+                                ? _captions[_currentIndex % _captions.length].$1
+                                : _captions[_currentIndex % _captions.length]
+                                      .$2,
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(
+                                  color: const Color(0xFFB9C6EA),
+                                  fontSize: 16,
+                                ),
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.chevron_right),
-                            onPressed: () {
-                              setState(() => _currentIndex++);
-                            },
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.chevron_left),
+                                onPressed: () {
+                                  setState(() => _currentIndex--);
+                                },
+                              ),
+                              Text(
+                                '${_currentIndex % _captions.length + 1} / ${_captions.length}',
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(color: const Color(0xFFB9C6EA)),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.chevron_right),
+                                onPressed: () {
+                                  setState(() => _currentIndex++);
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
               ),
-            ),
             ),
           ),
         ],
@@ -2681,76 +2915,78 @@ class _TeamPhotoCarouselState extends State<_TeamPhotoCarousel> {
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 700),
         child: Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF101A2F),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.white.withOpacity(0.12)),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: ZoomableImage(
-              imagePath: _images[idx],
-              height: isMobile ? 300 : 450,
-              width: double.infinity,
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF101A2F),
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(16),
-              bottomRight: Radius.circular(16),
-            ),
-            border: Border.all(color: Colors.white.withOpacity(0.12)),
-          ),
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Column(
-            children: [
-              Text.rich(
-                TextSpan(
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: const Color(0xFFB9C6EA),
-                    fontSize: 14,
-                  ),
-                  children: _buildCISpans(
-                    widget.language == 'en' ? _captions[idx].$1 : _captions[idx].$2,
-                    Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: const Color(0xFFB9C6EA),
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                textAlign: TextAlign.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF101A2F),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.white.withOpacity(0.12)),
               ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: ZoomableImage(
+                  imagePath: _images[idx],
+                  height: isMobile ? 300 : 450,
+                  width: double.infinity,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF101A2F),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
+                ),
+                border: Border.all(color: Colors.white.withOpacity(0.12)),
+              ),
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Column(
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.chevron_left),
-                    onPressed: () => setState(() => _currentIndex--),
-                  ),
-                  Text(
-                    '${idx + 1} / ${_images.length}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: const Color(0xFFB9C6EA),
+                  Text.rich(
+                    TextSpan(
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: const Color(0xFFB9C6EA),
+                        fontSize: 14,
+                      ),
+                      children: _buildCISpans(
+                        widget.language == 'en'
+                            ? _captions[idx].$1
+                            : _captions[idx].$2,
+                        Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFFB9C6EA),
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.chevron_right),
-                    onPressed: () => setState(() => _currentIndex++),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.chevron_left),
+                        onPressed: () => setState(() => _currentIndex--),
+                      ),
+                      Text(
+                        '${idx + 1} / ${_images.length}',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFFB9C6EA),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.chevron_right),
+                        onPressed: () => setState(() => _currentIndex++),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ],
         ),
       ),
     );
@@ -2766,7 +3002,7 @@ class MapsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
@@ -2782,9 +3018,9 @@ class MapsSection extends StatelessWidget {
               cursor: SystemMouseCursors.click,
               child: Text(
                 language == 'en' ? 'Project Maps' : 'Mapas del Proyecto',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineSmall?.copyWith(color: Colors.white),
               ),
             ),
           ),
@@ -2803,9 +3039,11 @@ class MapsSection extends StatelessWidget {
 
               final openMapsButton = ElevatedButton(
                 onPressed: () {
-                  launchUrl(Uri.parse(
-                    'https://www.google.com/maps/place/San+Juan+de+Pequní+Indígena+(+La+Bonga)/@9.3827301,-79.5241626,17z/data=!3m1!4b1!4m6!3m5!1s0x8fab494a734c2493:0xe55e405b5412d0dc!8m2!3d9.3827301!4d-79.5215877!16s%2Fg%2F11mtjt0g7z?entry=ttu',
-                  ));
+                  launchUrl(
+                    Uri.parse(
+                      'https://www.google.com/maps/place/San+Juan+de+Pequní+Indígena+(+La+Bonga)/@9.3827301,-79.5241626,17z/data=!3m1!4b1!4m6!3m5!1s0x8fab494a734c2493:0xe55e405b5412d0dc!8m2!3d9.3827301!4d-79.5215877!16s%2Fg%2F11mtjt0g7z?entry=ttu',
+                    ),
+                  );
                 },
                 child: Text(
                   language == 'en'
@@ -2818,7 +3056,10 @@ class MapsSection extends StatelessWidget {
                 // Mobile: stacked column
                 const displayHeight = 563.0;
                 const imageAspectRatio = 1600.0 / 1237.0;
-                final displayWidth = math.min(constraints.maxWidth, displayHeight * imageAspectRatio);
+                final displayWidth = math.min(
+                  constraints.maxWidth,
+                  displayHeight * imageAspectRatio,
+                );
                 final iframeHeight = displayWidth / 1.6;
                 return Center(
                   child: Container(
@@ -2862,7 +3103,8 @@ class MapsSection extends StatelessWidget {
               // Desktop: side-by-side row
               const gap = 16.0;
               const cardPadding = 12.0;
-              final colWidth = (constraints.maxWidth - gap - cardPadding * 2) / 2;
+              final colWidth =
+                  (constraints.maxWidth - gap - cardPadding * 2) / 2;
               final mapHeight = colWidth * mapAspectH;
 
               return Container(
@@ -2929,12 +3171,9 @@ class MapsSection extends StatelessWidget {
 class _GoogleMapEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const HtmlElementView(
-      viewType: 'google-maps-embed',
-    );
+    return const HtmlElementView(viewType: 'google-maps-embed');
   }
 }
-
 
 // Reports Section
 // Reports Section
@@ -2953,7 +3192,7 @@ class _ReportsSectionState extends State<ReportsSection> {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
@@ -2963,18 +3202,18 @@ class _ReportsSectionState extends State<ReportsSection> {
         children: [
           Text(
             widget.language == 'en' ? 'Field Reports' : 'Informes de Campo',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 12),
           Text(
             widget.language == 'en'
                 ? 'Explore our gallery of Substack posts and field reflections. Official research reports will be available as PDFs here.'
                 : 'Explore nuestra galería de publicaciones de Substack y reflexiones de campo. Los informes de investigación oficiales estarán disponibles como PDF aquí.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFFB9C6EA),
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: const Color(0xFFB9C6EA)),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
@@ -2985,9 +3224,14 @@ class _ReportsSectionState extends State<ReportsSection> {
               GestureDetector(
                 onTap: () => setState(() => _selectedTab = 0),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
                   decoration: BoxDecoration(
-                    color: _selectedTab == 0 ? const Color(0xFF0051BA) : const Color(0xFF101A2F),
+                    color: _selectedTab == 0
+                        ? const Color(0xFF0051BA)
+                        : const Color(0xFF101A2F),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -3005,13 +3249,20 @@ class _ReportsSectionState extends State<ReportsSection> {
               GestureDetector(
                 onTap: () => setState(() => _selectedTab = 1),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
                   decoration: BoxDecoration(
-                    color: _selectedTab == 1 ? const Color(0xFF0051BA) : const Color(0xFF101A2F),
+                    color: _selectedTab == 1
+                        ? const Color(0xFF0051BA)
+                        : const Color(0xFF101A2F),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    widget.language == 'en' ? 'Official Reports' : 'Informes Oficiales',
+                    widget.language == 'en'
+                        ? 'Official Reports'
+                        : 'Informes Oficiales',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -3036,7 +3287,9 @@ class _ReportsSectionState extends State<ReportsSection> {
           else
             _buildReportCard(
               context,
-              widget.language == 'en' ? 'Official Reports' : 'Informes Oficiales',
+              widget.language == 'en'
+                  ? 'Official Reports'
+                  : 'Informes Oficiales',
               widget.language == 'en'
                   ? 'Formal reports, project summaries, grant documentation, and technical outputs.'
                   : 'Informes formales, resúmenes de proyectos, documentación de subvenciones y resultados técnicos.',
@@ -3099,31 +3352,91 @@ class FAQSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     final faqs = language == 'en'
         ? [
-            ('Why does the health of Chagres National Park matter for people in the United States?', 'Chagres National Park provides approximately 40 percent of the freshwater used by Panama Canal operations and drinking water for more than 2 million people in Panama City and Colón. The Canal remains one of the most strategically important global trade corridors, moving a significant portion of U.S.-bound maritime commerce.\n\nRecent droughts have demonstrated that water scarcity is one of the canal\'s greatest operational threats. Long-term watershed health directly affects trade reliability, regional diplomatic stability, and economic security.'),
-            ('Who and what legal authority authorizes this project?', 'This initiative proceeds only with community consent and institutional coordination. During a reconnaissance expedition in Summer 2025, the research team met with the Indigenous community of San Juan Pequeñí, participated in a formal Local Congress, and received written approval.\n\nThis authorization aligns with Panama\'s 2008 Law 72 governing Collective Indigenous Lands. The project continues only through collaborative agreement with community leadership.'),
-            ('How does "mapping" help protect an area like this?', 'National park boundaries alone do not ensure forest protection or water security. Effective stewardship requires understanding the ecological and social processes occurring within those boundaries.\n\nParticipatory research mapping translates Indigenous geographic knowledge into structured formats that can support zoning, monitoring, and long-term governance planning. At a fundamental level, it is difficult to protect what is not clearly understood.'),
-            ('How are community members involved and compensated?', 'Community representatives are trained and certified as local geographers in GPS data collection and mapping techniques. Participants are compensated for their time and expertise.'),
-            ('How long will the project take?', 'We estimate the Chagres Initiative will have 3 overlapping phases requiring about three years in total to complete depending on funding availability:\n\nYear 1-2: Participatory research mapping and geospatial database development.\nYear 1-2: Consensus-driven zoning and development of community land-use guidelines.\nYear 2-3: Final map production, synthesis, and integration into management planning frameworks.\n\nThe participatory research mapping approach is iterative, with alternating workshops and field research in Panama followed by GIS and computer mapping analyzes at the universities to obtain the most precise cartographic and spatial data on resource use in the Chagres National Park for developing an Indigenous and state approved management plan for land use in the park.'),
-            ('How will donated funds be used?', 'Your support funds all field-based research and community collaboration. Included are the workshops, equipment (GPS, drones, Starlink), and expenses of local geographers, researchers and students.'),
-            ('Is this project political?', 'The project is non-partisan and research-driven. Its focus is watershed stewardship, participatory governance, and environmental monitoring.'),
-            ('Will the data be publicly available?', 'Final authorship will be shared by team members, community and governmental participants. Sensitive knowledge remains under community control.'),
-            ('Can this model be replicated elsewhere?', 'Yes. This is a new framework for community-based research with a novel public-private funding formula combined with 21st century geospatial and A.I. innovations designed to engage the public ranging from Indigenous villages to metropolitan centers. We hope to connect people of all backgrounds and educations with our research.\n\nWe hope to channel the power of tax-deductible donations and connect the people and institutions that make them with the on-the-ground and in-the-university realities of fieldwork on a strategic, geopolitical issue of global importance: Water Security of the Panama Canal.'),
-            ('Hasn\'t the whole world been mapped already?', 'No. There is a difference between remote imagery of an area from satellites and the kinds of maps we are making. The level of detail combining physical geography with cultural-historical information in the community is unique and critical to our process.'),
+            (
+              'Why does the health of Chagres National Park matter for people in the United States?',
+              'Chagres National Park provides approximately 40 percent of the freshwater used by Panama Canal operations and drinking water for more than 2 million people in Panama City and Colón. The Canal remains one of the most strategically important global trade corridors, moving a significant portion of U.S.-bound maritime commerce.\n\nRecent droughts have demonstrated that water scarcity is one of the canal\'s greatest operational threats. Long-term watershed health directly affects trade reliability, regional diplomatic stability, and economic security.',
+            ),
+            (
+              'Who and what legal authority authorizes this project?',
+              'This initiative proceeds only with community consent and institutional coordination. During a reconnaissance expedition in Summer 2025, the research team met with the Indigenous community of San Juan Pequeñí, participated in a formal Local Congress, and received written approval.\n\nThis authorization aligns with Panama\'s 2008 Law 72 governing Collective Indigenous Lands. The project continues only through collaborative agreement with community leadership.',
+            ),
+            (
+              'How does "mapping" help protect an area like this?',
+              'National park boundaries alone do not ensure forest protection or water security. Effective stewardship requires understanding the ecological and social processes occurring within those boundaries.\n\nParticipatory research mapping translates Indigenous geographic knowledge into structured formats that can support zoning, monitoring, and long-term governance planning. At a fundamental level, it is difficult to protect what is not clearly understood.',
+            ),
+            (
+              'How are community members involved and compensated?',
+              'Community representatives are trained and certified as local geographers in GPS data collection and mapping techniques. Participants are compensated for their time and expertise.',
+            ),
+            (
+              'How long will the project take?',
+              'We estimate the Chagres Initiative will have 3 overlapping phases requiring about three years in total to complete depending on funding availability:\n\nYear 1-2: Participatory research mapping and geospatial database development.\nYear 1-2: Consensus-driven zoning and development of community land-use guidelines.\nYear 2-3: Final map production, synthesis, and integration into management planning frameworks.\n\nThe participatory research mapping approach is iterative, with alternating workshops and field research in Panama followed by GIS and computer mapping analyzes at the universities to obtain the most precise cartographic and spatial data on resource use in the Chagres National Park for developing an Indigenous and state approved management plan for land use in the park.',
+            ),
+            (
+              'How will donated funds be used?',
+              'Your support funds all field-based research and community collaboration. Included are the workshops, equipment (GPS, drones, Starlink), and expenses of local geographers, researchers and students.',
+            ),
+            (
+              'Is this project political?',
+              'The project is non-partisan and research-driven. Its focus is watershed stewardship, participatory governance, and environmental monitoring.',
+            ),
+            (
+              'Will the data be publicly available?',
+              'Final authorship will be shared by team members, community and governmental participants. Sensitive knowledge remains under community control.',
+            ),
+            (
+              'Can this model be replicated elsewhere?',
+              'Yes. This is a new framework for community-based research with a novel public-private funding formula combined with 21st century geospatial and A.I. innovations designed to engage the public ranging from Indigenous villages to metropolitan centers. We hope to connect people of all backgrounds and educations with our research.\n\nWe hope to channel the power of tax-deductible donations and connect the people and institutions that make them with the on-the-ground and in-the-university realities of fieldwork on a strategic, geopolitical issue of global importance: Water Security of the Panama Canal.',
+            ),
+            (
+              'Hasn\'t the whole world been mapped already?',
+              'No. There is a difference between remote imagery of an area from satellites and the kinds of maps we are making. The level of detail combining physical geography with cultural-historical information in the community is unique and critical to our process.',
+            ),
           ]
         : [
-            ('¿Por qué importa la salud del Parque Nacional Chagres para la gente de los Estados Unidos?', 'El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panamá y agua potable para más de 2 millones de personas en la Ciudad de Panamá y Colón. El Canal sigue siendo uno de los corredores comerciales globales más estratégicamente importantes, y por él circula una parte significativa del comercio marítimo con destino a EE.UU.\n\nLas sequías recientes han demostrado que la escasez de agua es una de las mayores amenazas operativas del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplomática regional y la seguridad económica.'),
-            ('¿Quién y qué autoridad legal autoriza este proyecto?', 'Esta iniciativa procede solo con consentimiento comunitario y coordinación institucional. Durante una expedición de reconocimiento en verano de 2025, el equipo de investigación se reunió con la comunidad indígena de San Juan Pequeñí, participó en un Congreso Local formal y recibió aprobación escrita.\n\nEsta autorización se alinea con la Ley 72 de 2008 de Panamá que rige las Tierras Colectivas Indígenas. El proyecto continúa solo mediante acuerdo colaborativo con el liderazgo comunitario.'),
-            ('¿Cómo ayuda el "mapeo" a proteger un área como esta?', 'Los límites del parque nacional por sí solos no garantizan la protección forestal ni la seguridad hídrica. El manejo efectivo requiere comprender los procesos ecológicos y sociales que ocurren dentro de esos límites.\n\nEl mapeo participativo de investigación traduce el conocimiento geográfico indígena a formatos estructurados que pueden apoyar la zonificación, el monitoreo y la planificación de gobernanza a largo plazo. En un nivel fundamental, es difícil proteger lo que no se entiende claramente.'),
-            ('¿Cómo participan y son compensados los miembros de la comunidad?', 'Los representantes comunitarios son capacitados y certificados como geógrafos locales en recopilación de datos GPS y técnicas de mapeo. Los participantes reciben compensación por su tiempo y experiencia.'),
-            ('¿Cuánto tiempo tomará el proyecto?', 'Estimamos que la Iniciativa Chagres tendrá 3 fases superpuestas que requerirán aproximadamente tres años en total para completarse dependiendo de la disponibilidad de fondos:\n\nAño 1-2: Mapeo participativo de investigación y desarrollo de base de datos geoespacial.\nAño 1-2: Zonificación impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\nAño 2-3: Producción final del mapa, síntesis e integración en marcos de planificación de manejo.\n\nEl enfoque de mapeo participativo de investigación es iterativo, con talleres e investigación de campo alternados en Panamá seguidos de análisis de SIG y mapeo computarizado en las universidades para obtener los datos cartográficos y espaciales más precisos sobre el uso de recursos en el Parque Nacional Chagres para desarrollar un plan de manejo de uso del suelo aprobado por las comunidades indígenas y el estado.'),
-            ('¿Cómo se usarán los fondos donados?', 'Su apoyo financia toda la investigación de campo y la colaboración comunitaria. Se incluyen los talleres, equipos (GPS, drones, Starlink) y los gastos de geógrafos locales, investigadores y estudiantes.'),
-            ('¿Es este proyecto político?', 'El proyecto es apartidista e impulsado por la investigación. Su enfoque es el manejo de cuencas hidrográficas, gobernanza participativa y monitoreo ambiental.'),
-            ('¿Estarán los datos disponibles públicamente?', 'La autoría final será compartida por los miembros del equipo, participantes comunitarios y gubernamentales. El conocimiento sensible permanece bajo control comunitario.'),
-            ('¿Se puede replicar este modelo en otros lugares?', 'Sí. Este es un nuevo marco para la investigación comunitaria con una fórmula de financiación público-privada novedosa combinada con innovaciones geoespaciales y de I.A. del siglo XXI diseñadas para involucrar al público, desde comunidades indígenas hasta centros metropolitanos. Esperamos conectar a personas de todos los orígenes y niveles de educación con nuestra investigación.\n\nEsperamos canalizar el poder de las donaciones deducibles de impuestos y conectar a las personas e instituciones que las realizan con las realidades del trabajo de campo, tanto sobre el terreno como en la universidad, en un tema estratégico y geopolítico de importancia global: la Seguridad Hídrica del Canal de Panamá.'),
-            ('¿No ha sido mapeado ya todo el mundo?', 'No. Hay una diferencia entre la teledetección satelital de un área y los tipos de mapas que estamos haciendo. El nivel de detalle que combina geografía física con información cultural-histórica en la comunidad es único y crítico para nuestro proceso.'),
+            (
+              '¿Por qué importa la salud del Parque Nacional Chagres para la gente de los Estados Unidos?',
+              'El Parque Nacional Chagres proporciona aproximadamente el 40 por ciento del agua dulce utilizada en las operaciones del Canal de Panamá y agua potable para más de 2 millones de personas en la Ciudad de Panamá y Colón. El Canal sigue siendo uno de los corredores comerciales globales más estratégicamente importantes, y por él circula una parte significativa del comercio marítimo con destino a EE.UU.\n\nLas sequías recientes han demostrado que la escasez de agua es una de las mayores amenazas operativas del Canal. La salud de la cuenca a largo plazo afecta directamente la confiabilidad del comercio, la estabilidad diplomática regional y la seguridad económica.',
+            ),
+            (
+              '¿Quién y qué autoridad legal autoriza este proyecto?',
+              'Esta iniciativa procede solo con consentimiento comunitario y coordinación institucional. Durante una expedición de reconocimiento en verano de 2025, el equipo de investigación se reunió con la comunidad indígena de San Juan Pequeñí, participó en un Congreso Local formal y recibió aprobación escrita.\n\nEsta autorización se alinea con la Ley 72 de 2008 de Panamá que rige las Tierras Colectivas Indígenas. El proyecto continúa solo mediante acuerdo colaborativo con el liderazgo comunitario.',
+            ),
+            (
+              '¿Cómo ayuda el "mapeo" a proteger un área como esta?',
+              'Los límites del parque nacional por sí solos no garantizan la protección forestal ni la seguridad hídrica. El manejo efectivo requiere comprender los procesos ecológicos y sociales que ocurren dentro de esos límites.\n\nEl mapeo participativo de investigación traduce el conocimiento geográfico indígena a formatos estructurados que pueden apoyar la zonificación, el monitoreo y la planificación de gobernanza a largo plazo. En un nivel fundamental, es difícil proteger lo que no se entiende claramente.',
+            ),
+            (
+              '¿Cómo participan y son compensados los miembros de la comunidad?',
+              'Los representantes comunitarios son capacitados y certificados como geógrafos locales en recopilación de datos GPS y técnicas de mapeo. Los participantes reciben compensación por su tiempo y experiencia.',
+            ),
+            (
+              '¿Cuánto tiempo tomará el proyecto?',
+              'Estimamos que la Iniciativa Chagres tendrá 3 fases superpuestas que requerirán aproximadamente tres años en total para completarse dependiendo de la disponibilidad de fondos:\n\nAño 1-2: Mapeo participativo de investigación y desarrollo de base de datos geoespacial.\nAño 1-2: Zonificación impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\nAño 2-3: Producción final del mapa, síntesis e integración en marcos de planificación de manejo.\n\nEl enfoque de mapeo participativo de investigación es iterativo, con talleres e investigación de campo alternados en Panamá seguidos de análisis de SIG y mapeo computarizado en las universidades para obtener los datos cartográficos y espaciales más precisos sobre el uso de recursos en el Parque Nacional Chagres para desarrollar un plan de manejo de uso del suelo aprobado por las comunidades indígenas y el estado.',
+            ),
+            (
+              '¿Cómo se usarán los fondos donados?',
+              'Su apoyo financia toda la investigación de campo y la colaboración comunitaria. Se incluyen los talleres, equipos (GPS, drones, Starlink) y los gastos de geógrafos locales, investigadores y estudiantes.',
+            ),
+            (
+              '¿Es este proyecto político?',
+              'El proyecto es apartidista e impulsado por la investigación. Su enfoque es el manejo de cuencas hidrográficas, gobernanza participativa y monitoreo ambiental.',
+            ),
+            (
+              '¿Estarán los datos disponibles públicamente?',
+              'La autoría final será compartida por los miembros del equipo, participantes comunitarios y gubernamentales. El conocimiento sensible permanece bajo control comunitario.',
+            ),
+            (
+              '¿Se puede replicar este modelo en otros lugares?',
+              'Sí. Este es un nuevo marco para la investigación comunitaria con una fórmula de financiación público-privada novedosa combinada con innovaciones geoespaciales y de I.A. del siglo XXI diseñadas para involucrar al público, desde comunidades indígenas hasta centros metropolitanos. Esperamos conectar a personas de todos los orígenes y niveles de educación con nuestra investigación.\n\nEsperamos canalizar el poder de las donaciones deducibles de impuestos y conectar a las personas e instituciones que las realizan con las realidades del trabajo de campo, tanto sobre el terreno como en la universidad, en un tema estratégico y geopolítico de importancia global: la Seguridad Hídrica del Canal de Panamá.',
+            ),
+            (
+              '¿No ha sido mapeado ya todo el mundo?',
+              'No. Hay una diferencia entre la teledetección satelital de un área y los tipos de mapas que estamos haciendo. El nivel de detalle que combina geografía física con información cultural-histórica en la comunidad es único y crítico para nuestro proceso.',
+            ),
           ];
 
     return Container(
@@ -3142,10 +3455,12 @@ class FAQSection extends StatelessWidget {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Text(
-                language == 'en' ? 'Frequently Asked Questions' : 'Preguntas Frecuentes',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                ),
+                language == 'en'
+                    ? 'Frequently Asked Questions'
+                    : 'Preguntas Frecuentes',
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineSmall?.copyWith(color: Colors.white),
               ),
             ),
           ),
@@ -3191,7 +3506,10 @@ class FAQSection extends StatelessWidget {
             fontSize: 18,
           ),
         ),
-        childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        childrenPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         children: [
           Text.rich(
             TextSpan(
@@ -3234,7 +3552,7 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     final givingLevels = [
       (
         widget.language == 'en' ? 'Community Supporter' : 'Donante Comunitario',
@@ -3251,7 +3569,9 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
             : 'Donantes que apoyan la logística en el país: viajes entre la Ciudad de Panamá y el campo, transporte de equipos y coordinación con socios locales e instituciones. Cubre combustible y viajes en barco. No hay carreteras; todo se transporta por río.',
       ),
       (
-        widget.language == 'en' ? 'Stewardship Supporter' : 'Donante de Custodia',
+        widget.language == 'en'
+            ? 'Stewardship Supporter'
+            : 'Donante de Custodia',
         widget.language == 'en' ? '\$250 - \$1,000' : '\$250 - \$1,000',
         widget.language == 'en'
             ? 'International travel for university students and professors.'
@@ -3265,7 +3585,9 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
             : 'Costos de talleres y sesiones de mapeo participativo: alquiler de local, mesas, sillas; comidas y alojamiento para participantes, impresión de materiales de mapeo.',
       ),
       (
-        widget.language == 'en' ? 'Visionary & Institutional' : 'Visionario e Institucional',
+        widget.language == 'en'
+            ? 'Visionary & Institutional'
+            : 'Visionario e Institucional',
         widget.language == 'en' ? '> \$5,000' : '> \$5,000',
         widget.language == 'en'
             ? 'Stipends for community geographers, students, and faculty. No salaries are paid. Donor supports local costs of food, lodging, and transportation in Panama City and in the Chagres National Park.'
@@ -3285,28 +3607,28 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
         children: [
           Text.rich(
             TextSpan(
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(color: Colors.white),
               children: _buildCISpans(
-                widget.language == 'en' ? 'Support the Chagres Initiative' : 'Apoya la Iniciativa Chagres',
-                Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white),
+                widget.language == 'en'
+                    ? 'Support the Chagres Initiative'
+                    : 'Apoya la Iniciativa Chagres',
+                Theme.of(
+                  context,
+                ).textTheme.headlineSmall?.copyWith(color: Colors.white),
               ),
             ),
           ),
           const SizedBox(height: 16),
           Text.rich(
             TextSpan(
-              style: const TextStyle(
-                color: Color(0xFFB9C6EA),
-                fontSize: 16,
-              ),
+              style: const TextStyle(color: Color(0xFFB9C6EA), fontSize: 16),
               children: _buildCISpans(
                 widget.language == 'en'
                     ? 'All donated funds are used in the Chagres Initiative Research Fund to be used exclusively for project activities.\n\nThe descriptions of each supporter category are just examples of how funds could be used.'
                     : 'Todos los fondos donados se utilizan en el Fondo de Investigación de la Iniciativa Chagres para ser utilizados exclusivamente para actividades del proyecto.\n\nLas descripciones de cada categoría de donante son solo ejemplos de cómo podrían utilizarse los fondos.',
-                const TextStyle(
-                  color: Color(0xFFB9C6EA),
-                  fontSize: 16,
-                ),
+                const TextStyle(color: Color(0xFFB9C6EA), fontSize: 16),
               ),
             ),
             textAlign: TextAlign.center,
@@ -3330,9 +3652,7 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
               children: [
                 // Donation Button
                 GestureDetector(
-                  onTap: () {
-                    launchUrl(Uri.parse('https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship'));
-                  },
+                  onTap: _openDonationPage,
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: _HoverGlow(
@@ -3345,23 +3665,44 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                             width: 2,
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 28,
+                          vertical: 12,
+                        ),
                         child: widget.language == 'en'
-                          ? Text.rich(
-                              TextSpan(
-                                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                                children: [
-                                  const TextSpan(text: 'Please '),
-                                  const TextSpan(text: 'Click', style: TextStyle(fontStyle: FontStyle.italic)),
-                                  const TextSpan(text: ' to '),
-                                  const TextSpan(text: 'Contribute', style: TextStyle(fontStyle: FontStyle.italic)),
-                                ],
+                            ? Text.rich(
+                                TextSpan(
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  children: [
+                                    const TextSpan(text: 'Please '),
+                                    const TextSpan(
+                                      text: 'Click',
+                                      style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                    const TextSpan(text: ' to '),
+                                    const TextSpan(
+                                      text: 'Contribute',
+                                      style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : const Text(
+                                'Haga clic aquí para contribuir',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            )
-                          : const Text(
-                              'Haga clic aquí para contribuir',
-                              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
                       ),
                     ),
                   ),
@@ -3374,7 +3715,8 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: givingLevels.length,
-                    separatorBuilder: (context, index) => const SizedBox(height: 0),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 0),
                     itemBuilder: (context, index) {
                       final level = givingLevels[index];
                       return Container(
@@ -3387,7 +3729,9 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                           ),
                         ),
                         child: Theme(
-                          data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+                          data: Theme.of(
+                            context,
+                          ).copyWith(splashColor: Colors.transparent),
                           child: ExpansionTile(
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -3414,7 +3758,10 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
                             iconColor: const Color(0xFF81C784),
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 16,
+                                ),
                                 child: Text(
                                   level.$3,
                                   style: const TextStyle(
@@ -3451,72 +3798,124 @@ class TeamSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isMobile = screenWidth < 900;
     final isPhone = screenWidth < 600;
-    
+
     final content = Stack(
       children: [
-        if (!isPhone) Positioned.fill(
-          child: ShaderMask(
-            shaderCallback: (rect) => const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.0, 0.12, 0.88, 1.0],
-              colors: [Colors.transparent, Colors.white, Colors.white, Colors.transparent],
-            ).createShader(rect),
-            blendMode: BlendMode.dstIn,
-            child: Image.asset(
-              'assets/images/la_bonga_vista.jpeg',
-              fit: BoxFit.cover,
-              filterQuality: FilterQuality.high,
-              color: const Color(0xFF0C1328).withOpacity(0.55),
-              colorBlendMode: BlendMode.srcOver,
+        if (!isPhone)
+          Positioned.fill(
+            child: ShaderMask(
+              shaderCallback: (rect) => const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, 0.12, 0.88, 1.0],
+                colors: [
+                  Colors.transparent,
+                  Colors.white,
+                  Colors.white,
+                  Colors.transparent,
+                ],
+              ).createShader(rect),
+              blendMode: BlendMode.dstIn,
+              child: Image.asset(
+                'assets/images/la_bonga_vista.jpeg',
+                fit: BoxFit.cover,
+                filterQuality: FilterQuality.high,
+                color: const Color(0xFF0C1328).withOpacity(0.55),
+                colorBlendMode: BlendMode.srcOver,
+              ),
             ),
           ),
-        ),
         Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 60,
-        vertical: 60,
-      ),
-      child: Column(
-        children: [
-          Text(
-            language == 'en' ? 'Research Team' : 'Equipo de Investigación',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
-            ),
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 20 : 60,
+            vertical: 60,
           ),
-          const SizedBox(height: 24),
-          // Team Photo Carousel
-          _TeamPhotoCarousel(language: language),
-          const SizedBox(height: 40),
-          // La Bonga Section
-          _buildTeamSection(
-            context,
-            language == 'en' ? 'La Bonga Personnel' : 'Personal de La Bonga',
-            [
-              ('Marcelino Guatico', 'Chief of La Bonga', 'Nokó de La Bonga', '', 'labonga_seal.png'),
-              ('Elieser Adames', 'President of La Bonga', 'Presidente de La Bonga', '', 'labonga_seal.png'),
+          child: Column(
+            children: [
+              Text(
+                language == 'en' ? 'Research Team' : 'Equipo de Investigación',
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineSmall?.copyWith(color: Colors.white),
+              ),
+              const SizedBox(height: 24),
+              // Team Photo Carousel
+              _TeamPhotoCarousel(language: language),
+              const SizedBox(height: 40),
+              // La Bonga Section
+              _buildTeamSection(
+                context,
+                language == 'en'
+                    ? 'La Bonga Personnel'
+                    : 'Personal de La Bonga',
+                [
+                  (
+                    'Marcelino Guatico',
+                    'Chief of La Bonga',
+                    'Nokó de La Bonga',
+                    '',
+                    'labonga_seal.png',
+                  ),
+                  (
+                    'Elieser Adames',
+                    'President of La Bonga',
+                    'Presidente de La Bonga',
+                    '',
+                    'labonga_seal.png',
+                  ),
+                ],
+                language,
+                isMobile,
+              ),
+              const SizedBox(height: 40),
+              // University of Kansas Section
+              _buildTeamSection(
+                context,
+                language == 'en'
+                    ? 'University of Kansas Personnel'
+                    : 'Personal de la Universidad de Kansas',
+                [
+                  (
+                    'Dr. Peter Herlihy',
+                    'Professor of Geography',
+                    'Profesor de Geografía',
+                    'herlihy@ku.edu',
+                    'peter1.jpg',
+                  ),
+                  (
+                    'Cap McLiney',
+                    'PhD Student',
+                    'Estudiante de Doctorado',
+                    'cmclineyjr@ku.edu',
+                    'cap.png',
+                  ),
+                  (
+                    'Amalie Hipp',
+                    'PhD Student',
+                    'Estudiante de Doctorado',
+                    'ahippe@ku.edu',
+                    'Hipp_Headshot.jpg',
+                  ),
+                  (
+                    'Ollie Berwanger',
+                    'Undergraduate Researcher',
+                    'Investigador de Pregrado',
+                    'cash.berwanger@ku.edu',
+                    'geog_logo.jpg',
+                  ),
+                  (
+                    'Oliver Zigmund',
+                    'Undergraduate Researcher',
+                    'Investigador de Pregrado',
+                    'oliverlzigmund@ku.edu',
+                    'geog_logo.jpg',
+                  ),
+                ],
+                language,
+                isMobile,
+              ),
             ],
-            language,
-            isMobile,
           ),
-          const SizedBox(height: 40),
-          // University of Kansas Section
-          _buildTeamSection(
-            context,
-            language == 'en' ? 'University of Kansas Personnel' : 'Personal de la Universidad de Kansas',
-            [
-              ('Dr. Peter Herlihy', 'Professor of Geography', 'Profesor de Geografía', 'herlihy@ku.edu', 'peter1.jpg'),
-              ('Cap McLiney', 'PhD Student', 'Estudiante de Doctorado', 'cmclineyjr@ku.edu', 'cap.png'),
-              ('Amalie Hipp', 'PhD Student', 'Estudiante de Doctorado', 'ahippe@ku.edu', 'Hipp_Headshot.jpg'),
-              ('Ollie Berwanger', 'Undergraduate Researcher', 'Investigador de Pregrado', 'cash.berwanger@ku.edu', 'geog_logo.jpg'),
-              ('Oliver Zigmund', 'Undergraduate Researcher', 'Investigador de Pregrado', 'oliverlzigmund@ku.edu', 'geog_logo.jpg'),
-            ],
-            language,
-            isMobile,
-          ),
-        ],
-      ),
         ),
       ],
     );
@@ -3551,8 +3950,12 @@ class TeamSection extends StatelessWidget {
             children: members
                 .map(
                   (member) => SizedBox(
-                    width: isMobile ? ((MediaQuery.of(context).size.width - 40) / 2) - 5 : 150,
-                    height: isMobile ? ((MediaQuery.of(context).size.width - 40) / 2) - 5 : 150,
+                    width: isMobile
+                        ? ((MediaQuery.of(context).size.width - 40) / 2) - 5
+                        : 150,
+                    height: isMobile
+                        ? ((MediaQuery.of(context).size.width - 40) / 2) - 5
+                        : 150,
                     child: _buildTeamCard(
                       context,
                       member.$1,
@@ -3580,9 +3983,7 @@ class TeamSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF101A2F),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.08),
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.08)),
       ),
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -3633,7 +4034,7 @@ class ContactUsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 60,
@@ -3643,9 +4044,9 @@ class ContactUsSection extends StatelessWidget {
         children: [
           Text(
             language == 'en' ? 'Contact Us' : 'Contáctenos',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 24),
           Container(
@@ -3738,7 +4139,7 @@ class FooterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
-    
+
     return Container(
       color: const Color(0xFF0C1328),
       padding: EdgeInsets.symmetric(
@@ -3749,14 +4150,14 @@ class FooterSection extends StatelessWidget {
         children: [
           Text.rich(
             TextSpan(
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: const Color(0xFFB9C6EA),
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: const Color(0xFFB9C6EA)),
               children: _buildCISpans(
                 '© 2026 Chagres Initiative',
-                Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFFB9C6EA),
-                ),
+                Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: const Color(0xFFB9C6EA)),
               ),
             ),
             textAlign: TextAlign.center,
@@ -3773,14 +4174,13 @@ class FooterSection extends StatelessWidget {
                     color: language == 'en'
                         ? Colors.white
                         : const Color(0xFFB9C6EA),
-                    fontWeight: language == 'en' ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: language == 'en'
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                 ),
               ),
-              const Text(
-                ' | ',
-                style: TextStyle(color: Color(0xFFB9C6EA)),
-              ),
+              const Text(' | ', style: TextStyle(color: Color(0xFFB9C6EA))),
               GestureDetector(
                 onTap: () => onLanguageChanged('es'),
                 child: Text(
@@ -3789,7 +4189,9 @@ class FooterSection extends StatelessWidget {
                     color: language == 'es'
                         ? Colors.white
                         : const Color(0xFFB9C6EA),
-                    fontWeight: language == 'es' ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: language == 'es'
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                 ),
               ),
@@ -3847,9 +4249,9 @@ class _NewsletterSectionState extends State<NewsletterSection> {
               widget.language == 'en'
                   ? 'Stay Updated'
                   : 'Manténgase Actualizado',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.white,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(color: Colors.white),
             ),
             const SizedBox(height: 12),
             Text.rich(
@@ -3912,9 +4314,9 @@ class _NewsletterSectionState extends State<NewsletterSection> {
               widget.language == 'en'
                   ? '@chagresinitiative'
                   : '@chagresinitiative',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: const Color(0xFF81C784),
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: const Color(0xFF81C784)),
               textAlign: TextAlign.center,
             ),
           ],
@@ -3947,14 +4349,12 @@ class _FadeInAnimationState extends State<FadeInAnimation>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
+    _controller = AnimationController(duration: widget.duration, vsync: this);
 
-    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
+    _opacity = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
 
     _controller.forward();
   }
@@ -3967,10 +4367,7 @@ class _FadeInAnimationState extends State<FadeInAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _opacity,
-      child: widget.child,
-    );
+    return FadeTransition(opacity: _opacity, child: widget.child);
   }
 }
 
@@ -4210,10 +4607,7 @@ class _RevealOnScrollState extends State<RevealOnScroll>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.duration);
     WidgetsBinding.instance.addPostFrameCallback((_) => _attach());
   }
 
@@ -4274,7 +4668,6 @@ class _RevealOnScrollState extends State<RevealOnScroll>
   }
 }
 
-
 // Helper Widget for Zoomable Images with Keyboard Support
 class ZoomableImage extends StatefulWidget {
   final String imagePath;
@@ -4312,9 +4705,7 @@ class _ZoomableImageState extends State<ZoomableImage> {
   void _showZoomDialog() {
     showDialog(
       context: context,
-      builder: (context) => ZoomImageDialog(
-        imagePath: widget.imagePath,
-      ),
+      builder: (context) => ZoomImageDialog(imagePath: widget.imagePath),
     );
   }
 
@@ -4404,11 +4795,7 @@ class _ZoomImageDialogState extends State<ZoomImageDialog> {
                     shape: BoxShape.circle,
                   ),
                   padding: const EdgeInsets.all(8),
-                  child: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                    size: 28,
-                  ),
+                  child: const Icon(Icons.close, color: Colors.white, size: 28),
                 ),
               ),
             ),
