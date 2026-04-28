@@ -1893,9 +1893,11 @@ class SatellitePrmStorySection extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: isPhone ? 28 : 42),
-                    _ImageryPrmSideBySide(language: language),
-                    SizedBox(height: isPhone ? 24 : 34),
+                    SizedBox(height: isPhone ? 24 : 42),
+                    if (!isMobile) ...[
+                      _ImageryPrmSideBySide(language: language),
+                      const SizedBox(height: 34),
+                    ],
                     _StaticStoryComparison(language: language),
                     SizedBox(height: isPhone ? 28 : 42),
                     for (var index = 0; index < beats.length; index++) ...[
