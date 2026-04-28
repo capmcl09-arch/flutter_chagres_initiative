@@ -1883,8 +1883,8 @@ class SatellitePrmStorySection extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       en
-                          ? 'From Satellite Imagery to the Maps We Make Together'
-                          : 'De imágenes satelitales a los mapas que hacemos juntos',
+                          ? 'Comparing Satellite Imagery and the Maps We Make'
+                          : 'Comparando imágenes satelitales y los mapas que hacemos',
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,

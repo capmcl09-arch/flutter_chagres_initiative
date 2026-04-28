@@ -40245,7 +40245,7 @@ else c=j?36:72
 s=i?58:84
 r=g?"SEEING IS NOT THE SAME AS UNDERSTANDING":"VER NO ES LO MISMO QUE ENTENDER"
 r=A.aB(r,l,l,A.cZ(l,l,B.b2,l,l,l,l,l,l,l,l,i?11:13,l,l,B.Z,l,l,!0,l,2.2,l,l,l,l,l,l),B.P)
-q=g?"From Satellite Imagery to the Maps We Make Together":"De im\xe1genes satelitales a los mapas que hacemos juntos"
+q=g?"Comparing Satellite Imagery and the Maps We Make":"Comparando im\xe1genes satelitales y los mapas que hacemos"
 p=A.W(a).ok.c
 q=A.aB(q,l,l,p==null?l:p.uK(B.e,B.aY),B.P)
 p=g?"It is easy to feel like the whole world has already been mapped because satellite imagery is everywhere. But in remote places like Chagres, imagery may be unclassified, partly classified, or mislabeled. Our method asks what the place means, how it is used, and what people need to decide wisely.":"Es f\xe1cil sentir que todo el mundo ya est\xe1 mapeado porque las im\xe1genes satelitales est\xe1n en todas partes. Pero en lugares remotos como Chagres, la imagen puede no estar clasificada, estar parcialmente clasificada o estar mal etiquetada. Nuestro m\xe9todo pregunta qu\xe9 significa el lugar, c\xf3mo se usa y qu\xe9 necesitan saber las personas para decidir bien."
