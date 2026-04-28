@@ -430,18 +430,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                 RevealOnScroll(
                   child: SatellitePrmStorySection(language: widget.language),
                 ),
-                // Green band with meaningful framing, after the maps explainer.
-                Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0xFF0C1328), Color(0xFF16402E)],
-                    ),
-                  ),
-                  height: 60,
-                ),
                 Container(
                   width: double.infinity,
                   color: const Color(0xFF16402E),
@@ -1859,9 +1847,11 @@ class SatellitePrmStorySection extends StatelessWidget {
               child: _JungleSideStrip(mirror: true),
             ),
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isPhone ? 20 : (isMobile ? 36 : 72),
-              vertical: isPhone ? 58 : 84,
+            padding: EdgeInsets.fromLTRB(
+              isPhone ? 20 : (isMobile ? 36 : 72),
+              isPhone ? 58 : 84,
+              isPhone ? 20 : (isMobile ? 36 : 72),
+              isPhone ? 26 : 36,
             ),
             child: Center(
               child: ConstrainedBox(
@@ -1908,9 +1898,12 @@ class SatellitePrmStorySection extends StatelessWidget {
                     SizedBox(height: isPhone ? 24 : 34),
                     _StaticStoryComparison(language: language),
                     SizedBox(height: isPhone ? 28 : 42),
-                    for (final beat in beats) ...[
-                      _StaticStoryBeatCard(beat: beat, isMobile: isMobile),
-                      const SizedBox(height: 16),
+                    for (var index = 0; index < beats.length; index++) ...[
+                      _StaticStoryBeatCard(
+                        beat: beats[index],
+                        isMobile: isMobile,
+                      ),
+                      if (index != beats.length - 1) const SizedBox(height: 16),
                     ],
                   ],
                 ),
@@ -3430,9 +3423,11 @@ class _MeaningfulSectionState extends State<MeaningfulSection> {
     ];
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 16 : 60,
-        vertical: 48,
+      padding: EdgeInsets.fromLTRB(
+        isMobile ? 16 : 60,
+        isMobile ? 20 : 24,
+        isMobile ? 16 : 60,
+        48,
       ),
       child: Center(
         child: ConstrainedBox(
