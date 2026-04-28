@@ -427,6 +427,9 @@ class _ChagresHomeState extends State<ChagresHome> {
                 RevealOnScroll(
                   child: MappingMethodSection(language: widget.language),
                 ),
+                RevealOnScroll(
+                  child: SatellitePrmStorySection(language: widget.language),
+                ),
                 // Green band with meaningful framing, after the maps explainer.
                 Container(
                   width: double.infinity,
@@ -1527,134 +1530,1717 @@ class MappingMethodSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      color: const Color(0xFF0C1328),
-      padding: EdgeInsets.symmetric(
-        horizontal: horizontalPad,
-        vertical: verticalPad,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF0C1328), Color(0xFF16402E), Color(0xFF16402E)],
+          stops: [0.0, 0.28, 1.0],
+        ),
       ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                language == 'en'
-                    ? 'PARTICIPATORY RESEARCH MAPPING'
-                    : 'MAPEO PARTICIPATIVO DE INVESTIGACIÓN',
-                style: TextStyle(
-                  color: const Color(0xFF7FB069),
-                  fontSize: isPhone ? 12 : 14,
-                  letterSpacing: 3.0,
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 18),
-              Builder(
-                builder: (context) {
-                  final titleStyle = Theme.of(context).textTheme.displaySmall
-                      ?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      );
-                  return Text(
-                    language == 'en'
-                        ? 'How Our Maps Are Made'
-                        : 'Cómo se Elaboran Nuestros Mapas',
-                    style: titleStyle,
-                    textAlign: TextAlign.center,
-                  );
-                },
-              ),
-              const SizedBox(height: 24),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 880),
-                child: Text(
-                  language == 'en'
-                      ? 'PRM blends Indigenous geospatial knowledge with GPS, aerial photography, and satellite imagery. The diagram below shows how lived experience becomes a shared tool for stewardship, dialogue, and protection — step by step.'
-                      : 'El PRM combina el conocimiento geoespacial indígena con GPS, fotografía aérea e imágenes satelitales. El siguiente diagrama muestra cómo la experiencia vivida se convierte, paso a paso, en una herramienta compartida para la administración, el diálogo y la protección.',
-                  style: TextStyle(
-                    color: const Color(0xFFB9C6EA),
-                    fontSize: isPhone ? 15 : 17,
-                    height: 1.7,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: isPhone ? 36 : 60),
-              MouseRegion(
-                cursor: SystemMouseCursors.zoomIn,
-                child: GestureDetector(
-                  onTap: () => showDialog(
-                    context: context,
-                    builder: (_) =>
-                        ZoomImageDialog(imagePath: prmExplainImagePath),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(isPhone ? 12 : 20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.55),
-                          blurRadius: 44,
-                          offset: const Offset(0, 18),
+      child: Stack(
+        children: [
+          if (!isMobile)
+            const Positioned(
+              left: 0,
+              top: 0,
+              bottom: 0,
+              child: _JungleSideStrip(mirror: false),
+            ),
+          if (!isMobile)
+            const Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: _JungleSideStrip(mirror: true),
+            ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPad,
+              vertical: verticalPad,
+            ),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1200),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      language == 'en'
+                          ? 'PARTICIPATORY RESEARCH MAPPING'
+                          : 'MAPEO PARTICIPATIVO DE INVESTIGACIÓN',
+                      style: TextStyle(
+                        color: const Color(0xFF9EC77A),
+                        fontSize: isPhone ? 12 : 14,
+                        letterSpacing: 3.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 18),
+                    Builder(
+                      builder: (context) {
+                        final titleStyle = Theme.of(context)
+                            .textTheme
+                            .displaySmall
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            );
+                        return Text(
+                          language == 'en'
+                              ? 'How Our Maps Are Made'
+                              : 'Cómo se Elaboran Nuestros Mapas',
+                          style: titleStyle,
+                          textAlign: TextAlign.center,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 880),
+                      child: Text(
+                        language == 'en'
+                            ? 'PRM blends Indigenous geospatial knowledge with GPS, aerial photography, and satellite imagery. The diagram below shows how lived experience becomes a shared tool for stewardship, dialogue, and protection — step by step.'
+                            : 'El PRM combina el conocimiento geoespacial indígena con GPS, fotografía aérea e imágenes satelitales. El siguiente diagrama muestra cómo la experiencia vivida se convierte, paso a paso, en una herramienta compartida para la administración, el diálogo y la protección.',
+                        style: TextStyle(
+                          color: const Color(0xFFE5ECF5),
+                          fontSize: isPhone ? 15 : 17,
+                          height: 1.7,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: isPhone ? 36 : 60),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.zoomIn,
+                      child: GestureDetector(
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (_) =>
+                              ZoomImageDialog(imagePath: prmExplainImagePath),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              isPhone ? 12 : 20,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.45),
+                                blurRadius: 34,
+                                offset: const Offset(0, 14),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              isPhone ? 12 : 20,
+                            ),
+                            child: Image.asset(
+                              prmExplainImagePath,
+                              fit: BoxFit.contain,
+                              width: double.infinity,
+                              filterQuality: FilterQuality.high,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: isPhone ? 14 : 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.zoom_in,
+                          color: const Color(0xFF9EC77A),
+                          size: isPhone ? 16 : 18,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          language == 'en'
+                              ? 'Click the diagram to zoom in'
+                              : 'Haz clic en el diagrama para ampliar',
+                          style: TextStyle(
+                            color: const Color(0xFF9EC77A),
+                            fontSize: isPhone ? 13 : 14,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.5,
+                          ),
                         ),
                       ],
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(isPhone ? 12 : 20),
-                      child: Image.asset(
-                        prmExplainImagePath,
-                        fit: BoxFit.contain,
-                        width: double.infinity,
-                        filterQuality: FilterQuality.high,
+                    SizedBox(height: isPhone ? 20 : 28),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 760),
+                      child: Text(
+                        language == 'en'
+                            ? 'A good map does not replace local knowledge — it translates that knowledge into a form more people can understand, use, and act on.'
+                            : 'Un buen mapa no reemplaza el conocimiento local: traduce ese conocimiento a una forma que más personas puedan entender, usar y aplicar.',
+                        style: TextStyle(
+                          color: const Color(0xFFD7E0EA),
+                          fontSize: isPhone ? 14 : 16,
+                          fontStyle: FontStyle.italic,
+                          height: 1.6,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Scrollytelling comparison: satellite imagery versus PRM maps.
+class SatellitePrmStorySection extends StatelessWidget {
+  final String language;
+
+  const SatellitePrmStorySection({super.key, required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final isMobile = width < 900;
+    final isPhone = width < 600;
+    final en = language == 'en';
+
+    final beats = en
+        ? const [
+            _StoryBeat(
+              label: '1',
+              title:
+                  'Satellite imagery is useful, but it is not the whole map.',
+              body:
+                  'Tools many people use every day let us zoom into a picture of the earth from above. That is powerful. But in remote areas like Chagres, imagery is often unclassified, partly classified, incorrectly labeled, or not labeled at all.',
+              satellitePoint: 'Imagery may show forest without explaining it',
+              prmPoint:
+                  'Our method explains how places are used and understood',
+              icon: Icons.satellite_alt,
+              visualType: _StoryVisualType.satelliteTiles,
+            ),
+            _StoryBeat(
+              label: '2',
+              title: 'A green patch can hold many stories.',
+              body:
+                  'A green patch may look empty. To families nearby, it may be hunting forest, a medicinal plant area, a sacred place, a seasonal trail, or land that floods after heavy rain.',
+              satellitePoint: 'Can miss uses, names, history, and rules',
+              prmPoint: 'Adds lived knowledge from community geographers',
+              icon: Icons.groups_2,
+              visualType: _StoryVisualType.hiddenMeaning,
+            ),
+            _StoryBeat(
+              label: '3',
+              title: 'How we map: layer the image with field knowledge.',
+              body:
+                  'Participatory Research Mapping combines field walks, GPS points, sketch maps, interviews, air photos, and satellite imagery. The crucial step happens in the field, where community geographers identify what different parts of the rainforest are, how they are used, and why they matter.',
+              satellitePoint: 'One visual layer: surface appearance',
+              prmPoint: 'Many meaning layers: use, access, risk, value',
+              icon: Icons.layers,
+              visualType: _StoryVisualType.mapLayers,
+            ),
+            _StoryBeat(
+              label: '4',
+              title: 'That detail matters when decisions have consequences.',
+              body:
+                  'Conservation, watershed protection, zoning, and governance all require more than “forest” versus “not forest.” Chagres National Park spans about 318,765 acres (129,000 hectares), so accurate mapping requires travel throughout an enormous park and enough detail to understand where protection is urgent, where use is traditional, and where conflict could happen.',
+              satellitePoint: 'Helps spot change after it appears',
+              prmPoint: 'Helps plan before harm or conflict grows',
+              icon: Icons.account_tree_outlined,
+              visualType: _StoryVisualType.decisionPath,
+            ),
+            _StoryBeat(
+              label: '5',
+              title: 'This is why our method is worth funding.',
+              body:
+                  'Your gift supports the careful, iterative fieldwork that fills the gap between raw imagery and real-world decisions. The time and cost come from repeated travel across the park, training local mappers, working with the people who live there to facilitate this process, checking and refining the maps, and giving communities and partners a tool they can act on.',
+              satellitePoint: 'Imagery helps us see',
+              prmPoint: 'PRM helps people understand, decide, and protect',
+              icon: Icons.volunteer_activism,
+              visualType: _StoryVisualType.donorTool,
+            ),
+          ]
+        : const [
+            _StoryBeat(
+              label: '1',
+              title: 'La imagen satelital es útil, pero no es todo el mapa.',
+              body:
+                  'Las herramientas que muchas personas usan a diario permiten acercarse a una imagen de la tierra desde arriba. Eso es poderoso. Pero en áreas remotas como Chagres, la imagen muchas veces no está clasificada, está parcialmente clasificada, está mal etiquetada o no tiene etiquetas.',
+              satellitePoint: 'La imagen puede mostrar bosque sin explicarlo',
+              prmPoint:
+                  'Nuestro método explica cómo se usan y entienden los lugares',
+              icon: Icons.satellite_alt,
+              visualType: _StoryVisualType.satelliteTiles,
+            ),
+            _StoryBeat(
+              label: '2',
+              title: 'Pero una imagen desde arriba no explica a las personas.',
+              body:
+                  'Una zona verde puede parecer vacía. Para las familias cercanas, puede ser bosque de cacería, área de plantas medicinales, lugar sagrado, sendero estacional o tierra que se inunda con lluvias fuertes.',
+              satellitePoint: 'Puede perder usos, nombres, historia y reglas',
+              prmPoint: 'Agrega conocimiento vivido de geógrafos comunitarios',
+              icon: Icons.groups_2,
+              visualType: _StoryVisualType.hiddenMeaning,
+            ),
+            _StoryBeat(
+              label: '3',
+              title:
+                  'Cómo mapeamos: combinamos imagen con conocimiento de campo.',
+              body:
+                  'El Mapeo Participativo de Investigación combina recorridos de campo, puntos GPS, mapas dibujados, entrevistas, fotos aéreas e imágenes satelitales. El paso crucial ocurre en el campo, donde geógrafos comunitarios identifican qué son las distintas partes del bosque tropical, cómo se usan y por qué importan.',
+              satellitePoint: 'Una capa visual: apariencia de la superficie',
+              prmPoint:
+                  'Muchas capas de significado: uso, acceso, riesgo, valor',
+              icon: Icons.layers,
+              visualType: _StoryVisualType.mapLayers,
+            ),
+            _StoryBeat(
+              label: '4',
+              title:
+                  'Ese detalle importa cuando las decisiones tienen consecuencias.',
+              body:
+                  'La conservación, la protección de cuencas, la zonificación y la gobernanza requieren más que “bosque” o “no bosque”. El Parque Nacional Chagres abarca aproximadamente 318,765 acres (129,000 hectáreas), por eso el mapeo preciso requiere viajar por un parque enorme y reunir suficiente detalle para saber dónde la protección es urgente, dónde el uso es tradicional y dónde puede surgir conflicto.',
+              satellitePoint: 'Ayuda a ver cambios cuando ya aparecen',
+              prmPoint: 'Ayuda a planificar antes de que crezca el daño',
+              icon: Icons.account_tree_outlined,
+              visualType: _StoryVisualType.decisionPath,
+            ),
+            _StoryBeat(
+              label: '5',
+              title: 'Por eso vale la pena financiar nuestro método.',
+              body:
+                  'Su donación apoya el trabajo de campo cuidadoso e iterativo que llena el espacio entre imágenes crudas y decisiones reales. El tiempo y el costo vienen de viajes repetidos por el parque, capacitar mapeadores locales, trabajar con las personas que viven allí para facilitar este proceso, revisar y mejorar los mapas, y dar a comunidades y aliados una herramienta para actuar.',
+              satellitePoint: 'Las imágenes ayudan a ver',
+              prmPoint: 'El PRM ayuda a entender, decidir y proteger',
+              icon: Icons.volunteer_activism,
+              visualType: _StoryVisualType.donorTool,
+            ),
+          ];
+
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF16402E),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      const Color(0xFF16402E).withOpacity(0.96),
+                      const Color(0xFF1A4A35).withOpacity(0.98),
+                      const Color(0xFF16402E).withOpacity(0.96),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: isPhone ? 14 : 18),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.zoom_in,
-                    color: const Color(0xFF7FB069),
-                    size: isPhone ? 16 : 18,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    language == 'en'
-                        ? 'Click the diagram to zoom in'
-                        : 'Haz clic en el diagrama para ampliar',
-                    style: TextStyle(
-                      color: const Color(0xFF7FB069),
-                      fontSize: isPhone ? 13 : 14,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.5,
+            ),
+          ),
+          if (!isMobile)
+            const Positioned(
+              left: 0,
+              top: 0,
+              bottom: 0,
+              child: _JungleSideStrip(mirror: false),
+            ),
+          if (!isMobile)
+            const Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: _JungleSideStrip(mirror: true),
+            ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isPhone ? 20 : (isMobile ? 36 : 72),
+              vertical: isPhone ? 58 : 84,
+            ),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1080),
+                child: Column(
+                  children: [
+                    Text(
+                      en
+                          ? 'SEEING IS NOT THE SAME AS UNDERSTANDING'
+                          : 'VER NO ES LO MISMO QUE ENTENDER',
+                      style: TextStyle(
+                        color: const Color(0xFFFFC766),
+                        fontSize: isPhone ? 11 : 13,
+                        letterSpacing: 2.2,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    Text(
+                      en
+                          ? 'From Satellite Imagery to the Maps We Make Together'
+                          : 'De imágenes satelitales a los mapas que hacemos juntos',
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 18),
+                    Text(
+                      en
+                          ? 'It is easy to feel like the whole world has already been mapped because satellite imagery is everywhere. But in remote places like Chagres, imagery may be unclassified, partly classified, or mislabeled. Our method asks what the place means, how it is used, and what people need to decide wisely.'
+                          : 'Es fácil sentir que todo el mundo ya está mapeado porque las imágenes satelitales están en todas partes. Pero en lugares remotos como Chagres, la imagen puede no estar clasificada, estar parcialmente clasificada o estar mal etiquetada. Nuestro método pregunta qué significa el lugar, cómo se usa y qué necesitan saber las personas para decidir bien.',
+                      style: TextStyle(
+                        color: const Color(0xFFE5ECF5),
+                        fontSize: isPhone ? 16 : 18,
+                        height: 1.6,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: isPhone ? 28 : 42),
+                    _ImageryPrmSideBySide(language: language),
+                    SizedBox(height: isPhone ? 24 : 34),
+                    _StaticStoryComparison(language: language),
+                    SizedBox(height: isPhone ? 28 : 42),
+                    for (final beat in beats) ...[
+                      _StaticStoryBeatCard(beat: beat, isMobile: isMobile),
+                      const SizedBox(height: 16),
+                    ],
+                  ],
+                ),
               ),
-              SizedBox(height: isPhone ? 20 : 28),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 760),
-                child: Text(
-                  language == 'en'
-                      ? 'A good map does not replace local knowledge — it translates that knowledge into a form more people can understand, use, and act on.'
-                      : 'Un buen mapa no reemplaza el conocimiento local: traduce ese conocimiento a una forma que más personas puedan entender, usar y aplicar.',
-                  style: TextStyle(
-                    color: const Color(0xFFB0B8C8),
-                    fontSize: isPhone ? 14 : 16,
-                    fontStyle: FontStyle.italic,
-                    height: 1.6,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StoryBeat {
+  final String label;
+  final String title;
+  final String body;
+  final String satellitePoint;
+  final String prmPoint;
+  final IconData icon;
+  final _StoryVisualType visualType;
+
+  const _StoryBeat({
+    required this.label,
+    required this.title,
+    required this.body,
+    required this.satellitePoint,
+    required this.prmPoint,
+    required this.icon,
+    required this.visualType,
+  });
+}
+
+enum _StoryVisualType {
+  satelliteTiles,
+  hiddenMeaning,
+  mapLayers,
+  decisionPath,
+  donorTool,
+}
+
+class _ImageryPrmSideBySide extends StatelessWidget {
+  final String language;
+
+  const _ImageryPrmSideBySide({required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isPhone = MediaQuery.of(context).size.width < 600;
+    final en = language == 'en';
+    final imagery = _LandscapeUnderstandingPanel(
+      title: en ? 'Satellite imagery' : 'Imagen satelital',
+      subtitle: en
+          ? 'remote-area imagery may not classify what it shows'
+          : 'la imagen remota puede no clasificar lo que muestra',
+      mode: _LandscapePanelMode.imagery,
+      language: language,
+    );
+    final map = _LandscapeUnderstandingPanel(
+      title: en ? 'How we map' : 'Cómo mapeamos',
+      subtitle: en
+          ? 'the same place, separated by use and meaning'
+          : 'el mismo lugar, separado por uso y significado',
+      mode: _LandscapePanelMode.prm,
+      language: language,
+    );
+
+    return Container(
+      padding: EdgeInsets.all(isPhone ? 14 : 18),
+      decoration: BoxDecoration(
+        color: const Color(0xFF07111F).withOpacity(0.86),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.white.withOpacity(0.14)),
+      ),
+      child: isPhone
+          ? Column(children: [imagery, const SizedBox(height: 14), map])
+          : Row(
+              children: [
+                Expanded(child: imagery),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: const Color(0xFFFFC766).withOpacity(0.9),
+                    size: 30,
                   ),
-                  textAlign: TextAlign.center,
+                ),
+                Expanded(child: map),
+              ],
+            ),
+    );
+  }
+}
+
+enum _LandscapePanelMode { imagery, prm }
+
+class _LandscapeUnderstandingPanel extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final _LandscapePanelMode mode;
+  final String language;
+
+  const _LandscapeUnderstandingPanel({
+    required this.title,
+    required this.subtitle,
+    required this.mode,
+    required this.language,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isImagery = mode == _LandscapePanelMode.imagery;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 6, right: 6, bottom: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  color: isImagery ? Colors.white : const Color(0xFFF7E7BE),
+                  fontSize: 19,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  color: isImagery
+                      ? const Color(0xFFB9C6EA)
+                      : const Color(0xFFEFD49D),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  height: 1.25,
                 ),
               ),
             ],
           ),
+        ),
+        Container(
+          height: 330,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: isImagery
+                ? const Color(0xFF173529)
+                : const Color(0xFFF0E3C5),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: isImagery
+                  ? const Color(0xFF77A7D9).withOpacity(0.34)
+                  : const Color(0xFF7A4D25).withOpacity(0.30),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: isImagery
+                    ? const _SatelliteMosaicGraphic()
+                    : _PrmMeaningMapGraphic(language: language),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SatelliteMosaicGraphic extends StatelessWidget {
+  const _SatelliteMosaicGraphic();
+
+  @override
+  Widget build(BuildContext context) {
+    return const CustomPaint(painter: _SatelliteScenePainter());
+  }
+}
+
+class _PrmMeaningMapGraphic extends StatelessWidget {
+  final String language;
+
+  const _PrmMeaningMapGraphic({required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final en = language == 'en';
+
+    return Stack(
+      children: [
+        const Positioned.fill(child: CustomPaint(painter: _PrmScenePainter())),
+        Positioned(
+          left: 18,
+          top: 14,
+          child: Text(
+            en ? 'A Pretend PRM Map' : 'Un mapa PRM imaginario',
+            style: const TextStyle(
+              color: Color(0xFF3B2A16),
+              fontSize: 16,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ),
+        Positioned(
+          left: 74,
+          top: 94,
+          child: _WaterTextLabel(label: en ? 'river' : 'río'),
+        ),
+        Positioned(
+          left: 78,
+          top: 224,
+          child: _WaterTextLabel(label: en ? 'lake' : 'lago'),
+        ),
+        Positioned(
+          left: 24,
+          top: 126,
+          child: _MapZone(
+            label: en ? 'water source' : 'fuente de agua',
+            color: const Color(0xFF77A7D9),
+          ),
+        ),
+        Positioned(
+          right: 18,
+          top: 92,
+          child: _MapZone(
+            label: en ? 'village' : 'aldea',
+            color: const Color(0xFFE8C36F),
+          ),
+        ),
+        Positioned(
+          left: 22,
+          bottom: 44,
+          child: _MapZone(
+            label: en ? 'medicinal forest' : 'bosque medicinal',
+            color: const Color(0xFF7FB069),
+          ),
+        ),
+        Positioned(
+          right: 30,
+          top: 156,
+          child: _MapZone(
+            label: en ? 'hunting forest' : 'bosque de cacería',
+            color: const Color(0xFF4F8F5B),
+          ),
+        ),
+        Positioned(
+          left: 126,
+          bottom: 42,
+          child: _MapZone(
+            label: en ? 'seasonal trail' : 'sendero estacional',
+            color: const Color(0xFFFFC766),
+          ),
+        ),
+        Positioned(
+          right: 28,
+          bottom: 30,
+          child: _MapZone(
+            label: en ? 'cultivation zone' : 'zona de cultivo',
+            color: const Color(0xFFA0291E),
+          ),
+        ),
+        Positioned(
+          right: 84,
+          top: 196,
+          child: _MapZone(
+            label: en ? 'religious site' : 'sitio religioso',
+            color: const Color(0xFFB87AD9),
+          ),
+        ),
+        Positioned(
+          right: 14,
+          top: 14,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _MapScaleBar(label: en ? '500 m' : '500 m'),
+              const SizedBox(width: 16),
+              _MapLegend(language: language),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _WaterTextLabel extends StatelessWidget {
+  final String label;
+
+  const _WaterTextLabel({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 13,
+        fontWeight: FontWeight.w900,
+        shadows: [
+          Shadow(color: Color(0xAA063B52), blurRadius: 5),
+          Shadow(color: Color(0xAA063B52), offset: Offset(0, 1)),
+        ],
+      ),
+    );
+  }
+}
+
+class _MapLegend extends StatelessWidget {
+  final String language;
+
+  const _MapLegend({required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final en = language == 'en';
+
+    return Container(
+      width: 124,
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            en ? 'Legend' : 'Leyenda',
+            style: const TextStyle(
+              color: Color(0xFF3B2A16),
+              fontSize: 9,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          const SizedBox(height: 5),
+          _MapLegendItem(
+            color: const Color(0xFF7FB069),
+            text: en ? 'forest use' : 'uso del bosque',
+          ),
+          _MapLegendItem(
+            color: const Color(0xFFA0291E),
+            text: en ? 'cultivation' : 'cultivo',
+          ),
+          _MapLegendItem(
+            color: const Color(0xFFB87AD9),
+            text: en ? 'religious' : 'religioso',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MapLegendItem extends StatelessWidget {
+  final Color color;
+  final String text;
+
+  const _MapLegendItem({required this.color, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 3),
+      child: Row(
+        children: [
+          Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          const SizedBox(width: 6),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: Color(0xFF3B2A16),
+                fontSize: 8,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MapScaleBar extends StatelessWidget {
+  final String label;
+
+  const _MapScaleBar({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(width: 64, height: 4, color: const Color(0xFF3B2A16)),
+          const SizedBox(height: 3),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Color(0xFF3B2A16),
+              fontSize: 9,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SatelliteScenePainter extends CustomPainter {
+  const _SatelliteScenePainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawRect(
+      Offset.zero & size,
+      Paint()..color = const Color(0xFF173529),
+    );
+
+    final forestPaints = [
+      Paint()..color = const Color(0xFF1B4B32),
+      Paint()..color = const Color(0xFF245D37),
+      Paint()..color = const Color(0xFF2F6B3F),
+      Paint()..color = const Color(0xFF173326),
+    ];
+    for (var row = 0; row < 9; row++) {
+      for (var col = 0; col < 13; col++) {
+        final center = Offset(
+          size.width * (0.04 + col * 0.083),
+          size.height * (0.08 + row * 0.105),
+        );
+        final radius = size.shortestSide * (0.045 + ((row + col) % 3) * 0.007);
+        canvas.drawCircle(
+          center,
+          radius,
+          forestPaints[(row + col) % forestPaints.length],
+        );
+      }
+    }
+
+    final riverPaint = Paint()
+      ..color = const Color(0xFF67A8C7).withOpacity(0.88)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = size.width * 0.075
+      ..strokeCap = StrokeCap.round;
+    final river = Path()
+      ..moveTo(-20, size.height * 0.32)
+      ..cubicTo(
+        size.width * 0.18,
+        size.height * 0.42,
+        size.width * 0.33,
+        size.height * 0.18,
+        size.width * 0.52,
+        size.height * 0.35,
+      )
+      ..cubicTo(
+        size.width * 0.68,
+        size.height * 0.50,
+        size.width * 0.75,
+        size.height * 0.64,
+        size.width + 20,
+        size.height * 0.54,
+      );
+    canvas.drawPath(river, riverPaint);
+
+    canvas.drawOval(
+      Rect.fromLTWH(
+        size.width * 0.10,
+        size.height * 0.62,
+        size.width * 0.26,
+        size.height * 0.18,
+      ),
+      Paint()..color = const Color(0xFF79B9D6).withOpacity(0.92),
+    );
+
+    final clearing = RRect.fromRectAndRadius(
+      Rect.fromLTWH(
+        size.width * 0.68,
+        size.height * 0.20,
+        size.width * 0.22,
+        size.height * 0.17,
+      ),
+      const Radius.circular(18),
+    );
+    canvas.drawRRect(
+      clearing,
+      Paint()..color = const Color(0xFF9B8555).withOpacity(0.78),
+    );
+    final roofPaint = Paint()..color = const Color(0xFFE8C36F);
+    for (var index = 0; index < 8; index++) {
+      final x = size.width * (0.70 + (index % 4) * 0.045);
+      final y = size.height * (0.23 + (index ~/ 4) * 0.055);
+      canvas.drawRect(Rect.fromLTWH(x, y, 18, 10), roofPaint);
+    }
+
+    final hazePaint = Paint()..color = Colors.white.withOpacity(0.12);
+    canvas.drawOval(
+      Rect.fromLTWH(
+        size.width * 0.42,
+        size.height * 0.08,
+        size.width * 0.38,
+        size.height * 0.14,
+      ),
+      hazePaint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(
+        size.width * 0.05,
+        size.height * 0.62,
+        size.width * 0.34,
+        size.height * 0.12,
+      ),
+      hazePaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _SatelliteScenePainter oldDelegate) => false;
+}
+
+class _PrmScenePainter extends CustomPainter {
+  const _PrmScenePainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawRect(
+      Offset.zero & size,
+      Paint()..color = const Color(0xFFF0E3C5),
+    );
+
+    final gridPaint = Paint()
+      ..color = const Color(0xFF8C6B3E).withOpacity(0.15)
+      ..strokeWidth = 1;
+    for (double x = 0; x < size.width; x += size.width / 8) {
+      canvas.drawLine(Offset(x, 0), Offset(x, size.height), gridPaint);
+    }
+    for (double y = 0; y < size.height; y += size.height / 7) {
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
+    }
+
+    _drawZone(
+      canvas,
+      Path()
+        ..moveTo(size.width * 0.06, size.height * 0.54)
+        ..quadraticBezierTo(
+          size.width * 0.20,
+          size.height * 0.38,
+          size.width * 0.36,
+          size.height * 0.54,
+        )
+        ..quadraticBezierTo(
+          size.width * 0.30,
+          size.height * 0.86,
+          size.width * 0.08,
+          size.height * 0.84,
+        )
+        ..close(),
+      const Color(0xFF7FB069).withOpacity(0.56),
+    );
+    _drawZone(
+      canvas,
+      Path()
+        ..moveTo(size.width * 0.46, size.height * 0.46)
+        ..quadraticBezierTo(
+          size.width * 0.74,
+          size.height * 0.30,
+          size.width * 0.92,
+          size.height * 0.48,
+        )
+        ..quadraticBezierTo(
+          size.width * 0.84,
+          size.height * 0.76,
+          size.width * 0.52,
+          size.height * 0.68,
+        )
+        ..close(),
+      const Color(0xFF4F8F5B).withOpacity(0.54),
+    );
+    _drawZone(
+      canvas,
+      Path()
+        ..moveTo(size.width * 0.58, size.height * 0.62)
+        ..quadraticBezierTo(
+          size.width * 0.78,
+          size.height * 0.54,
+          size.width * 0.98,
+          size.height * 0.66,
+        )
+        ..lineTo(size.width, size.height)
+        ..lineTo(size.width * 0.64, size.height)
+        ..close(),
+      const Color(0xFFA0291E).withOpacity(0.30),
+    );
+    _drawZone(
+      canvas,
+      Path()
+        ..moveTo(size.width * 0.70, size.height * 0.68)
+        ..quadraticBezierTo(
+          size.width * 0.82,
+          size.height * 0.58,
+          size.width * 0.92,
+          size.height * 0.70,
+        )
+        ..quadraticBezierTo(
+          size.width * 0.86,
+          size.height * 0.84,
+          size.width * 0.72,
+          size.height * 0.82,
+        )
+        ..close(),
+      const Color(0xFFB87AD9).withOpacity(0.38),
+    );
+
+    final riverPaint = Paint()
+      ..color = const Color(0xFF2E9CC3)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = size.width * 0.032
+      ..strokeCap = StrokeCap.round;
+    final river = Path()
+      ..moveTo(-10, size.height * 0.32)
+      ..cubicTo(
+        size.width * 0.18,
+        size.height * 0.42,
+        size.width * 0.33,
+        size.height * 0.18,
+        size.width * 0.52,
+        size.height * 0.35,
+      )
+      ..cubicTo(
+        size.width * 0.68,
+        size.height * 0.50,
+        size.width * 0.75,
+        size.height * 0.64,
+        size.width + 10,
+        size.height * 0.54,
+      );
+    canvas.drawPath(river, riverPaint);
+    canvas.drawOval(
+      Rect.fromLTWH(
+        size.width * 0.10,
+        size.height * 0.62,
+        size.width * 0.22,
+        size.height * 0.16,
+      ),
+      Paint()..color = const Color(0xFF77A7D9).withOpacity(0.80),
+    );
+
+    final trailPaint = Paint()
+      ..color = const Color(0xFF543518)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..strokeCap = StrokeCap.round;
+    final trail = Path()
+      ..moveTo(size.width * 0.20, size.height * 0.76)
+      ..quadraticBezierTo(
+        size.width * 0.40,
+        size.height * 0.55,
+        size.width * 0.62,
+        size.height * 0.76,
+      )
+      ..quadraticBezierTo(
+        size.width * 0.72,
+        size.height * 0.86,
+        size.width * 0.88,
+        size.height * 0.80,
+      );
+    canvas.drawPath(trail, trailPaint);
+
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(
+          size.width * 0.70,
+          size.height * 0.38,
+          size.width * 0.20,
+          size.height * 0.15,
+        ),
+        const Radius.circular(14),
+      ),
+      Paint()..color = const Color(0xFFE8C36F).withOpacity(0.58),
+    );
+  }
+
+  void _drawZone(Canvas canvas, Path path, Color color) {
+    canvas.drawPath(path, Paint()..color = color);
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = Colors.white.withOpacity(0.72)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.2,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _PrmScenePainter oldDelegate) => false;
+}
+
+class _MapGridBackground extends StatelessWidget {
+  const _MapGridBackground();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: List.generate(
+        8,
+        (row) => Expanded(
+          child: Row(
+            children: List.generate(
+              8,
+              (col) => Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: const Color(0x228C6B3E)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MapZone extends StatelessWidget {
+  final String label;
+  final Color color;
+
+  const _MapZone({required this.label, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return _SimpleLegendPill(text: label, color: color, darkText: true);
+  }
+}
+
+class _SimpleLegendPill extends StatelessWidget {
+  final String text;
+  final Color color;
+  final bool darkText;
+
+  const _SimpleLegendPill({
+    required this.text,
+    required this.color,
+    required this.darkText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.86),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: Colors.white.withOpacity(0.46)),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: darkText ? const Color(0xFF2A1B0B) : Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+    );
+  }
+}
+
+class _StaticStoryComparison extends StatelessWidget {
+  final String language;
+
+  const _StaticStoryComparison({required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isPhone = MediaQuery.of(context).size.width < 600;
+    final en = language == 'en';
+    final satellite = _StaticComparisonPanel(
+      icon: Icons.satellite_alt,
+      title: en ? 'Satellite imagery' : 'Imagen satelital',
+      color: const Color(0xFF77A7D9),
+      points: en
+          ? const [
+              'This is a valuable starting point, not a complete map of land meaning or land use.',
+              'It shows forest canopy, water, roads, roofs, and clearings.',
+              'It cannot tell who uses a place, what it is called, or why it matters.',
+            ]
+          : const [
+              'Es un punto de partida valioso, no un mapa completo del significado o uso de la tierra.',
+              'Muestra copa forestal, agua, caminos, techos y claros.',
+              'No puede decir quién usa un lugar, cómo se llama o por qué importa.',
+            ],
+    );
+    final prm = _StaticComparisonPanel(
+      icon: Icons.edit_location_alt,
+      title: en ? 'How we map' : 'Cómo mapeamos',
+      color: const Color(0xFF7FB069),
+      points: en
+          ? const [
+              'Adds field notes, GPS points, names, routes, rules, and local history.',
+              'Connects ecological detail with community knowledge.',
+              'Creates a tool for conservation, zoning, governance, and negotiation.',
+            ]
+          : const [
+              'Agrega notas de campo, puntos GPS, nombres, rutas, reglas e historia local.',
+              'Conecta detalle ecológico con conocimiento comunitario.',
+              'Crea una herramienta para conservación, zonificación, gobernanza y negociación.',
+            ],
+    );
+
+    if (isPhone) {
+      return Column(children: [satellite, const SizedBox(height: 14), prm]);
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: satellite),
+        const SizedBox(width: 18),
+        Expanded(child: prm),
+      ],
+    );
+  }
+}
+
+class _StaticComparisonPanel extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final Color color;
+  final List<String> points;
+
+  const _StaticComparisonPanel({
+    required this.icon,
+    required this.title,
+    required this.color,
+    required this.points,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: const Color(0xFF07111F).withOpacity(0.88),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.46), width: 1.4),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: color, size: 30),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 21,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          for (final point in points) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 7,
+                  height: 7,
+                  margin: const EdgeInsets.only(top: 8),
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    point,
+                    style: const TextStyle(
+                      color: Color(0xFFD7E0EA),
+                      fontSize: 15,
+                      height: 1.5,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _StaticStoryBeatCard extends StatelessWidget {
+  final _StoryBeat beat;
+  final bool isMobile;
+
+  const _StaticStoryBeatCard({required this.beat, required this.isMobile});
+
+  @override
+  Widget build(BuildContext context) {
+    final visualAid = _StoryVisualAid(
+      type: beat.visualType,
+      isMobile: isMobile,
+    );
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(isMobile ? 20 : 26),
+      decoration: BoxDecoration(
+        color: const Color(0xFF101A2F).withOpacity(0.92),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withOpacity(0.12)),
+      ),
+      child: isMobile
+          ? Column(
+              children: [
+                _StoryBeatText(beat: beat, isMobile: isMobile),
+                const SizedBox(height: 18),
+                visualAid,
+              ],
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: _StoryBeatText(beat: beat, isMobile: isMobile),
+                ),
+                const SizedBox(width: 22),
+                Expanded(flex: 4, child: visualAid),
+              ],
+            ),
+    );
+  }
+}
+
+class _StoryBeatText extends StatelessWidget {
+  final _StoryBeat beat;
+  final bool isMobile;
+
+  const _StoryBeatText({required this.beat, required this.isMobile});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 44,
+          height: 44,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFFC766),
+            shape: BoxShape.circle,
+          ),
+          child: Text(
+            beat.label,
+            style: const TextStyle(
+              color: Color(0xFF07111F),
+              fontSize: 17,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(beat.icon, color: const Color(0xFF7FB069), size: 24),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      beat.title,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: isMobile ? 20 : 23,
+                        fontWeight: FontWeight.w800,
+                        height: 1.22,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                beat.body,
+                style: TextStyle(
+                  color: const Color(0xFFD7E0EA),
+                  fontSize: isMobile ? 15 : 16,
+                  height: 1.58,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  _StoryTag(
+                    text: beat.satellitePoint,
+                    color: const Color(0xFF77A7D9),
+                  ),
+                  _StoryTag(
+                    text: beat.prmPoint,
+                    color: const Color(0xFF7FB069),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StoryVisualAid extends StatelessWidget {
+  final _StoryVisualType type;
+  final bool isMobile;
+
+  const _StoryVisualAid({required this.type, required this.isMobile});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      constraints: BoxConstraints(minHeight: isMobile ? 180 : 210),
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: const Color(0xFF07111F).withOpacity(0.78),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.white.withOpacity(0.12)),
+      ),
+      child: switch (type) {
+        _StoryVisualType.satelliteTiles => _SatelliteTileVisual(),
+        _StoryVisualType.hiddenMeaning => _HiddenMeaningVisual(),
+        _StoryVisualType.mapLayers => _MapLayerVisual(),
+        _StoryVisualType.decisionPath => _DecisionPathVisual(),
+        _StoryVisualType.donorTool => _DonorToolVisual(),
+      },
+    );
+  }
+}
+
+class _SatelliteTileVisual extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _VisualTitle(icon: Icons.grid_view, text: 'Pixels show surface'),
+        const SizedBox(height: 14),
+        SizedBox(
+          height: 124,
+          child: GridView.count(
+            crossAxisCount: 5,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
+            physics: const NeverScrollableScrollPhysics(),
+            children: List.generate(15, (index) {
+              final colors = [
+                const Color(0xFF1F5A38),
+                const Color(0xFF2E6F3C),
+                const Color(0xFF77A7D9),
+                const Color(0xFF36513A),
+              ];
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  color: colors[index % colors.length],
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              );
+            }),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _HiddenMeaningVisual extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        _VisualTitle(
+          icon: Icons.visibility_off,
+          text: 'Meaning is hidden from above',
+        ),
+        SizedBox(height: 16),
+        _VisualPill(icon: Icons.forest, text: 'medicinal plants'),
+        SizedBox(height: 10),
+        _VisualPill(icon: Icons.route, text: 'seasonal trail'),
+        SizedBox(height: 10),
+        _VisualPill(icon: Icons.water_drop, text: 'flood risk'),
+      ],
+    );
+  }
+}
+
+class _MapLayerVisual extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      height: 188,
+      child: Stack(
+        children: [
+          Positioned(
+            left: 14,
+            right: 44,
+            top: 26,
+            child: _LayerSheet(color: Color(0xFF77A7D9), label: 'imagery'),
+          ),
+          Positioned(
+            left: 28,
+            right: 28,
+            top: 70,
+            child: _LayerSheet(color: Color(0xFFFFC766), label: 'field notes'),
+          ),
+          Positioned(
+            left: 42,
+            right: 12,
+            top: 114,
+            child: _LayerSheet(
+              color: Color(0xFF7FB069),
+              label: 'community knowledge',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DecisionPathVisual extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        _DecisionStep(icon: Icons.image_search, text: 'See change'),
+        Icon(Icons.arrow_downward, color: Color(0xFFFFC766)),
+        _DecisionStep(icon: Icons.map, text: 'Understand context'),
+        Icon(Icons.arrow_downward, color: Color(0xFFFFC766)),
+        _DecisionStep(icon: Icons.task_alt, text: 'Plan before harm grows'),
+      ],
+    );
+  }
+}
+
+class _DonorToolVisual extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        _VisualTitle(
+          icon: Icons.volunteer_activism,
+          text:
+              'Donation enables all of these steps which facilitate this process',
+        ),
+        SizedBox(height: 16),
+        _VisualPill(icon: Icons.gps_fixed, text: 'GPS + fieldwork'),
+        SizedBox(height: 10),
+        _VisualPill(icon: Icons.school, text: 'trained community geographers'),
+        SizedBox(height: 10),
+        _VisualPill(icon: Icons.handshake, text: 'governance-ready maps'),
+      ],
+    );
+  }
+}
+
+class _VisualTitle extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _VisualTitle({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: const Color(0xFFFFC766), size: 22),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _VisualPill extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _VisualPill({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: const Color(0xFF16402E).withOpacity(0.82),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFF7FB069).withOpacity(0.36)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: const Color(0xFF7FB069), size: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: Color(0xFFD7E0EA),
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LayerSheet extends StatelessWidget {
+  final Color color;
+  final String label;
+
+  const _LayerSheet({required this.color, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 58,
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.84),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.white.withOpacity(0.38)),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: Color(0xFF07111F),
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+    );
+  }
+}
+
+class _DecisionStep extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _DecisionStep({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: const Color(0xFF7FB069), size: 22),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StoryTag extends StatelessWidget {
+  final String text;
+  final Color color;
+
+  const _StoryTag({required this.text, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.14),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: color.withOpacity(0.46)),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontSize: 13,
+          fontWeight: FontWeight.w800,
         ),
       ),
     );
