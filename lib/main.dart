@@ -11,6 +11,9 @@ import 'dart:math' as math;
 
 const String _donationPageUrl =
     'https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship';
+const Color _kuBlue = Color(0xFF1D53B3);
+const String _kuLogoBlueAsset = 'assets/images/KU_LOGO_BLUE.jpg';
+const String _revisedBadgeLogoAsset = 'assets/images/logo_badge_revised.png';
 
 void _openDonationPage() {
   launchUrl(Uri.parse(_donationPageUrl));
@@ -235,8 +238,9 @@ class _ChagresHomeState extends State<ChagresHome> {
       const AssetImage('assets/images/chagres_initiative_logo_hq.png'),
       context,
     );
+    precacheImage(const AssetImage(_revisedBadgeLogoAsset), context);
     precacheImage(const AssetImage('assets/images/jayhawk.png'), context);
-    precacheImage(const AssetImage('assets/images/ku_signature.png'), context);
+    precacheImage(const AssetImage(_kuLogoBlueAsset), context);
     precacheImage(const AssetImage('assets/images/Launch_KU.png'), context);
     precacheImage(
       const AssetImage('assets/images/Spanish_PRM_Explain.png'),
@@ -398,15 +402,53 @@ class _ChagresHomeState extends State<ChagresHome> {
               children: [
                 if (!isMobile)
                   const SizedBox(height: 58), // Space for fixed header
-                HeroSection(
-                  language: widget.language,
-                  onLogoTap: _showLogoZoom,
-                ),
+                HeroSection(language: widget.language),
                 _WorkingDraftBanner(language: widget.language),
                 RevealOnScroll(
                   child: AboutSection(
                     key: _aboutKey,
                     language: widget.language,
+                  ),
+                ),
+                // Panama Canal / Chagres National Park map — drops in between
+                // the About cards and the fact-icons stats band.
+                Container(
+                  width: double.infinity,
+                  color: const Color(0xFF0C1328),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 20 : 60,
+                    vertical: isMobile ? 36 : 56,
+                  ),
+                  child: RevealOnScroll(
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1375),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              widget.language == 'en'
+                                  ? 'Panama, the Canal and Chagres National Park'
+                                  : 'Panamá, el Canal y el Parque Nacional Chagres',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.cinzel(
+                                color: Colors.white,
+                                fontSize: isMobile ? 22 : 32,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 0.5,
+                                height: 1.2,
+                              ),
+                            ),
+                            SizedBox(height: isMobile ? 14 : 18),
+                            Image.asset(
+                              'assets/images/panama_chagres_map_transparent.png',
+                              fit: BoxFit.contain,
+                              filterQuality: FilterQuality.high,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 // Stats band (5 figures) lifted out of the green band so it
@@ -417,6 +459,9 @@ class _ChagresHomeState extends State<ChagresHome> {
                   child: RevealOnScroll(
                     child: _SealWithStats(language: widget.language),
                   ),
+                ),
+                RevealOnScroll(
+                  child: MappingMethodSection(language: widget.language),
                 ),
                 RevealOnScroll(
                   child: _WhyDonationsBand(
@@ -645,68 +690,19 @@ class _ChagresHomeState extends State<ChagresHome> {
   }
 
   Widget _buildHeaderBrand({required bool isMobile}) {
-    final signatureHeight = isMobile ? 26.0 : 42.0;
-    final launchHeight = isMobile ? 26.0 : 42.0;
-    final gap = isMobile ? 10.0 : 14.0;
+    final kuHeight = isMobile ? 26.0 : 38.0;
 
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 450),
-      transitionBuilder: (child, animation) =>
-          FadeTransition(opacity: animation, child: child),
-      child: _showJayhawk
-          ? Row(
-              key: const ValueKey('ku_launch_signature'),
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: _showLogoZoom,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Image.asset(
-                      'assets/images/ku_signature.png',
-                      height: signatureHeight,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                SizedBox(width: gap),
-                GestureDetector(
-                  onTap: _openDonationPage,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Image.asset(
-                      'assets/images/Launch_KU.png',
-                      height: launchHeight,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : GestureDetector(
-              key: const ValueKey('logo_with_jayhawk'),
-              onTap: _showLogoZoom,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      'assets/images/chagres_initiative_logo_hq.png',
-                      height: isMobile ? 48 : 80,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(width: isMobile ? 10 : 14),
-                    Image.asset(
-                      'assets/images/jayhawk.png',
-                      height: isMobile ? 40 : 64,
-                      fit: BoxFit.contain,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+    return GestureDetector(
+      onTap: _scrollToTop,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Image.asset(
+          _kuLogoBlueAsset,
+          height: kuHeight,
+          fit: BoxFit.contain,
+          filterQuality: FilterQuality.high,
+        ),
+      ),
     );
   }
 
@@ -719,7 +715,7 @@ class _ChagresHomeState extends State<ChagresHome> {
         ),
       ),
       title: _buildHeaderBrand(isMobile: true),
-      backgroundColor: const Color(0xFF0C1328),
+      backgroundColor: _kuBlue,
       elevation: 1,
       centerTitle: true,
     );
@@ -821,7 +817,7 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   Widget _buildDesktopHeader() {
     return Container(
-      color: const Color(0xFF0C1328),
+      color: _kuBlue,
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -896,12 +892,11 @@ class _ChagresHomeState extends State<ChagresHome> {
   }
 }
 
-// Hero Section - Logo centered on palms
+// Hero Section - project mark centered on palms
 class HeroSection extends StatelessWidget {
   final String language;
-  final VoidCallback? onLogoTap;
 
-  const HeroSection({super.key, required this.language, this.onLogoTap});
+  const HeroSection({super.key, required this.language});
 
   @override
   Widget build(BuildContext context) {
@@ -909,8 +904,9 @@ class HeroSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
-    final logoWidth = isMobile ? screenWidth * 0.92 : screenWidth * 0.68;
     final heroTopPadding = isMobile ? topInset + 56 : screenHeight * 0.09;
+    final sealMaxWidth = isMobile ? screenWidth * 0.72 : screenWidth * 0.34;
+    final sealMaxHeight = isMobile ? screenHeight * 0.42 : screenHeight * 0.55;
 
     return Stack(
       children: [
@@ -940,30 +936,25 @@ class HeroSection extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: onLogoTap,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: logoWidth,
-                        maxHeight: isMobile
-                            ? screenHeight * 0.34
-                            : screenHeight * 0.44,
-                      ),
-                      child: Image.asset(
-                        'assets/images/chagres_initiative_logo_hq.png',
-                        fit: isMobile ? BoxFit.contain : BoxFit.fitWidth,
-                      ),
-                    ),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: sealMaxWidth,
+                    maxHeight: sealMaxHeight,
+                  ),
+                  child: Image.asset(
+                    'assets/images/chagres_oval_seal.png',
+                    fit: BoxFit.contain,
+                    filterQuality: FilterQuality.high,
                   ),
                 ),
-                SizedBox(height: isMobile ? 20 : 28),
+                SizedBox(height: isMobile ? 18 : 26),
                 Column(
                   children: [
                     _buildPhrase(
                       context,
-                      language == 'en' ? 'Water Security' : 'Seguridad Hídrica',
+                      language == 'en'
+                          ? 'Panama Canal Water Security'
+                          : 'Seguridad Hídrica del Canal de Panamá',
                     ),
                     const SizedBox(height: 10),
                     _buildPhrase(
@@ -1010,6 +1001,262 @@ class HeroSection extends StatelessWidget {
   Widget _buildPhrase(BuildContext context, String text) {
     return _HeroPhrasePill(text: text);
   }
+}
+
+class _HeaderProjectMark extends StatelessWidget {
+  final String language;
+  final bool isMobile;
+
+  const _HeaderProjectMark({required this.language, required this.isMobile});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CustomPaint(
+          size: Size.square(isMobile ? 34 : 44),
+          painter: const _ChagresMarkPainter(compact: true),
+        ),
+        SizedBox(width: isMobile ? 8 : 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              language == 'en' ? 'Chagres' : 'Chagres',
+              style: GoogleFonts.cinzel(
+                color: Colors.white,
+                fontSize: isMobile ? 15 : 19,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.8,
+                height: 1.0,
+              ),
+            ),
+            Text(
+              language == 'en' ? 'Initiative' : 'Iniciativa',
+              style: GoogleFonts.cinzel(
+                color: const Color(0xFFE8F1FF),
+                fontSize: isMobile ? 9 : 11,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.2,
+                height: 1.1,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _HeroPlaceholderLogo extends StatelessWidget {
+  final String language;
+
+  const _HeroPlaceholderLogo({required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+    final title = language == 'en'
+        ? 'Chagres Initiative'
+        : 'Iniciativa Chagres';
+    final subtitle = language == 'en'
+        ? 'Water Security | Rainforest Stewardship'
+        : 'Seguridad Hidrica | Custodia del Bosque';
+
+    return AspectRatio(
+      aspectRatio: isMobile ? 1.55 : 2.45,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 22 : 40,
+          vertical: isMobile ? 18 : 30,
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xFF07111F).withOpacity(0.58),
+          borderRadius: BorderRadius.circular(isMobile ? 18 : 24),
+          border: Border.all(color: Colors.white.withOpacity(0.24), width: 1.2),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.42),
+              blurRadius: 34,
+              offset: const Offset(0, 16),
+            ),
+          ],
+        ),
+        child: isMobile
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomPaint(
+                    size: const Size.square(86),
+                    painter: const _ChagresMarkPainter(),
+                  ),
+                  const SizedBox(height: 14),
+                  _HeroLogoText(
+                    title: title,
+                    subtitle: subtitle,
+                    centered: true,
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomPaint(
+                    size: const Size.square(132),
+                    painter: const _ChagresMarkPainter(),
+                  ),
+                  const SizedBox(width: 30),
+                  Expanded(
+                    child: _HeroLogoText(
+                      title: title,
+                      subtitle: subtitle,
+                      centered: false,
+                    ),
+                  ),
+                ],
+              ),
+      ),
+    );
+  }
+}
+
+class _HeroLogoText extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final bool centered;
+
+  const _HeroLogoText({
+    required this.title,
+    required this.subtitle,
+    required this.centered,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: centered
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
+      children: [
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: centered ? Alignment.center : Alignment.centerLeft,
+          child: Text(
+            title,
+            style: GoogleFonts.cinzel(
+              color: Colors.white,
+              fontSize: isMobile ? 36 : 62,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.4,
+              height: 1.02,
+              shadows: [
+                Shadow(
+                  color: Colors.black.withOpacity(0.55),
+                  blurRadius: 12,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            textAlign: centered ? TextAlign.center : TextAlign.left,
+          ),
+        ),
+        SizedBox(height: isMobile ? 8 : 12),
+        Text(
+          subtitle,
+          style: GoogleFonts.cinzel(
+            color: const Color(0xFFE8F1FF),
+            fontSize: isMobile ? 12 : 18,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.4,
+            height: 1.25,
+          ),
+          textAlign: centered ? TextAlign.center : TextAlign.left,
+        ),
+        SizedBox(height: isMobile ? 10 : 14),
+        Container(
+          width: isMobile ? 96 : 150,
+          height: 3,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(99),
+            gradient: const LinearGradient(
+              colors: [Color(0xFF77A7D9), Color(0xFF7FB069), Color(0xFFFFC766)],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ChagresMarkPainter extends CustomPainter {
+  final bool compact;
+
+  const _ChagresMarkPainter({this.compact = false});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.shortestSide / 2;
+    final outerPaint = Paint()
+      ..shader = const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFF0051BA), Color(0xFF16402E)],
+      ).createShader(Offset.zero & size);
+
+    canvas.drawCircle(center, radius, outerPaint);
+    canvas.drawCircle(
+      center,
+      radius * 0.91,
+      Paint()
+        ..color = const Color(0xFF07111F).withOpacity(compact ? 0.24 : 0.18)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = radius * 0.07,
+    );
+
+    final mountainPaint = Paint()..color = const Color(0xFF7FB069);
+    final mountainPath = Path()
+      ..moveTo(size.width * 0.16, size.height * 0.62)
+      ..lineTo(size.width * 0.38, size.height * 0.30)
+      ..lineTo(size.width * 0.53, size.height * 0.52)
+      ..lineTo(size.width * 0.68, size.height * 0.34)
+      ..lineTo(size.width * 0.88, size.height * 0.62)
+      ..close();
+    canvas.drawPath(mountainPath, mountainPaint);
+
+    final riverPaint = Paint()
+      ..color = const Color(0xFF77A7D9)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = radius * 0.16
+      ..strokeCap = StrokeCap.round;
+    final riverPath = Path()
+      ..moveTo(size.width * 0.24, size.height * 0.70)
+      ..cubicTo(
+        size.width * 0.40,
+        size.height * 0.58,
+        size.width * 0.48,
+        size.height * 0.80,
+        size.width * 0.70,
+        size.height * 0.67,
+      );
+    canvas.drawPath(riverPath, riverPaint);
+
+    final sunPaint = Paint()..color = const Color(0xFFFFC766);
+    canvas.drawCircle(
+      Offset(size.width * 0.70, size.height * 0.30),
+      radius * 0.12,
+      sunPaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _ChagresMarkPainter oldDelegate) =>
+      oldDelegate.compact != compact;
 }
 
 class _HeroPhrasePill extends StatefulWidget {
@@ -1259,7 +1506,7 @@ class PartnershipsSection extends StatelessWidget {
                                 ),
                                 children: _buildCISpans(
                                   language == 'en'
-                                      ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and zoning plan of the Chagres National Park will take about three years and U.S. \$550,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
+                                      ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and standard map results needed for zoning and planning of the Chagres National Park will take about three years and U.S. \$550,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
                                       : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nAnte los drásticos recortes en los fondos federales de EE.UU., los de las ONG e incluso la financiación universitaria interna para la investigación internacional, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres requerirá aproximadamente tres años y unos US\$550,000.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, ya que pagan los costos directos del proyecto para los miembros de la comunidad, los estudiantes y profesores de KU del equipo de investigación, así como vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios que cubren alimentación, alojamiento y transporte.',
                                   const TextStyle(
                                     color: Color(0xFFB9C6EA),
@@ -1358,7 +1605,9 @@ class PartnershipsSection extends StatelessWidget {
   }
 }
 
-// About Section
+// About Section — three-card layout: each card holds one core idea with an
+// illustrative image, a heading, and a short body. Designed for marketing
+// readability over the previous two-paragraph wall of text.
 class AboutSection extends StatelessWidget {
   final String language;
 
@@ -1367,129 +1616,759 @@ class AboutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth < 900;
     final isPhone = screenWidth < 600;
+    // Two-column layout above 900px; stack below.
+    final useTwoColumns = screenWidth >= 900;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Natural image height at full width (1600×1066)
-        final imageHeight = constraints.maxWidth * 1066.0 / 1600.0;
-        // Content sits in the top 1/3 of the photo
-        final topPadding = imageHeight * 0.05;
+    final horizontalPad = isPhone ? 20.0 : (useTwoColumns ? 60.0 : 40.0);
+    final verticalPad = isPhone ? 64.0 : 96.0;
 
-        // Shared text content widget
-        final textContent = Column(
-          children: [
-            GestureDetector(
-              onTap: () {},
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Builder(
-                  builder: (context) {
-                    final titleStyle = Theme.of(
-                      context,
-                    ).textTheme.displaySmall?.copyWith(color: Colors.white);
-                    return Text.rich(
-                      TextSpan(
-                        style: titleStyle,
-                        children: _buildCISpans(
-                          language == 'en'
-                              ? 'About the Chagres Initiative'
-                              : 'Sobre la Iniciativa Chagres',
-                          titleStyle,
-                        ),
-                      ),
-                      textAlign: TextAlign.center,
-                    );
-                  },
+    final cards = <_AboutCardData>[
+      _AboutCardData(
+        illustration: const _CompassPainter(),
+        hero: language == 'en' ? 'Exploration' : 'Exploración',
+        subtitle: language == 'en'
+            ? 'At the Heart of the Panama Canal'
+            : 'En el Corazón del Canal de Panamá',
+        tagline: '',
+        accent: const Color(0xFF77A7D9), // sky blue — exploration / methodology
+        sentence: language == 'en'
+            ? "In the world's greatest commercial, maritime hub, discovery abounds surprisingly, in the shadow of Panama City."
+            : 'En el mayor centro comercial y marítimo del mundo, el descubrimiento abunda sorprendentemente a la sombra de la Ciudad de Panamá.',
+        highlights: language == 'en'
+            ? const [
+                "world's greatest commercial, maritime hub",
+                'discovery abounds',
+                'Panama City',
+              ]
+            : const [
+                'mayor centro comercial y marítimo del mundo',
+                'el descubrimiento abunda',
+                'Ciudad de Panamá',
+              ],
+        bullets: language == 'en'
+            ? const [
+                'Built on Indigenous geospatial knowledge',
+                'Layered with GPS, aerial photography, and satellite imagery',
+                'Villagers trained as community geographers alongside KU researchers',
+                'Rigorous science rooted in lived experience',
+              ]
+            : const [
+                'Basado en conocimiento geoespacial indígena',
+                'Combinado con GPS, fotografía aérea e imágenes satelitales',
+                'Pobladores capacitados como geógrafos comunitarios junto a KU',
+                'Ciencia rigurosa arraigada en la experiencia vivida',
+              ],
+      ),
+      _AboutCardData(
+        illustration: const _MountainPalmsPainter(),
+        hero: language == 'en' ? 'Discovering' : 'Descubriendo',
+        subtitle: language == 'en'
+            ? 'Indigenous People Sustain Global Trade'
+            : 'Los Pueblos Indígenas Sostienen el Comercio Global',
+        tagline: '',
+        accent: const Color(0xFF7FB069), // leaf green — place / stakes
+        sentence: language == 'en'
+            ? 'Indigenous Rainforest communities coexist with the most pristine Neo-tropical rainforest in the mesoamerican biological corridor.'
+            : 'Las comunidades indígenas del bosque tropical conviven con el bosque tropical neotropical más prístino del corredor biológico mesoamericano.',
+        highlights: language == 'en'
+            ? const [
+                'Indigenous Rainforest communities',
+                'most pristine Neo-tropical rainforest',
+                'mesoamerican biological corridor',
+              ]
+            : const [
+                'comunidades indígenas del bosque tropical',
+                'bosque tropical neotropical más prístino',
+                'corredor biológico mesoamericano',
+              ],
+        bullets: language == 'en'
+            ? const [
+                'Source of 40% of Panama Canal freshwater',
+                'Drinking water for 2M+ people in Panama City & Colón',
+                'Indigenous lands inside Chagres National Park',
+                'Maps that empower land protection & planning',
+              ]
+            : const [
+                'Fuente del 40% del agua dulce del Canal de Panamá',
+                'Agua potable para 2M+ personas en Panamá y Colón',
+                'Tierras indígenas dentro del Parque Nacional Chagres',
+                'Mapas que potencian la protección de tierras y la planificación',
+              ],
+      ),
+    ];
+
+    final cardsLayout = useTwoColumns
+        ? IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (int i = 0; i < cards.length; i++) ...[
+                  Expanded(child: _AboutCard(data: cards[i])),
+                  if (i < cards.length - 1) const SizedBox(width: 28),
+                ],
+              ],
+            ),
+          )
+        : Column(
+            children: [
+              for (int i = 0; i < cards.length; i++) ...[
+                _AboutCard(data: cards[i]),
+                if (i < cards.length - 1) const SizedBox(height: 24),
+              ],
+            ],
+          );
+
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF0C1328), Color(0xFF101A2F)],
+        ),
+      ),
+      child: CustomPaint(
+        painter: const _CartographicBackdropPainter(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: horizontalPad,
+            vertical: verticalPad,
+          ),
+          child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1280),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                language == 'en'
+                    ? 'The Chagres Initiative Is...'
+                    : 'La Iniciativa Chagres Es...',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.playfairDisplay(
+                  color: const Color(0xFFE0B660),
+                  fontSize: 56,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.3,
+                  height: 1.2,
+                  shadows: [
+                    Shadow(
+                      color: const Color(0xFFE0B660).withOpacity(0.4),
+                      blurRadius: 24,
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const SizedBox(height: 24),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(
-                  0xFF101A2F,
-                ).withOpacity(isPhone ? 1.0 : 0.82),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.45),
-                    blurRadius: 34,
-                    offset: const Offset(0, 14),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.all(36),
-              child: Text.rich(
-                TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFFB9C6EA),
-                    fontSize: 17,
-                    height: 1.75,
-                  ),
-                  children: _buildCISpans(
-                    language == 'en'
-                        ? 'The Chagres Initiative responds to a legal request from an Indigenous Congress in Panama to help them map and conserve their lands inside the Chagres National Park (CNP), which supplies 40 percent of the freshwater used by Panama Canal operations and drinking water for more than 2 million people in Panama City and Colón.\n\nOur KU research team was invited by Indigenous leaders to help them map their land use inside the park. We use participatory research mapping (PRM) methodology that combines Indigenous geospatial knowledge (IGK) with GPS, air photography, and satellite imagery. Importantly, we train villagers as "community geographers" who learn field research skills and work alongside university researchers to produce accurate maps for conservation and development planning. Through this collaboration, the community gains the mapping tools they need for land protection, and together we produce scientifically rigorous data grounded in Indigenous knowledge and local experience.'
-                        : 'La Iniciativa Chagres responde a una solicitud legal de un Congreso Indígena en Panamá para ayudarles a mapear y conservar sus tierras dentro del Parque Nacional Chagres (PNC), que suministra el 40 por ciento del agua dulce utilizada por las operaciones del Canal de Panamá y agua potable para más de 2 millones de personas en la Ciudad de Panamá y Colón.\n\nNuestro equipo de investigación de KU fue invitado por líderes indígenas para ayudarles a mapear el uso de su tierra dentro del parque. Utilizamos la metodología de mapeo participativo de investigación (PRM) que combina el conocimiento geoespacial indígena (CGI) con GPS, fotografía aérea e imágenes satelitales. Es importante señalar que capacitamos a los pobladores como "geógrafos comunitarios" que aprenden habilidades de investigación de campo y trabajan junto a investigadores universitarios para producir mapas precisos para la planificación de conservación y desarrollo. A través de esta colaboración, la comunidad obtiene las herramientas de mapeo que necesita para la protección de tierras, y juntos producimos datos científicamente rigurosos fundamentados en el conocimiento indígena y la experiencia local.',
-                    Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFFB9C6EA),
-                      fontSize: 17,
-                      height: 1.75,
+              SizedBox(height: isPhone ? 28 : 40),
+              cardsLayout,
+            ],
+          ),
+        ),
+      ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AboutCardData {
+  final CustomPainter illustration;
+  final String hero;
+  final String subtitle;
+  final String tagline;
+  final Color accent;
+  final String sentence;
+  final List<String> highlights;
+  final List<String> bullets;
+  const _AboutCardData({
+    required this.illustration,
+    required this.hero,
+    required this.subtitle,
+    required this.tagline,
+    required this.accent,
+    required this.sentence,
+    required this.highlights,
+    required this.bullets,
+  });
+}
+
+/// Splits `text` into TextSpans, gold-italic-styling any substring that matches
+/// a `highlight`. First-occurrence wins; matches don't nest.
+List<TextSpan> _buildHighlightSpans(
+  String text,
+  List<String> highlights,
+  TextStyle baseStyle,
+  TextStyle highlightStyle,
+) {
+  final spans = <TextSpan>[];
+  String remaining = text;
+  while (remaining.isNotEmpty) {
+    int firstIdx = -1;
+    String firstMatch = '';
+    for (final h in highlights) {
+      final idx = remaining.indexOf(h);
+      if (idx >= 0 && (firstIdx < 0 || idx < firstIdx)) {
+        firstIdx = idx;
+        firstMatch = h;
+      }
+    }
+    if (firstIdx < 0) {
+      spans.add(TextSpan(text: remaining, style: baseStyle));
+      break;
+    }
+    if (firstIdx > 0) {
+      spans.add(
+        TextSpan(text: remaining.substring(0, firstIdx), style: baseStyle),
+      );
+    }
+    spans.add(TextSpan(text: firstMatch, style: highlightStyle));
+    remaining = remaining.substring(firstIdx + firstMatch.length);
+  }
+  return spans;
+}
+
+// Gold gradient used for the hero word — gives it a metallic shimmer that
+// reads as "luxury editorial" against the dark navy card.
+const List<Color> _aboutGoldGradient = [
+  Color(0xFFFFE9A8),
+  Color(0xFFE0B660),
+  Color(0xFFB8851A),
+];
+
+class _AboutCard extends StatelessWidget {
+  final _AboutCardData data;
+  const _AboutCard({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    // Solid gold with a subtle warm glow for that "shiny" feel — no gradient.
+    final goldHeroStyle = GoogleFonts.playfairDisplay(
+      color: const Color(0xFFE0B660),
+      fontSize: 46,
+      fontWeight: FontWeight.w700,
+      fontStyle: FontStyle.italic,
+      height: 1.15,
+      letterSpacing: 0.5,
+      shadows: [
+        Shadow(
+          color: const Color(0xFFE0B660).withOpacity(0.45),
+          blurRadius: 22,
+        ),
+      ],
+    );
+
+    return Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF152544), Color(0xFF0F1B36)],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.07), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.45),
+            blurRadius: 32,
+            offset: const Offset(0, 16),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(34, 38, 34, 36),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+                // Headline illustration — gold compass / mountains-and-palms.
+                SizedBox(
+                  width: 156,
+                  height: 156,
+                  child: CustomPaint(painter: data.illustration),
+                ),
+                const SizedBox(height: 14),
+                // Hero — single solid-gold Text, centered. Same fontSize on
+                // both cards so they match in scale.
+                Text(
+                  data.hero,
+                  textAlign: TextAlign.center,
+                  style: goldHeroStyle,
+                ),
+                const SizedBox(height: 10),
+                // Hairline gold rule.
+                Container(
+                  width: 64,
+                  height: 1.5,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFE0B660), Color(0xFFFFE9A8)],
                     ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        );
-
-        // Phone: no background photo, just padded text
-        if (isPhone) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            child: textContent,
-          );
-        }
-
-        // Tablet/desktop: full photo with overlaid text
-        return Stack(
-          children: [
-            // Full ship photo, natural size, soft edges
-            ShaderMask(
-              shaderCallback: (rect) => const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.0, 0.08, 0.92, 1.0],
-                colors: [
-                  Colors.transparent,
-                  Colors.white,
-                  Colors.white,
-                  Colors.transparent,
+                const SizedBox(height: 12),
+                // Solid gold subtitle — continuation of the title.
+                Text(
+                  data.subtitle,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.playfairDisplay(
+                    color: const Color(0xFFE0B660),
+                    fontSize: 30,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.3,
+                    height: 1.3,
+                  ),
+                ),
+                if (data.tagline.isNotEmpty) ...[
+                  const SizedBox(height: 18),
+                  Text(
+                    data.tagline,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.playfairDisplay(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w500,
+                      height: 1.5,
+                    ),
+                  ),
                 ],
-              ).createShader(rect),
-              blendMode: BlendMode.dstIn,
-              child: Image.asset(
-                'assets/images/container_ship_gatun.jpg',
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
-                filterQuality: FilterQuality.high,
-                color: const Color(0xFF0C1328).withOpacity(0.50),
-                colorBlendMode: BlendMode.srcOver,
-              ),
+              ],
             ),
-            // Text overlaid in the top portion of the photo
-            Positioned(
-              top: topPadding,
-              left: isMobile ? 20 : 60,
-              right: isMobile ? 20 : 60,
-              child: textContent,
-            ),
-          ],
-        );
-      },
+          ),
+        ),
     );
   }
+}
+
+class _AboutBullet extends StatelessWidget {
+  final String text;
+  final Color accent;
+  const _AboutBullet({required this.text, required this.accent});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 8, right: 12),
+          child: Container(
+            width: 7,
+            height: 7,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: accent,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Color(0xFFB9C6EA),
+              fontSize: 15.5,
+              height: 1.55,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// Hand-drawn gold illustrations for the About cards. Drawn at runtime as
+// vector strokes/fills so they stay crisp at any size and pick up the
+// surrounding card aesthetic.
+const Color _aboutGold = Color(0xFFE0B660);
+const Color _aboutGoldLight = Color(0xFFFFE9A8);
+
+/// Detailed brass compass, drawn at a 3/4 (tilted) angle so the dial reads as
+/// an ellipse rather than a flat circle. All elements stay symmetrically
+/// inside the bounding box so the illustration's visual center matches its
+/// geometric center.
+class _CompassPainter extends CustomPainter {
+  const _CompassPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width / 2;
+    final r = size.shortestSide / 2;
+    // Foreshortening factor (1.0 = top-down, lower = more tilted).
+    const yScale = 0.66;
+    // How thick the visible case rim is below the dial.
+    final caseDepth = r * 0.10;
+    // Pre-shift the dial center upward by half the case depth so the visual
+    // center of the dial+rim composition lands at the geometric center of
+    // the SizedBox.
+    final cy = size.height / 2 - caseDepth / 2;
+    final center = Offset(cx, cy);
+
+    final ringStroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = r * 0.040
+      ..strokeCap = StrokeCap.round
+      ..color = _aboutGold;
+    final hairline = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = r * 0.018
+      ..strokeCap = StrokeCap.round
+      ..color = _aboutGold.withOpacity(0.85);
+    final faintHairline = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = r * 0.010
+      ..color = _aboutGold.withOpacity(0.45);
+
+    // Helper — point on an ellipse at compass angle `degrees` (0 = N, clockwise).
+    Offset onEllipse(double degrees, double radiusFactor) {
+      final a = (degrees - 90) * math.pi / 180; // compass to math
+      return Offset(
+        cx + math.cos(a) * r * radiusFactor,
+        cy + math.sin(a) * r * radiusFactor * yScale,
+      );
+    }
+
+    // ---- Brass case body (visible rim below the dial) ----
+    final caseRect = Rect.fromCenter(
+      center: Offset(cx, cy + caseDepth),
+      width: r * 1.92,
+      height: r * 1.92 * yScale,
+    );
+    canvas.drawOval(
+      caseRect,
+      Paint()..color = const Color(0xFFB8851A), // deep brass
+    );
+    // Highlight along the bottom of the case rim.
+    canvas.drawArc(
+      caseRect,
+      0,
+      math.pi,
+      false,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = r * 0.030
+        ..color = const Color(0xFFFFE9A8).withOpacity(0.55),
+    );
+
+    // ---- Dial face (top ellipse) ----
+    final dialRect = Rect.fromCircle(center: center, radius: r * 0.92);
+    final tiltedDialRect = Rect.fromCenter(
+      center: center,
+      width: dialRect.width,
+      height: dialRect.height * yScale,
+    );
+    // Soft radial gradient inside the face for depth.
+    final dialPaint = Paint()
+      ..shader = RadialGradient(
+        center: const Alignment(0.0, -0.3),
+        radius: 0.95,
+        colors: const [Color(0xFF1B2A48), Color(0xFF0B1426)],
+      ).createShader(tiltedDialRect);
+    canvas.drawOval(tiltedDialRect, dialPaint);
+    canvas.drawOval(tiltedDialRect, ringStroke);
+
+    // Inner decorative ring.
+    final innerDialRect = Rect.fromCenter(
+      center: center,
+      width: r * 1.55,
+      height: r * 1.55 * yScale,
+    );
+    canvas.drawOval(innerDialRect, hairline);
+
+    // Faint compass-rose enclosure ring.
+    final roseRingRect = Rect.fromCenter(
+      center: center,
+      width: r * 1.10,
+      height: r * 1.10 * yScale,
+    );
+    canvas.drawOval(roseRingRect, faintHairline);
+
+    // ---- Degree ticks: long every 30°, short every 15° between ----
+    for (int i = 0; i < 24; i++) {
+      final degrees = i * 15.0;
+      final isMajor = i % 2 == 0;
+      final outer = onEllipse(degrees, 0.92);
+      final inner = onEllipse(degrees, isMajor ? 0.80 : 0.86);
+      canvas.drawLine(outer, inner, isMajor ? hairline : faintHairline);
+    }
+
+    // ---- Cardinal labels (N E S W) inside the inner ring ----
+    void drawLabel(String letter, double degrees, double radiusFactor) {
+      final pos = onEllipse(degrees, radiusFactor);
+      final tp = TextPainter(
+        text: TextSpan(
+          text: letter,
+          style: TextStyle(
+            color: letter == 'N' ? _aboutGoldLight : _aboutGold,
+            fontSize: r * 0.16,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.6,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      tp.paint(
+        canvas,
+        Offset(pos.dx - tp.width / 2, pos.dy - tp.height / 2),
+      );
+    }
+
+    drawLabel('N', 0, 0.66);
+    drawLabel('E', 90, 0.70);
+    drawLabel('S', 180, 0.66);
+    drawLabel('W', 270, 0.70);
+
+    // ---- Compass rose: 4-point primary star (N/E/S/W) + 4-point intercardinals ----
+    void drawPetal({
+      required double angleDeg,
+      required double outerR,
+      required double sideR,
+      required double sideSpread,
+      required Color color,
+    }) {
+      final tip = onEllipse(angleDeg, outerR);
+      final left = onEllipse(angleDeg - sideSpread, sideR);
+      final right = onEllipse(angleDeg + sideSpread, sideR);
+      final petal = Path()
+        ..moveTo(cx, cy)
+        ..lineTo(left.dx, left.dy)
+        ..lineTo(tip.dx, tip.dy)
+        ..lineTo(right.dx, right.dy)
+        ..close();
+      canvas.drawPath(petal, Paint()..color = color);
+      canvas.drawPath(petal, hairline);
+    }
+
+    // Intercardinal (smaller, drawn first so they sit behind cardinals).
+    for (final ang in const [45.0, 135.0, 225.0, 315.0]) {
+      drawPetal(
+        angleDeg: ang,
+        outerR: 0.36,
+        sideR: 0.10,
+        sideSpread: 25,
+        color: _aboutGold.withOpacity(0.45),
+      );
+    }
+    // Cardinal (larger, primary star points).
+    drawPetal(
+      angleDeg: 0,
+      outerR: 0.50,
+      sideR: 0.12,
+      sideSpread: 18,
+      color: _aboutGoldLight,
+    );
+    drawPetal(
+      angleDeg: 90,
+      outerR: 0.50,
+      sideR: 0.12,
+      sideSpread: 18,
+      color: _aboutGold,
+    );
+    drawPetal(
+      angleDeg: 180,
+      outerR: 0.50,
+      sideR: 0.12,
+      sideSpread: 18,
+      color: _aboutGold.withOpacity(0.7),
+    );
+    drawPetal(
+      angleDeg: 270,
+      outerR: 0.50,
+      sideR: 0.12,
+      sideSpread: 18,
+      color: _aboutGold,
+    );
+
+    // ---- Center hub (brass screw cap) ----
+    canvas.drawCircle(center, r * 0.06, Paint()..color = _aboutGoldLight);
+    canvas.drawCircle(center, r * 0.06, hairline);
+    // Tiny screw slot.
+    canvas.drawLine(
+      Offset(cx - r * 0.04, cy),
+      Offset(cx + r * 0.04, cy),
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = r * 0.015
+        ..color = const Color(0xFFB8851A),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _CompassPainter oldDelegate) => false;
+}
+
+class _MountainPalmsPainter extends CustomPainter {
+  const _MountainPalmsPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    final s = size.shortestSide;
+
+    final stroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = s * 0.025
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round
+      ..color = _aboutGold;
+    final thin = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = s * 0.018
+      ..strokeCap = StrokeCap.round
+      ..color = _aboutGold.withOpacity(0.85);
+    final mountainFill = Paint()..color = _aboutGold.withOpacity(0.16);
+    final frontFill = Paint()..color = _aboutGold.withOpacity(0.28);
+
+    // Sun behind the mountains.
+    canvas.drawCircle(
+      Offset(w * 0.66, h * 0.32),
+      s * 0.07,
+      Paint()..color = _aboutGoldLight,
+    );
+    canvas.drawCircle(Offset(w * 0.66, h * 0.32), s * 0.07, thin);
+
+    // Back mountain ridge.
+    final back = Path()
+      ..moveTo(w * 0.05, h * 0.66)
+      ..lineTo(w * 0.22, h * 0.42)
+      ..lineTo(w * 0.36, h * 0.54)
+      ..lineTo(w * 0.54, h * 0.30)
+      ..lineTo(w * 0.72, h * 0.46)
+      ..lineTo(w * 0.85, h * 0.36)
+      ..lineTo(w * 0.96, h * 0.66)
+      ..lineTo(w * 0.05, h * 0.66)
+      ..close();
+    canvas.drawPath(back, mountainFill);
+    canvas.drawPath(back, stroke);
+
+    // Front mountain ridge — slightly lower and softer.
+    final front = Path()
+      ..moveTo(w * 0.02, h * 0.74)
+      ..lineTo(w * 0.16, h * 0.54)
+      ..lineTo(w * 0.30, h * 0.66)
+      ..lineTo(w * 0.46, h * 0.48)
+      ..lineTo(w * 0.62, h * 0.62)
+      ..lineTo(w * 0.78, h * 0.56)
+      ..lineTo(w * 0.92, h * 0.70)
+      ..lineTo(w * 0.98, h * 0.74)
+      ..lineTo(w * 0.02, h * 0.74)
+      ..close();
+    canvas.drawPath(front, frontFill);
+    canvas.drawPath(front, stroke);
+
+    // Ground horizon line.
+    canvas.drawLine(
+      Offset(w * 0.04, h * 0.86),
+      Offset(w * 0.96, h * 0.86),
+      thin,
+    );
+
+  }
+
+  @override
+  bool shouldRepaint(covariant _MountainPalmsPainter oldDelegate) => false;
+}
+
+// Faint cartographic grid + meridian curve drawn behind the whole About
+// section — gives the page a "weathered map spread" backdrop without
+// competing with foreground content.
+class _CartographicBackdropPainter extends CustomPainter {
+  const _CartographicBackdropPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    final lineColor = const Color(0xFF8FB3FF).withOpacity(0.06);
+    final stroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1
+      ..color = lineColor;
+
+    // Vertical meridians — curved (longitude lines projected on a sphere).
+    const verticalCount = 9;
+    for (int i = 1; i < verticalCount; i++) {
+      final x = w * (i / verticalCount);
+      final bow = (x - w / 2) * 0.15; // outer meridians bow further
+      final path = Path()
+        ..moveTo(x, 0)
+        ..quadraticBezierTo(x + bow, h / 2, x, h);
+      canvas.drawPath(path, stroke);
+    }
+
+    // Horizontal parallels.
+    const horizontalCount = 7;
+    for (int i = 1; i < horizontalCount; i++) {
+      final y = h * (i / horizontalCount);
+      canvas.drawLine(Offset(0, y), Offset(w, y), stroke);
+    }
+
+    // Faint dashed "route" arc spanning the section diagonally.
+    final routeColor = const Color(0xFFE0B660).withOpacity(0.10);
+    final routeStroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5
+      ..color = routeColor;
+    final dashLen = 12.0;
+    final gapLen = 8.0;
+    final route = Path()
+      ..moveTo(w * 0.10, h * 0.30)
+      ..quadraticBezierTo(w * 0.50, h * 0.05, w * 0.92, h * 0.40);
+    final metrics = route.computeMetrics();
+    for (final m in metrics) {
+      double dist = 0;
+      while (dist < m.length) {
+        final extract = m.extractPath(dist, dist + dashLen);
+        canvas.drawPath(extract, routeStroke);
+        dist += dashLen + gapLen;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _CartographicBackdropPainter oldDelegate) =>
+      false;
+}
+
+// Tiny faint compass-rose decoration that sits in a card corner; ties each
+// card visually to the cartographic theme.
+class _CardCornerCompassRose extends CustomPainter {
+  final Color accent;
+  const _CardCornerCompassRose({required this.accent});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width / 2;
+    final cy = size.height / 2;
+    final r = size.shortestSide / 2;
+    final stroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.8
+      ..color = accent.withOpacity(0.16);
+    canvas.drawCircle(Offset(cx, cy), r * 0.85, stroke);
+    canvas.drawCircle(Offset(cx, cy), r * 0.62, stroke);
+    canvas.drawCircle(Offset(cx, cy), r * 0.40, stroke);
+    for (int i = 0; i < 16; i++) {
+      final a = i * math.pi / 8;
+      final inner = r * 0.40;
+      final outer = r * 0.85;
+      canvas.drawLine(
+        Offset(cx + math.cos(a) * inner, cy + math.sin(a) * inner),
+        Offset(cx + math.cos(a) * outer, cy + math.sin(a) * outer),
+        stroke,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _CardCornerCompassRose oldDelegate) =>
+      oldDelegate.accent != accent;
 }
 
 // Mapping Method Section — large-scale showcase of the PRM diagram.
@@ -3301,8 +4180,8 @@ class _WhyDonationsSection extends StatelessWidget {
                     style: whyStyle,
                     children: _buildCISpans(
                       language == 'en'
-                          ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and zone CNP lands for development, conservation, and watershed governance. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
-                          : 'En pocas palabras, como una novedosa alternativa de financiamiento público-privado para la investigación, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y zonificar las tierras del PNC para el desarrollo, la conservación y la gobernanza de cuencas hidrográficas. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarles a ustedes, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
+                          ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and document Indigenous resource uses in CNP. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
+                          : 'En pocas palabras, como una novedosa alternativa de financiamiento público-privado para la investigación, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y documentar los usos indígenas de recursos en el PNC. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarles a ustedes, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
                       whyStyle,
                     ),
                   ),
@@ -4157,7 +5036,7 @@ class _MethodologySectionState extends State<MethodologySection> {
             ),
             (
               'Stage Four: Plot Field Data onto Cartographic Sheets',
-              'Plot field data onto standard cartographic sheets in community workshops. Designing Indigenous Land-use Management and zoning in workshops.',
+              'Plot field data onto standard cartographic sheets in community workshops. Designing Indigenous Land-use Management and potential zoning plans in workshops.',
             ),
             (
               'Stage Five: GIS and Computer Map Production',
@@ -4179,7 +5058,7 @@ class _MethodologySectionState extends State<MethodologySection> {
             ),
             (
               'Etapa Cuatro: Trazar Datos de Campo en Hojas Cartográficas',
-              'Trazar datos de campo en hojas cartográficas estándar en talleres comunitarios. Diseño del manejo del uso de tierras indígenas y zonificación en talleres.',
+              'Trazar datos de campo en hojas cartográficas estándar en talleres comunitarios. Diseño del manejo del uso de tierras indígenas y planes potenciales de zonificación en talleres.',
             ),
             (
               'Etapa Cinco: Producción de Mapas SIG y Computarizados',
@@ -4474,8 +5353,8 @@ class _TeamPhotoCarouselState extends State<_TeamPhotoCarousel> {
 
   List<(String, String)> get _captions => [
     (
-      'Formal signing of Indigenous Local Congress inviting KU geographers to do participatory mapping of their communities in the Chagres National Park to develop a conservation zoning plan. Photo shows Emberá Chief Marcelino Guático and Community President Elieser Adames signing the legal request (pedido) formalizing the KU Chagres Initiative (Taylor Tappan and Cap McLiney are also shown).',
-      'Firma formal del Congreso Local Indígena invitando a los geógrafos de KU a realizar el mapeo participativo de sus comunidades en el Parque Nacional Chagres para desarrollar un plan de zonificación de conservación. La foto muestra al Jefe Emberá Marcelino Guático y al Presidente Comunitario Elieser Adames firmando la solicitud legal (pedido) que formaliza la Iniciativa Chagres de KU (Taylor Tappan y Cap McLiney también aparecen en la foto).',
+      'Indigenous Local Congress inviting KU geographers to do participatory mapping of their communities in the Chagres National Park to produce the cartographic and statistical data needed for a conservation zoning plan. Photo shows Emberá Chief Marcelino Guático and Community President Elieser Adames signing the legal request (pedido) formalizing the KU Chagres Initiative (Taylor Tappan and Cap McLiney are also shown).',
+      'Congreso Local Indígena invitando a los geógrafos de KU a realizar el mapeo participativo de sus comunidades en el Parque Nacional Chagres para producir los datos cartográficos y estadísticos necesarios para un plan de zonificación de conservación. La foto muestra al Jefe Emberá Marcelino Guático y al Presidente Comunitario Elieser Adames firmando la solicitud legal (pedido) que formaliza la Iniciativa Chagres de KU (Taylor Tappan y Cap McLiney también aparecen en la foto).',
     ),
     (
       'Original KU Research Team of Dr. Peter Herlihy, Cap McLiney, Amalie Hipp, Sam Morrow and Dr. Taylor Tappan on Barro Colorado Island in Lake Gatún, Panama Canal Zone, June 2025.',
@@ -4950,7 +5829,7 @@ class FAQSection extends StatelessWidget {
             ),
             (
               'How long will the project take?',
-              'We estimate the Chagres Initiative will have 3 overlapping phases requiring about three years in total to complete depending on funding availability:\n\nYear 1-2: Participatory research mapping and geospatial database development.\nYear 1-2: Consensus-driven zoning and development of community land-use guidelines.\nYear 2-3: Final map production, synthesis, and integration into management planning frameworks.\n\nThe participatory research mapping approach is iterative, with alternating workshops and field research in Panama followed by GIS and computer mapping analyzes at the universities to obtain the most precise cartographic and spatial data on resource use in the Chagres National Park for developing an Indigenous and state approved management plan for land use in the park.',
+              'We estimate the Chagres Initiative will have 3 overlapping phases requiring about three years in total to complete depending on funding availability:\n\nYear 1-2: Participatory research mapping and geospatial database development.\nYear 1-2: Develop proposed consensus-driven zoning and community land-use guidelines.\nYear 2-3: Final map production, synthesis, and integration into management planning frameworks.\n\nThe participatory research mapping approach is iterative, with alternating workshops and field research in Panama followed by GIS and computer mapping analyzes at the universities to obtain the most precise cartographic and spatial data on resource use in the Chagres National Park for developing an Indigenous and state approved management plan for land use in the park.',
             ),
             (
               'How will donated funds be used?',
@@ -4992,7 +5871,7 @@ class FAQSection extends StatelessWidget {
             ),
             (
               '¿Cuánto tiempo tomará el proyecto?',
-              'Estimamos que la Iniciativa Chagres tendrá 3 fases superpuestas que requerirán aproximadamente tres años en total para completarse dependiendo de la disponibilidad de fondos:\n\nAño 1-2: Mapeo participativo de investigación y desarrollo de base de datos geoespacial.\nAño 1-2: Zonificación impulsada por consenso y desarrollo de directrices de uso del suelo comunitario.\nAño 2-3: Producción final del mapa, síntesis e integración en marcos de planificación de manejo.\n\nEl enfoque de mapeo participativo de investigación es iterativo, con talleres e investigación de campo alternados en Panamá seguidos de análisis de SIG y mapeo computarizado en las universidades para obtener los datos cartográficos y espaciales más precisos sobre el uso de recursos en el Parque Nacional Chagres para desarrollar un plan de manejo de uso del suelo aprobado por las comunidades indígenas y el estado.',
+              'Estimamos que la Iniciativa Chagres tendrá 3 fases superpuestas que requerirán aproximadamente tres años en total para completarse dependiendo de la disponibilidad de fondos:\n\nAño 1-2: Mapeo participativo de investigación y desarrollo de base de datos geoespacial.\nAño 1-2: Desarrollar propuestas de zonificación impulsada por consenso y directrices de uso del suelo comunitario.\nAño 2-3: Producción final del mapa, síntesis e integración en marcos de planificación de manejo.\n\nEl enfoque de mapeo participativo de investigación es iterativo, con talleres e investigación de campo alternados en Panamá seguidos de análisis de SIG y mapeo computarizado en las universidades para obtener los datos cartográficos y espaciales más precisos sobre el uso de recursos en el Parque Nacional Chagres para desarrollar un plan de manejo de uso del suelo aprobado por las comunidades indígenas y el estado.',
             ),
             (
               '¿Cómo se usarán los fondos donados?',
