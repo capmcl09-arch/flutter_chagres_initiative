@@ -39,59 +39,6 @@ void main() {
 }
 
 // Helper: splits text on "Chagres Initiative" / "Iniciativa Chagres" and italicizes those spans.
-TextSpan _buildAboutDonationsSpans(String language) {
-  const baseStyle = TextStyle(
-    color: Colors.white,
-    fontSize: 18,
-    height: 1.6,
-    fontWeight: FontWeight.w500,
-  );
-  final ciStyle = baseStyle.copyWith(
-    color: const Color(0xFF7FB069),
-    fontWeight: FontWeight.w800,
-    fontStyle: FontStyle.italic,
-  );
-  final lkuStyle = baseStyle.copyWith(
-    color: const Color(0xFF5FB5FF),
-    fontWeight: FontWeight.w800,
-  );
-
-  if (language == 'en') {
-    return TextSpan(
-      style: baseStyle,
-      children: [
-        const TextSpan(
-          text:
-              'Your tax-deductible donations will contribute to our understanding and management of a geopolitical issue of USA and global importance: Water Security of the Panama Canal.\n\nThe ',
-        ),
-        TextSpan(text: 'Chagres Initiative', style: ciStyle),
-        const TextSpan(text: ' is a '),
-        TextSpan(text: 'Launch KU', style: lkuStyle),
-        const TextSpan(
-          text:
-              ' project. LaunchKU is the KU Endowment\'s crowdfunding platform, helping faculty and students raise funds for their work to benefit KU.\n\nFollow online and witness the research unfold on our website. You will see how your donations directly impact every aspect of the research which includes the support of Indigenous villagers and university researchers.',
-        ),
-      ],
-    );
-  }
-  return TextSpan(
-    style: baseStyle,
-    children: [
-      const TextSpan(
-        text:
-            'Sus donaciones deducibles de impuestos contribuirán a nuestra comprensión y gestión de un asunto geopolítico de importancia para EE.UU. y el mundo: la Seguridad Hídrica del Canal de Panamá.\n\nLa ',
-      ),
-      TextSpan(text: 'Iniciativa Chagres', style: ciStyle),
-      const TextSpan(text: ' es un proyecto de '),
-      TextSpan(text: 'Launch KU', style: lkuStyle),
-      const TextSpan(
-        text:
-            '. LaunchKU es la plataforma de crowdfunding del KU Endowment, que ayuda a profesores y estudiantes a recaudar fondos para sus proyectos en beneficio de KU.\n\nSíganos en línea y sea testigo del desarrollo de la investigación en nuestro sitio web. Verá cómo sus donaciones impactan directamente cada aspecto de la investigación, lo que incluye el apoyo a los pobladores indígenas y a los investigadores universitarios.',
-      ),
-    ],
-  );
-}
-
 List<InlineSpan> _buildCISpans(String text, TextStyle? baseStyle) {
   const ciEN = 'Chagres Initiative';
   const ciES = 'Iniciativa Chagres';
@@ -428,15 +375,15 @@ class _ChagresHomeState extends State<ChagresHome> {
                           children: [
                             Text(
                               widget.language == 'en'
-                                  ? 'Panama, the Canal and Chagres National Park'
-                                  : 'Panamá, el Canal y el Parque Nacional Chagres',
+                                  ? 'CHAGRES NATIONAL PARK (CNP): PANAMA CANAL WATER SOURCE & INDIGENOUS HOMELAND'
+                                  : 'PARQUE NACIONAL CHAGRES (PNC): FUENTE DE AGUA DEL CANAL DE PANAMÁ Y HOGAR INDÍGENA',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.cinzel(
-                                color: Colors.white,
-                                fontSize: isMobile ? 22 : 32,
+                                color: const Color(0xFFE0B660),
+                                fontSize: isMobile ? 20 : 28,
                                 fontWeight: FontWeight.w700,
-                                letterSpacing: 0.5,
-                                height: 1.2,
+                                letterSpacing: 0.6,
+                                height: 1.3,
                               ),
                             ),
                             SizedBox(height: isMobile ? 14 : 18),
@@ -446,6 +393,97 @@ class _ChagresHomeState extends State<ChagresHome> {
                               filterQuality: FilterQuality.high,
                             ),
                           ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // Researching and Training "Community Geographers" callout —
+                // sits directly under the map.
+                Container(
+                  width: double.infinity,
+                  color: const Color(0xFF0C1328),
+                  padding: EdgeInsets.fromLTRB(
+                    isMobile ? 20 : 60,
+                    0,
+                    isMobile ? 20 : 60,
+                    isMobile ? 48 : 72,
+                  ),
+                  child: RevealOnScroll(
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1100),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xFF152544),
+                                Color(0xFF0F1B36),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: const Color(0xFFE0B660).withOpacity(0.32),
+                              width: 1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.40),
+                                blurRadius: 30,
+                                offset: const Offset(0, 14),
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: isMobile ? 24 : 48,
+                            vertical: isMobile ? 32 : 44,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.language == 'en'
+                                    ? 'Researching and Training "Community Geographers"'
+                                    : 'Investigando y Capacitando a "Geógrafos Comunitarios"',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.playfairDisplay(
+                                  color: const Color(0xFFE0B660),
+                                  fontSize: isMobile ? 26 : 34,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0.4,
+                                  height: 1.25,
+                                ),
+                              ),
+                              SizedBox(height: isMobile ? 14 : 20),
+                              Container(
+                                width: 64,
+                                height: 1.5,
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xFFE0B660),
+                                      Color(0xFFFFE9A8),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: isMobile ? 16 : 22),
+                              Text(
+                                widget.language == 'en'
+                                    ? 'The Chagres Initiative documents Indigenous land uses inside the rainforested CNP to protect it as their legal homeland while safeguarding Panama Canal Water Security.'
+                                    : 'La Iniciativa Chagres documenta los usos indígenas de la tierra dentro del PNC selvático para protegerlo como su hogar legal mientras salvaguarda la Seguridad Hídrica del Canal de Panamá.',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Color(0xFFD9DEEC),
+                                  fontSize: 17,
+                                  height: 1.65,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -462,6 +500,12 @@ class _ChagresHomeState extends State<ChagresHome> {
                 ),
                 RevealOnScroll(
                   child: MappingMethodSection(language: widget.language),
+                ),
+                RevealOnScroll(
+                  child: _MakeDreamsCallout(
+                    language: widget.language,
+                    onDonate: _openDonationPage,
+                  ),
                 ),
                 RevealOnScroll(
                   child: _WhyDonationsBand(
@@ -905,8 +949,8 @@ class HeroSection extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
     final heroTopPadding = isMobile ? topInset + 56 : screenHeight * 0.09;
-    final sealMaxWidth = isMobile ? screenWidth * 0.72 : screenWidth * 0.34;
-    final sealMaxHeight = isMobile ? screenHeight * 0.42 : screenHeight * 0.55;
+    final sealMaxWidth = isMobile ? screenWidth * 0.83 : screenWidth * 0.39;
+    final sealMaxHeight = isMobile ? screenHeight * 0.48 : screenHeight * 0.63;
 
     return Stack(
       children: [
@@ -967,8 +1011,8 @@ class HeroSection extends StatelessWidget {
                     _buildPhrase(
                       context,
                       language == 'en'
-                          ? 'Indigenous Communities'
-                          : 'Comunidades Indígenas',
+                          ? 'Indigenous Community Empowerment'
+                          : 'Empoderamiento de la Comunidad Indígena',
                     ),
                   ],
                 ),
@@ -1398,132 +1442,36 @@ class PartnershipsSection extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text(
-                    language == 'en'
-                        ? 'About Donations'
-                        : 'Acerca de las Donaciones',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.headlineSmall?.copyWith(color: Colors.white),
-                  ),
-                  const SizedBox(height: 24),
-                  // Prominent donation appeal text
-                  Container(
-                    constraints: const BoxConstraints(maxWidth: 800),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 20,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF101A2F),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color(0xFF0051BA).withOpacity(0.4),
-                        width: 1.5,
+                  // Donation copy now lives in the combined "Why Donations
+                  // Matter" band higher on the page; only the KU/Launch KU
+                  // branding remains here, leading into the donate button.
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/jayhawk.png',
+                        height: isPhone ? 72 : 96,
+                        fit: BoxFit.contain,
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text.rich(
-                          _buildAboutDonationsSpans(language),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/jayhawk.png',
-                              height: isPhone ? 72 : 96,
-                              fit: BoxFit.contain,
-                            ),
-                            SizedBox(width: isPhone ? 14 : 22),
-                            GestureDetector(
-                              onTap: _openDonationPage,
-                              child: MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Image.asset(
-                                  'assets/images/Launch_KU.png',
-                                  height: isPhone ? 54 : 72,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Spacer to push Make Dreams below the boat photo's bottom blur
-                  SizedBox(height: (imageHeight - 580).clamp(60.0, 800.0)),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter: dart_ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-                      child: Container(
-                        constraints: const BoxConstraints(maxWidth: 720),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32,
-                          vertical: 28,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color(0xFF1A4080).withOpacity(0.22),
-                          border: Border.all(
-                            color: const Color(0xFF4A90D9).withOpacity(0.28),
-                            width: 1.2,
+                      SizedBox(width: isPhone ? 14 : 22),
+                      GestureDetector(
+                        onTap: _openDonationPage,
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Image.asset(
+                            'assets/images/Launch_KU.png',
+                            height: isPhone ? 54 : 72,
+                            fit: BoxFit.contain,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFF0D2550).withOpacity(0.45),
-                              blurRadius: 40,
-                              spreadRadius: 4,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              language == 'en'
-                                  ? 'Make Dreams Possible – Fund KU Research Abroad'
-                                  : 'Haga posibles los sueños – Financie la Investigación de KU en el Exterior',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 16),
-                            Text.rich(
-                              TextSpan(
-                                style: const TextStyle(
-                                  color: Color(0xFFB9C6EA),
-                                  fontSize: 17,
-                                  height: 1.7,
-                                ),
-                                children: _buildCISpans(
-                                  language == 'en'
-                                      ? 'Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and standard map results needed for zoning and planning of the Chagres National Park will take about three years and U.S. \$550,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.'
-                                      : 'Su donación deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigación de campo en Panamá, así como las actividades de mapeo computarizado y análisis en universidades de EE.UU. Con su donación no se pagan gastos generales, honorarios administrativos ni salarios.\n\nAnte los drásticos recortes en los fondos federales de EE.UU., los de las ONG e incluso la financiación universitaria interna para la investigación internacional, presentamos una alternativa novedosa: una asociación directa de investigación público-privada.\n\nEstimamos que producir un análisis geoespacial y un plan de zonificación del Parque Nacional Chagres requerirá aproximadamente tres años y unos US\$550,000.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, ya que pagan los costos directos del proyecto para los miembros de la comunidad, los estudiantes y profesores de KU del equipo de investigación, así como vuelos a Panamá, transporte en barco y camión, costos de talleres, equipos de campo, materiales de mapeo y estipendios que cubren alimentación, alojamiento y transporte.',
-                                  const TextStyle(
-                                    color: Color(0xFFB9C6EA),
-                                    fontSize: 17,
-                                    height: 1.7,
-                                  ),
-                                ),
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ],
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 40),
+                  // "Make Dreams Possible" callout was moved up to a dedicated
+                  // section right after the mapping flowchart.
+                  const SizedBox(height: 60),
                   // Poem Image — below boat photo seam
                   Image.asset(
                     'assets/images/poem.png',
@@ -1665,8 +1613,8 @@ class AboutSection extends StatelessWidget {
         illustration: const _MountainPalmsPainter(),
         hero: language == 'en' ? 'Discovering' : 'Descubriendo',
         subtitle: language == 'en'
-            ? 'Indigenous People Sustain Global Trade'
-            : 'Los Pueblos Indígenas Sostienen el Comercio Global',
+            ? 'Where Indigenous People Sustain Global Trade'
+            : 'Donde los Pueblos Indígenas Sostienen el Comercio Global',
         tagline: '',
         accent: const Color(0xFF7FB069), // leaf green — place / stakes
         sentence: language == 'en'
@@ -1749,7 +1697,7 @@ class AboutSection extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   color: const Color(0xFFE0B660),
-                  fontSize: 56,
+                  fontSize: 50,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.3,
@@ -1847,7 +1795,7 @@ class _AboutCard extends StatelessWidget {
     // Solid gold with a subtle warm glow for that "shiny" feel — no gradient.
     final goldHeroStyle = GoogleFonts.playfairDisplay(
       color: const Color(0xFFE0B660),
-      fontSize: 46,
+      fontSize: 41,
       fontWeight: FontWeight.w700,
       fontStyle: FontStyle.italic,
       height: 1.15,
@@ -1917,7 +1865,7 @@ class _AboutCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.playfairDisplay(
                     color: const Color(0xFFE0B660),
-                    fontSize: 30,
+                    fontSize: 27,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.3,
@@ -4160,29 +4108,29 @@ class _WhyDonationsSection extends StatelessWidget {
           children: [
             Text(
               language == 'en'
-                  ? 'Why are Donations Necessary?'
-                  : '¿Por qué son necesarias las donaciones?',
+                  ? 'Why Donations Matter'
+                  : 'Por Qué Importan las Donaciones',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 18),
             Builder(
               builder: (context) {
                 final whyStyle = Theme.of(context).textTheme.bodyMedium
                     ?.copyWith(
-                      color: const Color(0xFFB9C6EA),
-                      fontSize: 18,
-                      height: 1.75,
+                      color: const Color(0xFFD9DEEC),
+                      fontSize: 17,
+                      height: 1.65,
                     );
                 return Text.rich(
                   TextSpan(
                     style: whyStyle,
                     children: _buildCISpans(
                       language == 'en'
-                          ? 'Simply put, as a novel private-public research funding alternative, your support makes the Chagres Initiative possible.\n\nFederal and NGO funding sources for international research on conservation, development, and non-traditional security (NTS) threats—like "Panama Canal Water Security"—are being cut under the current U.S. administration. Therefore, we propose a public-private crowdsourcing approach allowing tax-deductible contributions.\n\nWe are launching fundraising to begin the project this Summer 2026 estimating three years and \$550,000 goal. Donations (through KU Endowment) cover direct project costs only.\n\nYour donations pay direct project costs to map and document Indigenous resource uses in CNP. The timeline reflects multiple field research periods and lab-based analysis. PRM requires sustained collaboration, repeated visits, and training. Donations cover travel, transportation, workshops, honoraria, field equipment, and mapping materials.\n\nWe aim to connect you, the donors, with meaningful geographic research, linking those concerned with environmental stewardship, Indigenous knowledge, and Panama Canal water security with those conducting the research.'
-                          : 'En pocas palabras, como una novedosa alternativa de financiamiento público-privado para la investigación, su apoyo hace posible la Iniciativa Chagres.\n\nLas fuentes de financiamiento federales y de ONG para investigación internacional sobre conservación, desarrollo y amenazas a la seguridad no tradicional (SNT), como la "Seguridad Hídrica del Canal de Panamá", están siendo recortadas bajo la actual administración de Estados Unidos. Por lo tanto, proponemos un enfoque de financiamiento colectivo público-privado que permite contribuciones deducibles de impuestos.\n\nEstamos lanzando una campaña de recaudación de fondos para iniciar el proyecto este verano de 2026, estimando tres años y una meta de \$550,000. Las donaciones (a través de KU Endowment) cubren solo los costos directos del proyecto.\n\nSus donaciones pagan los costos directos del proyecto para mapear y documentar los usos indígenas de recursos en el PNC. El cronograma refleja múltiples períodos de investigación de campo y análisis de laboratorio. PRM requiere colaboración sostenida, visitas repetidas y capacitación. Las donaciones cubren viajes, transporte, talleres, honorarios, equipos de campo y materiales de mapeo.\n\nNuestro objetivo es conectarles a ustedes, los donantes, con investigaciones geográficas significativas, vinculando a quienes se preocupan por la gestión ambiental, el conocimiento indígena y la seguridad hídrica del Canal de Panamá con quienes llevan a cabo la investigación.',
+                          ? 'Federal and NGO funding for international research on conservation, Indigenous knowledge, and Panama Canal Water Security is being cut. The Chagres Initiative answers with a public-private model — a Launch KU project on KU Endowment\'s crowdfunding platform — with tax-deductible gifts routed entirely to direct project costs supporting Indigenous villagers, community geographers, and KU researchers.'
+                          : 'Los fondos federales y de ONG para la investigación internacional en conservación, conocimiento indígena y la Seguridad Hídrica del Canal de Panamá están siendo recortados. La Iniciativa Chagres responde con un modelo público-privado — un proyecto Launch KU en la plataforma de crowdfunding de KU Endowment — con donaciones deducibles de impuestos dirigidas íntegramente a los costos directos del proyecto, apoyando a pobladores indígenas, geógrafos comunitarios e investigadores de KU.',
                       whyStyle,
                     ),
                   ),
@@ -4250,6 +4198,179 @@ class _WhyDonationsBand extends StatelessWidget {
             ),
           ),
           height: 60,
+        ),
+      ],
+    );
+  }
+}
+
+// Compact "Make Dreams Possible" callout — moved up from Partnerships and
+// shortened to a marketing-friendly summary with bullet highlights.
+class _MakeDreamsCallout extends StatelessWidget {
+  final String language;
+  final VoidCallback onDonate;
+  const _MakeDreamsCallout({required this.language, required this.onDonate});
+
+  @override
+  Widget build(BuildContext context) {
+    final isPhone = MediaQuery.of(context).size.width < 600;
+    final isMobile = MediaQuery.of(context).size.width < 900;
+
+    final bullets = language == 'en'
+        ? const [
+            '100% to direct project costs — no overhead, no salaries.',
+            'Three-year, \$550,000 mission launching Summer 2026 via KU Endowment.',
+            'Funds workshops, mapping tech, travel, and community-geographer stipends.',
+            'Public-private partnership replacing shrinking federal research funding.',
+          ]
+        : const [
+            '100% a costos directos — sin gastos generales ni salarios.',
+            'Misión de 3 años y \$550,000, verano 2026, vía KU Endowment.',
+            'Financia talleres, tecnología de mapeo, viajes y estipendios comunitarios.',
+            'Asociación público-privada que reemplaza el financiamiento federal recortado.',
+          ];
+
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF0C1328),
+      padding: EdgeInsets.symmetric(
+        horizontal: isPhone ? 20 : 60,
+        vertical: isPhone ? 40 : 64,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 820),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: BackdropFilter(
+              filter: dart_ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile ? 24 : 36,
+                  vertical: isMobile ? 26 : 34,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color(0xFF1A4080).withOpacity(0.22),
+                  border: Border.all(
+                    color: const Color(0xFF4A90D9).withOpacity(0.28),
+                    width: 1.2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF0D2550).withOpacity(0.45),
+                      blurRadius: 40,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      language == 'en'
+                          ? 'Make Dreams Possible'
+                          : 'Haga Posibles los Sueños',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.playfairDisplay(
+                        color: const Color(0xFFE0B660),
+                        fontSize: isPhone ? 26 : 34,
+                        fontWeight: FontWeight.w700,
+                        fontStyle: FontStyle.italic,
+                        height: 1.15,
+                        letterSpacing: 0.4,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      language == 'en'
+                          ? 'FUND KU RESEARCH ABROAD'
+                          : 'FINANCIE LA INVESTIGACIÓN DE KU EN EL EXTERIOR',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: isPhone ? 11 : 13,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 2.2,
+                      ),
+                    ),
+                    SizedBox(height: isMobile ? 14 : 18),
+                    for (int i = 0; i < bullets.length; i++) ...[
+                      _MakeDreamsBullet(text: bullets[i]),
+                      if (i < bullets.length - 1) const SizedBox(height: 8),
+                    ],
+                    SizedBox(height: isMobile ? 20 : 24),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: onDonate,
+                        child: _HoverGlow(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 36,
+                              vertical: 16,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFA0291E),
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(
+                                color: const Color(0xFFA0291E),
+                                width: 2,
+                              ),
+                            ),
+                            child: Text(
+                              language == 'en' ? 'Donate Now' : 'Donar Ahora',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.4,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MakeDreamsBullet extends StatelessWidget {
+  final String text;
+  const _MakeDreamsBullet({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 8, right: 12),
+          child: Container(
+            width: 7,
+            height: 7,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xFFE0B660),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Color(0xFFD9DEEC),
+              fontSize: 15,
+              height: 1.5,
+            ),
+          ),
         ),
       ],
     );
@@ -4450,9 +4571,9 @@ class _SealWithStats extends StatelessWidget {
                 waterStat,
                 const SizedBox(height: 28),
                 peopleStat,
-                const SizedBox(height: 36),
+                const SizedBox(height: 28),
                 communitiesStat,
-                const SizedBox(height: 36),
+                const SizedBox(height: 28),
                 birdStat,
                 const SizedBox(height: 28),
                 plantStat,
@@ -4460,23 +4581,19 @@ class _SealWithStats extends StatelessWidget {
             ),
           )
         : Padding(
-            padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 32),
-            child: Column(
+            padding: const EdgeInsets.symmetric(vertical: 44, horizontal: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                communitiesStat,
-                const SizedBox(height: 56),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: Center(child: waterStat)),
-                    const SizedBox(width: 24),
-                    Expanded(child: Center(child: peopleStat)),
-                    const SizedBox(width: 24),
-                    Expanded(child: Center(child: birdStat)),
-                    const SizedBox(width: 24),
-                    Expanded(child: Center(child: plantStat)),
-                  ],
-                ),
+                Expanded(child: Center(child: waterStat)),
+                const SizedBox(width: 10),
+                Expanded(child: Center(child: peopleStat)),
+                const SizedBox(width: 10),
+                Expanded(child: Center(child: communitiesStat)),
+                const SizedBox(width: 10),
+                Expanded(child: Center(child: birdStat)),
+                const SizedBox(width: 10),
+                Expanded(child: Center(child: plantStat)),
               ],
             ),
           );
@@ -4541,14 +4658,20 @@ class _StatFigure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isPhone = screenWidth < 600;
+    final circleSize = isPhone ? 92.0 : 100.0;
+    final iconPad = isPhone ? 14.0 : 16.0;
+    final valueSize = isPhone ? 32.0 : 34.0;
+    final labelSize = isPhone ? 12.5 : 13.0;
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 360),
+      constraints: const BoxConstraints(maxWidth: 200),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 168,
-            height: 168,
+            width: circleSize,
+            height: circleSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: const Color(0xFF5FB5FF).withOpacity(0.08),
@@ -4558,29 +4681,29 @@ class _StatFigure extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(26),
+              padding: EdgeInsets.all(iconPad),
               child: CustomPaint(painter: painter),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Text(
             value,
             style: GoogleFonts.inter(
               color: const Color(0xFF7CC4FF),
-              fontSize: 62,
+              fontSize: valueSize,
               fontWeight: FontWeight.w800,
               letterSpacing: -0.5,
               height: 1.0,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 6),
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFFB9C6EA),
-              fontSize: 17,
-              height: 1.5,
+            style: TextStyle(
+              color: const Color(0xFFB9C6EA),
+              fontSize: labelSize,
+              height: 1.45,
             ),
           ),
         ],
