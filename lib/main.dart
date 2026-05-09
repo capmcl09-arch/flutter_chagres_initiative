@@ -357,11 +357,17 @@ class _ChagresHomeState extends State<ChagresHome> {
                     language: widget.language,
                   ),
                 ),
+                // Continuous navy + palm-texture band: maps title, two-panel
+                // map, community-geographers callout, and the 5-figure stats
+                // band all share one textured backdrop so the navy run reads
+                // as one section instead of three flat navy slabs.
+                _NavyPalmBand(
+                  child: Column(
+                    children: [
                 // Panama Canal / Chagres National Park map — drops in between
                 // the About cards and the fact-icons stats band.
                 Container(
                   width: double.infinity,
-                  color: const Color(0xFF0C1328),
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 20 : 60,
                     vertical: isMobile ? 36 : 56,
@@ -387,10 +393,41 @@ class _ChagresHomeState extends State<ChagresHome> {
                               ),
                             ),
                             SizedBox(height: isMobile ? 14 : 18),
-                            Image.asset(
-                              'assets/images/panama_chagres_map_transparent.png',
-                              fit: BoxFit.contain,
-                              filterQuality: FilterQuality.high,
+                            // Two-panel map: left = Panama country, right =
+                            // Chagres NP detail. Side-by-side on desktop,
+                            // stacked vertically on phones.
+                            LayoutBuilder(
+                              builder: (context, constraints) {
+                                final stack = constraints.maxWidth < 720;
+                                final leftMap = Image.asset(
+                                  'assets/images/panama_left_map.png',
+                                  fit: BoxFit.contain,
+                                  filterQuality: FilterQuality.high,
+                                );
+                                final rightMap = Image.asset(
+                                  'assets/images/panama_right_map.png',
+                                  fit: BoxFit.contain,
+                                  filterQuality: FilterQuality.high,
+                                );
+                                if (stack) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      leftMap,
+                                      const SizedBox(height: 18),
+                                      rightMap,
+                                    ],
+                                  );
+                                }
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(child: leftMap),
+                                    const SizedBox(width: 24),
+                                    Expanded(child: rightMap),
+                                  ],
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -402,7 +439,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                 // sits directly under the map.
                 Container(
                   width: double.infinity,
-                  color: const Color(0xFF0C1328),
                   padding: EdgeInsets.fromLTRB(
                     isMobile ? 20 : 60,
                     0,
@@ -493,25 +529,15 @@ class _ChagresHomeState extends State<ChagresHome> {
                 // lands directly after About.
                 Container(
                   width: double.infinity,
-                  color: const Color(0xFF0C1328),
                   child: RevealOnScroll(
                     child: _SealWithStats(language: widget.language),
                   ),
                 ),
+                    ],
+                  ),
+                ),
                 RevealOnScroll(
                   child: MappingMethodSection(language: widget.language),
-                ),
-                RevealOnScroll(
-                  child: _MakeDreamsCallout(
-                    language: widget.language,
-                    onDonate: _openDonationPage,
-                  ),
-                ),
-                RevealOnScroll(
-                  child: _WhyDonationsBand(
-                    language: widget.language,
-                    isMobile: isMobile,
-                  ),
                 ),
                 Container(
                   width: double.infinity,
@@ -533,12 +559,15 @@ class _ChagresHomeState extends State<ChagresHome> {
                           child: _JungleSideStrip(mirror: true),
                         ),
                       RevealOnScroll(
-                        child: MeaningfulSection(language: widget.language),
+                        child: _MakeDreamsCallout(
+                          language: widget.language,
+                          onDonate: _openDonationPage,
+                        ),
                       ),
                     ],
                   ),
                 ),
-                // Transition back to navy for Partnerships.
+                // Transition green → navy for Partnerships.
                 Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
@@ -2234,10 +2263,10 @@ class _CartographicBackdropPainter extends CustomPainter {
     final w = size.width;
     final h = size.height;
 
-    final lineColor = const Color(0xFF8FB3FF).withOpacity(0.06);
+    final lineColor = const Color(0xFF8FB3FF).withOpacity(0.18);
     final stroke = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1
+      ..strokeWidth = 1.4
       ..color = lineColor;
 
     // Vertical meridians — curved (longitude lines projected on a sphere).
@@ -2259,10 +2288,10 @@ class _CartographicBackdropPainter extends CustomPainter {
     }
 
     // Faint dashed "route" arc spanning the section diagonally.
-    final routeColor = const Color(0xFFE0B660).withOpacity(0.10);
+    final routeColor = const Color(0xFFE0B660).withOpacity(0.22);
     final routeStroke = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5
+      ..strokeWidth = 1.8
       ..color = routeColor;
     final dashLen = 12.0;
     final gapLen = 8.0;
@@ -4064,146 +4093,6 @@ class _StoryTag extends StatelessWidget {
   }
 }
 
-// Why Donations Section
-class _WhyDonationsSection extends StatelessWidget {
-  final String language;
-  const _WhyDonationsSection({required this.language});
-
-  @override
-  Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 900;
-
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 60,
-        vertical: 48,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF0E261C).withOpacity(0.84),
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(
-            color: const Color(0xFF81C784).withOpacity(0.32),
-            width: 1.2,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.40),
-              blurRadius: 30,
-              offset: const Offset(0, 12),
-            ),
-            BoxShadow(
-              color: const Color(0xFF08130E).withOpacity(0.18),
-              blurRadius: 18,
-              spreadRadius: 2,
-            ),
-          ],
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: isMobile ? 20 : 40,
-          vertical: 40,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              language == 'en'
-                  ? 'Why Donations Matter'
-                  : 'Por Qué Importan las Donaciones',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 18),
-            Builder(
-              builder: (context) {
-                final whyStyle = Theme.of(context).textTheme.bodyMedium
-                    ?.copyWith(
-                      color: const Color(0xFFD9DEEC),
-                      fontSize: 17,
-                      height: 1.65,
-                    );
-                return Text.rich(
-                  TextSpan(
-                    style: whyStyle,
-                    children: _buildCISpans(
-                      language == 'en'
-                          ? 'Federal and NGO funding for international research on conservation, Indigenous knowledge, and Panama Canal Water Security is being cut. The Chagres Initiative answers with a public-private model — a Launch KU project on KU Endowment\'s crowdfunding platform — with tax-deductible gifts routed entirely to direct project costs supporting Indigenous villagers, community geographers, and KU researchers.'
-                          : 'Los fondos federales y de ONG para la investigación internacional en conservación, conocimiento indígena y la Seguridad Hídrica del Canal de Panamá están siendo recortados. La Iniciativa Chagres responde con un modelo público-privado — un proyecto Launch KU en la plataforma de crowdfunding de KU Endowment — con donaciones deducibles de impuestos dirigidas íntegramente a los costos directos del proyecto, apoyando a pobladores indígenas, geógrafos comunitarios e investigadores de KU.',
-                      whyStyle,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _WhyDonationsBand extends StatelessWidget {
-  final String language;
-  final bool isMobile;
-
-  const _WhyDonationsBand({required this.language, required this.isMobile});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0xFF0C1328), Color(0xFF16402E)],
-            ),
-          ),
-          height: 60,
-        ),
-        Container(
-          width: double.infinity,
-          color: const Color(0xFF16402E),
-          child: Stack(
-            children: [
-              if (!isMobile)
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  bottom: 0,
-                  child: _JungleSideStrip(mirror: false),
-                ),
-              if (!isMobile)
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  child: _JungleSideStrip(mirror: true),
-                ),
-              Column(children: [_WhyDonationsSection(language: language)]),
-            ],
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0xFF16402E), Color(0xFF0C1328)],
-            ),
-          ),
-          height: 60,
-        ),
-      ],
-    );
-  }
-}
-
 // Compact "Make Dreams Possible" callout — moved up from Partnerships and
 // shortened to a marketing-friendly summary with bullet highlights.
 class _MakeDreamsCallout extends StatelessWidget {
@@ -4230,9 +4119,7 @@ class _MakeDreamsCallout extends StatelessWidget {
             'Asociación público-privada que reemplaza el financiamiento federal recortado.',
           ];
 
-    return Container(
-      width: double.infinity,
-      color: const Color(0xFF0C1328),
+    return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: isPhone ? 20 : 60,
         vertical: isPhone ? 40 : 64,
@@ -4251,14 +4138,14 @@ class _MakeDreamsCallout extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: const Color(0xFF1A4080).withOpacity(0.22),
+                  color: const Color(0xFF0E261C).withOpacity(0.62),
                   border: Border.all(
-                    color: const Color(0xFF4A90D9).withOpacity(0.28),
+                    color: const Color(0xFFE0B660).withOpacity(0.32),
                     width: 1.2,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF0D2550).withOpacity(0.45),
+                      color: const Color(0xFF08130E).withOpacity(0.45),
                       blurRadius: 40,
                       spreadRadius: 2,
                     ),
@@ -4377,141 +4264,57 @@ class _MakeDreamsBullet extends StatelessWidget {
   }
 }
 
-// Meaningful Section
-class MeaningfulSection extends StatefulWidget {
-  final String language;
+// Reusable navy band with the faint, green-tinted palm texture used elsewhere
+// in the page. Wrap a vertical run of navy sections in one of these to get a
+// continuous textured backdrop instead of multiple flat-navy stretches.
+class _NavyPalmBand extends StatelessWidget {
+  final Widget child;
+  const _NavyPalmBand({required this.child});
 
-  const MeaningfulSection({super.key, required this.language});
-
-  @override
-  State<MeaningfulSection> createState() => _MeaningfulSectionState();
-}
-
-class _MeaningfulSectionState extends State<MeaningfulSection> {
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 900;
-
-    final principles = [
-      (
-        widget.language == 'en'
-            ? '1. Authorized by Indigenous Congress'
-            : '1. Autorizado por el Congreso Indígena',
-        widget.language == 'en'
-            ? 'This project is grounded in decades of trust and expertise built by KU geography professors and students doing participatory research mapping (PRM) projects in Panama and Central America. At their governing Congreso Local in June 2025, Indigenous Emberá and Wounaan leaders from Chagres National Park (CNP) recognized our "KU know-how" from previous mapping projects with their relatives. The congreso then voted unanimously to invite us to map their lands and help them develop a management plan acceptable to the Panamanian government.'
-            : 'Este proyecto se basa en décadas de confianza y experiencia construida por profesores y estudiantes de geografía de KU realizando proyectos de mapeo participativo de investigación (PRM) en Panamá y Centroamérica. En su Congreso Local en junio de 2025, los líderes indígenas Emberá y Wounaan del Parque Nacional Chagres (PNC) reconocieron nuestro "know-how de KU" de proyectos de mapeo anteriores con sus parientes. El congreso luego votó unánimemente para invitarnos a mapear sus tierras y ayudarles a desarrollar un plan de manejo aceptable para el gobierno panameño.',
-      ),
-      (
-        widget.language == 'en'
-            ? '2. "Living Research" in Indigenous Rainforest Communities of the Panama Canal Watershed'
-            : '2. "Investigación Viva" en Comunidades Indígenas del Bosque Tropical de la Cuenca del Canal de Panamá',
-        widget.language == 'en'
-            ? 'Rather than confining findings to academic journals or static reports, this initiative maintains a transparent and evolving public platform and collaborates directly with government agencies.'
-            : 'En lugar de confinar los hallazgos a revistas académicas o informes estáticos, esta iniciativa mantiene una plataforma pública transparente y en evolución y colabora directamente con agencias gubernamentales.',
-      ),
-      (
-        widget.language == 'en'
-            ? '3. Training Community Geographers as Co-Producers of Scientific Results'
-            : '3. Formación de Geógrafos Comunitarios como Co-Productores de Resultados Científicos',
-        widget.language == 'en'
-            ? 'Unlike other projects, our results create community resources of sustained value: we formally certify community representatives as geographers who receive training, and do hands-on fieldwork, learn and use GPS, basic cartography, heads-up imagery analysis, and other geographic methods, including drone use for forest management. These "community geographers" — perhaps not surprisingly — are empowered as ideal co-producers and co-authors of project maps and data. All publication authorships are shared among team members and final cartographic information remain under the ownership of the local communities.'
-            : 'A diferencia de otros proyectos, nuestros resultados crean recursos comunitarios de valor sostenido: certificamos formalmente a representantes comunitarios como geógrafos que reciben formación y realizan trabajo de campo práctico, aprenden y utilizan GPS, cartografía básica, análisis de imágenes aéreas y otros métodos geográficos, incluyendo el uso de drones para la gestión forestal. Estos "geógrafos comunitarios" — como era de esperar — se convierten en los co-productores y co-autores ideales de los mapas y datos del proyecto. La autoría de todas las publicaciones se comparte entre los miembros del equipo, y la información cartográfica final queda en propiedad de las comunidades locales.',
-      ),
-    ];
-
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-        isMobile ? 16 : 60,
-        isMobile ? 20 : 24,
-        isMobile ? 16 : 60,
-        48,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 900),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFF101A2F),
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: Colors.white.withOpacity(0.08)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.35),
-                  blurRadius: 30,
-                  offset: const Offset(0, 12),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.symmetric(
-              horizontal: isMobile ? 20 : 40,
-              vertical: 40,
-            ),
-            child: Column(
-              children: [
-                Text(
-                  widget.language == 'en'
-                      ? 'What Makes This Project Uniquely Meaningful?'
-                      : '¿Qué hace que este proyecto sea único?',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.headlineSmall?.copyWith(color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(14),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: principles.length,
-                    separatorBuilder: (context, index) => Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: Colors.white.withOpacity(0.08),
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF0C1328),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: IgnorePointer(
+              child: ShaderMask(
+                shaderCallback: (rect) => const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0x00FFFFFF),
+                    Color(0xFFFFFFFF),
+                    Color(0xFFFFFFFF),
+                    Color(0x00FFFFFF),
+                  ],
+                  stops: [0.0, 0.06, 0.94, 1.0],
+                ).createShader(rect),
+                blendMode: BlendMode.dstIn,
+                child: Opacity(
+                  opacity: 0.38,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/palms.jpg'),
+                        repeat: ImageRepeat.repeat,
+                        fit: BoxFit.none,
+                        alignment: Alignment.topCenter,
+                        colorFilter: ColorFilter.mode(
+                          Color(0xCC16402E),
+                          BlendMode.multiply,
+                        ),
+                      ),
                     ),
-                    itemBuilder: (context, index) {
-                      final principle = principles[index];
-                      return Theme(
-                        data: Theme.of(context).copyWith(
-                          splashColor: Colors.transparent,
-                          dividerColor: Colors.transparent,
-                        ),
-                        child: ExpansionTile(
-                          title: Text(
-                            principle.$1,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          collapsedIconColor: const Color(0xFFB9C6EA),
-                          iconColor: const Color(0xFF81C784),
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 16,
-                              ),
-                              child: Text(
-                                principle.$2,
-                                style: const TextStyle(
-                                  color: Color(0xFFB9C6EA),
-                                  fontSize: 14,
-                                  height: 1.6,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          child,
+        ],
       ),
     );
   }
@@ -4598,50 +4401,9 @@ class _SealWithStats extends StatelessWidget {
             ),
           );
 
-    // Faint jungle backdrop — same palms texture, green tint, and ~0.38 opacity
-    // used by the side strips, softly faded at the top/bottom edges so it
-    // blends into the surrounding green band.
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Positioned.fill(
-          child: IgnorePointer(
-            child: ShaderMask(
-              shaderCallback: (rect) => const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0x00FFFFFF),
-                  Color(0xFFFFFFFF),
-                  Color(0xFFFFFFFF),
-                  Color(0x00FFFFFF),
-                ],
-                stops: [0.0, 0.12, 0.88, 1.0],
-              ).createShader(rect),
-              blendMode: BlendMode.dstIn,
-              child: Opacity(
-                opacity: 0.38,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/palms.jpg'),
-                      repeat: ImageRepeat.repeat,
-                      fit: BoxFit.none,
-                      alignment: Alignment.topCenter,
-                      colorFilter: ColorFilter.mode(
-                        Color(0xCC16402E),
-                        BlendMode.multiply,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        content,
-      ],
-    );
+    // The palm-texture backdrop is now provided by the surrounding
+    // _NavyPalmBand wrapper, so this widget just renders its content.
+    return content;
   }
 }
 
