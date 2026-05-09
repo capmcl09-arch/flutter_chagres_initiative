@@ -1279,7 +1279,7 @@ case 8:return"900"}return""},
 aIR(a,b){var s
 switch(a){case B.bz:return"left"
 case B.dk:return"right"
-case B.O:return"center"
+case B.M:return"center"
 case B.eH:return"justify"
 case B.ho:switch(b.a){case 1:s="end"
 break
@@ -9372,9 +9372,9 @@ this.c=c},
 azZ(a){return new A.f2(a.gc6(a),A.br(20,null,!1,t.av))},
 aA_(a){return a===1},
 aE2(a,b){var s=t.S
-return new A.h8(B.N,B.d5,A.V9(),B.bX,A.v(s,t.GY),A.v(s,t.o),B.j,A.c([],t.t),A.v(s,t.G),A.dj(s),a,b,A.Va(),A.v(s,t.c))},
+return new A.h8(B.O,B.d5,A.V9(),B.bX,A.v(s,t.GY),A.v(s,t.o),B.j,A.c([],t.t),A.v(s,t.G),A.dj(s),a,b,A.Va(),A.v(s,t.c))},
 amw(a,b){var s=t.S
-return new A.fX(B.N,B.d5,A.V9(),B.bX,A.v(s,t.GY),A.v(s,t.o),B.j,A.c([],t.t),A.v(s,t.G),A.dj(s),a,b,A.Va(),A.v(s,t.c))},
+return new A.fX(B.O,B.d5,A.V9(),B.bX,A.v(s,t.GY),A.v(s,t.o),B.j,A.c([],t.t),A.v(s,t.G),A.dj(s),a,b,A.Va(),A.v(s,t.c))},
 B4:function B4(a,b){this.a=a
 this.b=b},
 fT:function fT(){},
@@ -15071,7 +15071,7 @@ asz(a,b){var s,r,q,p,o,n,m,l,k,j,i,h,g=null
 A:{s=0
 if(B.bz===a)break A
 if(B.dk===a){s=1
-break A}if(B.O===a){s=0.5
+break A}if(B.M===a){s=0.5
 break A}r=B.ba===a
 q=r
 p=!q
@@ -17503,8 +17503,8 @@ break A}n=l.r
 l=n!=null
 if(l)if(n==null)A.ct(n)
 if(l){m=n==null?A.ct(n):n
-l=b.b-m-a.a7(B.M,s,a.gbW()).b
-break A}l=d.h8(t.o.a(b.a9(0,a.a7(B.M,s,a.gbW())))).b
+l=b.b-m-a.a7(B.N,s,a.gbW()).b
+break A}l=d.h8(t.o.a(b.a9(0,a.a7(B.N,s,a.gbW())))).b
 break A}return r+l},
 e0:function e0(a,b,c){var _=this
 _.y=_.x=_.w=_.r=_.f=_.e=null
@@ -20753,8 +20753,8 @@ break A}n=l.r
 l=n!=null
 if(l)if(n==null)A.ct(n)
 if(l){m=n==null?A.ct(n):n
-l=b.b-m-a.a7(B.M,s,a.gbW()).b
-break A}l=d.h8(t.o.a(b.a9(0,a.a7(B.M,s,a.gbW())))).b
+l=b.b-m-a.a7(B.N,s,a.gbW()).b
+break A}l=d.h8(t.o.a(b.a9(0,a.a7(B.N,s,a.gbW())))).b
 break A}return r+l},
 aEM(a){return a.ad(0)},
 aBT(a,b,c){return new A.xL(b,new A.a4Y(c),a,B.JB,null)},
@@ -21621,7 +21621,7 @@ _.c=b
 _.f=_.e=$
 _.a=c},
 amL(a,b,c,d,e){var s=null,r=Math.max(0,b*2-1)
-return new A.qM(new A.Le(new A.a1o(a,d),r,!0,!0,!0,new A.a1p(),s),s,B.aN,!1,s,s,c,!0,s,b,B.N,s,s,B.ao,B.aB,s)},
+return new A.qM(new A.Le(new A.a1o(a,d),r,!0,!0,!0,new A.a1p(),s),s,B.aN,!1,s,s,c,!0,s,b,B.O,s,s,B.ao,B.aB,s)},
 KF:function KF(){},
 a8f:function a8f(a,b,c){this.a=a
 this.b=b
@@ -23885,7 +23885,7 @@ s[15]=1
 return new A.aU(s)},
 Eh(a,b,c){if(a==null)return a===b
 return a>b-c&&a<b+c||a===b},
-apI(a,b){return a.a7(B.M,b,a.gbW())},
+apI(a,b){return a.a7(B.N,b,a.gbW())},
 az1(a,b){a.ct(b,!0)
 return a.gC(0)},
 az0(a,b,c){return a.ev(b,c)},
@@ -32700,7 +32700,7 @@ d1=j.w
 return d1.d-d1.b},
 abw(a){var s,r,q,p,o,n,m,l,k,j,i,h=this.a,g=h.a.aaA()
 if(a===1/0&&g!==B.bz){for(h=this.e,s=h.length,r=0,q=0;q<s;++q){p=h[q].w
-r=Math.max(r,p.c-p.a)}return}for(s=this.e,p=s.length,o=g===B.O,n=g===B.dk,m=g===B.eH,q=0;q<s.length;s.length===p||(0,A.w)(s),++q){l=s[q]
+r=Math.max(r,p.c-p.a)}return}for(s=this.e,p=s.length,o=g===B.M,n=g===B.dk,m=g===B.eH,q=0;q<s.length;s.length===p||(0,A.w)(s),++q){l=s[q]
 k=h.z
 j=l.w
 i=k-(j.c-j.a)
@@ -40046,7 +40046,7 @@ q.push(A.eg(new A.EK(h.a.c,h.x)))
 o=e?20:60
 n=e?36:56
 m=h.a.c==="en"?"Panama, the Canal and Chagres National Park":"Panam\xe1, el Canal y el Parque Nacional Chagres"
-m=A.b_(m,g,g,A.avc().$5$color$fontSize$fontWeight$height$letterSpacing(B.e,e?22:32,B.W,1.2,0.5),B.O)
+m=A.b_(m,g,g,A.avc().$5$color$fontSize$fontWeight$height$letterSpacing(B.e,e?22:32,B.W,1.2,0.5),B.M)
 q.push(A.aS(g,A.eg(A.df(new A.cB(B.zu,A.bo(A.c([m,A.cT(g,e?14:18,g),A.hl("assets/images/panama_chagres_map_transparent.png",B.F,g,g,B.bG,B.b5,g,g,g)],r),B.t,B.u,B.bv),g),g,g)),B.l,B.a2,g,g,g,g,g,new A.ai(o,n,o,n),g,g,1/0))
 q.push(A.aS(g,A.eg(new A.RZ(h.a.c,g)),B.l,B.a2,g,g,g,g,g,g,g,g,1/0))
 q.push(A.eg(new A.Il(h.a.c,g)))
@@ -40068,7 +40068,7 @@ m=A.eg(new A.Im(n,g))
 l=A.eg(new A.uH(n,g))
 k=A.eg(new A.xh(n,h.y))
 j=A.hl("assets/images/community_meeting.jpg",B.F,g,g,B.aH,g,g,g,g)
-j=A.eg(new A.bR(B.Db,A.bo(A.c([j,B.dh,A.b_(n==="en"?"The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.":"La Junta Directiva Ind\xedgena de La Bonga escuchando la presentaci\xf3n de nuestro equipo sobre el PRM.",g,g,B.Qa,B.O)],r),B.t,B.u,B.v),g))
+j=A.eg(new A.bR(B.Db,A.bo(A.c([j,B.dh,A.b_(n==="en"?"The Indigenous Council Meeting of La Bonga as they listen to our team present about PRM.":"La Junta Directiva Ind\xedgena de La Bonga escuchando la presentaci\xf3n de nuestro equipo sobre el PRM.",g,g,B.Qa,B.M)],r),B.t,B.u,B.v),g))
 i=h.a.c
 o.push(A.bo(A.c([m,l,k,j,A.eg(new A.wm(i,h.z)),A.eg(new A.yJ(i,h.at)),A.eg(new A.H4(i,h.as)),A.eg(new A.wp(i,h.ay)),A.eg(new A.xC(i,g)),A.eg(new A.G3(i,g))],r),B.t,B.u,B.v))
 q.push(A.aS(g,A.h5(B.b2,o,B.b_),B.l,B.cn,g,g,g,g,g,g,g,g,1/0))
@@ -40078,10 +40078,10 @@ q.push(A.cT(g,A.aT(a,g,f).w.a.b*0.1,g))
 r=A.c([new A.L7(h.d,A.bo(q,B.t,B.u,B.v),g)],r)
 if(p)r.push(A.eV(g,h.Yj(),g,g,0,0,0,g))
 f=A.aT(a,g,f).w
-r.push(A.eV(g,A.dx(A.d9(g,A.anL(B.l2,A.aS(g,new A.Ke(3,A.b_(h.a.c==="en"?"Donate Now":"Donar Ahora",g,g,B.RQ,g),g),B.l,g,g,B.zC,g,g,g,B.CU,g,g,g),1.04),B.N,!1,g,g,g,g,g,g,g,g,g,g,g,g,g,A.alc(),g,g,g),B.aJ,g,g,g),g,g,g,0,f.a.b*0.62,g))
+r.push(A.eV(g,A.dx(A.d9(g,A.anL(B.l2,A.aS(g,new A.Ke(3,A.b_(h.a.c==="en"?"Donate Now":"Donar Ahora",g,g,B.RQ,g),g),B.l,g,g,B.zC,g,g,g,B.CU,g,g,g),1.04),B.O,!1,g,g,g,g,g,g,g,g,g,g,g,g,g,A.alc(),g,g,g),B.aJ,g,g,g),g,g,g,0,f.a.b*0.62,g))
 return new A.yU(d,A.h5(B.b2,r,B.b_),s,c,g)},
 Hm(a){var s=null
-return A.d9(s,A.dx(A.hl("assets/images/KU_LOGO_BLUE.jpg",B.F,s,s,B.bG,B.b5,a?26:38,s,s),B.aJ,s,s,s),B.N,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,this.gLi(),s,s,s)},
+return A.d9(s,A.dx(A.hl("assets/images/KU_LOGO_BLUE.jpg",B.F,s,s,B.bG,B.b5,a?26:38,s,s),B.aJ,s,s,s),B.O,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,this.gLi(),s,s,s)},
 Yt(){var s=null,r=this.Hm(!0)
 return new A.uD(new A.dI(new A.adz(),s),r,1,B.m7,!0,new A.QW(s,s,1/0,56),s)},
 Yu(){var s,r,q,p,o,n,m,l,k=this,j=null,i=A.hl(u.v,B.F,j,j,B.aH,j,60,j,j),h=t.p
@@ -40104,13 +40104,13 @@ s=k.la(s,k.as)
 l=A.aqo(j,j,B.a9,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j,j)
 i=A.c([new A.GQ(B.zJ,i,j),r,q,p,o,n,m,s,B.Cz,new A.bR(B.mp,A.cT(A.YO(A.b_(k.a.c==="en"?"Espa\xf1ol":"English",j,j,B.QT,j),new A.adA(k),l),j,1/0),j)],h)
 h=A.aL([null,0],t.LO,t.S)
-return new A.GO(B.a2,new A.qM(new A.aa0(!0,!0,!0,i,h),B.aA,B.aN,!1,j,j,B.z0,!1,j,10,B.N,j,j,B.ao,B.aB,j),j)},
+return new A.GO(B.a2,new A.qM(new A.aa0(!0,!0,!0,i,h),B.aA,B.aN,!1,j,j,B.z0,!1,j,10,B.O,j,j,B.ao,B.aB,j),j)},
 la(a,b){var s=null
 return A.ard(s,s,s,!0,!0,s,s,new A.adx(this,b),s,s,A.b_(a,s,s,B.kB,s),s,s)},
 Yj(){var s=this,r=null,q=s.Hm(!1),p=s.lb("About",s.x),o=s.lb("Methodology",s.y),n=s.lb("Fieldwork",s.z),m=s.lb("About Donations",s.ax),l=s.lb("Support",s.ay),k=s.lb("Team",s.Q),j=s.lb("FAQ",s.as),i=A.aqo(r,r,B.a9,r,r,r,r,r,r,r,r,r,B.CS,r,r,r,r,r,r,r),h=t.p
 return A.aS(r,A.hy(A.c([q,B.Nm,A.asS(B.dq,A.c([p,o,n,m,l,k,j,A.cT(A.YO(A.b_(s.a.c==="en"?"ES":"EN",r,r,B.R2,r),new A.adw(s),i),32,r)],h),0,16)],h),B.t,B.en,B.v),B.l,B.m7,r,r,r,r,r,B.D4,r,r,r)},
 lb(a,b){var s=null,r=this.f===a,q=this.a6w(a),p=r?B.e:B.V
-return A.dx(A.d9(s,A.b_(q,s,s,A.ej(s,s,p,s,s,s,s,s,s,s,s,17,s,s,r?B.W:B.n,s,s,!0,s,s,s,s,s,s,s,s),s),B.N,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.adB(this,b),s,s,s),B.aJ,s,s,s)},
+return A.dx(A.d9(s,A.b_(q,s,s,A.ej(s,s,p,s,s,s,s,s,s,s,s,17,s,s,r?B.W:B.n,s,s,!0,s,s,s,s,s,s,s,s),s),B.O,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.adB(this,b),s,s,s),B.aJ,s,s,s)},
 a6w(a){var s
 if(this.a.c==="en")return a
 A:{if("About"===a){s="Acerca de"
@@ -40186,7 +40186,7 @@ A.p2.prototype={
 ac(){return new A.OT()}}
 A.OT.prototype={
 I(a){var s=this,r=null,q=A.a4(B.c.aq(255*(s.d?0.55:0.45)),B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),p=A.bH(40),o=A.eo(A.a4(B.c.aq(255*(s.d?0.55:0.18)),B.e.n()>>>16&255,B.e.n()>>>8&255,B.e.n()&255),1),n=s.d?A.c([new A.c4(1,B.av,A.a4(89,B.be.n()>>>16&255,B.be.n()>>>8&255,B.be.n()&255),B.j,22)],t.E):B.n4
-return A.dx(A.VM(A.b_(s.a.c,r,r,A.avc().$4$color$fontSize$fontWeight$letterSpacing(B.e,18,B.bH,2),r),r,B.cV,new A.b3(q,r,o,p,n,r,B.w),B.CJ,r,B.D_,r,r),B.a6,new A.afr(s),new A.afs(s),r)}}
+return A.dx(A.VM(A.b_(s.a.c,r,r,A.avc().$4$color$fontSize$fontWeight$letterSpacing(B.e,18,B.bH,2),B.M),r,B.cV,new A.b3(q,r,o,p,n,r,B.w),B.CJ,r,B.D_,r,r),B.a6,new A.afr(s),new A.afs(s),r)}}
 A.afr.prototype={
 $1(a){var s=this.a
 return s.aj(new A.afq(s))},
@@ -40218,10 +40218,10 @@ o=A.X(a).ok.f
 p=A.b_(p,i,i,o==null?i:o.bh(B.e),i)
 o=A.bH(12)
 n=A.eo(A.a4(102,B.a9.n()>>>16&255,B.a9.n()>>>8&255,B.a9.n()&255),1.5)
-r=A.hE(A.aFp(r),i,B.O)
+r=A.hE(A.aFp(r),i,B.M)
 m=A.hl("assets/images/jayhawk.png",B.F,i,i,B.aH,B.b5,d?72:96,i,i)
 l=A.cT(i,i,d?14:22)
-r=A.aS(i,A.bo(A.c([r,B.cF,A.hy(A.c([m,l,A.d9(i,A.dx(A.hl("assets/images/Launch_KU.png",B.F,i,i,B.aH,B.b5,d?54:72,i,i),B.aJ,i,i,i),B.N,!1,i,i,i,i,i,i,i,i,i,i,i,i,i,A.alc(),i,i,i)],f),B.t,B.c5,B.bv)],f),B.t,B.u,B.v),B.l,i,B.lb,new A.b3(B.aa,i,n,o,i,i,B.w),i,i,i,B.CX,i,i,i)
+r=A.aS(i,A.bo(A.c([r,B.cF,A.hy(A.c([m,l,A.d9(i,A.dx(A.hl("assets/images/Launch_KU.png",B.F,i,i,B.aH,B.b5,d?54:72,i,i),B.aJ,i,i,i),B.O,!1,i,i,i,i,i,i,i,i,i,i,i,i,i,A.alc(),i,i,i)],f),B.t,B.c5,B.bv)],f),B.t,B.u,B.v),B.l,i,B.lb,new A.b3(B.aa,i,n,o,i,i,B.w),i,i,i,B.CX,i,i,i)
 o=A.cT(i,B.c.cg(g-580,60,800),i)
 n=A.bH(20)
 $.a1()
@@ -40229,12 +40229,12 @@ m=A.bH(20)
 l=A.a4(56,B.iz.n()>>>16&255,B.iz.n()>>>8&255,B.iz.n()&255)
 k=A.eo(A.a4(71,B.iu.n()>>>16&255,B.iu.n()>>>8&255,B.iu.n()&255),1.2)
 j=A.c([new A.c4(4,B.av,A.a4(115,B.ik.n()>>>16&255,B.ik.n()>>>8&255,B.ik.n()&255),B.j,40)],t.E)
-d=A.b_(q?"Make Dreams Possible \u2013 Fund KU Research Abroad":"Haga posibles los sue\xf1os \u2013 Financie la Investigaci\xf3n de KU en el Exterior",i,i,B.Pl,B.O)
+d=A.b_(q?"Make Dreams Possible \u2013 Fund KU Research Abroad":"Haga posibles los sue\xf1os \u2013 Financie la Investigaci\xf3n de KU en el Exterior",i,i,B.Pl,B.M)
 d=A.iQ(n,A.ayH(A.aS(i,A.bo(A.c([d,B.hl,A.hE(A.da(A.mB(q?"Your tax-deductible gift funds all Chagres Initiative activities directly including: all expenses connected to workshops and field research in Panama, as well as the activities of computer mapping and analysis at U.S. universities. No overhead, administrative fees or salaries are paid with your donation.\n\nWith U.S. Federal, NGO and now even internal university funding for international research being drastically cut, we present a novel alternative: a direct public-private research partnership.\n\nWe estimate to produce a geospatial analysis and standard map results needed for zoning and planning of the Chagres National Park will take about three years and U.S. $550,000 to complete.\n\nSimply put, your donations make the Chagres Initiative possible, paying direct project costs of community members, KU students, and professors on the research team, paying for flights to Panama, boat and truck transportation, workshop costs, field equipment, mapping materials, and stipends to cover their food, lodging, and travel.":"Su donaci\xf3n deducible de impuestos financia directamente todas las actividades de la Iniciativa Chagres, incluyendo: todos los gastos relacionados con talleres e investigaci\xf3n de campo en Panam\xe1, as\xed como las actividades de mapeo computarizado y an\xe1lisis en universidades de EE.UU. Con su donaci\xf3n no se pagan gastos generales, honorarios administrativos ni salarios.\n\nAnte los dr\xe1sticos recortes en los fondos federales de EE.UU., los de las ONG e incluso la financiaci\xf3n universitaria interna para la investigaci\xf3n internacional, presentamos una alternativa novedosa: una asociaci\xf3n directa de investigaci\xf3n p\xfablico-privada.\n\nEstimamos que producir un an\xe1lisis geoespacial y un plan de zonificaci\xf3n del Parque Nacional Chagres requerir\xe1 aproximadamente tres a\xf1os y unos US$550,000.\n\nEn pocas palabras, sus donaciones hacen posible la Iniciativa Chagres, ya que pagan los costos directos del proyecto para los miembros de la comunidad, los estudiantes y profesores de KU del equipo de investigaci\xf3n, as\xed como vuelos a Panam\xe1, transporte en barco y cami\xf3n, costos de talleres, equipos de campo, materiales de mapeo y estipendios que cubren alimentaci\xf3n, alojamiento y transporte.",B.yd),i,i,i,i,i,i,i,i,B.yd,i),i,B.bz)],f),B.t,B.u,B.v),B.l,i,B.zt,new A.b3(l,i,k,m,j,i,B.w),i,i,i,B.D6,i,i,i),new A.AN(18,18,i)))
 n=A.hl("assets/images/poem.png",B.F,i,i,B.aH,B.b5,i,B.z1,h?280:360)
 m=A.bH(100)
 l=A.eo(B.dV,2)
-e.push(A.aS(i,A.bo(A.c([p,B.aZ,r,o,d,B.hm,n,B.xO,A.dx(A.d9(i,A.anL(B.l1,A.aS(i,A.bo(A.c([q?A.hE(A.da(A.c([B.y9,B.ya,B.yc,B.yb],t.VO),i,i,i,i,i,i,i,i,B.yf,i),i,B.O):B.SA],f),B.t,B.u,B.v),B.l,i,B.zv,new A.b3(B.dV,i,l,m,i,i,B.w),i,i,i,B.D3,i,i,i),1.03),B.N,!1,i,i,i,i,i,i,i,i,i,i,i,i,i,A.alc(),i,i,i),B.aJ,i,i,i)],f),B.t,B.u,B.v),B.l,i,i,i,i,i,i,new A.ai(c,140,s,60),i,i,1/0))
+e.push(A.aS(i,A.bo(A.c([p,B.aZ,r,o,d,B.hm,n,B.xO,A.dx(A.d9(i,A.anL(B.l1,A.aS(i,A.bo(A.c([q?A.hE(A.da(A.c([B.y9,B.ya,B.yc,B.yb],t.VO),i,i,i,i,i,i,i,i,B.yf,i),i,B.M):B.SA],f),B.t,B.u,B.v),B.l,i,B.zv,new A.b3(B.dV,i,l,m,i,i,B.w),i,i,i,B.D3,i,i,i),1.03),B.O,!1,i,i,i,i,i,i,i,i,i,i,i,i,i,A.alc(),i,i,i),B.aJ,i,i,i)],f),B.t,B.u,B.v),B.l,i,i,i,i,i,i,new A.ai(c,140,s,60),i,i,1/0))
 return A.h5(B.b2,e,B.b_)},
 $S:287}
 A.a5d.prototype={
@@ -40249,7 +40249,7 @@ if(g)s=20
 else s=f?60:40
 r=g?64:96
 q=this.c==="en"
-p=q?"Exploration":"Exploraci\xf3n"
+p=q?"Exploring":"Explorando"
 o=q?"At the Heart of the Panama Canal":"En el Coraz\xf3n del Canal de Panam\xe1"
 n=q?"Discovering":"Descubriendo"
 m=q?"Indigenous People Sustain Global Trade":"Los Pueblos Ind\xedgenas Sostienen el Comercio Global"
@@ -40262,13 +40262,13 @@ B.b.M(o,n)}j=new A.HQ(A.hy(o,B.dX,B.u,B.v),i)}else{o=A.c([],p)
 for(k=0;k<2;++k){n=A.c([new A.Ax(l[k],i)],p)
 if(k<1)n.push(B.aZ)
 B.b.M(o,n)}j=A.bo(o,B.t,B.u,B.v)}q=q?"The Chagres Initiative Is...":"La Iniciativa Chagres Es..."
-q=A.b_(q,i,i,A.alj().$7$color$fontSize$fontStyle$fontWeight$height$letterSpacing$shadows(B.D,56,B.at,B.L,1.2,0.3,A.c([new A.hC(A.a4(102,B.D.n()>>>16&255,B.D.n()>>>8&255,B.D.n()&255),B.j,24)],t.kO)),B.O)
+q=A.b_(q,i,i,A.alj().$7$color$fontSize$fontStyle$fontWeight$height$letterSpacing$shadows(B.D,56,B.at,B.L,1.2,0.3,A.c([new A.hC(A.a4(102,B.D.n()>>>16&255,B.D.n()>>>8&255,B.D.n()&255),B.j,24)],t.kO)),B.M)
 return A.aS(i,A.q_(new A.bR(new A.ai(s,r,s,r),A.df(new A.cB(B.zA,A.bo(A.c([q,A.cT(i,g?28:40,i),j],p),B.t,B.u,B.v),i),i,i),i),i,i,B.TG),B.l,i,i,B.zG,i,i,i,i,i,i,1/0)}}
 A.Mi.prototype={}
 A.Ax.prototype={
-I(a){var s=null,r=A.alj().$7$color$fontSize$fontStyle$fontWeight$height$letterSpacing$shadows(B.D,46,B.at,B.W,1.15,0.5,A.c([new A.hC(A.a4(115,B.D.n()>>>16&255,B.D.n()>>>8&255,B.D.n()&255),B.j,22)],t.kO)),q=A.bH(20),p=A.eo(A.a4(18,B.e.n()>>>16&255,B.e.n()>>>8&255,B.e.n()&255),1),o=A.c([new A.c4(0,B.av,A.a4(115,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),B.J8,32)],t.E),n=this.c,m=t.p,l=A.c([A.cT(A.q_(s,s,s,n.a),156,156),B.Np,A.b_(n.b,s,s,r,B.O),B.dh,A.aS(s,s,B.l,s,s,B.zH,s,1.5,s,s,s,s,64),B.bl,A.b_(n.c,s,s,A.alj().$6$color$fontSize$fontStyle$fontWeight$height$letterSpacing(B.D,30,B.at,B.L,1.3,0.3),B.O)],m)
+I(a){var s=null,r=A.alj().$7$color$fontSize$fontStyle$fontWeight$height$letterSpacing$shadows(B.D,46,B.at,B.W,1.15,0.5,A.c([new A.hC(A.a4(115,B.D.n()>>>16&255,B.D.n()>>>8&255,B.D.n()&255),B.j,22)],t.kO)),q=A.bH(20),p=A.eo(A.a4(18,B.e.n()>>>16&255,B.e.n()>>>8&255,B.e.n()&255),1),o=A.c([new A.c4(0,B.av,A.a4(115,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),B.J8,32)],t.E),n=this.c,m=t.p,l=A.c([A.cT(A.q_(s,s,s,n.a),156,156),B.Np,A.b_(n.b,s,s,r,B.M),B.dh,A.aS(s,s,B.l,s,s,B.zH,s,1.5,s,s,s,s,64),B.bl,A.b_(n.c,s,s,A.alj().$6$color$fontSize$fontStyle$fontWeight$height$letterSpacing(B.D,30,B.at,B.L,1.3,0.3),B.M)],m)
 n=n.d
-if(n.length!==0)B.b.M(l,A.c([B.xM,A.b_(n,s,s,A.alj().$5$color$fontSize$fontStyle$fontWeight$height(B.e,18,B.at,B.L,1.5),B.O)],m))
+if(n.length!==0)B.b.M(l,A.c([B.xM,A.b_(n,s,s,A.alj().$5$color$fontSize$fontStyle$fontWeight$height(B.e,18,B.at,B.L,1.5),B.M)],m))
 return A.aS(s,new A.bR(B.D8,A.df(A.bo(l,B.t,B.u,B.bv),s,s),s),B.ck,s,s,new A.b3(s,s,p,q,o,B.Ev,B.w),s,s,s,s,s,s,s)}}
 A.Nh.prototype={
 av(a6,a7){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1=a7.a/2,a2=a7.gcX()/2,a3=a2*0.1,a4=a7.b/2-a3/2,a5=new A.k(a1,a4)
@@ -40476,24 +40476,24 @@ m=!d
 if(m)n.push(B.Kv)
 if(m)n.push(B.Kw)
 m=q?"PARTICIPATORY RESEARCH MAPPING":"MAPEO PARTICIPATIVO DE INVESTIGACI\xd3N"
-m=A.b_(m,f,f,A.ej(f,f,B.ig,f,f,f,f,f,f,f,f,c?12:14,f,f,B.bH,f,f,!0,f,3,f,f,f,f,f,f),B.O)
+m=A.b_(m,f,f,A.ej(f,f,B.ig,f,f,f,f,f,f,f,f,c?12:14,f,f,B.bH,f,f,!0,f,3,f,f,f,f,f,f),B.M)
 l=q?"PRM blends Indigenous geospatial knowledge with GPS, aerial photography, and satellite imagery. The diagram below shows how lived experience becomes a shared tool for stewardship, dialogue, and protection \u2014 step by step.":"El PRM combina el conocimiento geoespacial ind\xedgena con GPS, fotograf\xeda a\xe9rea e im\xe1genes satelitales. El siguiente diagrama muestra c\xf3mo la experiencia vivida se convierte, paso a paso, en una herramienta compartida para la administraci\xf3n, el di\xe1logo y la protecci\xf3n."
-l=A.b_(l,f,f,A.ej(f,f,B.BT,f,f,f,f,f,f,f,f,c?15:17,f,f,f,f,1.7,!0,f,f,f,f,f,f,f,f),B.O)
+l=A.b_(l,f,f,A.ej(f,f,B.BT,f,f,f,f,f,f,f,f,c?15:17,f,f,f,f,1.7,!0,f,f,f,f,f,f,f,f),B.M)
 k=A.cT(f,c?36:60,f)
 j=A.bH(c?12:20)
 i=A.c([new A.c4(0,B.av,A.a4(115,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),B.fP,34)],t.E)
-j=A.dx(A.d9(f,A.aS(f,A.iQ(A.bH(c?12:20),A.hl(p,B.F,f,f,B.bG,B.b5,f,f,1/0)),B.l,f,f,new A.b3(f,f,f,j,i,f,B.w),f,f,f,f,f,f,f),B.N,!1,f,f,f,f,f,f,f,f,f,f,f,f,f,new A.a1A(a,p),f,f,f),B.NX,f,f,f)
+j=A.dx(A.d9(f,A.aS(f,A.iQ(A.bH(c?12:20),A.hl(p,B.F,f,f,B.bG,B.b5,f,f,1/0)),B.l,f,f,new A.b3(f,f,f,j,i,f,B.w),f,f,f,f,f,f,f),B.O,!1,f,f,f,f,f,f,f,f,f,f,f,f,f,new A.a1A(a,p),f,f,f),B.NX,f,f,f)
 i=A.cT(f,c?14:18,f)
 h=A.amx(B.DI,B.ig,f,c?16:18)
 g=q?"Click the diagram to zoom in":"Haz clic en el diagrama para ampliar"
 h=A.hy(A.c([h,B.Nn,A.b_(g,f,f,A.ej(f,f,B.ig,f,f,f,f,f,f,f,f,c?13:14,f,f,B.bH,f,f,!0,f,0.5,f,f,f,f,f,f),f)],o),B.t,B.c5,B.v)
 g=A.cT(f,c?20:28,f)
 q=q?"A good map does not replace local knowledge \u2014 it translates that knowledge into a form more people can understand, use, and act on.":"Un buen mapa no reemplaza el conocimiento local: traduce ese conocimiento a una forma que m\xe1s personas puedan entender, usar y aplicar."
-n.push(new A.bR(new A.ai(s,r,s,r),A.df(new A.cB(B.zz,A.bo(A.c([m,B.xM,new A.dI(new A.a1B(this),f),B.aZ,new A.cB(B.zw,l,f),k,j,i,h,g,new A.cB(B.zB,A.b_(q,f,f,A.ej(f,f,B.C5,f,f,f,f,f,f,f,f,c?14:16,B.at,f,f,f,1.6,!0,f,f,f,f,f,f,f,f),B.O),f)],o),B.t,B.u,B.v),f),f,f),f))
+n.push(new A.bR(new A.ai(s,r,s,r),A.df(new A.cB(B.zz,A.bo(A.c([m,B.xM,new A.dI(new A.a1B(this),f),B.aZ,new A.cB(B.zw,l,f),k,j,i,h,g,new A.cB(B.zB,A.b_(q,f,f,A.ej(f,f,B.C5,f,f,f,f,f,f,f,f,c?14:16,B.at,f,f,f,1.6,!0,f,f,f,f,f,f,f,f),B.M),f)],o),B.t,B.u,B.v),f),f,f),f))
 return A.aS(f,A.h5(B.b2,n,B.b_),B.l,f,f,B.zD,f,f,f,f,f,f,1/0)}}
 A.a1B.prototype={
 $1(a){var s=A.X(a).ok.c,r=s==null?null:s.BX(B.e,B.W)
-return A.b_(this.a.c==="en"?"How Our Maps Are Made":"C\xf3mo se Elaboran Nuestros Mapas",null,null,r,B.O)},
+return A.b_(this.a.c==="en"?"How Our Maps Are Made":"C\xf3mo se Elaboran Nuestros Mapas",null,null,r,B.M)},
 $S:167}
 A.a1A.prototype={
 $0(){return A.avn(new A.a1z(this.b),this.a,t.z)},
@@ -40529,7 +40529,7 @@ h=A.c([new A.c4(0,B.av,A.a4(89,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),B.j
 r=n?20:40
 q=this.a.c==="en"?"What Makes This Project Uniquely Meaningful?":"\xbfQu\xe9 hace que este proyecto sea \xfanico?"
 p=A.X(a).ok.f
-return new A.bR(new A.ai(m,l,k,48),A.df(new A.cB(B.hX,A.aS(o,A.bo(A.c([A.b_(q,o,o,p==null?o:p.bh(B.e),B.O),B.aZ,A.iQ(A.bH(14),A.amL(new A.agE(s),3,B.fO,new A.agF(),!0))],t.p),B.t,B.u,B.v),B.l,o,o,new A.b3(B.aa,o,i,j,h,o,B.w),o,o,o,new A.ai(r,40,r,40),o,o,o),o),o,o),o)}}
+return new A.bR(new A.ai(m,l,k,48),A.df(new A.cB(B.hX,A.aS(o,A.bo(A.c([A.b_(q,o,o,p==null?o:p.bh(B.e),B.M),B.aZ,A.iQ(A.bH(14),A.amL(new A.agE(s),3,B.fO,new A.agF(),!0))],t.p),B.t,B.u,B.v),B.l,o,o,new A.b3(B.aa,o,i,j,h,o,B.w),o,o,o,new A.ai(r,40,r,40),o,o,o),o),o,o),o)}}
 A.agF.prototype={
 $2(a,b){return A.aqb(A.a4(20,B.e.n()>>>16&255,B.e.n()>>>8&255,B.e.n()&255),1,1)},
 $S:171}
@@ -40555,7 +40555,7 @@ $1(a){return B.Ew.ly(0,a)},
 $S:49}
 A.mv.prototype={
 I(a){var s=null,r=A.a4(20,B.cl.n()>>>16&255,B.cl.n()>>>8&255,B.cl.n()&255),q=A.eo(A.a4(89,B.cl.n()>>>16&255,B.cl.n()>>>8&255,B.cl.n()&255),2)
-return new A.cB(B.zy,A.bo(A.c([A.aS(s,new A.bR(B.D1,A.q_(s,s,s,this.c),s),B.l,s,s,new A.b3(r,s,q,s,s,s,B.dB),s,168,s,s,s,s,168),B.cF,A.b_(this.d,s,s,A.aIA().$5$color$fontSize$fontWeight$height$letterSpacing(B.dQ,62,B.cp,1,-0.5),s),B.dh,A.b_(this.e,s,s,B.QJ,B.O)],t.p),B.t,B.u,B.bv),s)}}
+return new A.cB(B.zy,A.bo(A.c([A.aS(s,new A.bR(B.D1,A.q_(s,s,s,this.c),s),B.l,s,s,new A.b3(r,s,q,s,s,s,B.dB),s,168,s,s,s,s,168),B.cF,A.b_(this.d,s,s,A.aIA().$5$color$fontSize$fontWeight$height$letterSpacing(B.dQ,62,B.cp,1,-0.5),s),B.dh,A.b_(this.e,s,s,B.QJ,B.M)],t.p),B.t,B.u,B.bv),s)}}
 A.TG.prototype={
 av(a,b){var s,r,q,p,o,n=b.a,m=b.b,l=$.a1().r,k=A.bK(l),j=n*0.5,i=m*0.06
 k.W(new A.cR(j,i))
@@ -40729,7 +40729,7 @@ try{$.Vo()
 $.l_().op("auth-pdf-viewer-en",new A.acB(),!0)}catch(s){}try{$.Vo()
 $.l_().op("auth-pdf-viewer-es",new A.acC(),!0)}catch(s){}},
 I(a){var s,r,q,p=this,o=null,n=A.aT(a,o,t.w).w.a.a<900,m=n?20:60,l=p.a.c==="en"?"Project Authorization":"Autorizaci\xf3n del Proyecto",k=A.X(a).ok.f
-l=A.d9(o,A.dx(A.b_(l,o,o,k==null?o:k.a9I(B.e,B.f),o),B.aJ,o,o,o),B.N,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.acz(p,a),o,o,o)
+l=A.d9(o,A.dx(A.b_(l,o,o,k==null?o:k.a9I(B.e,B.f),o),B.aJ,o,o,o),B.O,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.acz(p,a),o,o,o)
 k=A.bH(16)
 s=p.a.c==="en"?'During our exploratory expedition to the Indigenous Ember\xe1/Wounaan community of La Bonga Pequen\xed in the Panama Canal Watershed last summer 2025, community leaders invited us to return and present our participatory research methodology (PRM) to their governing congress because they understood the project\'s potential.\n\nAt their governing Congreso Local in June 2025, Indigenous Ember\xe1 and Wounaan leaders from communities inside the Chagres National Park (CNP) recognized "KU know-how" from previous successful mapping projects with their relatives in the eastern Dari\xe9n Province back in the 1990s! The Congreso Local voted unanimously to ask our KU team of geographers to map their lands and help them develop a management plan acceptable to the Panamanian government.':'Durante nuestra expedici\xf3n exploratoria a la comunidad ind\xedgena Ember\xe1/Wounaan de La Bonga Pequen\xed en la Cuenca del Canal de Panam\xe1 el verano pasado de 2025, los l\xedderes comunitarios nos invitaron a regresar y presentar nuestra metodolog\xeda de investigaci\xf3n participativa (PRM) a su congreso rector porque entendieron el potencial del proyecto.\n\nEn su Congreso Local en junio de 2025, los l\xedderes ind\xedgenas Ember\xe1 y Wounaan de comunidades dentro del Parque Nacional Chagres (PNC) reconocieron el "know-how de KU" gracias a proyectos de mapeo exitosos previos con sus parientes en la provincia oriental del Dari\xe9n, \xa1ya desde la d\xe9cada de 1990! El Congreso Local acord\xf3 por unanimidad solicitar a nuestro equipo de ge\xf3grafos de KU que mapearan sus tierras y les ayudaran a desarrollar un plan de manejo aceptable para el gobierno paname\xf1o.'
 r=A.X(a).ok.z
@@ -40789,10 +40789,10 @@ q=A.c([new A.c4(0,B.av,A.a4(89,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),B.j
 p=k?20:40
 o=this.a.c==="en"?"Stages of Participatory Research Mapping (PRM)":"Etapas del Mapeo de Investigaci\xf3n Participativa"
 n=A.X(a).ok.f
-o=A.b_(o,l,l,n==null?l:n.bh(B.e),B.O)
+o=A.b_(o,l,l,n==null?l:n.bh(B.e),B.M)
 n=this.a.c==="en"?'Unlike most research, PRM releases the research function to trained "community geographers" who co-design and implement the project as they interpret geo-spatial information alongside KU geographers and students.':'A diferencia de la mayor\xeda de las investigaciones, el PRM delega la funci\xf3n de investigaci\xf3n en "ge\xf3grafos comunitarios" capacitados que co-dise\xf1an e implementan el proyecto mientras interpretan informaci\xf3n geoespacial junto a ge\xf3grafos y estudiantes de KU.'
 m=A.X(a).ok.z
-return new A.bR(new A.ai(j,48,j,48),A.df(new A.cB(B.hX,A.aS(l,A.bo(A.c([o,B.hl,A.b_(n,l,l,m==null?l:m.a9J(B.V,B.at),B.O),B.cF,A.iQ(A.bH(14),A.amL(new A.agH(i),5,B.fO,new A.agI(),!0))],t.p),B.t,B.u,B.v),B.l,l,l,new A.b3(B.aa,l,r,s,q,l,B.w),l,l,l,new A.ai(p,40,p,40),l,l,l),l),l,l),l)}}
+return new A.bR(new A.ai(j,48,j,48),A.df(new A.cB(B.hX,A.aS(l,A.bo(A.c([o,B.hl,A.b_(n,l,l,m==null?l:m.a9J(B.V,B.at),B.M),B.cF,A.iQ(A.bH(14),A.amL(new A.agH(i),5,B.fO,new A.agI(),!0))],t.p),B.t,B.u,B.v),B.l,l,l,new A.b3(B.aa,l,r,s,q,l,B.w),l,l,l,new A.ai(p,40,p,40),l,l,l),l),l,l),l)}}
 A.agI.prototype={
 $2(a,b){return A.aqb(A.a4(20,B.e.n()>>>16&255,B.e.n()>>>8&255,B.e.n()&255),1,1)},
 $S:171}
@@ -40804,7 +40804,7 @@ A.wm.prototype={
 ac(){return new A.OM(A.c(["assets/images/lancha.jpg","assets/images/field_tour.jpg","assets/images/indigenous_band.jpg","assets/images/indigenous_girl_smiling.jpg","assets/images/chief_checking.jpg","assets/images/site_analysis.jpg","assets/images/lizard.jpg","assets/images/monkey.jpg"],t.s),A.c([B.KQ,B.KD,B.Lg,B.KF,B.Lf,B.Lp,B.KG,B.Lc],t.Wy))}}
 A.OM.prototype={
 I(a){var s,r,q,p,o,n,m,l,k=this,j=null,i=A.aT(a,j,t.w).w.a.a<900,h=i?20:60,g=k.a.c==="en"?"Fieldwork & Landscape":"Trabajo de Campo y Paisaje",f=A.X(a).ok.f
-g=A.d9(j,A.dx(A.b_(g,j,j,f==null?j:f.bh(B.e),j),B.aJ,j,j,j),B.N,!1,j,j,j,j,j,j,j,j,j,j,j,j,j,new A.afb(),j,j,j)
+g=A.d9(j,A.dx(A.b_(g,j,j,f==null?j:f.bh(B.e),j),B.aJ,j,j,j),B.O,!1,j,j,j,j,j,j,j,j,j,j,j,j,j,new A.afb(),j,j,j)
 f=i?0:24
 s=i?1/0:800
 r=A.bH(16)
@@ -40852,7 +40852,7 @@ j=A.X(a).ok.Q
 j=j==null?p:j.kr(B.V,14)
 i=q.a.c==="en"?[B.wX,B.wY][n].a:[B.wX,B.wY][n].b
 s=A.X(a).ok.Q
-j=A.hE(A.da(A.mB(i,s==null?p:s.kr(B.V,14)),p,p,p,p,p,p,p,p,j,p),p,B.O)
+j=A.hE(A.da(A.mB(i,s==null?p:s.kr(B.V,14)),p,p,p,p,p,p,p,p,j,p),p,B.M)
 i=A.wu(p,p,B.mG,p,p,new A.aj9(q),p,p,p)
 s=A.X(a).ok.Q
 s=s==null?p:s.bh(B.V)
@@ -40874,7 +40874,7 @@ $0(){return this.a.d++},
 $S:0}
 A.Im.prototype={
 I(a){var s=null,r=A.aT(a,s,t.w).w.a.a<900,q=r?20:60,p=this.c==="en"?"Project Maps":"Mapas del Proyecto",o=A.X(a).ok.f
-return new A.bR(new A.ai(q,60,q,60),A.bo(A.c([A.d9(s,A.dx(A.b_(p,s,s,o==null?s:o.bh(B.e),s),B.aJ,s,s,s),B.N,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.a1D(),s,s,s),A.amH(new A.a1E(this,r))],t.p),B.t,B.u,B.v),s)}}
+return new A.bR(new A.ai(q,60,q,60),A.bo(A.c([A.d9(s,A.dx(A.b_(p,s,s,o==null?s:o.bh(B.e),s),B.aJ,s,s,s),B.O,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.a1D(),s,s,s),A.amH(new A.a1E(this,r))],t.p),B.t,B.u,B.v),s)}}
 A.a1D.prototype={
 $0(){},
 $S:0}
@@ -40900,16 +40900,16 @@ I(a){var s,r,q,p,o,n=this,m=null,l="Field Blog",k="Blog de Campo",j="Official Re
 g=A.b_(g,m,m,f==null?m:f.bh(B.e),m)
 f=n.a.c==="en"?"Explore our gallery of Substack posts and field reflections. Official research reports will be available as PDFs here.":"Explore nuestra galer\xeda de publicaciones de Substack y reflexiones de campo. Los informes de investigaci\xf3n oficiales estar\xe1n disponibles como PDF aqu\xed."
 s=A.X(a).ok.z
-f=A.b_(f,m,m,s==null?m:s.bh(B.V),B.O)
+f=A.b_(f,m,m,s==null?m:s.bh(B.V),B.M)
 s=n.d===0?B.a9:B.aa
 r=A.bH(8)
 q=n.a.c==="en"?l:k
-r=A.d9(m,A.aS(m,A.b_(q,m,m,A.ej(m,m,B.e,m,m,m,m,m,"serif",m,m,16,m,m,B.W,m,m,!0,m,m,m,m,m,m,m,m),m),B.l,m,m,new A.b3(s,m,m,r,m,m,B.w),m,m,m,B.mq,m,m,m),B.N,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.ai2(n),m,m,m)
+r=A.d9(m,A.aS(m,A.b_(q,m,m,A.ej(m,m,B.e,m,m,m,m,m,"serif",m,m,16,m,m,B.W,m,m,!0,m,m,m,m,m,m,m,m),m),B.l,m,m,new A.b3(s,m,m,r,m,m,B.w),m,m,m,B.mq,m,m,m),B.O,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.ai2(n),m,m,m)
 s=n.d===1?B.a9:B.aa
 q=A.bH(8)
 p=n.a.c==="en"?j:i
 o=t.p
-o=A.c([g,B.bl,f,B.aZ,A.hy(A.c([r,B.xL,A.d9(m,A.aS(m,A.b_(p,m,m,A.ej(m,m,B.e,m,m,m,m,m,"serif",m,m,16,m,m,B.W,m,m,!0,m,m,m,m,m,m,m,m),m),B.l,m,m,new A.b3(s,m,m,q,m,m,B.w),m,m,m,B.mq,m,m,m),B.N,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.ai3(n),m,m,m)],o),B.t,B.c5,B.v),B.aZ],o)
+o=A.c([g,B.bl,f,B.aZ,A.hy(A.c([r,B.xL,A.d9(m,A.aS(m,A.b_(p,m,m,A.ej(m,m,B.e,m,m,m,m,m,"serif",m,m,16,m,m,B.W,m,m,!0,m,m,m,m,m,m,m,m),m),B.l,m,m,new A.b3(s,m,m,q,m,m,B.w),m,m,m,B.mq,m,m,m),B.O,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,new A.ai3(n),m,m,m)],o),B.t,B.c5,B.v),B.aZ],o)
 if(n.d===0){g=n.a.c==="en"
 f=g?l:k
 o.push(n.Ho(a,f,g?"Narrative updates from the field, participatory mapping workshops, and watershed engagement activities.":"Actualizaciones narrativas del campo, talleres de mapeo participativo y actividades de involucramiento con las cuencas hidrogr\xe1ficas."))}else{g=n.a.c==="en"
@@ -40938,9 +40938,9 @@ I(a){var s=null,r=A.aT(a,s,t.w).w,q=this.c==="en",p=t.Wy,o=q?A.c([B.L7,B.Ld,B.KT
 r=r.a.a<900?20:60
 q=q?"Frequently Asked Questions":"Preguntas Frecuentes"
 p=A.X(a).ok.f
-q=A.d9(s,A.dx(A.b_(q,s,s,p==null?s:p.bh(B.e),s),B.aJ,s,s,s),B.N,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.Zm(),s,s,s)
+q=A.d9(s,A.dx(A.b_(q,s,s,p==null?s:p.bh(B.e),s),B.aJ,s,s,s),B.O,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.Zm(),s,s,s)
 p=A.bH(16)
-return A.aS(s,A.bo(A.c([q,B.aZ,A.aS(s,new A.qM(new A.Le(new A.Zn(this,o),10,!0,!0,!0,A.aIK(),s),s,B.aN,!1,s,s,B.fO,!0,s,10,B.N,s,s,B.ao,B.aB,s),B.l,s,s,new A.b3(B.aa,s,s,p,s,s,B.w),s,s,s,s,s,s,s)],t.p),B.t,B.u,B.v),B.l,s,s,s,s,s,s,new A.ai(r,60,r,60),s,s,s)}}
+return A.aS(s,A.bo(A.c([q,B.aZ,A.aS(s,new A.qM(new A.Le(new A.Zn(this,o),10,!0,!0,!0,A.aIK(),s),s,B.aN,!1,s,s,B.fO,!0,s,10,B.O,s,s,B.ao,B.aB,s),B.l,s,s,new A.b3(B.aa,s,s,p,s,s,B.w),s,s,s,s,s,s,s)],t.p),B.t,B.u,B.v),B.l,s,s,s,s,s,s,new A.ai(r,60,r,60),s,s,s)}}
 A.Zm.prototype={
 $0(){},
 $S:0}
@@ -40966,14 +40966,14 @@ o=o==null?q:o.bh(B.e)
 n=r.a.c==="en"?"Support the Chagres Initiative":"Apoya la Iniciativa Chagres"
 m=A.X(a).ok.f
 o=A.hE(A.da(A.mB(n,m==null?q:m.bh(B.e)),q,q,q,q,q,q,q,q,o,q),q,q)
-n=A.hE(A.da(A.mB(r.a.c==="en"?"All donated funds are used in the Chagres Initiative Research Fund to be used exclusively for project activities.\n\nThe descriptions of each supporter category are just examples of how funds could be used.":"Todos los fondos donados se utilizan en el Fondo de Investigaci\xf3n de la Iniciativa Chagres para ser utilizados exclusivamente para actividades del proyecto.\n\nLas descripciones de cada categor\xeda de donante son solo ejemplos de c\xf3mo podr\xedan utilizarse los fondos.",B.kB),q,q,q,q,q,q,q,q,B.kB,q),q,B.O)
+n=A.hE(A.da(A.mB(r.a.c==="en"?"All donated funds are used in the Chagres Initiative Research Fund to be used exclusively for project activities.\n\nThe descriptions of each supporter category are just examples of how funds could be used.":"Todos los fondos donados se utilizan en el Fondo de Investigaci\xf3n de la Iniciativa Chagres para ser utilizados exclusivamente para actividades del proyecto.\n\nLas descripciones de cada categor\xeda de donante son solo ejemplos de c\xf3mo podr\xedan utilizarse los fondos.",B.kB),q,q,q,q,q,q,q,q,B.kB,q),q,B.M)
 m=A.bH(16)
 l=A.c([new A.c4(0,B.av,A.a4(115,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),B.fP,34)],t.E)
 k=A.bH(100)
 j=A.eo(B.dV,2)
 i=r.a.c==="en"?A.hE(A.da(A.c([B.y9,B.ya,B.yc,B.yb],t.VO),q,q,q,q,q,q,q,q,B.ye,q),q,q):B.SB
 h=t.p
-return A.aS(q,A.bo(A.c([o,B.hl,n,B.hm,A.aS(q,A.bo(A.c([A.d9(q,A.dx(A.anL(B.l1,A.aS(q,i,B.l,q,q,new A.b3(B.dV,q,j,k,q,q,B.w),q,q,q,B.D2,q,q,q),1.03),B.aJ,q,q,q),B.N,!1,q,q,q,q,q,q,q,q,q,q,q,q,q,A.alc(),q,q,q),B.xO,A.aS(q,A.amL(new A.afg(s),5,B.fO,new A.afh(),!0),B.l,q,B.lb,q,q,q,q,q,q,q,q)],h),B.t,B.u,B.v),B.l,q,q,new A.b3(B.aa,q,q,m,l,q,B.w),q,q,q,B.iG,q,q,q)],h),B.t,B.u,B.v),B.l,q,q,q,q,q,q,new A.ai(p,60,p,60),q,q,1/0)}}
+return A.aS(q,A.bo(A.c([o,B.hl,n,B.hm,A.aS(q,A.bo(A.c([A.d9(q,A.dx(A.anL(B.l1,A.aS(q,i,B.l,q,q,new A.b3(B.dV,q,j,k,q,q,B.w),q,q,q,B.D2,q,q,q),1.03),B.aJ,q,q,q),B.O,!1,q,q,q,q,q,q,q,q,q,q,q,q,q,A.alc(),q,q,q),B.xO,A.aS(q,A.amL(new A.afg(s),5,B.fO,new A.afh(),!0),B.l,q,B.lb,q,q,q,q,q,q,q,q)],h),B.t,B.u,B.v),B.l,q,q,new A.b3(B.aa,q,q,m,l,q,B.w),q,q,q,B.iG,q,q,q)],h),B.t,B.u,B.v),B.l,q,q,q,q,q,q,new A.ai(p,60,p,60),q,q,1/0)}}
 A.afh.prototype={
 $2(a,b){return B.No},
 $S:312}
@@ -41015,9 +41015,9 @@ r=r[4]
 o=A.bH(8)
 n=A.eo(A.a4(20,B.e.n()>>>16&255,B.e.n()>>>8&255,B.e.n()&255),1)
 m=A.X(s).ok.Q
-q=A.b_(q,2,B.bA,m==null?k:m.BY(B.e,13,B.W),B.O)
+q=A.b_(q,2,B.bA,m==null?k:m.BY(B.e,13,B.W),B.M)
 s=A.X(s).ok.Q
-return A.cT(A.aS(k,A.bo(A.c([new A.Fw(B.cT,new A.fb("assets/images/"+r,k,k),28,k),B.Nt,q,B.Nq,A.b_(p,3,B.bA,s==null?k:s.uW(B.V,12,1.2),B.O)],t.p),B.t,B.c5,B.v),B.l,k,k,new A.b3(B.aa,k,n,o,k,k,B.w),k,k,k,B.fp,k,k,k),j,i)},
+return A.cT(A.aS(k,A.bo(A.c([new A.Fw(B.cT,new A.fb("assets/images/"+r,k,k),28,k),B.Nt,q,B.Nq,A.b_(p,3,B.bA,s==null?k:s.uW(B.V,12,1.2),B.M)],t.p),B.t,B.c5,B.v),B.l,k,k,new A.b3(B.aa,k,n,o,k,k,B.w),k,k,k,B.fp,k,k,k),j,i)},
 $S:315}
 A.G3.prototype={
 I(a){var s,r,q,p,o,n=null,m=A.aT(a,n,t.w).w.a.a<900?20:60,l=this.c==="en",k=l?"Contact Us":"Cont\xe1ctenos",j=A.X(a).ok.f
@@ -41029,11 +41029,11 @@ q=A.X(a).ok.z
 q=q==null?n:q.bh(B.V)
 p=l?"Have questions about the Chagres Initiative? We'd love to hear from you.":"\xbfTiene preguntas sobre la Iniciativa Chagres? Nos encantar\xeda tener noticias suyas."
 o=A.X(a).ok.z
-q=A.hE(A.da(A.mB(p,o==null?n:o.bh(B.V)),n,n,n,n,n,n,n,n,q,n),n,B.O)
+q=A.hE(A.da(A.mB(p,o==null?n:o.bh(B.V)),n,n,n,n,n,n,n,n,q,n),n,B.M)
 p=A.bH(12)
 s=A.c([new A.c4(0,B.av,A.a4(B.c.aq(76.5),B.a9.n()>>>16&255,B.a9.n()>>>8&255,B.a9.n()&255),B.tg,12)],s)
 o=t.p
-return new A.bR(new A.ai(m,60,m,60),A.bo(A.c([k,B.aZ,A.aS(n,A.bo(A.c([q,B.aZ,A.d9(n,A.dx(A.aS(n,A.b_(l?"Email us at: chagresinitiative@ku.edu":"Env\xedenos un correo a: chagresinitiative@ku.edu",n,n,B.hq,n),B.l,n,n,new A.b3(B.a9,n,n,p,s,n,B.w),n,n,n,B.D5,n,n,n),B.aJ,n,n,n),B.N,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.Xs(),n,n,n)],o),B.t,B.u,B.v),B.l,n,n,new A.b3(B.aa,n,n,j,r,n,B.w),n,n,n,B.iG,n,n,n)],o),B.t,B.u,B.v),n)}}
+return new A.bR(new A.ai(m,60,m,60),A.bo(A.c([k,B.aZ,A.aS(n,A.bo(A.c([q,B.aZ,A.d9(n,A.dx(A.aS(n,A.b_(l?"Email us at: chagresinitiative@ku.edu":"Env\xedenos un correo a: chagresinitiative@ku.edu",n,n,B.hq,n),B.l,n,n,new A.b3(B.a9,n,n,p,s,n,B.w),n,n,n,B.D5,n,n,n),B.aJ,n,n,n),B.O,!1,n,n,n,n,n,n,n,n,n,n,n,n,n,new A.Xs(),n,n,n)],o),B.t,B.u,B.v),B.l,n,n,new A.b3(B.aa,n,n,j,r,n,B.w),n,n,n,B.iG,n,n,n)],o),B.t,B.u,B.v),n)}}
 A.Xs.prototype={
 $0(){A.Ee(A.h7("mailto:chagresinitiative@ku.edu",0,null))},
 $S:0}
@@ -41041,15 +41041,15 @@ A.Hk.prototype={
 I(a){var s,r,q,p,o=null,n=A.aT(a,o,t.w).w.a.a<900?20:60,m=A.X(a).ok.Q
 m=m==null?o:m.bh(B.V)
 s=A.X(a).ok.Q
-m=A.hE(A.da(A.mB("\xa9 2026 Chagres Initiative",s==null?o:s.bh(B.V)),o,o,o,o,o,o,o,o,m,o),o,B.O)
+m=A.hE(A.da(A.mB("\xa9 2026 Chagres Initiative",s==null?o:s.bh(B.V)),o,o,o,o,o,o,o,o,m,o),o,B.M)
 s=this.c
 r=s==="en"
 q=r?B.e:B.V
-q=A.d9(o,A.b_("English",o,o,A.ej(o,o,q,o,o,o,o,o,o,o,o,o,o,o,r?B.W:B.n,o,o,!0,o,o,o,o,o,o,o,o),o),B.N,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a_1(this),o,o,o)
+q=A.d9(o,A.b_("English",o,o,A.ej(o,o,q,o,o,o,o,o,o,o,o,o,o,o,r?B.W:B.n,o,o,!0,o,o,o,o,o,o,o,o),o),B.O,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a_1(this),o,o,o)
 s=s==="es"
 r=s?B.e:B.V
 p=t.p
-return A.aS(o,A.bo(A.c([m,B.hl,A.hy(A.c([q,B.Sy,A.d9(o,A.b_("Espa\xf1ol",o,o,A.ej(o,o,r,o,o,o,o,o,o,o,o,o,o,o,s?B.W:B.n,o,o,!0,o,o,o,o,o,o,o,o),o),B.N,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a_2(this),o,o,o)],p),B.t,B.c5,B.v)],p),B.t,B.u,B.v),B.l,B.a2,o,o,o,o,o,new A.ai(n,40,n,40),o,o,o)}}
+return A.aS(o,A.bo(A.c([m,B.hl,A.hy(A.c([q,B.Sy,A.d9(o,A.b_("Espa\xf1ol",o,o,A.ej(o,o,r,o,o,o,o,o,o,o,o,o,o,o,s?B.W:B.n,o,o,!0,o,o,o,o,o,o,o,o),o),B.O,!1,o,o,o,o,o,o,o,o,o,o,o,o,o,new A.a_2(this),o,o,o)],p),B.t,B.c5,B.v)],p),B.t,B.u,B.v),B.l,B.a2,o,o,o,o,o,new A.ai(n,40,n,40),o,o,o)}}
 A.a_1.prototype={
 $0(){return this.a.d.$1("en")},
 $S:0}
@@ -41066,13 +41066,13 @@ h=A.X(a).ok.z
 h=h==null?p:h.bh(B.V)
 s=q.a.c==="en"?"Subscribe to our Substack for the latest research updates, field reflections, and news from the Chagres Initiative.":"Suscr\xedbase a nuestro Substack para recibir las \xfaltimas actualizaciones de investigaci\xf3n, reflexiones de campo y noticias de la Iniciativa Chagres."
 r=A.X(a).ok.z
-h=A.hE(A.da(A.mB(s,r==null?p:r.bh(B.V)),p,p,p,p,p,p,p,p,h,p),p,B.O)
+h=A.hE(A.da(A.mB(s,r==null?p:r.bh(B.V)),p,p,p,p,p,p,p,p,h,p),p,B.M)
 s=A.c([B.a9,A.a4(204,B.a9.n()>>>16&255,B.a9.n()>>>8&255,B.a9.n()&255)],t.W)
 r=A.bH(50)
 l=A.c([new A.c4(0,B.av,A.a4(102,B.a9.n()>>>16&255,B.a9.n()>>>8&255,B.a9.n()&255),B.tg,16)],l)
-l=A.d9(p,A.dx(A.aS(p,A.b_(q.a.c==="en"?"Subscribe on Substack":"Suscribirse en Substack",p,p,B.Qu,p),B.l,p,p,new A.b3(p,p,p,r,l,new A.dw(B.dy,B.cN,B.ak,s,p,p),B.w),p,p,p,B.D9,p,p,p),B.aJ,p,p,p),B.N,!1,p,p,p,p,p,p,p,p,p,p,p,p,p,q.ga6g(),p,p,p)
+l=A.d9(p,A.dx(A.aS(p,A.b_(q.a.c==="en"?"Subscribe on Substack":"Suscribirse en Substack",p,p,B.Qu,p),B.l,p,p,new A.b3(p,p,p,r,l,new A.dw(B.dy,B.cN,B.ak,s,p,p),B.w),p,p,p,B.D9,p,p,p),B.aJ,p,p,p),B.O,!1,p,p,p,p,p,p,p,p,p,p,p,p,p,q.ga6g(),p,p,p)
 s=A.X(a).ok.Q
-return new A.bR(new A.ai(n,60,n,60),A.aS(p,A.bo(A.c([i,B.bl,h,B.aZ,l,B.bl,A.b_("@chagresinitiative",p,p,s==null?p:s.bh(B.be),B.O)],t.p),B.t,B.u,B.v),B.l,p,p,new A.b3(B.aa,p,p,m,k,p,B.w),p,p,p,new A.ai(j,50,j,50),p,p,p),p)}}
+return new A.bR(new A.ai(n,60,n,60),A.aS(p,A.bo(A.c([i,B.bl,h,B.aZ,l,B.bl,A.b_("@chagresinitiative",p,p,s==null?p:s.bh(B.be),B.M)],t.p),B.t,B.u,B.v),B.l,p,p,new A.b3(B.aa,p,p,m,k,p,B.w),p,p,p,new A.ai(j,50,j,50),p,p,p),p)}}
 A.w6.prototype={
 ac(){return new A.On(null,null)}}
 A.On.prototype={
@@ -41093,7 +41093,7 @@ s===$&&A.a()
 return A.nh(this.a.c,s)}}
 A.TO.prototype={
 I(a){var s=null,r=A.aT(a,s,t.w).w.a.a<600,q=r?16:32,p=r?14:20,o=A.a4(B.c.aq(25.5),B.cm.n()>>>16&255,B.cm.n()>>>8&255,B.cm.n()&255),n=A.eo(A.a4(140,B.cm.n()>>>16&255,B.cm.n()>>>8&255,B.cm.n()&255),1),m=A.bH(8),l=this.c==="en"?"While the project has launched and the fundraising platform is live, this website is still under construction and should be considered a working draft.":"Aunque el proyecto ya se lanz\xf3 y la plataforma de recaudaci\xf3n de fondos est\xe1 activa, este sitio web a\xfan se encuentra en construcci\xf3n y debe considerarse un borrador en desarrollo.",k=A.a4(235,B.e.n()>>>16&255,B.e.n()>>>8&255,B.e.n()&255)
-return A.aS(s,A.df(new A.cB(B.hX,A.aS(s,A.hy(A.c([B.DO,B.Nk,new A.wb(1,B.Dk,A.b_(l,s,s,A.ej(s,s,k,s,s,s,s,s,s,s,s,r?13:14,B.at,s,s,s,1.4,!0,s,s,s,s,s,s,s,s),B.O),s)],t.p),B.t,B.c5,B.v),B.l,s,s,new A.b3(o,s,n,m,s,s,B.w),s,s,s,new A.ai(p,12,p,12),s,s,s),s),s,s),B.l,B.a2,s,s,s,s,s,new A.ai(q,14,q,14),s,s,1/0)}}
+return A.aS(s,A.df(new A.cB(B.hX,A.aS(s,A.hy(A.c([B.DO,B.Nk,new A.wb(1,B.Dk,A.b_(l,s,s,A.ej(s,s,k,s,s,s,s,s,s,s,s,r?13:14,B.at,s,s,s,1.4,!0,s,s,s,s,s,s,s,s),B.M),s)],t.p),B.t,B.c5,B.v),B.l,s,s,new A.b3(o,s,n,m,s,s,B.w),s,s,s,new A.ai(p,12,p,12),s,s,s),s),s,s),B.l,B.a2,s,s,s,s,s,new A.ai(q,14,q,14),s,s,1/0)}}
 A.hJ.prototype={
 ac(){return new A.Pj(null,null)}}
 A.Pj.prototype={
@@ -41226,7 +41226,7 @@ a60(){var s=this.c
 s.toString
 A.avn(new A.ajU(this),s,t.z)},
 I(a){var s=null,r=this.a,q=r.c,p=r.d,o=r.e
-return A.d9(s,A.dx(new A.w6(A.hl(q,B.F,s,s,B.aH,r.f,p,s,o),s),B.aJ,s,s,s),B.N,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,this.ga6_(),s,s,s)}}
+return A.d9(s,A.dx(new A.w6(A.hl(q,B.F,s,s,B.aH,r.f,p,s,o),s),B.aJ,s,s,s),B.O,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,this.ga6_(),s,s,s)}}
 A.ajU.prototype={
 $1(a){return A.asT(this.a.a.c)},
 $S:169}
@@ -41248,7 +41248,7 @@ s.toString
 A.o1(s,!1).Eb(null)}},
 I(a){var s=null,r=this.d
 r===$&&A.a()
-return new A.Gu(B.Q,new A.yd(r,this.ga1m(),A.h5(B.b2,A.c([new A.xT(new A.fb(this.a.c,s,s),!1,new A.ka("covered",2),new A.ka("contained",0.8),s),A.eV(s,A.d9(s,A.aS(s,B.DN,B.l,s,s,new A.b3(B.I,s,s,s,s,s,B.dB),s,s,s,B.fp,s,s,s),B.N,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.ajR(a),s,s,s),s,s,s,16,16,s),A.eV(16,A.aS(s,B.Sz,B.l,s,s,new A.b3(B.I,s,s,A.bH(8),s,s,B.w),s,s,s,B.fp,s,s,s),s,s,16,s,s,s)],t.p),B.b_),s),s)}}
+return new A.Gu(B.Q,new A.yd(r,this.ga1m(),A.h5(B.b2,A.c([new A.xT(new A.fb(this.a.c,s,s),!1,new A.ka("covered",2),new A.ka("contained",0.8),s),A.eV(s,A.d9(s,A.aS(s,B.DN,B.l,s,s,new A.b3(B.I,s,s,s,s,s,B.dB),s,s,s,B.fp,s,s,s),B.O,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.ajR(a),s,s,s),s,s,s,16,16,s),A.eV(16,A.aS(s,B.Sz,B.l,s,s,new A.b3(B.I,s,s,A.bH(8),s,s,B.w),s,s,s,B.fp,s,s,s),s,s,16,s,s,s)],t.p),B.b_),s),s)}}
 A.ajR.prototype={
 $0(){A.o1(this.a,!1).Eb(null)
 return null},
@@ -44378,7 +44378,7 @@ s.ry=null},
 f8(a){var s,r,q=this
 if(q.CW===B.eS){q.CW=B.hL
 q.Ij()
-if(q.at===B.N){s=q.dy
+if(q.at===B.O){s=q.dy
 s.toString
 q.dx=s
 s=q.fx
@@ -44992,13 +44992,13 @@ return s},
 aG(a,b){b.sbM(a.ae(t.I).w)}}
 A.Rk.prototype={
 c2(a){var s=a.BV(1/0),r=this.p$
-return a.b6(r.a7(B.M,s,r.gbW()))},
+return a.b6(r.a7(B.N,s,r.gbW()))},
 cN(a,b){var s,r,q=this,p=a.BV(1/0),o=q.p$
 if(o==null)return null
 s=o.ev(p,b)
 if(s==null)return null
-r=o.a7(B.M,p,o.gbW())
-return s+q.gEv().h8(t.o.a(q.a7(B.M,a,q.gbW()).a9(0,r))).b},
+r=o.a7(B.N,p,o.gbW())
+return s+q.gEv().h8(t.o.a(q.a7(B.N,a,q.gbW()).a9(0,r))).b},
 bp(){var s=this,r=t.k,q=r.a(A.A.prototype.gT.call(s)).BV(1/0)
 s.p$.ct(q,!0)
 s.fy=r.a(A.A.prototype.gT.call(s)).b6(s.p$.gC(0))
@@ -45326,8 +45326,8 @@ cN(a,b){var s,r,q=this.p$
 if(q==null)return null
 s=q.ev(a,b)
 if(s==null)return null
-r=q.a7(B.M,a,q.gbW())
-return s+B.F.h8(t.o.a(this.a7(B.M,a,this.gbW()).a9(0,r))).b},
+r=q.a7(B.N,a,q.gbW())
+return s+B.F.h8(t.o.a(this.a7(B.N,a,this.gbW()).a9(0,r))).b},
 bp(){var s,r=this
 r.fy=r.HV(t.k.a(A.A.prototype.gT.call(r)),A.mE())
 s=r.p$
@@ -45707,8 +45707,8 @@ cN(a,b){var s,r,q=this.p$
 if(q==null)return null
 s=q.ev(a,b)
 if(s==null)return null
-r=q.a7(B.M,a,q.gbW())
-return s+B.F.h8(t.o.a(this.a7(B.M,a,this.gbW()).a9(0,r))).b},
+r=q.a7(B.N,a,q.gbW())
+return s+B.F.h8(t.o.a(this.a7(B.N,a,this.gbW()).a9(0,r))).b},
 bp(){var s,r=this
 r.fy=r.Hr(t.k.a(A.A.prototype.gT.call(r)),A.mE())
 s=r.p$
@@ -46517,7 +46517,7 @@ d=A.Xn(B.Et,e.F6(e.a*r),!0)
 r=a2.a
 r.toString
 A.lC(a5,B.c9,t.c4).toString
-c=A.apw(new A.qe(f,A.d9(a3,A.ci(a3,a3,d,!1,a3,!1,a3,a3,a3,a3,a3,a3,a3,"Dismiss",a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3),B.N,!1,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a2.gqe(a2),a3,a3,a3),a3))
+c=A.apw(new A.qe(f,A.d9(a3,A.ci(a3,a3,d,!1,a3,!1,a3,a3,a3,a3,a3,a3,a3,"Dismiss",a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3),B.O,!1,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a3,a2.gqe(a2),a3,a3,a3),a3))
 b=a2.gIq()
 a=a2.ga_d()
 a0=a2.f.x
@@ -46983,7 +46983,7 @@ A.Ci.prototype={
 aS(a){return 0},
 aR(a){return 0},
 c2(a){var s,r=this.p$,q=a.a,p=a.b,o=a.c,n=a.d
-if(r!=null){s=r.a7(B.M,B.hW,r.gbW())
+if(r!=null){s=r.a7(B.N,B.hW,r.gbW())
 return new A.G(Math.max(q,Math.min(p,s.a)),Math.max(o,Math.min(n,s.b)))}else return new A.G(A.F(1/0,q,p),A.F(1/0,o,n))},
 bp(){var s=this,r=t.k.a(A.A.prototype.gT.call(s)),q=s.p$,p=r.a,o=r.b,n=r.c,m=r.d
 if(q!=null){q.ct(B.hW,!0)
@@ -48032,7 +48032,7 @@ e=a.fB(o)?a.gacg():a0
 d=a.fB(o)?a.gaci():a0
 c=a.fB(o)?a.gacc():a0
 b=a.fB(o)?a.gace():a0
-return new A.C0(a,A.VE(k,A.qk(!1,p,A.dx(A.azx(A.ci(a0,a0,A.d9(B.aB,o.c,B.N,!0,a0,a0,a0,a0,a0,a0,a0,a0,a0,c,b,e,d,g,f,i,h),!1,a0,!1,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,m,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0),l),l,a.gabT(),a.gabV(),a0),a0,a0,a0,q,!0,a0,a.gabG(),a0,a0,a0,a0)),a0)},
+return new A.C0(a,A.VE(k,A.qk(!1,p,A.dx(A.azx(A.ci(a0,a0,A.d9(B.aB,o.c,B.O,!0,a0,a0,a0,a0,a0,a0,a0,a0,a0,c,b,e,d,g,f,i,h),!1,a0,!1,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,m,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0),l),l,a.gabT(),a.gabV(),a0),a0,a0,a0,q,!0,a0,a.gabG(),a0,a0,a0,a0)),a0)},
 $ianO:1}
 A.afY.prototype={
 $1(a){return a!=null},
@@ -49679,7 +49679,7 @@ Hk(a,b){var s,r,q=this,p=q.a.at
 if(p!=null){s=q.x
 r=s.y
 s=r==null?A.o(s).h("bL.T").a(r):r
-q.mP(a,A.aA0(B.fm,p,B.N,!0,q.ga_e(),null,!0,s,q.d,null),B.hK,!1,b===B.ac,b===B.P,!1)}},
+q.mP(a,A.aA0(B.fm,p,B.O,!0,q.ga_e(),null,!0,s,q.d,null),B.hK,!1,b===B.ac,b===B.P,!1)}},
 I(a){var s,r,q,p,o,n,m,l,k=this,j=null,i={},h=A.X(a),g=a.ae(t.I).w,f=A.c([],t.s9),e=k.a,d=e.r
 e=e.f
 k.gn8()
@@ -53895,8 +53895,8 @@ l=B.f9.hy(m,new A.a3(o,a1),n)
 if(l!=null){h.gtN()
 n=h.af===B.cU&&h.u===B.b4
 k=q.gbW()
-if(n){j=B.M.hy(m,o,k)
-i=B.aP.po(b-h.tz(j),!1)}else{j=B.M.hy(m,o,k)
+if(n){j=B.N.hy(m,o,k)
+i=B.aP.po(b-h.tz(j),!1)}else{j=B.N.hy(m,o,k)
 i=h.af.po(b-h.tz(j),e)}p=A.uJ(p,l+i)}}return p},
 Zd(a5,a6,a7){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e=this,d=null,c="Pattern matching error",b=new A.a6z(e,a7,a5,e.yJ(a5)),a=Math.max(0,a7.b),a0=e.gzc(),a1=e.K.pj(a,e.dO$,a0,e.aT),a2=a1.a,a3=d,a4=a1.b
 a3=a4
@@ -53913,7 +53913,7 @@ if(!o)throw A.e(A.aa(c))
 for(k=n,j=s;k!=null;k=l.$1(k)){r.m(0,k,j)
 i=b.$1(k)
 o=k.gbW()
-h=B.M.hy(k.dy,i,o)
+h=B.N.hy(k.dy,i,o)
 j+=e.zr(h)+a3}k=e.aa$
 o=A.o(e).h("as.1")
 while(k!=null){i=b.$1(k)
@@ -56895,7 +56895,7 @@ aX(a){var s=this.p$
 s=s==null?null:s.a7(B.az,a,s.gbg())
 return s==null?0:s},
 c2(a){var s=this.p$
-s=s==null?null:s.a7(B.M,a,s.gbW())
+s=s==null?null:s.a7(B.N,a,s.gbW())
 return s==null?this.qi(a):s},
 bp(){var s=this,r=s.p$
 if(r==null)r=null
@@ -56957,7 +56957,7 @@ bp(){var s=this,r=t.k.a(A.A.prototype.gT.call(s)),q=s.p$,p=s.E
 if(q!=null){q.ct(p.lN(r),!0)
 s.fy=s.p$.gC(0)}else s.fy=p.lN(r).b6(B.a0)},
 c2(a){var s=this.p$
-s=s==null?null:s.a7(B.M,this.E.lN(a),s.gbW())
+s=s==null?null:s.a7(B.N,this.E.lN(a),s.gbW())
 return s==null?this.E.lN(a).b6(B.a0):s}}
 A.JP.prototype={
 sae5(a,b){if(this.E===b)return
@@ -57755,7 +57755,7 @@ return(this.u&1)===1?s.a7(B.al,a,s.gb5()):s.a7(B.az,a,s.gbg())},
 c2(a){var s,r,q=this.p$
 if(q==null)return new A.G(A.F(0,a.a,a.b),A.F(0,a.c,a.d))
 s=(this.u&1)===1?a.gvH():a
-r=q.a7(B.M,s,q.gbW())
+r=q.a7(B.N,s,q.gbW())
 return(this.u&1)===1?new A.G(r.b,r.a):r},
 bp(){var s,r,q=this
 q.K=null
@@ -57914,7 +57914,7 @@ if(r!=null)return r.a7(B.az,Math.max(0,a-s.geL()),r.gbg())+(s.gbX(0)+s.gc1(0))
 return s.gbX(0)+s.gc1(0)},
 c2(a){var s,r=this.glf(),q=this.p$
 if(q==null)return a.b6(new A.G(r.geL(),r.gbX(0)+r.gc1(0)))
-s=q.a7(B.M,a.Cb(r),q.gbW())
+s=q.a7(B.N,a.Cb(r),q.gbW())
 return a.b6(new A.G(r.geL()+s.a,r.gbX(0)+r.gc1(0)+s.b))},
 cN(a,b){var s,r,q=this.p$
 if(q==null)return null
@@ -57962,7 +57962,7 @@ return s*(r==null?1:r)},
 aX(a){var s=this.V_(a),r=this.cG
 return s*(r==null?1:r)},
 c2(a){var s,r,q=this,p=q.cF!=null||a.b===1/0,o=q.cG!=null||a.d===1/0,n=q.p$
-if(n!=null){s=n.a7(B.M,new A.a8(0,a.b,0,a.d),n.gbW())
+if(n!=null){s=n.a7(B.N,new A.a8(0,a.b,0,a.d),n.gbW())
 if(p){n=q.cF
 if(n==null)n=1
 n=s.a*n}else n=1/0
@@ -57993,7 +57993,7 @@ r=a.d
 q=new A.a8(0,s,0,r)
 p=g.ev(q,b)
 if(p==null)return null
-o=g.a7(B.M,q,g.gbW())
+o=g.a7(B.N,q,g.gbW())
 n=h.cF
 m=n==null
 l=!m||s===1/0
@@ -58038,7 +58038,7 @@ q=this.E
 p=a.b6(q.jZ(a))
 o=s.a
 n=s.b
-return r+q.rQ(p,o>=n&&s.c>=s.d?new A.G(A.F(0,o,n),A.F(0,s.c,s.d)):m.a7(B.M,s,m.gbW())).b},
+return r+q.rQ(p,o>=n&&s.c>=s.d?new A.G(A.F(0,o,n),A.F(0,s.c,s.d)):m.a7(B.N,s,m.gbW())).b},
 bp(){var s,r,q,p,o,n=this,m=t.k,l=m.a(A.A.prototype.gT.call(n))
 n.fy=l.b6(n.E.jZ(l))
 if(n.p$!=null){s=n.E.rK(m.a(A.A.prototype.gT.call(n)))
@@ -58751,7 +58751,7 @@ break
 case 2:s=a
 break
 default:s=null}r=l.gLP()
-q=l.a7(B.M,a,l.gbW())
+q=l.a7(B.N,a,l.gbW())
 p=l.aa$
 o=A.o(l).h("as.1")
 n=null
@@ -59516,7 +59516,7 @@ q=Math.max(q,o)
 p=s.b
 p.toString
 s=r.a(p).ak$}return q
-case 1:return n.a7(B.M,new A.a8(0,1/0,0,a),n.gbW()).a}},
+case 1:return n.a7(B.N,new A.a8(0,1/0,0,a),n.gbW()).a}},
 aQ(a){var s,r,q,p,o,n=this
 switch(n.u.a){case 0:s=n.aa$
 for(r=A.o(n).h("as.1"),q=0;s!=null;){p=s.gb5()
@@ -59525,9 +59525,9 @@ q+=o
 p=s.b
 p.toString
 s=r.a(p).ak$}return q
-case 1:return n.a7(B.M,new A.a8(0,1/0,0,a),n.gbW()).a}},
+case 1:return n.a7(B.N,new A.a8(0,1/0,0,a),n.gbW()).a}},
 aR(a){var s,r,q,p,o,n=this
-switch(n.u.a){case 0:return n.a7(B.M,new A.a8(0,a,0,1/0),n.gbW()).b
+switch(n.u.a){case 0:return n.a7(B.N,new A.a8(0,a,0,1/0),n.gbW()).b
 case 1:s=n.aa$
 for(r=A.o(n).h("as.1"),q=0;s!=null;){p=s.gbo()
 o=B.aM.hy(s.dy,1/0,p)
@@ -59536,7 +59536,7 @@ p=s.b
 p.toString
 s=r.a(p).ak$}return q}},
 aX(a){var s,r,q,p,o,n=this
-switch(n.u.a){case 0:return n.a7(B.M,new A.a8(0,a,0,1/0),n.gbW()).b
+switch(n.u.a){case 0:return n.a7(B.N,new A.a8(0,a,0,1/0),n.gbW()).b
 case 1:s=n.aa$
 for(r=A.o(n).h("as.1"),q=0;s!=null;){p=s.gbg()
 o=B.az.hy(s.dy,1/0,p)
@@ -59724,7 +59724,7 @@ $2(a,b){var s=this.a
 s.a=A.uJ(s.a,A.alT(b.ev(this.b,this.c),a.b))},
 $S:131}
 A.a7f.prototype={
-$1(a){return a.a7(B.M,this.a,a.gbW())},
+$1(a){return a.a7(B.N,this.a,a.gbW())},
 $S:132}
 A.RA.prototype={
 al(a){var s,r,q
@@ -65479,7 +65479,7 @@ a.c=null},
 $S:161}
 A.a_z.prototype={
 $0(){var s=t.S
-return new A.id(B.N,B.d5,A.V9(),B.bX,A.v(s,t.GY),A.v(s,t.o),B.j,A.c([],t.t),A.v(s,t.G),A.dj(s),this.a,null,A.Va(),A.v(s,t.c))},
+return new A.id(B.O,B.d5,A.V9(),B.bX,A.v(s,t.GY),A.v(s,t.o),B.j,A.c([],t.t),A.v(s,t.G),A.dj(s),this.a,null,A.Va(),A.v(s,t.c))},
 $S:388}
 A.a_A.prototype={
 $1(a){var s,r=this
@@ -68125,14 +68125,14 @@ aX(a){return A.or(this.gmY(),new A.ahW(a))},
 cN(a,b){var s,r,q,p,o=a.a,n=a.b,m=A.F(1/0,o,n),l=a.c,k=a.d,j=A.F(1/0,l,k)
 if(isFinite(m)&&isFinite(j))s=new A.G(A.F(1/0,o,n),A.F(1/0,l,k))
 else{o=this.za()
-s=o.a7(B.M,a,o.gbW())}r=A.mS(s)
+s=o.a7(B.N,a,o.gbW())}r=A.mS(s)
 q=this.gAn()
 for(o=new A.kO(this.jb().a()),p=null;o.t();)p=A.uJ(p,A.ato(o.b,s,r,q,b))
 return p},
 c2(a){var s=a.a,r=a.b,q=A.F(1/0,s,r),p=a.c,o=a.d,n=A.F(1/0,p,o)
 if(isFinite(q)&&isFinite(n))return new A.G(A.F(1/0,s,r),A.F(1/0,p,o))
 s=this.za()
-return s.a7(B.M,a,s.gbW())},
+return s.a7(B.N,a,s.gbW())},
 jb(){return new A.iB(this.Z1(),t.bm)},
 Z1(){var s=this
 return function(){var r=0,q=1,p=[],o,n,m,l,k
@@ -72687,11 +72687,11 @@ s.at=!s.at},
 $S:0}
 A.a6f.prototype={
 $0(){var s=this.a,r=t.S
-return new A.mk(s.z,B.N,B.d5,A.V9(),B.bX,A.v(r,t.GY),A.v(r,t.o),B.j,A.c([],t.t),A.v(r,t.G),A.dj(r),s,null,A.Va(),A.v(r,t.c))},
+return new A.mk(s.z,B.O,B.d5,A.V9(),B.bX,A.v(r,t.GY),A.v(r,t.o),B.j,A.c([],t.t),A.v(r,t.G),A.dj(r),s,null,A.Va(),A.v(r,t.c))},
 $S:454}
 A.a6g.prototype={
 $0(){var s=this.a,r=t.S
-return new A.my(s.z,B.N,B.d5,A.V9(),B.bX,A.v(r,t.GY),A.v(r,t.o),B.j,A.c([],t.t),A.v(r,t.G),A.dj(r),s,null,A.Va(),A.v(r,t.c))},
+return new A.my(s.z,B.O,B.d5,A.V9(),B.bX,A.v(r,t.GY),A.v(r,t.o),B.j,A.c([],t.t),A.v(r,t.G),A.dj(r),s,null,A.Va(),A.v(r,t.c))},
 $S:455}
 A.a6h.prototype={
 $0(){var s=this.a,r=t.S
@@ -73434,7 +73434,7 @@ A.L7.prototype={
 I(a){var s,r,q=null,p={},o=A.av_(a,B.aN,!1)
 p.a=this.x
 s=this.f
-r=A.ase(o,B.ao,s,B.N,B.aB,q,q,q,q,new A.a9T(p,this,o))
+r=A.ase(o,B.ao,s,B.O,B.aB,q,q,q,q,new A.a9T(p,this,o))
 A.ov(a)
 return!1?A.arP(r):r}}
 A.a9T.prototype={
@@ -73504,7 +73504,7 @@ s=s==null?null:s.a7(B.az,a,s.gbg())
 return s==null?0:s},
 c2(a){var s=this.p$
 if(s==null)return new A.G(A.F(0,a.a,a.b),A.F(0,a.c,a.d))
-return a.b6(s.a7(B.M,this.IY(a),s.gbW()))},
+return a.b6(s.a7(B.N,this.IY(a),s.gbW()))},
 bp(){var s,r,q=this,p=t.k.a(A.A.prototype.gT.call(q)),o=q.p$
 if(o==null)q.fy=new A.G(A.F(0,p.a,p.b),A.F(0,p.c,p.d))
 else{o.ct(q.IY(p),!0)
@@ -79531,7 +79531,7 @@ B.AV=new A.aeb()
 B.UY=new A.NQ()
 B.a6=new A.NT()
 B.fa=new A.ael()
-B.M=new A.aer()
+B.N=new A.aer()
 B.ib=new A.aey()
 B.AX=new A.ag_()
 B.AY=new A.ag0()
@@ -79740,7 +79740,7 @@ B.Cx=new A.q4(null,null,null,null,null,null,null,null,null,null,null,null,null,n
 B.Cy=new A.q5(null,null,null,null,null,null)
 B.Cz=new A.n8(null,null,B.aa,null)
 B.mg=new A.GN(0,"down")
-B.N=new A.GN(1,"start")
+B.O=new A.GN(1,"start")
 B.fm=new A.GP(0,"start")
 B.fn=new A.GP(1,"end")
 B.CA=new A.q8(null,null,null,null,null,null,null,null,null)
@@ -80054,11 +80054,11 @@ B.cs=s([B.FR,B.FD,B.GQ],t.zg)
 B.mW=s([0,4,12,1,5,13,3,7,15],t.t)
 B.bz=new A.kw(0,"left")
 B.dk=new A.kw(1,"right")
-B.O=new A.kw(2,"center")
+B.M=new A.kw(2,"center")
 B.eH=new A.kw(3,"justify")
 B.ba=new A.kw(4,"start")
 B.ho=new A.kw(5,"end")
-B.Fy=s([B.bz,B.dk,B.O,B.eH,B.ba,B.ho],A.ay("B<kw>"))
+B.Fy=s([B.bz,B.dk,B.M,B.eH,B.ba,B.ho],A.ay("B<kw>"))
 B.FA=s([B.hU,B.hV],A.ay("B<uF>"))
 B.FC=s([18,15,10,12,15,18,15,12,12],t.n)
 B.FE=s([1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298],t.t)
@@ -81805,7 +81805,7 @@ B.Qw=new A.l(!0,B.V,null,null,null,null,null,null,null,null,null,null,null,null,
 B.Sy=new A.ip(" | ",null,B.Qw,null,null,null,null)
 B.P5=new A.l(!0,B.e,null,null,null,null,12,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.Sz=new A.ip("Press ESC to close",null,B.P5,null,null,null,null)
-B.SA=new A.ip("Haga clic aqu\xed para contribuir",null,B.yf,B.O,null,null,null)
+B.SA=new A.ip("Haga clic aqu\xed para contribuir",null,B.yf,B.M,null,null,null)
 B.SB=new A.ip("Haga clic aqu\xed para contribuir",null,B.ye,null,null,null,null)
 B.V5=new A.abj(0,"system")
 B.Je=new A.k(0.056,0.024)

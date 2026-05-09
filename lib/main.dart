@@ -1298,6 +1298,7 @@ class _HeroPhrasePillState extends State<_HeroPhrasePill> {
         ),
         child: Text(
           widget.text,
+          textAlign: TextAlign.center,
           style: GoogleFonts.cinzel(
             color: Colors.white,
             fontSize: 18,
@@ -1626,7 +1627,7 @@ class AboutSection extends StatelessWidget {
     final cards = <_AboutCardData>[
       _AboutCardData(
         illustration: const _CompassPainter(),
-        hero: language == 'en' ? 'Exploration' : 'Exploración',
+        hero: language == 'en' ? 'Exploring' : 'Explorando',
         subtitle: language == 'en'
             ? 'At the Heart of the Panama Canal'
             : 'En el Corazón del Canal de Panamá',
