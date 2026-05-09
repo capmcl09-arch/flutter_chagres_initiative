@@ -2362,7 +2362,11 @@ class MappingMethodSection extends StatelessWidget {
     final isPhone = screenWidth < 600;
 
     final horizontalPad = isPhone ? 20.0 : (isMobile ? 40.0 : 60.0);
-    final verticalPad = isPhone ? 60.0 : 110.0;
+    // Top padding stays generous so the section breathes coming out of the
+    // navy band; bottom is tightened so the new "Visit Geography HQ" button
+    // hands off to Make Dreams without a long empty green stretch.
+    final topPad = isPhone ? 60.0 : 110.0;
+    final bottomPad = isPhone ? 32.0 : 44.0;
     final prmExplainImagePath = language == 'en'
         ? 'assets/images/PRM_Explain.png'
         : 'assets/images/Spanish_PRM_Explain.png';
@@ -2394,9 +2398,11 @@ class MappingMethodSection extends StatelessWidget {
               child: _JungleSideStrip(mirror: true),
             ),
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontalPad,
-              vertical: verticalPad,
+            padding: EdgeInsets.fromLTRB(
+              horizontalPad,
+              topPad,
+              horizontalPad,
+              bottomPad,
             ),
             child: Center(
               child: ConstrainedBox(
@@ -2523,6 +2529,63 @@ class MappingMethodSection extends StatelessWidget {
                           height: 1.6,
                         ),
                         textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: isPhone ? 20 : 28),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () => launchUrl(
+                          Uri.parse('https://learn.chagresinitiative.org'),
+                          mode: LaunchMode.externalApplication,
+                        ),
+                        child: _HoverGlow(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isPhone ? 22 : 30,
+                              vertical: isPhone ? 13 : 16,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF0051BA),
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(
+                                color: const Color(0xFF4A90D9),
+                                width: 1.4,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFF0051BA,
+                                  ).withOpacity(0.32),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  language == 'en'
+                                      ? 'Visit our Geography HQ to Learn More'
+                                      : 'Visite nuestro Geography HQ para aprender más',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: isPhone ? 14 : 16,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 0.6,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Icon(
+                                  Icons.arrow_outward,
+                                  color: Colors.white,
+                                  size: isPhone ? 16 : 18,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -4120,9 +4183,11 @@ class _MakeDreamsCallout extends StatelessWidget {
           ];
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: isPhone ? 20 : 60,
-        vertical: isPhone ? 40 : 64,
+      padding: EdgeInsets.fromLTRB(
+        isPhone ? 20 : 60,
+        isPhone ? 24 : 36,
+        isPhone ? 20 : 60,
+        isPhone ? 40 : 64,
       ),
       child: Center(
         child: ConstrainedBox(
