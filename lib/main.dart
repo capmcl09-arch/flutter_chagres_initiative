@@ -1014,10 +1014,39 @@ class HeroSection extends StatelessWidget {
                     maxWidth: sealMaxWidth,
                     maxHeight: sealMaxHeight,
                   ),
-                  child: Image.asset(
-                    'assets/images/chagres_oval_seal.png',
-                    fit: BoxFit.contain,
-                    filterQuality: FilterQuality.high,
+                  child: AspectRatio(
+                    aspectRatio: 1200 / 1440,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/chagres_oval_seal.png',
+                          fit: BoxFit.contain,
+                          filterQuality: FilterQuality.high,
+                        ),
+                        Align(
+                          alignment: const Alignment(0, 0.68),
+                          child: Text(
+                            'A LaunchKU Project',
+                            style: GoogleFonts.playfairDisplay(
+                              color: const Color(0xFFE0B660),
+                              fontSize: isMobile ? 15 : 20,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.italic,
+                              letterSpacing: 0.8,
+                              shadows: [
+                                Shadow(
+                                  color: const Color(
+                                    0xFFE0B660,
+                                  ).withOpacity(0.35),
+                                  blurRadius: 14,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: isMobile ? 18 : 26),
