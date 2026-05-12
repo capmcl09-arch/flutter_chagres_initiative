@@ -1069,8 +1069,8 @@ class HeroSection extends StatelessWidget {
                     _buildPhrase(
                       context,
                       language == 'en'
-                          ? 'Indigenous Community Empowerment'
-                          : 'Empoderamiento de la Comunidad Indígena',
+                          ? 'Indigenous Community Engagement'
+                          : 'Participación de la Comunidad Indígena',
                     ),
                   ],
                 ),
@@ -1078,19 +1078,37 @@ class HeroSection extends StatelessWidget {
             ),
           ),
         ),
-        // Gradient fade at bottom blending into next section
+        // Gradient fade at bottom blending into next section. Horizontal
+        // mask reduces opacity in the middle 50% so the centered hero pill
+        // and the section card below aren't overlapped by the dark shade.
         Positioned(
           bottom: 0,
           left: 0,
           right: 0,
           height: 160,
           child: IgnorePointer(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.transparent, Color(0xFF0C1328)],
+            child: ShaderMask(
+              shaderCallback: (rect) => const LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Colors.white,
+                  Colors.white,
+                  Color(0x33FFFFFF),
+                  Color(0x33FFFFFF),
+                  Colors.white,
+                  Colors.white,
+                ],
+                stops: [0.0, 0.20, 0.30, 0.70, 0.80, 1.0],
+              ).createShader(rect),
+              blendMode: BlendMode.dstIn,
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.transparent, Color(0xFF0C1328)],
+                  ),
                 ),
               ),
             ),
