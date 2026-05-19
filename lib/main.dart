@@ -154,6 +154,7 @@ class _ChagresHomeState extends State<ChagresHome> {
   bool _showBackToTop = false;
   String _activeSection = '';
   bool _showJayhawk = true;
+  bool _showLanguageToggle = true;
   double _screenHeight = 800.0;
 
   // GlobalKey references for each section
@@ -164,7 +165,6 @@ class _ChagresHomeState extends State<ChagresHome> {
   final GlobalKey _faqKey = GlobalKey();
   final GlobalKey _reportsKey = GlobalKey();
   final GlobalKey _partnershipsKey = GlobalKey();
-  final GlobalKey _givingLevelsKey = GlobalKey();
 
   @override
   void initState() {
@@ -221,6 +221,12 @@ class _ChagresHomeState extends State<ChagresHome> {
       setState(() => _showJayhawk = showJayhawk);
     }
 
+    // Show language toggle only on the opening page (hero visible).
+    final showLanguageToggle = _scrollController.offset < _screenHeight * 0.75;
+    if (showLanguageToggle != _showLanguageToggle) {
+      setState(() => _showLanguageToggle = showLanguageToggle);
+    }
+
     // Track active section
     _updateActiveSection();
   }
@@ -233,7 +239,6 @@ class _ChagresHomeState extends State<ChagresHome> {
       _methodologyKey: 'Methodology',
       _fieldworkKey: 'Fieldwork',
       _faqKey: 'FAQ',
-      _givingLevelsKey: 'Support',
     };
 
     // Find the section whose top has most recently passed the nav threshold (120px).
@@ -381,14 +386,15 @@ class _ChagresHomeState extends State<ChagresHome> {
                           children: [
                             Text(
                               widget.language == 'en'
-                                  ? 'CHAGRES NATIONAL PARK (CNP): PANAMA CANAL WATER SOURCE & INDIGENOUS HOMELAND'
-                                  : 'PARQUE NACIONAL CHAGRES (PNC): FUENTE DE AGUA DEL CANAL DE PANAMÁ Y HOGAR INDÍGENA',
+                                  ? 'CHAGRES NATIONAL PARK (CNP):\nPANAMA CANAL WATER SOURCE & INDIGENOUS HOMELAND'
+                                  : 'PARQUE NACIONAL CHAGRES (PNC):\nFUENTE DE AGUA DEL CANAL DE PANAMÁ Y HOGAR INDÍGENA',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.cinzel(
-                                color: const Color(0xFFE0B660),
-                                fontSize: isMobile ? 20 : 28,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 0.6,
+                              style: GoogleFonts.playfairDisplay(
+                                color: const Color(0xFF7FB069),
+                                fontSize: isMobile ? 22 : 32,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.3,
                                 height: 1.3,
                               ),
                             ),
@@ -435,8 +441,15 @@ class _ChagresHomeState extends State<ChagresHome> {
                     ),
                   ),
                 ),
-                // Researching and Training "Community Geographers" callout —
-                // sits directly under the map.
+                // Stats band (5 blue figures) sits directly below the map.
+                Container(
+                  width: double.infinity,
+                  child: RevealOnScroll(
+                    child: _SealWithStats(language: widget.language),
+                  ),
+                ),
+                // "The Chagres Initiative Solution…" callout — follows the
+                // blue fact figures.
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.fromLTRB(
@@ -481,21 +494,21 @@ class _ChagresHomeState extends State<ChagresHome> {
                             children: [
                               Text(
                                 widget.language == 'en'
-                                    ? 'Researching and Training "Community Geographers"'
-                                    : 'Investigando y Capacitando a "Geógrafos Comunitarios"',
+                                    ? 'The Chagres Initiative Solution…'
+                                    : 'La Solución de la Iniciativa Chagres…',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.playfairDisplay(
                                   color: const Color(0xFFE0B660),
-                                  fontSize: isMobile ? 26 : 34,
+                                  fontSize: isMobile ? 22 : 28,
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w600,
-                                  letterSpacing: 0.4,
+                                  letterSpacing: 0.3,
                                   height: 1.25,
                                 ),
                               ),
                               SizedBox(height: isMobile ? 14 : 20),
                               Container(
-                                width: 64,
+                                width: 56,
                                 height: 1.5,
                                 decoration: const BoxDecoration(
                                   gradient: LinearGradient(
@@ -509,13 +522,38 @@ class _ChagresHomeState extends State<ChagresHome> {
                               SizedBox(height: isMobile ? 16 : 22),
                               Text(
                                 widget.language == 'en'
-                                    ? 'The Chagres Initiative documents Indigenous land uses inside the rainforested CNP to protect it as their legal homeland while safeguarding Panama Canal Water Security.'
-                                    : 'La Iniciativa Chagres documenta los usos indígenas de la tierra dentro del PNC selvático para protegerlo como su hogar legal mientras salvaguarda la Seguridad Hídrica del Canal de Panamá.',
+                                    ? 'Develop a participatory research mapping project that converts Indigenous Spatial Knowledge (ISK) into standard geographic information now crucial for the rainforest conservation and Panama Canal Security.'
+                                    : 'Desarrollar un proyecto de mapeo de investigación participativa que convierta el Conocimiento Espacial Indígena (ISK) en información geográfica estándar, ahora crucial para la conservación del bosque tropical y la seguridad del Canal de Panamá.',
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Color(0xFFD9DEEC),
-                                  fontSize: 17,
-                                  height: 1.65,
+                                style: GoogleFonts.playfairDisplay(
+                                  color: const Color(0xFFE0B660),
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: isMobile ? 15 : 17,
+                                  height: 1.55,
+                                ),
+                              ),
+                              SizedBox(height: isMobile ? 16 : 22),
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () => _scrollToSection(
+                                    _methodologyKey,
+                                  ),
+                                  child: Text(
+                                    widget.language == 'en'
+                                        ? 'PRM Methodology Details (click here)'
+                                        : 'Detalles de la Metodología PRM (haga clic aquí)',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.playfairDisplay(
+                                      color: const Color(0xFFE0B660),
+                                      fontSize: isMobile ? 14 : 16,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: const Color(0xFFE0B660),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -525,19 +563,14 @@ class _ChagresHomeState extends State<ChagresHome> {
                     ),
                   ),
                 ),
-                // Stats band (5 figures) lifted out of the green band so it
-                // lands directly after About.
-                Container(
-                  width: double.infinity,
-                  child: RevealOnScroll(
-                    child: _SealWithStats(language: widget.language),
-                  ),
-                ),
                     ],
                   ),
                 ),
                 RevealOnScroll(
-                  child: MappingMethodSection(language: widget.language),
+                  child: MappingMethodSection(
+                    language: widget.language,
+                    methodologyKey: _methodologyKey,
+                  ),
                 ),
                 Container(
                   width: double.infinity,
@@ -630,12 +663,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                             ),
                           ),
                           RevealOnScroll(
-                            child: MethodologySection(
-                              key: _methodologyKey,
-                              language: widget.language,
-                            ),
-                          ),
-                          RevealOnScroll(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 40,
@@ -678,12 +705,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                           RevealOnScroll(
                             child: FAQSection(
                               key: _faqKey,
-                              language: widget.language,
-                            ),
-                          ),
-                          RevealOnScroll(
-                            child: GivingLevelsSection(
-                              key: _givingLevelsKey,
                               language: widget.language,
                             ),
                           ),
@@ -766,7 +787,10 @@ class _ChagresHomeState extends State<ChagresHome> {
     final kuHeight = isMobile ? 26.0 : 38.0;
 
     return GestureDetector(
-      onTap: _scrollToTop,
+      onTap: () => launchUrl(
+        Uri.parse('https://ku.edu'),
+        mode: LaunchMode.externalApplication,
+      ),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Image.asset(
@@ -791,6 +815,29 @@ class _ChagresHomeState extends State<ChagresHome> {
       backgroundColor: _kuBlue,
       elevation: 1,
       centerTitle: true,
+      actions: _showLanguageToggle
+          ? [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 8,
+                ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    backgroundColor: const Color(0xFF0051BA),
+                  ),
+                  onPressed: () => widget.onLanguageChanged(
+                    widget.language == 'en' ? 'es' : 'en',
+                  ),
+                  child: Text(
+                    widget.language == 'en' ? 'Español' : 'English',
+                    style: const TextStyle(fontSize: 14, fontFamily: 'serif'),
+                  ),
+                ),
+              ),
+            ]
+          : null,
     );
   }
 
@@ -840,35 +887,12 @@ class _ChagresHomeState extends State<ChagresHome> {
             _partnershipsKey,
           ),
           _buildDrawerItem(
-            widget.language == 'en' ? 'Support' : 'Apoyo',
-            _givingLevelsKey,
-          ),
-          _buildDrawerItem(
             widget.language == 'en' ? 'Team' : 'Equipo',
             _teamKey,
           ),
           _buildDrawerItem(
             widget.language == 'en' ? 'FAQ' : 'Preguntas Frecuentes',
             _faqKey,
-          ),
-          const Divider(color: Color(0xFF101A2F)),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0051BA),
-                ),
-                onPressed: () => widget.onLanguageChanged(
-                  widget.language == 'en' ? 'es' : 'en',
-                ),
-                child: Text(
-                  widget.language == 'en' ? 'Español' : 'English',
-                  style: const TextStyle(fontSize: 16, fontFamily: 'serif'),
-                ),
-              ),
-            ),
           ),
         ],
       ),
@@ -905,25 +929,25 @@ class _ChagresHomeState extends State<ChagresHome> {
               _buildNavLink('Methodology', _methodologyKey),
               _buildNavLink('Fieldwork', _fieldworkKey),
               _buildNavLink('About Donations', _partnershipsKey),
-              _buildNavLink('Support', _givingLevelsKey),
               _buildNavLink('Team', _teamKey),
               _buildNavLink('FAQ', _faqKey),
-              SizedBox(
-                height: 32,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    backgroundColor: const Color(0xFF0051BA),
-                  ),
-                  onPressed: () => widget.onLanguageChanged(
-                    widget.language == 'en' ? 'es' : 'en',
-                  ),
-                  child: Text(
-                    widget.language == 'en' ? 'ES' : 'EN',
-                    style: const TextStyle(fontSize: 15, fontFamily: 'serif'),
+              if (_showLanguageToggle)
+                SizedBox(
+                  height: 32,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      backgroundColor: const Color(0xFF0051BA),
+                    ),
+                    onPressed: () => widget.onLanguageChanged(
+                      widget.language == 'en' ? 'es' : 'en',
+                    ),
+                    child: Text(
+                      widget.language == 'en' ? 'Español' : 'English',
+                      style: const TextStyle(fontSize: 15, fontFamily: 'serif'),
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ],
@@ -957,7 +981,6 @@ class _ChagresHomeState extends State<ChagresHome> {
       'Methodology' => 'Metodología',
       'Fieldwork' => 'Trabajo de Campo',
       'About Donations' => 'Acerca de las Donaciones',
-      'Support' => 'Apoyo',
       'Team' => 'Equipo',
       'FAQ' => 'Preguntas Frecuentes',
       _ => label,
@@ -977,7 +1000,7 @@ class HeroSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
-    final heroTopPadding = isMobile ? topInset + 56 : screenHeight * 0.09;
+    final heroTopPadding = isMobile ? topInset + 28 : screenHeight * 0.035;
     final sealMaxWidth = isMobile ? screenWidth * 0.83 : screenWidth * 0.39;
     final sealMaxHeight = isMobile ? screenHeight * 0.48 : screenHeight * 0.63;
 
@@ -1016,36 +1039,10 @@ class HeroSection extends StatelessWidget {
                   ),
                   child: AspectRatio(
                     aspectRatio: 1200 / 1440,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/chagres_oval_seal.png',
-                          fit: BoxFit.contain,
-                          filterQuality: FilterQuality.high,
-                        ),
-                        Align(
-                          alignment: const Alignment(0, 0.68),
-                          child: Text(
-                            'A LaunchKU Project',
-                            style: GoogleFonts.playfairDisplay(
-                              color: const Color(0xFFE0B660),
-                              fontSize: isMobile ? 15 : 20,
-                              fontWeight: FontWeight.w600,
-                              fontStyle: FontStyle.italic,
-                              letterSpacing: 0.8,
-                              shadows: [
-                                Shadow(
-                                  color: const Color(
-                                    0xFFE0B660,
-                                  ).withOpacity(0.35),
-                                  blurRadius: 14,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: Image.asset(
+                      'assets/images/chagres_oval_seal.png',
+                      fit: BoxFit.contain,
+                      filterQuality: FilterQuality.high,
                     ),
                   ),
                 ),
@@ -1651,75 +1648,39 @@ class AboutSection extends StatelessWidget {
     final cards = <_AboutCardData>[
       _AboutCardData(
         illustration: const _CompassPainter(),
-        hero: language == 'en' ? 'Exploring' : 'Explorando',
+        hero: language == 'en' ? 'Exploring…' : 'Explorando…',
         subtitle: language == 'en'
-            ? 'At the Heart of the Panama Canal'
-            : 'En el Corazón del Canal de Panamá',
+            ? 'Rainforests and Indigenous Communities Thriving at the Heart of the Panama Canal.'
+            : 'Bosques tropicales y comunidades indígenas prosperando en el corazón del Canal de Panamá.',
         tagline: '',
-        accent: const Color(0xFF77A7D9), // sky blue — exploration / methodology
-        sentence: language == 'en'
-            ? "In the world's greatest commercial, maritime hub, discovery abounds surprisingly, in the shadow of Panama City."
-            : 'En el mayor centro comercial y marítimo del mundo, el descubrimiento abunda sorprendentemente a la sombra de la Ciudad de Panamá.',
-        highlights: language == 'en'
-            ? const [
-                "world's greatest commercial, maritime hub",
-                'discovery abounds',
-                'Panama City',
-              ]
-            : const [
-                'mayor centro comercial y marítimo del mundo',
-                'el descubrimiento abunda',
-                'Ciudad de Panamá',
-              ],
-        bullets: language == 'en'
-            ? const [
-                'Built on Indigenous geospatial knowledge',
-                'Layered with GPS, aerial photography, and satellite imagery',
-                'Villagers trained as community geographers alongside KU researchers',
-                'Rigorous science rooted in lived experience',
-              ]
-            : const [
-                'Basado en conocimiento geoespacial indígena',
-                'Combinado con GPS, fotografía aérea e imágenes satelitales',
-                'Pobladores capacitados como geógrafos comunitarios junto a KU',
-                'Ciencia rigurosa arraigada en la experiencia vivida',
-              ],
+        accent: const Color(0xFF77A7D9),
+        sentence: '',
+        highlights: const [],
+        bullets: const [],
       ),
       _AboutCardData(
         illustration: const _MountainPalmsPainter(),
-        hero: language == 'en' ? 'Discovering' : 'Descubriendo',
+        hero: language == 'en' ? 'Discovering…' : 'Descubriendo…',
         subtitle: language == 'en'
-            ? 'Where Indigenous People Sustain Global Trade'
-            : 'Donde los Pueblos Indígenas Sostienen el Comercio Global',
+            ? 'Indigenous Territories provide Water Security for Global Panama Canal Trade.'
+            : 'Los territorios indígenas brindan seguridad hídrica al comercio global del Canal de Panamá.',
         tagline: '',
-        accent: const Color(0xFF7FB069), // leaf green — place / stakes
-        sentence: language == 'en'
-            ? 'Indigenous Rainforest communities coexist with the most pristine Neo-tropical rainforest in the mesoamerican biological corridor.'
-            : 'Las comunidades indígenas del bosque tropical conviven con el bosque tropical neotropical más prístino del corredor biológico mesoamericano.',
-        highlights: language == 'en'
-            ? const [
-                'Indigenous Rainforest communities',
-                'most pristine Neo-tropical rainforest',
-                'mesoamerican biological corridor',
-              ]
-            : const [
-                'comunidades indígenas del bosque tropical',
-                'bosque tropical neotropical más prístino',
-                'corredor biológico mesoamericano',
-              ],
-        bullets: language == 'en'
-            ? const [
-                'Source of 40% of Panama Canal freshwater',
-                'Drinking water for 2M+ people in Panama City & Colón',
-                'Indigenous lands inside Chagres National Park',
-                'Maps that empower land protection & planning',
-              ]
-            : const [
-                'Fuente del 40% del agua dulce del Canal de Panamá',
-                'Agua potable para 2M+ personas en Panamá y Colón',
-                'Tierras indígenas dentro del Parque Nacional Chagres',
-                'Mapas que potencian la protección de tierras y la planificación',
-              ],
+        accent: const Color(0xFF7FB069),
+        sentence: '',
+        highlights: const [],
+        bullets: const [],
+      ),
+      _AboutCardData(
+        illustration: const _MapSheetPainter(),
+        hero: language == 'en' ? 'Helping…' : 'Ayudando…',
+        subtitle: language == 'en'
+            ? 'Chagres National Park (CNP) Residents create geographic data needed to protect it & their lands.'
+            : 'Los residentes del Parque Nacional Chagres (PNC) crean los datos geográficos necesarios para proteger el parque y sus tierras.',
+        tagline: '',
+        accent: const Color(0xFFE0B660),
+        sentence: '',
+        highlights: const [],
+        bullets: const [],
       ),
     ];
 
@@ -1730,7 +1691,7 @@ class AboutSection extends StatelessWidget {
               children: [
                 for (int i = 0; i < cards.length; i++) ...[
                   Expanded(child: _AboutCard(data: cards[i])),
-                  if (i < cards.length - 1) const SizedBox(width: 28),
+                  if (i < cards.length - 1) const SizedBox(width: 18),
                 ],
               ],
             ),
@@ -1739,7 +1700,7 @@ class AboutSection extends StatelessWidget {
             children: [
               for (int i = 0; i < cards.length; i++) ...[
                 _AboutCard(data: cards[i]),
-                if (i < cards.length - 1) const SizedBox(height: 24),
+                if (i < cards.length - 1) const SizedBox(height: 20),
               ],
             ],
           );
@@ -1768,14 +1729,14 @@ class AboutSection extends StatelessWidget {
             children: [
               Text(
                 language == 'en'
-                    ? 'The Chagres Initiative Is...'
-                    : 'La Iniciativa Chagres Es...',
+                    ? 'The Chagres Initiative is…'
+                    : 'La Iniciativa Chagres es…',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   color: const Color(0xFFE0B660),
-                  fontSize: 50,
+                  fontSize: isPhone ? 28 : 36,
                   fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   letterSpacing: 0.3,
                   height: 1.2,
                   shadows: [
@@ -1786,7 +1747,7 @@ class AboutSection extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: isPhone ? 28 : 40),
+              SizedBox(height: isPhone ? 24 : 32),
               cardsLayout,
             ],
           ),
@@ -1871,7 +1832,7 @@ class _AboutCard extends StatelessWidget {
     // Solid gold with a subtle warm glow for that "shiny" feel — no gradient.
     final goldHeroStyle = GoogleFonts.playfairDisplay(
       color: const Color(0xFFE0B660),
-      fontSize: 41,
+      fontSize: 28,
       fontWeight: FontWeight.w700,
       fontStyle: FontStyle.italic,
       height: 1.15,
@@ -1879,7 +1840,7 @@ class _AboutCard extends StatelessWidget {
       shadows: [
         Shadow(
           color: const Color(0xFFE0B660).withOpacity(0.45),
-          blurRadius: 22,
+          blurRadius: 18,
         ),
       ],
     );
@@ -1891,19 +1852,19 @@ class _AboutCard extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [Color(0xFF152544), Color(0xFF0F1B36)],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(color: Colors.white.withOpacity(0.07), width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.45),
-            blurRadius: 32,
-            offset: const Offset(0, 16),
+            blurRadius: 28,
+            offset: const Offset(0, 14),
           ),
         ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(34, 38, 34, 36),
+        padding: const EdgeInsets.fromLTRB(22, 26, 22, 26),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -1911,22 +1872,21 @@ class _AboutCard extends StatelessWidget {
             children: [
                 // Headline illustration — gold compass / mountains-and-palms.
                 SizedBox(
-                  width: 156,
-                  height: 156,
+                  width: 108,
+                  height: 108,
                   child: CustomPaint(painter: data.illustration),
                 ),
-                const SizedBox(height: 14),
-                // Hero — single solid-gold Text, centered. Same fontSize on
-                // both cards so they match in scale.
+                const SizedBox(height: 10),
+                // Hero — single solid-gold Text, centered.
                 Text(
                   data.hero,
                   textAlign: TextAlign.center,
                   style: goldHeroStyle,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
                 // Hairline gold rule.
                 Container(
-                  width: 64,
+                  width: 56,
                   height: 1.5,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
@@ -1934,28 +1894,28 @@ class _AboutCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 10),
                 // Solid gold subtitle — continuation of the title.
                 Text(
                   data.subtitle,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.playfairDisplay(
                     color: const Color(0xFFE0B660),
-                    fontSize: 27,
+                    fontSize: 16,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w500,
-                    letterSpacing: 0.3,
-                    height: 1.3,
+                    letterSpacing: 0.2,
+                    height: 1.4,
                   ),
                 ),
                 if (data.tagline.isNotEmpty) ...[
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 14),
                   Text(
                     data.tagline,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.playfairDisplay(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w500,
                       height: 1.5,
@@ -2299,6 +2259,137 @@ class _MountainPalmsPainter extends CustomPainter {
   bool shouldRepaint(covariant _MountainPalmsPainter oldDelegate) => false;
 }
 
+// Gold-line illustration evoking community cartographers creating a map:
+// a tilted sheet of paper with a sketched landform, a location pin, and a
+// pencil at work along its edge.
+class _MapSheetPainter extends CustomPainter {
+  const _MapSheetPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    final s = size.shortestSide;
+
+    final stroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = s * 0.025
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
+      ..color = _aboutGold;
+    final thin = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = s * 0.016
+      ..strokeCap = StrokeCap.round
+      ..color = _aboutGold.withOpacity(0.85);
+    final faint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = s * 0.010
+      ..color = _aboutGold.withOpacity(0.45);
+    final paperFill = Paint()..color = _aboutGold.withOpacity(0.10);
+    final landFill = Paint()..color = _aboutGold.withOpacity(0.22);
+
+    // Tilted paper sheet.
+    final paper = Path()
+      ..moveTo(w * 0.10, h * 0.20)
+      ..lineTo(w * 0.92, h * 0.14)
+      ..lineTo(w * 0.96, h * 0.84)
+      ..lineTo(w * 0.14, h * 0.90)
+      ..close();
+    canvas.drawPath(paper, paperFill);
+    canvas.drawPath(paper, stroke);
+
+    // Faint grid lines on paper (cartographic).
+    for (int i = 1; i < 4; i++) {
+      final t = i / 4.0;
+      // Horizontal grid line interpolated between the two long edges.
+      final ax = w * 0.10 + (w * 0.04) * t;
+      final ay = h * 0.20 + (h * 0.70) * t;
+      final bx = w * 0.92 + (w * 0.04) * t;
+      final by = h * 0.14 + (h * 0.70) * t;
+      canvas.drawLine(Offset(ax, ay), Offset(bx, by), faint);
+    }
+    for (int i = 1; i < 5; i++) {
+      final t = i / 5.0;
+      final ax = w * 0.10 + (w * 0.82) * t;
+      final ay = h * 0.20 + (h * -0.06) * t;
+      final bx = w * 0.14 + (w * 0.82) * t;
+      final by = h * 0.90 + (h * -0.06) * t;
+      canvas.drawLine(Offset(ax, ay), Offset(bx, by), faint);
+    }
+
+    // Sketched land outline on the sheet.
+    final land = Path()
+      ..moveTo(w * 0.30, h * 0.40)
+      ..cubicTo(
+        w * 0.20, h * 0.55,
+        w * 0.34, h * 0.74,
+        w * 0.52, h * 0.72,
+      )
+      ..cubicTo(
+        w * 0.72, h * 0.70,
+        w * 0.80, h * 0.46,
+        w * 0.62, h * 0.34,
+      )
+      ..cubicTo(
+        w * 0.48, h * 0.26,
+        w * 0.38, h * 0.30,
+        w * 0.30, h * 0.40,
+      )
+      ..close();
+    canvas.drawPath(land, landFill);
+    canvas.drawPath(land, stroke);
+
+    // River line through landform.
+    final river = Path()
+      ..moveTo(w * 0.34, h * 0.46)
+      ..quadraticBezierTo(w * 0.48, h * 0.50, w * 0.52, h * 0.60)
+      ..quadraticBezierTo(w * 0.58, h * 0.68, w * 0.70, h * 0.66);
+    canvas.drawPath(river, thin);
+
+    // Location pin on landform.
+    final pinCenter = Offset(w * 0.56, h * 0.50);
+    final pinR = s * 0.055;
+    canvas.drawCircle(pinCenter, pinR, Paint()..color = _aboutGoldLight);
+    canvas.drawCircle(pinCenter, pinR, thin);
+    final pinTail = Path()
+      ..moveTo(pinCenter.dx - pinR * 0.55, pinCenter.dy + pinR * 0.45)
+      ..lineTo(pinCenter.dx, pinCenter.dy + pinR * 1.6)
+      ..lineTo(pinCenter.dx + pinR * 0.55, pinCenter.dy + pinR * 0.45)
+      ..close();
+    canvas.drawPath(pinTail, Paint()..color = _aboutGoldLight);
+    canvas.drawPath(pinTail, thin);
+
+    // Pencil along upper right corner of sheet.
+    canvas.save();
+    canvas.translate(w * 0.78, h * 0.18);
+    canvas.rotate(0.55);
+    final pencilLen = s * 0.45;
+    final pencilW = s * 0.07;
+    // Shaft.
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, pencilLen, pencilW),
+      Paint()..color = _aboutGold.withOpacity(0.85),
+    );
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, pencilLen, pencilW),
+      thin,
+    );
+    // Tip (triangle).
+    final tip = Path()
+      ..moveTo(pencilLen, 0)
+      ..lineTo(pencilLen + pencilW * 1.2, pencilW * 0.5)
+      ..lineTo(pencilLen, pencilW)
+      ..close();
+    canvas.drawPath(tip, Paint()..color = _aboutGoldLight);
+    canvas.drawPath(tip, thin);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _MapSheetPainter oldDelegate) => false;
+}
+
 // Faint cartographic grid + meridian curve drawn behind the whole About
 // section — gives the page a "weathered map spread" backdrop without
 // competing with foreground content.
@@ -2399,8 +2490,13 @@ class _CardCornerCompassRose extends CustomPainter {
 // Mapping Method Section — large-scale showcase of the PRM diagram.
 class MappingMethodSection extends StatelessWidget {
   final String language;
+  final Key? methodologyKey;
 
-  const MappingMethodSection({super.key, required this.language});
+  const MappingMethodSection({
+    super.key,
+    required this.language,
+    this.methodologyKey,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -2491,19 +2587,51 @@ class MappingMethodSection extends StatelessWidget {
                     const SizedBox(height: 24),
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 880),
-                      child: Text(
-                        language == 'en'
-                            ? 'PRM blends Indigenous geospatial knowledge with GPS, aerial photography, and satellite imagery. The diagram below shows how lived experience becomes a shared tool for stewardship, dialogue, and protection — step by step.'
-                            : 'El PRM combina el conocimiento geoespacial indígena con GPS, fotografía aérea e imágenes satelitales. El siguiente diagrama muestra cómo la experiencia vivida se convierte, paso a paso, en una herramienta compartida para la administración, el diálogo y la protección.',
-                        style: TextStyle(
-                          color: const Color(0xFFE5ECF5),
-                          fontSize: isPhone ? 15 : 17,
-                          height: 1.7,
+                      child: Text.rich(
+                        TextSpan(
+                          style: TextStyle(
+                            color: const Color(0xFFE5ECF5),
+                            fontSize: isPhone ? 15 : 17,
+                            height: 1.7,
+                          ),
+                          children: language == 'en'
+                              ? const [
+                                  TextSpan(
+                                    text: 'Participatory Research Mapping (PRM)',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' can pinpoint land use locations in uncharted territories by combining Indigenous geographic knowledge (IGK) with modern cartographic tools to create new maps and data needed for land and park management.\n\nWe elevate community members (once the "researched") to a collateral position as co-researchers and co-authors, demanding unprecedented respect of each other’s knowledge and abilities.\n\nCommunity representatives are trained to complete land-use assessments using questionnaires, sketch-maps, GPS, interviews, and more. They work with a team of geographers to transform this information into consensual and then standard cartographic and demographic results.',
+                                  ),
+                                ]
+                              : const [
+                                  TextSpan(
+                                    text:
+                                        'El Mapeo de Investigación Participativa (PRM)',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' puede ubicar con precisión los usos de la tierra en territorios poco cartografiados al combinar el conocimiento geográfico indígena (IGK) con herramientas cartográficas modernas para crear los mapas y datos nuevos que se necesitan para el manejo de la tierra y los parques.\n\nElevamos a los miembros de la comunidad (antes los "investigados") a una posición colateral como co-investigadores y co-autores, exigiendo un respeto sin precedentes por los conocimientos y capacidades de cada uno.\n\nLos representantes comunitarios reciben capacitación para realizar evaluaciones de uso de la tierra mediante cuestionarios, mapas esquemáticos, GPS, entrevistas y más. Trabajan con un equipo de geógrafos para transformar esta información en resultados cartográficos y demográficos consensuados y luego estándar.',
+                                  ),
+                                ],
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                       ),
                     ),
-                    SizedBox(height: isPhone ? 36 : 60),
+                    SizedBox(height: isPhone ? 24 : 40),
+                    // Stages of PRM expansion list — sits directly under the
+                    // descriptive paragraphs.
+                    MethodologySection(
+                      key: methodologyKey,
+                      language: language,
+                    ),
+                    SizedBox(height: isPhone ? 24 : 40),
                     MouseRegion(
                       cursor: SystemMouseCursors.zoomIn,
                       child: GestureDetector(
@@ -4496,18 +4624,18 @@ class _SealWithStats extends StatelessWidget {
             ),
           )
         : Padding(
-            padding: const EdgeInsets.symmetric(vertical: 44, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 12),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: Center(child: waterStat)),
-                const SizedBox(width: 10),
+                const SizedBox(width: 6),
                 Expanded(child: Center(child: peopleStat)),
-                const SizedBox(width: 10),
+                const SizedBox(width: 6),
                 Expanded(child: Center(child: communitiesStat)),
-                const SizedBox(width: 10),
+                const SizedBox(width: 6),
                 Expanded(child: Center(child: birdStat)),
-                const SizedBox(width: 10),
+                const SizedBox(width: 6),
                 Expanded(child: Center(child: plantStat)),
               ],
             ),
@@ -4534,12 +4662,12 @@ class _StatFigure extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isPhone = screenWidth < 600;
-    final circleSize = isPhone ? 92.0 : 100.0;
-    final iconPad = isPhone ? 14.0 : 16.0;
-    final valueSize = isPhone ? 32.0 : 34.0;
-    final labelSize = isPhone ? 12.5 : 13.0;
+    final circleSize = isPhone ? 78.0 : 82.0;
+    final iconPad = isPhone ? 12.0 : 13.0;
+    final valueSize = isPhone ? 27.0 : 28.0;
+    final labelSize = isPhone ? 11.5 : 12.0;
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 200),
+      constraints: const BoxConstraints(maxWidth: 180),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -5021,46 +5149,38 @@ class _MethodologySectionState extends State<MethodologySection> {
     final stages = widget.language == 'en'
         ? [
             (
-              'Stage One: Co-design',
-              'Define mapping goals with community leadership.',
+              '1. Training Workshops',
+              'Researchers train and certify "community geographers" in a "toolbox" of geospatial skills for conservation management (sketch-mapping, basic cartography, and the use of questionnaires, topographic maps, the compass, the Global Positioning System (GPS), air photography and satellite imagery analysis, and drone use).',
             ),
             (
-              'Stage Two: Training',
-              'Through instructional exercises, "community geographers" learn the use of GPS, mapping tools, and data-documentation techniques.',
+              '2. Creating Consensual Maps',
+              'Through workshops and fieldwork community questionnaire data and hand-drawn sketch-maps on land use are converted into "consensual maps" showing agreed-upon place-names and resource-use locations.',
             ),
             (
-              'Stage Three: Field Verification and Mapping',
-              'Trained community geographers collect ground-truth points and data through shared site visits to do sketch mapping and questionnaire applications in communities.',
+              '3. Verification of Data',
+              'The accuracy of the results and maps with precise coordinates are reviewed repeatedly in workshops and community meetings, and by government agencies.',
             ),
             (
-              'Stage Four: Plot Field Data onto Cartographic Sheets',
-              'Plot field data onto standard cartographic sheets in community workshops. Designing Indigenous Land-use Management and potential zoning plans in workshops.',
-            ),
-            (
-              'Stage Five: GIS and Computer Map Production',
-              'KU students with professors digitize and standardize outputs for planning and governance use.',
+              '4. Standardizing Map Products',
+              'The consensual, community-produced maps are converted into standard maps that are scientifically accurate and recognized by government officials and other external, professional audiences.',
             ),
           ]
         : [
             (
-              'Etapa Uno: Codiseño',
-              'Definir objetivos de mapeo con el liderazgo comunitario.',
+              '1. Talleres de Capacitación',
+              'Los investigadores capacitan y certifican a "geógrafos comunitarios" en una "caja de herramientas" de habilidades geoespaciales para el manejo de la conservación (mapeo esquemático, cartografía básica y el uso de cuestionarios, mapas topográficos, la brújula, el Sistema de Posicionamiento Global (GPS), análisis de fotografía aérea e imágenes satelitales, y uso de drones).',
             ),
             (
-              'Etapa Dos: Capacitación',
-              'A través de ejercicios de instrucción, los "geógrafos comunitarios" aprenden el uso de GPS, herramientas de mapeo y técnicas de documentación de datos.',
+              '2. Creación de Mapas Consensuados',
+              'Mediante talleres y trabajo de campo, los datos de cuestionarios comunitarios y los mapas esquemáticos hechos a mano sobre el uso de la tierra se convierten en "mapas consensuados" que muestran los topónimos acordados y las ubicaciones de uso de recursos.',
             ),
             (
-              'Etapa Tres: Verificación de Campo y Mapeo',
-              'Los geógrafos comunitarios capacitados recopilan puntos de verificación en terreno y datos mediante visitas conjuntas al sitio para realizar mapas esquemáticos y aplicar cuestionarios en las comunidades.',
+              '3. Verificación de Datos',
+              'La precisión de los resultados y de los mapas con coordenadas exactas se revisa repetidamente en talleres y reuniones comunitarias, y por agencias gubernamentales.',
             ),
             (
-              'Etapa Cuatro: Trazar Datos de Campo en Hojas Cartográficas',
-              'Trazar datos de campo en hojas cartográficas estándar en talleres comunitarios. Diseño del manejo del uso de tierras indígenas y planes potenciales de zonificación en talleres.',
-            ),
-            (
-              'Etapa Cinco: Producción de Mapas SIG y Computarizados',
-              'Estudiantes de KU con profesores digitalizan y estandarizan los resultados para uso de planificación y gobernanza.',
+              '4. Estandarización de Productos Cartográficos',
+              'Los mapas consensuados producidos por la comunidad se convierten en mapas estándar que son científicamente precisos y reconocidos por funcionarios gubernamentales y otras audiencias externas y profesionales.',
             ),
           ];
 
