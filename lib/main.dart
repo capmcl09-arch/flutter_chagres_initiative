@@ -8,6 +8,7 @@ import 'dart:html' as html;
 import 'dart:ui' as dart_ui;
 import 'dart:ui_web' as ui;
 import 'dart:math' as math;
+import 'dart:convert';
 
 const String _donationPageUrl =
     'https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship';
@@ -163,8 +164,8 @@ class _ChagresHomeState extends State<ChagresHome> {
   final GlobalKey _fieldworkKey = GlobalKey();
   final GlobalKey _teamKey = GlobalKey();
   final GlobalKey _faqKey = GlobalKey();
-  final GlobalKey _reportsKey = GlobalKey();
   final GlobalKey _partnershipsKey = GlobalKey();
+  final GlobalKey _projectMapsKey = GlobalKey();
 
   @override
   void initState() {
@@ -189,10 +190,6 @@ class _ChagresHomeState extends State<ChagresHome> {
     precacheImage(const AssetImage('assets/images/jayhawk.png'), context);
     precacheImage(const AssetImage(_kuLogoBlueAsset), context);
     precacheImage(const AssetImage('assets/images/Launch_KU.png'), context);
-    precacheImage(
-      const AssetImage('assets/images/Spanish_PRM_Explain.png'),
-      context,
-    );
     precacheImage(const AssetImage('assets/images/palms.jpg'), context);
   }
 
@@ -233,7 +230,6 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   void _updateActiveSection() {
     final Map<GlobalKey, String> sections = {
-      _partnershipsKey: 'About Donations',
       _teamKey: 'Team',
       _aboutKey: 'About',
       _methodologyKey: 'Methodology',
@@ -281,10 +277,10 @@ class _ChagresHomeState extends State<ChagresHome> {
     final viewport = RenderAbstractViewport.of(box);
     final reveal = viewport.getOffsetToReveal(box, 0.0).offset;
     final isMobile = MediaQuery.of(this.context).size.width < 900;
-    // Desktop has a 100px fixed header overlay; add a small gap so the title
-    // clears the ribbon. Mobile uses a Scaffold AppBar so the body already
-    // begins below it.
-    final headerOffset = isMobile ? 0.0 : 124.0;
+    // Desktop has a ~58px fixed header overlay; leave a small gap so the
+    // section title lands just below the ribbon. Mobile uses a Scaffold AppBar
+    // so the body already begins below it.
+    final headerOffset = isMobile ? 0.0 : 70.0;
     final target = (reveal - headerOffset).clamp(
       0.0,
       _scrollController.position.maxScrollExtent,
@@ -355,7 +351,11 @@ class _ChagresHomeState extends State<ChagresHome> {
                 if (!isMobile)
                   const SizedBox(height: 58), // Space for fixed header
                 HeroSection(language: widget.language),
-                _WorkingDraftBanner(language: widget.language),
+                // Canal-news ribbon directly below the hero photo, ahead of
+                // the "Chagres Initiative is…" cards. Sourced from
+                // docs/news.json (refreshed daily by CI); hides itself if the
+                // feed is unavailable. Sits just below the fold on a laptop.
+                _NewsTicker(language: widget.language),
                 RevealOnScroll(
                   child: AboutSection(
                     key: _aboutKey,
@@ -373,9 +373,11 @@ class _ChagresHomeState extends State<ChagresHome> {
                 // the About cards and the fact-icons stats band.
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isMobile ? 20 : 60,
-                    vertical: isMobile ? 36 : 56,
+                  padding: EdgeInsets.fromLTRB(
+                    isMobile ? 20 : 60,
+                    isMobile ? 36 : 56,
+                    isMobile ? 20 : 60,
+                    isMobile ? 8 : 12,
                   ),
                   child: RevealOnScroll(
                     child: Center(
@@ -390,7 +392,9 @@ class _ChagresHomeState extends State<ChagresHome> {
                                   : 'PARQUE NACIONAL CHAGRES (PNC):\nFUENTE DE AGUA DEL CANAL DE PANAMÁ Y HOGAR INDÍGENA',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.playfairDisplay(
-                                color: const Color(0xFF7FB069),
+                                // Matches the neon-green Chagres NP fill on the
+                                // overview map (#47FC23).
+                                color: const Color(0xFF47FC23),
                                 fontSize: isMobile ? 22 : 32,
                                 fontStyle: FontStyle.italic,
                                 fontWeight: FontWeight.w600,
@@ -401,19 +405,18 @@ class _ChagresHomeState extends State<ChagresHome> {
                             SizedBox(height: isMobile ? 14 : 18),
                             // Two-panel map: left = Panama country, right =
                             // Chagres NP detail. Side-by-side on desktop,
-                            // stacked vertically on phones.
+                            // stacked vertically on phones. Each panel opens a
+                            // zoomable full-screen view on tap.
                             LayoutBuilder(
                               builder: (context, constraints) {
                                 final stack = constraints.maxWidth < 720;
-                                final leftMap = Image.asset(
-                                  'assets/images/panama_left_map.png',
-                                  fit: BoxFit.contain,
-                                  filterQuality: FilterQuality.high,
+                                final leftMap = _ZoomableMapPanel(
+                                  imagePath:
+                                      'assets/images/panama_left_map.png',
                                 );
-                                final rightMap = Image.asset(
-                                  'assets/images/panama_right_map.png',
-                                  fit: BoxFit.contain,
-                                  filterQuality: FilterQuality.high,
+                                final rightMap = _ZoomableMapPanel(
+                                  imagePath:
+                                      'assets/images/panama_right_map.png',
                                 );
                                 if (stack) {
                                   return Column(
@@ -441,11 +444,72 @@ class _ChagresHomeState extends State<ChagresHome> {
                     ),
                   ),
                 ),
-                // Stats band (5 blue figures) sits directly below the map.
+                // Blue fact figures sit directly below the maps, tightly
+                // grouped.
                 Container(
                   width: double.infinity,
                   child: RevealOnScroll(
                     child: _SealWithStats(language: widget.language),
+                  ),
+                ),
+                // "Click to View Live Maps" jumps down to the interactive
+                // "Project Maps" section; sits below the fact figures.
+                Padding(
+                  padding: EdgeInsets.only(bottom: isMobile ? 24 : 32),
+                  child: Center(
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () => _scrollToSection(_projectMapsKey),
+                        child: _HoverGlow(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isMobile ? 22 : 30,
+                              vertical: isMobile ? 13 : 16,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF0051BA),
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(
+                                color: const Color(0xFF4A90D9),
+                                width: 1.4,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFF0051BA,
+                                  ).withOpacity(0.32),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  widget.language == 'en'
+                                      ? 'Click to View Live Maps'
+                                      : 'Haga clic para ver los mapas en vivo',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: isMobile ? 14 : 16,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 0.6,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Icon(
+                                  Icons.arrow_downward,
+                                  color: Colors.white,
+                                  size: isMobile ? 16 : 18,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 // "The Chagres Initiative Solution…" callout — follows the
@@ -526,32 +590,65 @@ class _ChagresHomeState extends State<ChagresHome> {
                                     : 'Desarrollar un proyecto de mapeo de investigación participativa que convierta el Conocimiento Espacial Indígena (ISK) en información geográfica estándar, ahora crucial para la conservación del bosque tropical y la seguridad del Canal de Panamá.',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.playfairDisplay(
-                                  color: const Color(0xFFE0B660),
+                                  color: Colors.white,
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w500,
                                   fontSize: isMobile ? 15 : 17,
                                   height: 1.55,
                                 ),
                               ),
-                              SizedBox(height: isMobile ? 16 : 22),
+                              SizedBox(height: isMobile ? 18 : 24),
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 child: GestureDetector(
                                   onTap: () => _scrollToSection(
                                     _methodologyKey,
                                   ),
-                                  child: Text(
-                                    widget.language == 'en'
-                                        ? 'PRM Methodology Details (click here)'
-                                        : 'Detalles de la Metodología PRM (haga clic aquí)',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.playfairDisplay(
-                                      color: const Color(0xFFE0B660),
-                                      fontSize: isMobile ? 14 : 16,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w600,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: const Color(0xFFE0B660),
+                                  child: _HoverGlow(
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: isMobile ? 22 : 30,
+                                        vertical: isMobile ? 13 : 16,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF0051BA),
+                                        borderRadius: BorderRadius.circular(100),
+                                        border: Border.all(
+                                          color: const Color(0xFF4A90D9),
+                                          width: 1.4,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: const Color(
+                                              0xFF0051BA,
+                                            ).withOpacity(0.32),
+                                            blurRadius: 20,
+                                            offset: const Offset(0, 6),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            widget.language == 'en'
+                                                ? 'PRM Methodology Details'
+                                                : 'Detalles de la Metodología PRM',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: isMobile ? 14 : 16,
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: 0.6,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Icon(
+                                            Icons.arrow_downward,
+                                            color: Colors.white,
+                                            size: isMobile ? 16 : 18,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -655,7 +752,10 @@ class _ChagresHomeState extends State<ChagresHome> {
                       Column(
                         children: [
                           RevealOnScroll(
-                            child: MapsSection(language: widget.language),
+                            child: MapsSection(
+                              key: _projectMapsKey,
+                              language: widget.language,
+                            ),
                           ),
                           RevealOnScroll(
                             child: AuthorizationSection(
@@ -696,12 +796,8 @@ class _ChagresHomeState extends State<ChagresHome> {
                               language: widget.language,
                             ),
                           ),
-                          RevealOnScroll(
-                            child: ReportsSection(
-                              key: _reportsKey,
-                              language: widget.language,
-                            ),
-                          ),
+                          // Field Reports section removed — that content will
+                          // live on learn.chagresinitiative.org later.
                           RevealOnScroll(
                             child: FAQSection(
                               key: _faqKey,
@@ -785,21 +881,29 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   Widget _buildHeaderBrand({required bool isMobile}) {
     final kuHeight = isMobile ? 26.0 : 38.0;
+    final sealHeight = isMobile ? 28.0 : 40.0;
 
-    return GestureDetector(
-      onTap: () => launchUrl(
-        Uri.parse('https://ku.edu'),
-        mode: LaunchMode.externalApplication,
-      ),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: Image.asset(
-          _kuLogoBlueAsset,
-          height: kuHeight,
-          fit: BoxFit.contain,
-          filterQuality: FilterQuality.high,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: () => launchUrl(
+            Uri.parse('https://ku.edu'),
+            mode: LaunchMode.externalApplication,
+          ),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Image.asset(
+              _kuLogoBlueAsset,
+              height: kuHeight,
+              fit: BoxFit.contain,
+              filterQuality: FilterQuality.high,
+            ),
+          ),
         ),
-      ),
+        SizedBox(width: isMobile ? 10 : 14),
+        _LaBongaSeal(size: sealHeight, language: widget.language),
+      ],
     );
   }
 
@@ -881,12 +985,6 @@ class _ChagresHomeState extends State<ChagresHome> {
             _fieldworkKey,
           ),
           _buildDrawerItem(
-            widget.language == 'en'
-                ? 'About Donations'
-                : 'Acerca de las Donaciones',
-            _partnershipsKey,
-          ),
-          _buildDrawerItem(
             widget.language == 'en' ? 'Team' : 'Equipo',
             _teamKey,
           ),
@@ -928,7 +1026,6 @@ class _ChagresHomeState extends State<ChagresHome> {
               _buildNavLink('About', _aboutKey),
               _buildNavLink('Methodology', _methodologyKey),
               _buildNavLink('Fieldwork', _fieldworkKey),
-              _buildNavLink('About Donations', _partnershipsKey),
               _buildNavLink('Team', _teamKey),
               _buildNavLink('FAQ', _faqKey),
               if (_showLanguageToggle)
@@ -980,7 +1077,6 @@ class _ChagresHomeState extends State<ChagresHome> {
       'About' => 'Acerca de',
       'Methodology' => 'Metodología',
       'Fieldwork' => 'Trabajo de Campo',
-      'About Donations' => 'Acerca de las Donaciones',
       'Team' => 'Equipo',
       'FAQ' => 'Preguntas Frecuentes',
       _ => label,
@@ -1001,8 +1097,100 @@ class HeroSection extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
     final heroTopPadding = isMobile ? topInset + 28 : screenHeight * 0.035;
-    final sealMaxWidth = isMobile ? screenWidth * 0.83 : screenWidth * 0.39;
-    final sealMaxHeight = isMobile ? screenHeight * 0.48 : screenHeight * 0.63;
+    final sealMaxWidth = isMobile ? screenWidth * 0.54 : screenWidth * 0.39;
+    final sealMaxHeight = isMobile ? screenHeight * 0.42 : screenHeight * 0.63;
+    final double laBongaSize =
+        (isMobile ? screenWidth * 0.30 : screenWidth * 0.22)
+            .clamp(96.0, 300.0)
+            .toDouble();
+    final double jayhawkWidth =
+        (isMobile ? screenWidth * 0.34 : screenWidth * 0.26)
+            .clamp(112.0, 370.0)
+            .toDouble();
+
+    final sealImage = ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: sealMaxWidth,
+        maxHeight: sealMaxHeight,
+      ),
+      child: AspectRatio(
+        aspectRatio: 1200 / 1440,
+        child: Image.asset(
+          'assets/images/chagres_oval_seal.png',
+          fit: BoxFit.contain,
+          filterQuality: FilterQuality.high,
+        ),
+      ),
+    );
+    final laBongaSeal = _LaBongaSeal(size: laBongaSize, language: language);
+    final jayhawkLogo = MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Tooltip(
+        message: language == 'en'
+            ? 'University of Kansas'
+            : 'Universidad de Kansas',
+        child: GestureDetector(
+          onTap: () => launchUrl(
+            Uri.parse('https://ku.edu'),
+            mode: LaunchMode.externalApplication,
+          ),
+          child: Image.asset(
+            'assets/images/jayhawk.png',
+            width: jayhawkWidth,
+            fit: BoxFit.contain,
+            filterQuality: FilterQuality.high,
+          ),
+        ),
+      ),
+    );
+    // Phone: seal on top, La Bonga + Jayhawk side by side beneath it.
+    // Desktop: La Bonga and Jayhawk flank the seal left and right.
+    final Widget heroSealArea = isMobile
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              sealImage,
+              const SizedBox(height: 14),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  laBongaSeal,
+                  const SizedBox(width: 22),
+                  jayhawkLogo,
+                ],
+              ),
+            ],
+          )
+        : SizedBox(
+            width: screenWidth,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: laBongaSeal,
+                      ),
+                    ),
+                  ),
+                  sealImage,
+                  Expanded(
+                    child: Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: jayhawkLogo,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
 
     return Stack(
       children: [
@@ -1032,20 +1220,7 @@ class HeroSection extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: sealMaxWidth,
-                    maxHeight: sealMaxHeight,
-                  ),
-                  child: AspectRatio(
-                    aspectRatio: 1200 / 1440,
-                    child: Image.asset(
-                      'assets/images/chagres_oval_seal.png',
-                      fit: BoxFit.contain,
-                      filterQuality: FilterQuality.high,
-                    ),
-                  ),
-                ),
+                heroSealArea,
                 SizedBox(height: isMobile ? 18 : 26),
                 Column(
                   children: [
@@ -1117,6 +1292,37 @@ class HeroSection extends StatelessWidget {
 
   Widget _buildPhrase(BuildContext context, String text) {
     return _HeroPhrasePill(text: text);
+  }
+}
+
+// La Bonga community seal — clickable; tapping reveals its caption. Reused in
+// the hero (flanking the project seal) and in the top ribbon.
+class _LaBongaSeal extends StatelessWidget {
+  final double size;
+  final String language;
+  const _LaBongaSeal({required this.size, required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final message = language == 'en'
+        ? 'The Seal of the Community of La Bonga'
+        : 'El Sello de la Comunidad de La Bonga';
+    return Tooltip(
+      message: message,
+      triggerMode: TooltipTriggerMode.tap,
+      showDuration: const Duration(seconds: 3),
+      preferBelow: true,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Image.asset(
+          'assets/images/labonga_seal.png',
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+          filterQuality: FilterQuality.high,
+        ),
+      ),
+    );
   }
 }
 
@@ -1895,12 +2101,12 @@ class _AboutCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                // Solid gold subtitle — continuation of the title.
+                // White subtitle — continuation of the gold title.
                 Text(
                   data.subtitle,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.playfairDisplay(
-                    color: const Color(0xFFE0B660),
+                    color: Colors.white,
                     fontSize: 16,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w500,
@@ -2510,9 +2716,6 @@ class MappingMethodSection extends StatelessWidget {
     // hands off to Make Dreams without a long empty green stretch.
     final topPad = isPhone ? 60.0 : 110.0;
     final bottomPad = isPhone ? 32.0 : 44.0;
-    final prmExplainImagePath = language == 'en'
-        ? 'assets/images/PRM_Explain.png'
-        : 'assets/images/Spanish_PRM_Explain.png';
 
     return Container(
       width: double.infinity,
@@ -2632,65 +2835,6 @@ class MappingMethodSection extends StatelessWidget {
                       language: language,
                     ),
                     SizedBox(height: isPhone ? 24 : 40),
-                    MouseRegion(
-                      cursor: SystemMouseCursors.zoomIn,
-                      child: GestureDetector(
-                        onTap: () => showDialog(
-                          context: context,
-                          builder: (_) =>
-                              ZoomImageDialog(imagePath: prmExplainImagePath),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              isPhone ? 12 : 20,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.45),
-                                blurRadius: 34,
-                                offset: const Offset(0, 14),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                              isPhone ? 12 : 20,
-                            ),
-                            child: Image.asset(
-                              prmExplainImagePath,
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              filterQuality: FilterQuality.high,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: isPhone ? 14 : 18),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.zoom_in,
-                          color: const Color(0xFF9EC77A),
-                          size: isPhone ? 16 : 18,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          language == 'en'
-                              ? 'Click the diagram to zoom in'
-                              : 'Haz clic en el diagrama para ampliar',
-                          style: TextStyle(
-                            color: const Color(0xFF9EC77A),
-                            fontSize: isPhone ? 13 : 14,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: isPhone ? 20 : 28),
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 760),
                       child: Text(
@@ -4346,13 +4490,13 @@ class _MakeDreamsCallout extends StatelessWidget {
     final bullets = language == 'en'
         ? const [
             '100% to direct project costs — no overhead, no salaries.',
-            'Three-year, \$550,000 mission launching Summer 2026 via KU Endowment.',
+            'Three-year mission launching Summer 2026 via KU Endowment.',
             'Funds workshops, mapping tech, travel, and community-geographer stipends.',
             'Public-private partnership replacing shrinking federal research funding.',
           ]
         : const [
             '100% a costos directos — sin gastos generales ni salarios.',
-            'Misión de 3 años y \$550,000, verano 2026, vía KU Endowment.',
+            'Misión de 3 años, verano 2026, vía KU Endowment.',
             'Financia talleres, tecnología de mapeo, viajes y estipendios comunitarios.',
             'Asociación público-privada que reemplaza el financiamiento federal recortado.',
           ];
@@ -4504,6 +4648,310 @@ class _MakeDreamsBullet extends StatelessWidget {
   }
 }
 
+// One headline in the canal-news ticker.
+class _NewsHeadline {
+  final String title;
+  final String url;
+  final String source;
+  final String date;
+  const _NewsHeadline({
+    required this.title,
+    required this.url,
+    required this.source,
+    required this.date,
+  });
+}
+
+// Full-width auto-scrolling ribbon of Panama Canal headlines. Reads the static
+// news.json (same-origin, refreshed daily by CI). If the file is missing,
+// empty, or fails to load, the widget renders nothing so the page is never
+// affected.
+class _NewsTicker extends StatefulWidget {
+  final String language;
+  const _NewsTicker({required this.language});
+
+  @override
+  State<_NewsTicker> createState() => _NewsTickerState();
+}
+
+class _NewsTickerState extends State<_NewsTicker>
+    with SingleTickerProviderStateMixin {
+  List<_NewsHeadline> _items = const [];
+  late final AnimationController _controller;
+  final GlobalKey _contentKey = GlobalKey();
+  double _contentWidth = 0;
+  static const double _gap = 64; // space between the two looping copies
+  static const double _pxPerSecond = 55;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 30),
+    );
+    _loadNews();
+  }
+
+  Future<void> _loadNews() async {
+    try {
+      // Cache-bust hourly so a fresh deploy shows new headlines without a
+      // hard refresh, while still allowing normal caching within the hour.
+      final bust = DateTime.now().millisecondsSinceEpoch ~/ 3600000;
+      final raw = await html.HttpRequest.getString('news.json?t=$bust');
+      final data = json.decode(raw) as Map<String, dynamic>;
+      final list = (data['items'] as List<dynamic>? ?? const [])
+          .whereType<Map<String, dynamic>>()
+          .map(
+            (e) => _NewsHeadline(
+              title: (e['title'] ?? '').toString(),
+              url: (e['url'] ?? '').toString(),
+              source: (e['source'] ?? '').toString(),
+              date: (e['date'] ?? '').toString(),
+            ),
+          )
+          .where((h) => h.title.isNotEmpty && h.url.isNotEmpty)
+          .toList();
+      if (!mounted || list.isEmpty) return;
+      setState(() => _items = list);
+      WidgetsBinding.instance.addPostFrameCallback((_) => _measure());
+    } catch (_) {
+      // No ticker if the feed can't be loaded.
+    }
+  }
+
+  void _measure() {
+    final ctx = _contentKey.currentContext;
+    final width = ctx?.size?.width ?? 0;
+    if (width <= 0 || width == _contentWidth) return;
+    _contentWidth = width;
+    final loopPx = width + _gap;
+    _controller.duration = Duration(
+      milliseconds: (loopPx / _pxPerSecond * 1000).round(),
+    );
+    _controller
+      ..reset()
+      ..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_items.isEmpty) return const SizedBox.shrink();
+    final en = widget.language == 'en';
+    final isPhone = MediaQuery.of(context).size.width < 600;
+
+    final label = Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: isPhone ? 14 : 20,
+        vertical: isPhone ? 10 : 12,
+      ),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFFE0B660), Color(0xFFB8851A)],
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.directions_boat_filled,
+            size: isPhone ? 16 : 18,
+            color: const Color(0xFF0C1328),
+          ),
+          SizedBox(width: isPhone ? 6 : 8),
+          Text(
+            en ? 'CANAL NEWS' : 'NOTICIAS DEL CANAL',
+            style: TextStyle(
+              color: const Color(0xFF0C1328),
+              fontWeight: FontWeight.w800,
+              fontSize: isPhone ? 11 : 12.5,
+              letterSpacing: 1.0,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // The visible window is bounded by Expanded; ClipRect clips to it and an
+    // OverflowBox lets the (wider-than-screen) strip overflow inside so hit
+    // testing on each headline lands correctly. Hovering pauses the scroll so
+    // a moving headline is easy to click.
+    final scroller = MouseRegion(
+      onEnter: (_) => _controller.stop(),
+      onExit: (_) {
+        if (_contentWidth > 0 && !_controller.isAnimating) {
+          _controller.repeat();
+        }
+      },
+      child: ClipRect(
+        child: SizedBox(
+          height: isPhone ? 40 : 46,
+          width: double.infinity,
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, _) {
+              final loopPx = _contentWidth + _gap;
+              final dx =
+                  _contentWidth == 0 ? 0.0 : -_controller.value * loopPx;
+              return OverflowBox(
+                alignment: Alignment.centerLeft,
+                minWidth: 0,
+                maxWidth: double.infinity,
+                child: Transform.translate(
+                  offset: Offset(dx, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildStrip(key: _contentKey),
+                      SizedBox(width: _gap),
+                      // Second identical copy makes the wrap seamless.
+                      if (_contentWidth > 0) _buildStrip(),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: Color(0xFF101A2F),
+        border: Border(
+          top: BorderSide(color: Color(0x33E0B660)),
+          bottom: BorderSide(color: Color(0x33E0B660)),
+        ),
+      ),
+      child: Row(
+        children: [
+          label,
+          Expanded(child: scroller),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStrip({Key? key}) {
+    return Row(
+      key: key,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (final item in _items) _buildItem(item),
+      ],
+    );
+  }
+
+  Widget _buildItem(_NewsHeadline item) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 28),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => launchUrl(
+            Uri.parse(item.url),
+            mode: LaunchMode.externalApplication,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 28),
+                child: Text(
+                  '•',
+                  style: TextStyle(color: Color(0xFFE0B660), fontSize: 14),
+                ),
+              ),
+              Text(
+                item.title,
+                style: const TextStyle(
+                  color: Color(0xFFE5ECF5),
+                  fontSize: 14,
+                  height: 1.1,
+                ),
+              ),
+              if (_attribution(item).isNotEmpty) ...[
+                const SizedBox(width: 8),
+                Text(
+                  _attribution(item),
+                  style: const TextStyle(
+                    color: Color(0xFF8FA0C4),
+                    fontSize: 12.5,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // "— Source, 5/20/26" (either part omitted if missing).
+  String _attribution(_NewsHeadline item) {
+    final parts = [
+      if (item.source.isNotEmpty) item.source,
+      if (item.date.isNotEmpty) item.date,
+    ];
+    return parts.isEmpty ? '' : '— ${parts.join(', ')}';
+  }
+}
+
+// One panel of the two-panel overview/detail map. Tapping it opens a
+// full-screen, pinch/scroll-zoomable view; a small magnifier badge signals it
+// is interactive.
+class _ZoomableMapPanel extends StatelessWidget {
+  final String imagePath;
+  const _ZoomableMapPanel({required this.imagePath});
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.zoomIn,
+      child: GestureDetector(
+        onTap: () => showDialog(
+          context: context,
+          builder: (_) => ZoomImageDialog(imagePath: imagePath),
+        ),
+        child: Stack(
+          children: [
+            Image.asset(
+              imagePath,
+              fit: BoxFit.contain,
+              filterQuality: FilterQuality.high,
+            ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.45),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(
+                  Icons.zoom_in,
+                  color: Colors.white,
+                  size: 18,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // Reusable navy band with the faint, green-tinted palm texture used elsewhere
 // in the page. Wrap a vertical run of navy sections in one of these to get a
 // continuous textured backdrop instead of multiple flat-navy stretches.
@@ -4624,20 +5072,23 @@ class _SealWithStats extends StatelessWidget {
             ),
           )
         : Padding(
-            padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: Center(child: waterStat)),
-                const SizedBox(width: 6),
-                Expanded(child: Center(child: peopleStat)),
-                const SizedBox(width: 6),
-                Expanded(child: Center(child: communitiesStat)),
-                const SizedBox(width: 6),
-                Expanded(child: Center(child: birdStat)),
-                const SizedBox(width: 6),
-                Expanded(child: Center(child: plantStat)),
-              ],
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 20),
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  waterStat,
+                  const SizedBox(width: 16),
+                  peopleStat,
+                  const SizedBox(width: 16),
+                  communitiesStat,
+                  const SizedBox(width: 16),
+                  birdStat,
+                  const SizedBox(width: 16),
+                  plantStat,
+                ],
+              ),
             ),
           );
 
@@ -6400,9 +6851,11 @@ class TeamSection extends StatelessWidget {
             ),
           ),
         Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: isMobile ? 20 : 60,
-            vertical: 60,
+          padding: EdgeInsets.fromLTRB(
+            isMobile ? 20 : 60,
+            24,
+            isMobile ? 20 : 60,
+            60,
           ),
           child: Column(
             children: [
@@ -6942,69 +7395,6 @@ class _FadeInAnimationState extends State<FadeInAnimation>
   @override
   Widget build(BuildContext context) {
     return FadeTransition(opacity: _opacity, child: widget.child);
-  }
-}
-
-class _WorkingDraftBanner extends StatelessWidget {
-  final String language;
-  const _WorkingDraftBanner({required this.language});
-
-  @override
-  Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 600;
-    return Container(
-      width: double.infinity,
-      color: const Color(0xFF0C1328),
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 16 : 32,
-        vertical: 14,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 900),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: isMobile ? 14 : 20,
-              vertical: 12,
-            ),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5B83D).withOpacity(0.10),
-              border: Border.all(
-                color: const Color(0xFFF5B83D).withOpacity(0.55),
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.construction,
-                  color: Color(0xFFF5B83D),
-                  size: 20,
-                ),
-                const SizedBox(width: 12),
-                Flexible(
-                  child: Text(
-                    language == 'en'
-                        ? 'While the project has launched and the fundraising platform is live, this website is still under construction and should be considered a working draft.'
-                        : 'Aunque el proyecto ya se lanzó y la plataforma de recaudación de fondos está activa, este sitio web aún se encuentra en construcción y debe considerarse un borrador en desarrollo.',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.92),
-                      fontSize: isMobile ? 13 : 14,
-                      fontStyle: FontStyle.italic,
-                      height: 1.4,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
 

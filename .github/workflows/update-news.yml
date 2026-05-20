@@ -1,0 +1,43 @@
+name: Update Canal News
+
+# Fetches Panama Canal headlines once a day and commits docs/news.json so the
+# live ticker stays current. GitHub Pages redeploys docs/ on push. The fetch
+# script preserves the last-known-good file if a run fails, so a flaky feed
+# never blanks the ticker.
+
+on:
+  schedule:
+    - cron: '0 11 * * *'   # daily ~06:00 US Central / 05:00 CDT
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-news
+  cancel-in-progress: false
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch headlines
+        run: python scripts/fetch_news.py
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- docs/news.json; then
+            echo "No news changes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add docs/news.json
+            git commit -m "Update canal news ticker [skip ci]"
+            git push
+          fi

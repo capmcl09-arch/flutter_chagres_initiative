@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Office temp lock files and internal edit notes (not for deploy)
+~$*
+assets/documents/Edits_for_site.*
+docs/assets/assets/documents/Edits_for_site.*
