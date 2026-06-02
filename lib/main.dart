@@ -351,11 +351,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                 if (!isMobile)
                   const SizedBox(height: 58), // Space for fixed header
                 HeroSection(language: widget.language),
-                // Canal-news ribbon directly below the hero photo, ahead of
-                // the "Chagres Initiative is…" cards. Sourced from
-                // docs/news.json (refreshed daily by CI); hides itself if the
-                // feed is unavailable. Sits just below the fold on a laptop.
-                _NewsTicker(language: widget.language),
                 RevealOnScroll(
                   child: AboutSection(
                     key: _aboutKey,
@@ -1244,8 +1239,10 @@ class HeroSection extends StatelessWidget {
         // Gradient fade at bottom blending into next section. Horizontal
         // mask reduces opacity in the middle 50% so the centered hero pill
         // and the section card below aren't overlapped by the dark shade.
+        // Lifted off the bottom so the news ticker sits flush against the
+        // viewport edge.
         Positioned(
-          bottom: 0,
+          bottom: 126,
           left: 0,
           right: 0,
           height: 160,
@@ -1276,6 +1273,15 @@ class HeroSection extends StatelessWidget {
               ),
             ),
           ),
+        ),
+        // Canal-news ticker pinned near the bottom of the hero so it's
+        // visible on page load. Sourced from docs/news.json (refreshed daily
+        // by CI); hides itself if the feed is unavailable.
+        Positioned(
+          bottom: 80,
+          left: 0,
+          right: 0,
+          child: _NewsTicker(language: language),
         ),
       ],
     );
