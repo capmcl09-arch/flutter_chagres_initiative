@@ -881,29 +881,21 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   Widget _buildHeaderBrand({required bool isMobile}) {
     final kuHeight = isMobile ? 26.0 : 38.0;
-    final sealHeight = isMobile ? 28.0 : 40.0;
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        GestureDetector(
-          onTap: () => launchUrl(
-            Uri.parse('https://ku.edu'),
-            mode: LaunchMode.externalApplication,
-          ),
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: Image.asset(
-              _kuLogoBlueAsset,
-              height: kuHeight,
-              fit: BoxFit.contain,
-              filterQuality: FilterQuality.high,
-            ),
-          ),
+    return GestureDetector(
+      onTap: () => launchUrl(
+        Uri.parse('https://ku.edu'),
+        mode: LaunchMode.externalApplication,
+      ),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Image.asset(
+          _kuLogoBlueAsset,
+          height: kuHeight,
+          fit: BoxFit.contain,
+          filterQuality: FilterQuality.high,
         ),
-        SizedBox(width: isMobile ? 10 : 14),
-        _LaBongaSeal(size: sealHeight, language: widget.language),
-      ],
+      ),
     );
   }
 
@@ -1099,14 +1091,13 @@ class HeroSection extends StatelessWidget {
     final heroTopPadding = isMobile ? topInset + 28 : screenHeight * 0.035;
     final sealMaxWidth = isMobile ? screenWidth * 0.54 : screenWidth * 0.39;
     final sealMaxHeight = isMobile ? screenHeight * 0.42 : screenHeight * 0.63;
-    final double laBongaSize =
-        (isMobile ? screenWidth * 0.30 : screenWidth * 0.22)
-            .clamp(96.0, 300.0)
-            .toDouble();
     final double jayhawkWidth =
-        (isMobile ? screenWidth * 0.34 : screenWidth * 0.26)
-            .clamp(112.0, 370.0)
+        (isMobile ? screenWidth * 0.28 : screenWidth * 0.22)
+            .clamp(96.0, 310.0)
             .toDouble();
+    // Match La Bonga's diameter to the Jayhawk's rendered height (16:9 image)
+    // so their top and bottom edges line up.
+    final double laBongaSize = jayhawkWidth * (9 / 16);
 
     final sealImage = ConstrainedBox(
       constraints: BoxConstraints(
