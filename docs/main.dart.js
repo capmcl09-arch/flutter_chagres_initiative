@@ -40390,9 +40390,9 @@ A.adY.prototype={
 $0(){return this.a.uf(this.b)},
 $S:0}
 A.HQ.prototype={
-I(a0){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e=null,d=t.w,c=A.aZ(a0,e,d).w.a.a<900,b=A.aZ(a0,e,d).w.a.a,a=A.aZ(a0,e,d).w.a.b
-d=A.aZ(a0,B.aU,d).w
-s=c?d.r.b+9:a*0.035
+I(a1){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e=null,d=t.w,c=A.aZ(a1,e,d).w.a.a<900,b=A.aZ(a1,e,d).w.a.a,a=A.aZ(a1,e,d).w.a.b,a0=A.aZ(a1,B.aU,d).w.r.b
+if(c)s=this.c==="es"?a0:a0+9
+else s=a*0.035
 r=c?b*0.54:b*0.39
 q=c?a*0.42:a*0.63
 p=B.c.cg(c?b*0.28:b*0.22,96,310)
@@ -40405,7 +40405,9 @@ k=A.cA(A.anX(A.cP(e,A.h_("assets/images/jayhawk.png",B.D,e,e,B.bs,B.aZ,e,e,p),B.
 l=t.p
 j=c?A.bC(A.c([o,B.xI,A.du(A.c([n,B.NA,k],l),B.t,e,B.d4,B.ad)],l),B.t,B.v,B.ad):A.c5(new A.bO(B.D2,A.du(A.c([A.wa(A.di(A.aqV(n,B.f0),e,e)),o,A.wa(A.di(A.aqV(k,B.f0),e,e))],l),B.t,e,B.v,B.y),e),e,b)
 i=A.b6(e,e,B.l,e,e,new A.b5(e,B.Co,e,e,e,new A.dd(B.bY,B.bX,B.a9,A.c([A.a7(166,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255),A.a7(166,B.k.n()>>>16&255,B.k.n()>>>8&255,B.k.n()&255)],t.W),e,e),B.w),e,a,e,e,e,e,1/0)
-h=A.c5(e,c?18:26,e)
+if(c)h=d==="es"?12:18
+else h=26
+h=A.c5(e,h,e)
 g=m?"Panama Canal Water Security":"Seguridad H\xeddrica del Canal de Panam\xe1"
 f=m?"Rainforest Conservation":"Conservaci\xf3n del Bosque Tropical"
 m=m?"Indigenous Community Engagement":"Participaci\xf3n de la Comunidad Ind\xedgena"

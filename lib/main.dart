@@ -1083,7 +1083,12 @@ class HeroSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
-    final heroTopPadding = isMobile ? topInset + 9 : screenHeight * 0.035;
+    // Spanish hero pills are taller (longer phrases wrap to two lines), so
+    // pull the whole hero column up a bit more on Spanish phones to keep
+    // the news ticker from overlapping the third pill.
+    final heroTopPadding = isMobile
+        ? (language == 'es' ? topInset : topInset + 9)
+        : screenHeight * 0.035;
     final sealMaxWidth = isMobile ? screenWidth * 0.54 : screenWidth * 0.39;
     final sealMaxHeight = isMobile ? screenHeight * 0.42 : screenHeight * 0.63;
     final double jayhawkWidth =
@@ -1207,7 +1212,9 @@ class HeroSection extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 heroSealArea,
-                SizedBox(height: isMobile ? 18 : 26),
+                SizedBox(
+                  height: isMobile ? (language == 'es' ? 12 : 18) : 26,
+                ),
                 Column(
                   children: [
                     _buildPhrase(
