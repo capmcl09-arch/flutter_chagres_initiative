@@ -834,9 +834,9 @@ class _ChagresHomeState extends State<ChagresHome> {
                   ),
                   scale: 1.04,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 20,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 9 : 14,
+                      vertical: isMobile ? 12 : 20,
                     ),
                     decoration: const BoxDecoration(
                       color: Color(0xFFA0291E),
@@ -855,11 +855,15 @@ class _ChagresHomeState extends State<ChagresHome> {
                     child: RotatedBox(
                       quarterTurns: 3,
                       child: Text(
-                        widget.language == 'en' ? 'Donate Now' : 'Donar Ahora',
-                        style: const TextStyle(
+                        isMobile
+                            ? (widget.language == 'en' ? 'Donate' : 'Donar')
+                            : (widget.language == 'en'
+                                  ? 'Donate Now'
+                                  : 'Donar Ahora'),
+                        style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 13,
+                          fontSize: isMobile ? 11 : 13,
                           letterSpacing: 1.2,
                         ),
                       ),
@@ -2821,7 +2825,7 @@ class MappingMethodSection extends StatelessWidget {
                               : const [
                                   TextSpan(
                                     text:
-                                        'El Mapeo de Investigación Participativa (PRM)',
+                                        'La Investigación Cartográfica Participativa (PRM)',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -3021,7 +3025,7 @@ class SatellitePrmStorySection extends StatelessWidget {
               title:
                   'Cómo mapeamos: combinamos imagen con conocimiento de campo.',
               body:
-                  'El Mapeo Participativo de Investigación combina recorridos de campo, puntos GPS, mapas dibujados, entrevistas, fotos aéreas e imágenes satelitales. El paso crucial ocurre en el campo, donde geógrafos comunitarios identifican qué son las distintas partes del bosque tropical, cómo se usan y por qué importan.',
+                  'La Investigación Cartográfica Participativa combina recorridos de campo, puntos GPS, mapas dibujados, entrevistas, fotos aéreas e imágenes satelitales. El paso crucial ocurre en el campo, donde geógrafos comunitarios identifican qué son las distintas partes del bosque tropical, cómo se usan y por qué importan.',
               satellitePoint: 'Una capa visual: apariencia de la superficie',
               prmPoint:
                   'Muchas capas de significado: uso, acceso, riesgo, valor',
@@ -5538,7 +5542,7 @@ class _AuthorizationSectionState extends State<AuthorizationSection> {
                 Text(
                   widget.language == 'en'
                       ? 'During our exploratory expedition to the Indigenous Emberá/Wounaan community of La Bonga Pequení in the Panama Canal Watershed last summer 2025, community leaders invited us to return and present our participatory research methodology (PRM) to their governing congress because they understood the project\'s potential.\n\nAt their governing Congreso Local in June 2025, Indigenous Emberá and Wounaan leaders from communities inside the Chagres National Park (CNP) recognized "KU know-how" from previous successful mapping projects with their relatives in the eastern Darién Province back in the 1990s! The Congreso Local voted unanimously to ask our KU team of geographers to map their lands and help them develop a management plan acceptable to the Panamanian government.'
-                      : 'Durante nuestra expedición exploratoria a la comunidad indígena Emberá/Wounaan de La Bonga Pequení en la Cuenca del Canal de Panamá el verano pasado de 2025, los líderes comunitarios nos invitaron a regresar y presentar nuestra metodología de investigación participativa (PRM) a su congreso rector porque entendieron el potencial del proyecto.\n\nEn su Congreso Local en junio de 2025, los líderes indígenas Emberá y Wounaan de comunidades dentro del Parque Nacional Chagres (PNC) reconocieron el "know-how de KU" gracias a proyectos de mapeo exitosos previos con sus parientes en la provincia oriental del Darién, ¡ya desde la década de 1990! El Congreso Local acordó por unanimidad solicitar a nuestro equipo de geógrafos de KU que mapearan sus tierras y les ayudaran a desarrollar un plan de manejo aceptable para el gobierno panameño.',
+                      : 'Durante nuestra expedición exploratoria a la comunidad indígena Emberá/Wounaan de La Bonga Pequení en la Cuenca del Canal de Panamá el verano pasado de 2025, los líderes comunitarios nos invitaron a regresar y presentar nuestra metodología de Investigación Cartográfica Participativa (PRM) a su congreso rector porque entendieron el potencial del proyecto.\n\nEn su Congreso Local en junio de 2025, los líderes indígenas Emberá y Wounaan de comunidades dentro del Parque Nacional Chagres (PNC) reconocieron el "know-how de KU" gracias a proyectos de mapeo exitosos previos con sus parientes en la provincia oriental del Darién, ¡ya desde la década de 1990! El Congreso Local acordó por unanimidad solicitar a nuestro equipo de geógrafos de KU que mapearan sus tierras y les ayudaran a desarrollar un plan de manejo aceptable para el gobierno panameño.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFFB9C6EA),
                   ),
@@ -5673,7 +5677,7 @@ class _MethodologySectionState extends State<MethodologySection> {
                 Text(
                   widget.language == 'en'
                       ? 'Stages of Participatory Research Mapping (PRM)'
-                      : 'Etapas del Mapeo de Investigación Participativa',
+                      : 'Etapas de la Investigación Cartográfica Participativa',
                   style: Theme.of(
                     context,
                   ).textTheme.headlineSmall?.copyWith(color: Colors.white),
