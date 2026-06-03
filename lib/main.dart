@@ -1083,7 +1083,7 @@ class HeroSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
-    final heroTopPadding = isMobile ? topInset + 28 : screenHeight * 0.035;
+    final heroTopPadding = isMobile ? topInset + 9 : screenHeight * 0.035;
     final sealMaxWidth = isMobile ? screenWidth * 0.54 : screenWidth * 0.39;
     final sealMaxHeight = isMobile ? screenHeight * 0.42 : screenHeight * 0.63;
     final double jayhawkWidth =
@@ -1240,40 +1240,42 @@ class HeroSection extends StatelessWidget {
         // mask reduces opacity in the middle 50% so the centered hero pill
         // and the section card below aren't overlapped by the dark shade.
         // Lifted off the bottom so the news ticker sits flush against the
-        // viewport edge.
-        Positioned(
-          bottom: isMobile ? 58 : 126,
-          left: 0,
-          right: 0,
-          height: 160,
-          child: IgnorePointer(
-            child: ShaderMask(
-              shaderCallback: (rect) => const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Colors.white,
-                  Colors.white,
-                  Color(0x33FFFFFF),
-                  Color(0x33FFFFFF),
-                  Colors.white,
-                  Colors.white,
-                ],
-                stops: [0.0, 0.20, 0.30, 0.70, 0.80, 1.0],
-              ).createShader(rect),
-              blendMode: BlendMode.dstIn,
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.transparent, Color(0xFF0C1328)],
+        // viewport edge. Phones skip it because the shorter viewport leaves
+        // it crowding the hero pills.
+        if (!isMobile)
+          Positioned(
+            bottom: 126,
+            left: 0,
+            right: 0,
+            height: 160,
+            child: IgnorePointer(
+              child: ShaderMask(
+                shaderCallback: (rect) => const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Colors.white,
+                    Colors.white,
+                    Color(0x33FFFFFF),
+                    Color(0x33FFFFFF),
+                    Colors.white,
+                    Colors.white,
+                  ],
+                  stops: [0.0, 0.20, 0.30, 0.70, 0.80, 1.0],
+                ).createShader(rect),
+                blendMode: BlendMode.dstIn,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.transparent, Color(0xFF0C1328)],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
         // Canal-news ticker pinned near the bottom of the hero so it's
         // visible on page load. Sourced from docs/news.json (refreshed daily
         // by CI); hides itself if the feed is unavailable. Sits lower on
