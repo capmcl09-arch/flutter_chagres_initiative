@@ -1090,9 +1090,9 @@ class HeroSection extends StatelessWidget {
         (isMobile ? screenWidth * 0.28 : screenWidth * 0.22)
             .clamp(96.0, 310.0)
             .toDouble();
-    // Match La Bonga's diameter to the Jayhawk's rendered height (16:9 image)
-    // so their top and bottom edges line up.
-    final double laBongaSize = jayhawkWidth * (9 / 16);
+    // Match La Bonga's diameter to the Jayhawk's rendered height (950x847
+    // image) so their top and bottom edges line up.
+    final double laBongaSize = jayhawkWidth * (847 / 950);
 
     final sealImage = ConstrainedBox(
       constraints: BoxConstraints(
@@ -1242,7 +1242,7 @@ class HeroSection extends StatelessWidget {
         // Lifted off the bottom so the news ticker sits flush against the
         // viewport edge.
         Positioned(
-          bottom: 126,
+          bottom: isMobile ? 58 : 126,
           left: 0,
           right: 0,
           height: 160,
@@ -1276,9 +1276,11 @@ class HeroSection extends StatelessWidget {
         ),
         // Canal-news ticker pinned near the bottom of the hero so it's
         // visible on page load. Sourced from docs/news.json (refreshed daily
-        // by CI); hides itself if the feed is unavailable.
+        // by CI); hides itself if the feed is unavailable. Sits lower on
+        // phones where the shorter viewport leaves the hero pills closer to
+        // the ticker.
         Positioned(
-          bottom: 80,
+          bottom: isMobile ? 12 : 80,
           left: 0,
           right: 0,
           child: _NewsTicker(language: language),

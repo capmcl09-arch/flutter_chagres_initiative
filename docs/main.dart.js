@@ -40398,7 +40398,7 @@ q=c?a*0.42:a*0.63
 p=B.c.cg(c?b*0.28:b*0.22,96,310)
 o=new A.cF(new A.a3(0,r,0,q),new A.Fd(0.8333333333333334,A.h_("assets/images/chagres_oval_seal.png",B.D,e,e,B.bs,B.aZ,e,e,e),e),e)
 d=this.c
-n=new A.PD(p*0.5625,d,e)
+n=new A.PD(p*0.891578947368421,d,e)
 m=d==="en"
 l=m?"University of Kansas":"Universidad de Kansas"
 k=A.cA(A.anX(A.cP(e,A.h_("assets/images/jayhawk.png",B.D,e,e,B.bs,B.aZ,e,e,p),B.K,!1,e,e,e,e,e,e,e,e,e,e,e,e,e,new A.a0a(),e,e,e),l,e,e,e),B.ae,e,e,e)
@@ -40409,7 +40409,11 @@ h=A.c5(e,c?18:26,e)
 g=m?"Panama Canal Water Security":"Seguridad H\xeddrica del Canal de Panam\xe1"
 f=m?"Rainforest Conservation":"Conservaci\xf3n del Bosque Tropical"
 m=m?"Indigenous Community Engagement":"Participaci\xf3n de la Comunidad Ind\xedgena"
-return A.h8(B.aV,A.c([i,A.eY(e,A.di(A.bC(A.c([j,h,A.bC(A.c([new A.p8(g,e),B.cC,new A.p8(f,e),B.cC,new A.p8(m,e)],l),B.t,B.v,B.y)],l),B.t,B.v,B.ad),e,e),e,e,0,0,s,e),A.eY(126,A.lt(A.zv(B.cL,A.b6(e,e,B.l,e,e,B.zE,e,e,e,e,e,e,e),new A.a0b()),!0,e),160,e,0,0,e,e),A.eY(80,new A.C6(d,e),e,e,0,0,e,e)],l),B.b1)}}
+m=A.eY(e,A.di(A.bC(A.c([j,h,A.bC(A.c([new A.p8(g,e),B.cC,new A.p8(f,e),B.cC,new A.p8(m,e)],l),B.t,B.v,B.y)],l),B.t,B.v,B.ad),e,e),e,e,0,0,s,e)
+h=c?58:126
+h=A.eY(h,A.lt(A.zv(B.cL,A.b6(e,e,B.l,e,e,B.zE,e,e,e,e,e,e,e),new A.a0b()),!0,e),160,e,0,0,e,e)
+g=c?12:80
+return A.h8(B.aV,A.c([i,m,h,A.eY(g,new A.C6(d,e),e,e,0,0,e,e)],l),B.b1)}}
 A.a0a.prototype={
 $0(){return A.l0(A.eo("https://ku.edu",0,null),B.fD)},
 $S:0}
