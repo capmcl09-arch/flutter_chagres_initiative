@@ -386,12 +386,12 @@ class _ChagresHomeState extends State<ChagresHome> {
                                   ? 'CHAGRES NATIONAL PARK (CNP):\nPANAMA CANAL WATER SOURCE & INDIGENOUS HOMELAND'
                                   : 'PARQUE NACIONAL CHAGRES (PNC):\nFUENTE DE AGUA DEL CANAL DE PANAMÁ Y HOGAR INDÍGENA',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.playfairDisplay(
+                              style: TextStyle(
                                 // Matches the neon-green Chagres NP fill on the
                                 // overview map (#47FC23).
+                                fontFamily: 'serif',
                                 color: const Color(0xFF47FC23),
                                 fontSize: isMobile ? 22 : 32,
-                                fontStyle: FontStyle.italic,
                                 fontWeight: FontWeight.w600,
                                 letterSpacing: 0.3,
                                 height: 1.3,
