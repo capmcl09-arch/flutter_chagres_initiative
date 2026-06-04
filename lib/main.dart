@@ -1107,10 +1107,9 @@ class HeroSection extends StatelessWidget {
         ? screenHeight * 0.42
         : (screenHeight - heroTopPadding - desktopReservedBelowSeal)
             .clamp(240.0, screenHeight * 0.63);
-    final double jayhawkWidth =
-        (isMobile ? screenWidth * 0.28 : screenWidth * 0.22)
-            .clamp(96.0, 310.0)
-            .toDouble();
+    final double jayhawkWidth = isMobile
+        ? (screenWidth * 0.28).clamp(96.0, 310.0).toDouble()
+        : (screenWidth * 0.165).clamp(72.0, 232.0).toDouble();
     // Match La Bonga's diameter to the Jayhawk's rendered height (950x847
     // image) so their top and bottom edges line up.
     final double laBongaSize = jayhawkWidth * (847 / 950);
