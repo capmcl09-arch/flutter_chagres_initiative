@@ -1092,9 +1092,21 @@ class HeroSection extends StatelessWidget {
     // the news ticker from overlapping the third pill.
     final heroTopPadding = isMobile
         ? (language == 'es' ? topInset : topInset + 9)
-        : screenHeight * 0.035;
+        : (screenHeight * 0.022).clamp(10.0, 28.0);
     final sealMaxWidth = isMobile ? screenWidth * 0.54 : screenWidth * 0.39;
-    final sealMaxHeight = isMobile ? screenHeight * 0.42 : screenHeight * 0.63;
+    // Reserve room below the seal for the phrase pills, breathing space, and
+    // the news ticker pinned at `bottom: 80` so short laptop viewports never
+    // let the ticker overlap the pills. Spanish pills wrap to two lines and
+    // need extra room.
+    final desktopReservedBelowSeal = 26.0 // seal → pills gap
+        + (language == 'es' ? 220.0 : 170.0) // 3 phrase pills + their 10 px gaps
+        + 32.0 // safety margin above the ticker
+        + 64.0 // ticker height (label + scroller padding)
+        + 80.0; // ticker's `bottom:` offset
+    final sealMaxHeight = isMobile
+        ? screenHeight * 0.42
+        : (screenHeight - heroTopPadding - desktopReservedBelowSeal)
+            .clamp(240.0, screenHeight * 0.63);
     final double jayhawkWidth =
         (isMobile ? screenWidth * 0.28 : screenWidth * 0.22)
             .clamp(96.0, 310.0)
