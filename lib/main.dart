@@ -157,6 +157,7 @@ class _ChagresHomeState extends State<ChagresHome> {
   bool _showJayhawk = true;
   bool _showLanguageToggle = true;
   double _screenHeight = 800.0;
+  bool _purposeExpanded = false;
 
   // GlobalKey references for each section
   final GlobalKey _aboutKey = GlobalKey();
@@ -596,8 +597,8 @@ class _ChagresHomeState extends State<ChagresHome> {
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 child: GestureDetector(
-                                  onTap: () => _scrollToSection(
-                                    _methodologyKey,
+                                  onTap: () => setState(
+                                    () => _purposeExpanded = !_purposeExpanded,
                                   ),
                                   child: _HoverGlow(
                                     child: Container(
@@ -627,8 +628,12 @@ class _ChagresHomeState extends State<ChagresHome> {
                                         children: [
                                           Text(
                                             widget.language == 'en'
-                                                ? 'PRM Methodology Details'
-                                                : 'Detalles de la Metodología PRM',
+                                                ? (_purposeExpanded
+                                                      ? 'Hide Purpose'
+                                                      : 'Read Our Purpose')
+                                                : (_purposeExpanded
+                                                      ? 'Ocultar Propósito'
+                                                      : 'Lee Nuestro Propósito'),
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: isMobile ? 14 : 16,
@@ -637,16 +642,67 @@ class _ChagresHomeState extends State<ChagresHome> {
                                             ),
                                           ),
                                           const SizedBox(width: 10),
-                                          Icon(
-                                            Icons.arrow_downward,
-                                            color: Colors.white,
-                                            size: isMobile ? 16 : 18,
+                                          AnimatedRotation(
+                                            duration: const Duration(
+                                              milliseconds: 240,
+                                            ),
+                                            turns: _purposeExpanded ? 0.5 : 0.0,
+                                            child: Icon(
+                                              Icons.expand_more,
+                                              color: Colors.white,
+                                              size: isMobile ? 18 : 20,
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
                                 ),
+                              ),
+                              AnimatedCrossFade(
+                                duration: const Duration(milliseconds: 280),
+                                sizeCurve: Curves.easeOut,
+                                firstChild: const SizedBox(
+                                  width: double.infinity,
+                                  height: 0,
+                                ),
+                                secondChild: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: isMobile ? 22 : 28,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.language == 'en'
+                                            ? 'Purpose: to work hand-in-hand with the Indigenous community of La Bonga to produce community-owned maps of how local people use the land and water of the upper Chagres watershed, using Participatory Research Mapping (PRM).'
+                                            : 'Propósito: trabajar codo a codo con la comunidad Indígena de La Bonga para producir mapas de propiedad comunitaria sobre cómo los habitantes locales usan la tierra y el agua de la cuenca alta del Chagres, mediante el Mapeo de Investigación Participativa (PRM).',
+                                        style: GoogleFonts.playfairDisplay(
+                                          color: Colors.white,
+                                          fontSize: isMobile ? 15 : 17,
+                                          height: 1.6,
+                                        ),
+                                      ),
+                                      SizedBox(height: isMobile ? 14 : 18),
+                                      Text(
+                                        widget.language == 'en'
+                                            ? "The project has three goals. (1) Train and certify a cohort of six locally elected community geographers in sketch-mapping, cartography, structured interviewing, GPS and compass use, air-photo/satellite interpretation, and small-drone operation, so the community retains independent mapping capacity. (2) Produce, with the community, a consensual set of zonation maps documenting land use, place-names, resource and ceremonial sites, and water features, ground-truthed and re-drafted until the community agrees on a shared representation. (3) Convert those maps, paired with community-voted rules (normas), into a draft zoning/management framework the community can submit to MiAmbiente and the ACP and use to support a collective land claim under Panama's Law 72 of 2008. Success is measured by certified community geographers, community-endorsed maps, and a framework formally received by the agencies."
+                                            : 'El proyecto tiene tres objetivos. (1) Capacitar y certificar a un grupo de seis geógrafos comunitarios elegidos localmente en cartografía de croquis, cartografía, entrevistas estructuradas, uso de GPS y brújula, interpretación de fotografías aéreas y satelitales, y operación de drones pequeños, para que la comunidad mantenga capacidad de mapeo independiente. (2) Producir, con la comunidad, un conjunto consensuado de mapas de zonificación que documenten el uso del suelo, los topónimos, los sitios de recursos y ceremoniales, y las características hídricas, verificados en terreno y rediseñados hasta que la comunidad acuerde una representación compartida. (3) Convertir esos mapas, junto con las normas votadas por la comunidad, en un marco preliminar de zonificación y gestión que la comunidad pueda presentar a MiAmbiente y a la ACP, y usar para sustentar un reclamo colectivo de tierras bajo la Ley 72 de 2008 de Panamá. El éxito se mide por la cantidad de geógrafos comunitarios certificados, los mapas avalados por la comunidad, y un marco recibido formalmente por las agencias.',
+                                        style: GoogleFonts.playfairDisplay(
+                                          color: Colors.white.withOpacity(
+                                            0.92,
+                                          ),
+                                          fontSize: isMobile ? 14 : 15.5,
+                                          height: 1.6,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                crossFadeState: _purposeExpanded
+                                    ? CrossFadeState.showSecond
+                                    : CrossFadeState.showFirst,
                               ),
                             ],
                           ),
