@@ -1148,21 +1148,28 @@ class HeroSection extends StatelessWidget {
     // the news ticker from overlapping the third pill.
     final heroTopPadding = isMobile
         ? (language == 'es' ? topInset : topInset + 9)
-        : (screenHeight * 0.022).clamp(10.0, 28.0);
+        : (screenHeight * 0.012).clamp(6.0, 18.0);
     final sealMaxWidth = isMobile ? screenWidth * 0.54 : screenWidth * 0.39;
-    // Reserve room below the seal for the phrase pills, breathing space, and
-    // the news ticker pinned at `bottom: 80` so short laptop viewports never
-    // let the ticker overlap the pills. Spanish pills wrap to two lines and
-    // need extra room.
-    final desktopReservedBelowSeal = 26.0 // seal → pills gap
+    // Gold initiative subtitle reserves space between the logos and pills.
+    // Spanish wraps an extra line; mobile uses smaller type so the budget is
+    // tighter.
+    final subtitleReservedHeight = isMobile
+        ? (language == 'es' ? 64.0 : 48.0)
+        : (language == 'es' ? 96.0 : 76.0);
+    // Reserve room below the seal for the new gold subtitle, the phrase
+    // pills, breathing space, and the news ticker pinned at `bottom: 80` so
+    // short laptop viewports never let the ticker overlap the pills.
+    final desktopReservedBelowSeal = 14.0 // seal → subtitle gap
+        + subtitleReservedHeight // gold subtitle (2-line wrap budget)
+        + 18.0 // subtitle → pills gap
         + (language == 'es' ? 220.0 : 170.0) // 3 phrase pills + their 10 px gaps
         + 32.0 // safety margin above the ticker
         + 64.0 // ticker height (label + scroller padding)
         + 80.0; // ticker's `bottom:` offset
     final sealMaxHeight = isMobile
-        ? screenHeight * 0.42
+        ? screenHeight * 0.36
         : (screenHeight - heroTopPadding - desktopReservedBelowSeal)
-            .clamp(240.0, screenHeight * 0.63);
+            .clamp(220.0, screenHeight * 0.58);
     final double jayhawkWidth = isMobile
         ? (screenWidth * 0.28).clamp(96.0, 310.0).toDouble()
         : (screenWidth * 0.165).clamp(72.0, 232.0).toDouble();
@@ -1283,9 +1290,32 @@ class HeroSection extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 heroSealArea,
-                SizedBox(
-                  height: isMobile ? (language == 'es' ? 12 : 18) : 26,
+                SizedBox(height: isMobile ? 10 : 14),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: isMobile ? 360.0 : 820.0,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 16 : 24,
+                    ),
+                    child: Text(
+                      language == 'en'
+                          ? 'Safeguarding Panama Canal Water Security through Indigenous Stewardship'
+                          : 'Salvaguardando la Seguridad Hídrica del Canal de Panamá mediante la Custodia Indígena',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.playfairDisplay(
+                        color: const Color(0xFFE0B660),
+                        fontSize: isMobile ? 16 : 26,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.3,
+                        height: 1.3,
+                      ),
+                    ),
+                  ),
                 ),
+                SizedBox(height: isMobile ? 12 : 18),
                 Column(
                   children: [
                     _buildPhrase(
