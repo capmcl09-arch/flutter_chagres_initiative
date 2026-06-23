@@ -1140,6 +1140,7 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
+    final isPhone = MediaQuery.of(context).size.width < 600;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final topInset = MediaQuery.paddingOf(context).top;
@@ -1151,18 +1152,27 @@ class HeroSection extends StatelessWidget {
         : (screenHeight * 0.012).clamp(6.0, 18.0);
     final sealMaxWidth = isMobile ? screenWidth * 0.54 : screenWidth * 0.39;
     // Gold initiative subtitle reserves space between the logos and pills.
-    // Spanish wraps an extra line; mobile uses smaller type so the budget is
-    // tighter.
-    final subtitleReservedHeight = isMobile
-        ? (language == 'es' ? 64.0 : 48.0)
-        : (language == 'es' ? 96.0 : 76.0);
+    // Spanish wraps an extra line; phones bump the type up a notch (so the
+    // wrap budget grows accordingly). Wide desktops single-line the EN title.
+    final subtitleReservedHeight = isPhone
+        ? (language == 'es' ? 90.0 : 70.0)
+        : isMobile
+            ? (language == 'es' ? 70.0 : 54.0)
+            : (language == 'es'
+                ? 96.0
+                : (screenWidth >= 1200 ? 50.0 : 76.0));
+    // Phones use compact pills (smaller padding + type) per design ask, so
+    // their pill column is roughly half as tall.
+    final pillsReservedHeight = isPhone
+        ? (language == 'es' ? 130.0 : 92.0)
+        : (language == 'es' ? 220.0 : 170.0);
     // Reserve room below the seal for the new gold subtitle, the phrase
     // pills, breathing space, and the news ticker pinned at `bottom: 80` so
     // short laptop viewports never let the ticker overlap the pills.
     final desktopReservedBelowSeal = 14.0 // seal → subtitle gap
-        + subtitleReservedHeight // gold subtitle (2-line wrap budget)
+        + subtitleReservedHeight // gold subtitle (wrap budget)
         + 18.0 // subtitle → pills gap
-        + (language == 'es' ? 220.0 : 170.0) // 3 phrase pills + their 10 px gaps
+        + pillsReservedHeight // 3 phrase pills + their gaps
         + 32.0 // safety margin above the ticker
         + 64.0 // ticker height (label + scroller padding)
         + 80.0; // ticker's `bottom:` offset
@@ -1293,7 +1303,11 @@ class HeroSection extends StatelessWidget {
                 SizedBox(height: isMobile ? 10 : 14),
                 ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxWidth: isMobile ? 360.0 : 820.0,
+                    maxWidth: isPhone
+                        ? 360.0
+                        : isMobile
+                            ? 720.0
+                            : 1200.0,
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -1306,7 +1320,7 @@ class HeroSection extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.playfairDisplay(
                         color: const Color(0xFFE0B660),
-                        fontSize: isMobile ? 16 : 26,
+                        fontSize: isPhone ? 19 : (isMobile ? 17 : 26),
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.3,
@@ -1324,14 +1338,14 @@ class HeroSection extends StatelessWidget {
                           ? 'Panama Canal Water Security'
                           : 'Seguridad Hídrica del Canal de Panamá',
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: isPhone ? 6 : 10),
                     _buildPhrase(
                       context,
                       language == 'en'
                           ? 'Rainforest Conservation'
                           : 'Conservación del Bosque Tropical',
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: isPhone ? 6 : 10),
                     _buildPhrase(
                       context,
                       language == 'en'
@@ -1704,13 +1718,17 @@ class _HeroPhrasePillState extends State<_HeroPhrasePill> {
 
   @override
   Widget build(BuildContext context) {
+    final isPhone = MediaQuery.of(context).size.width < 600;
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 260),
         curve: Curves.easeOut,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+        padding: EdgeInsets.symmetric(
+          horizontal: isPhone ? 14 : 24,
+          vertical: isPhone ? 5 : 10,
+        ),
         decoration: BoxDecoration(
           color: Colors.black.withOpacity(_hover ? 0.55 : 0.45),
           borderRadius: BorderRadius.circular(40),
@@ -1733,9 +1751,9 @@ class _HeroPhrasePillState extends State<_HeroPhrasePill> {
           textAlign: TextAlign.center,
           style: GoogleFonts.cinzel(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: isPhone ? 13 : 18,
             fontWeight: FontWeight.w600,
-            letterSpacing: 2.0,
+            letterSpacing: isPhone ? 1.4 : 2.0,
           ),
         ),
       ),
