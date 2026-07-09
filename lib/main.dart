@@ -809,6 +809,11 @@ class _ChagresHomeState extends State<ChagresHome> {
                             ),
                           ),
                           RevealOnScroll(
+                            child: AIGeographySection(
+                              language: widget.language,
+                            ),
+                          ),
+                          RevealOnScroll(
                             child: AuthorizationSection(
                               language: widget.language,
                             ),
@@ -5882,6 +5887,7 @@ class GallerySection extends StatefulWidget {
 class _GallerySectionState extends State<GallerySection> {
   int _currentIndex = 0;
   final List<String> _images = [
+    'assets/images/Marcelino_Teaching.jpg',
     'assets/images/lancha.jpg',
     'assets/images/field_tour.jpg',
     'assets/images/indigenous_band.jpg',
@@ -5892,8 +5898,15 @@ class _GallerySectionState extends State<GallerySection> {
     'assets/images/monkey.jpg',
   ];
   final List<(String, String)> _captions = [
+    (
+      'Indigenous Nokó Marcelino Guatico describes the structure of Indigenous leadership and land tenure under law 72 of Chagres and all of Panama.',
+      'El Nokó indígena Marcelino Guatico describe la estructura del liderazgo indígena y la tenencia de tierras bajo la Ley 72 en Chagres y en todo Panamá.',
+    ),
     ('River lancha transport', 'Transporte en lancha por el río'),
-    ('Field tour in watershed', 'Gira de campo en la cuenca hidrográfica'),
+    (
+      'Field Tour at Smithsonian Tropical Research Institute - Barro Colorado.',
+      'Gira de campo en el Instituto Smithsonian de Investigaciones Tropicales - Barro Colorado.',
+    ),
     ('Indigenous cultural performance', 'Presentación cultural indígena'),
     ('Community member portrait', 'Retrato de miembro de la comunidad'),
     (
@@ -6315,6 +6328,178 @@ class MapsSection extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+// AI in Geography Section - sits directly below the Project Maps section
+// and shares its header style. Describes how the initiative is using AI
+// across cartography, public engagement, and field data workflows.
+class AIGeographySection extends StatelessWidget {
+  final String language;
+
+  const AIGeographySection({super.key, required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 20 : 60,
+        vertical: 60,
+      ),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () {},
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                language == 'en'
+                    ? 'A.I. in the Field of Geography'
+                    : 'IA en el Campo de la Geografía',
+                textAlign: TextAlign.center,
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineSmall?.copyWith(color: Colors.white),
+              ),
+            ),
+          ),
+          SizedBox(height: isMobile ? 20 : 28),
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1100),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFF152544), Color(0xFF0F1B36)],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: const Color(0xFFE0B660).withOpacity(0.32),
+                    width: 1,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.40),
+                      blurRadius: 30,
+                      offset: const Offset(0, 14),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile ? 24 : 48,
+                  vertical: isMobile ? 32 : 44,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      language == 'en'
+                          ? 'The Chagres Initiative is the first project in geography to weave modern A.I. into Participatory Research Mapping — from cartography, to community and supporter engagement, to end-to-end field data management. We are thrilled to be on the frontier of both technology and fieldwork.'
+                          : 'La Iniciativa Chagres es el primer proyecto en geografía que integra la IA moderna en el Mapeo de Investigación Participativa — desde la cartografía, hasta la interacción con la comunidad y con nuestros aliados, y la gestión integral de los datos de campo. Nos entusiasma estar en la frontera de la tecnología y el trabajo de campo.',
+                      style: GoogleFonts.playfairDisplay(
+                        color: Colors.white,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w500,
+                        fontSize: isMobile ? 15 : 17,
+                        height: 1.6,
+                      ),
+                    ),
+                    SizedBox(height: isMobile ? 22 : 30),
+                    _AIBullet(
+                      title: language == 'en'
+                          ? 'Building Maps'
+                          : 'Construyendo Mapas',
+                      body: language == 'en'
+                          ? 'A.I.-assisted workflows help us digitize community sketch-maps into GIS layers, extract place-names and features from field notes and photographs, and cross-reference community mapping with satellite and drone imagery — so our zonation maps stay both community-authored and cartographically rigorous.'
+                          : 'Los flujos asistidos por IA nos ayudan a digitalizar los croquis comunitarios en capas SIG, extraer topónimos y elementos a partir de notas de campo y fotografías, y contrastar el mapeo comunitario con imágenes satelitales y de dron — para que nuestros mapas de zonificación mantengan tanto la autoría comunitaria como el rigor cartográfico.',
+                    ),
+                    SizedBox(height: isMobile ? 18 : 24),
+                    _AIBullet(
+                      title: language == 'en'
+                          ? 'Engaging Supporters'
+                          : 'Interactuando con Aliados',
+                      body: language == 'en'
+                          ? 'This website itself was co-built with A.I., letting a small team keep bilingual content, project updates, and photo stories current so supporters, funders, and partner institutions always have an up-to-date window into the fieldwork.'
+                          : 'Este sitio web fue co-construido con IA, permitiendo a un equipo pequeño mantener al día el contenido bilingüe, las actualizaciones del proyecto y las historias fotográficas — para que aliados, financiadores e instituciones socias siempre tengan una ventana actualizada al trabajo de campo.',
+                    ),
+                    SizedBox(height: isMobile ? 18 : 24),
+                    _AIBullet(
+                      title: language == 'en'
+                          ? 'Managing Data Collection'
+                          : 'Gestionando la Recolección de Datos',
+                      body: language == 'en'
+                          ? 'From structured intake of GPS points and interview transcripts to organizing air-photo and drone captures across field trips, A.I.-driven pipelines keep our data consistent, versioned, and ready for community review.'
+                          : 'Desde la captura estructurada de puntos GPS y transcripciones de entrevistas hasta la organización de fotografías aéreas y de dron a lo largo de las giras de campo, los flujos impulsados por IA mantienen nuestros datos consistentes, versionados y listos para la revisión comunitaria.',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Bullet row used inside AIGeographySection: gold dot + gold italic title
+// + white body copy. Kept local to that section — the styling isn't reused
+// elsewhere.
+class _AIBullet extends StatelessWidget {
+  final String title;
+  final String body;
+
+  const _AIBullet({required this.title, required this.body});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: isMobile ? 8 : 10, right: 14),
+          child: Container(
+            width: 8,
+            height: 8,
+            decoration: const BoxDecoration(
+              color: Color(0xFFE0B660),
+              shape: BoxShape.circle,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.playfairDisplay(
+                  color: const Color(0xFFE0B660),
+                  fontSize: isMobile ? 17 : 20,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.3,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                body,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: isMobile ? 14 : 15.5,
+                  height: 1.6,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
