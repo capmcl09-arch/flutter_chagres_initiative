@@ -448,68 +448,9 @@ class _ChagresHomeState extends State<ChagresHome> {
                     child: _SealWithStats(language: widget.language),
                   ),
                 ),
-                // "Click to View Live Maps" jumps down to the interactive
-                // "Project Maps" section; sits below the fact figures.
-                Padding(
-                  padding: EdgeInsets.only(bottom: isMobile ? 24 : 32),
-                  child: Center(
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () => _scrollToSection(_projectMapsKey),
-                        child: _HoverGlow(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: isMobile ? 22 : 30,
-                              vertical: isMobile ? 13 : 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF0051BA),
-                              borderRadius: BorderRadius.circular(100),
-                              border: Border.all(
-                                color: const Color(0xFF4A90D9),
-                                width: 1.4,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(
-                                    0xFF0051BA,
-                                  ).withOpacity(0.32),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  widget.language == 'en'
-                                      ? 'Click to View Live Maps'
-                                      : 'Haga clic para ver los mapas en vivo',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: isMobile ? 14 : 16,
-                                    fontWeight: FontWeight.w700,
-                                    letterSpacing: 0.6,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Icon(
-                                  Icons.arrow_downward,
-                                  color: Colors.white,
-                                  size: isMobile ? 16 : 18,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
                 // "The Chagres Initiative Solution…" callout — follows the
-                // blue fact figures.
+                // blue fact figures. The "View Live Maps" button now lives
+                // inside this callout, after the three-goals subsections.
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.fromLTRB(
@@ -687,14 +628,201 @@ class _ChagresHomeState extends State<ChagresHome> {
                                       SizedBox(height: isMobile ? 14 : 18),
                                       Text(
                                         widget.language == 'en'
-                                            ? "The project has three goals. (1) Train and certify a cohort of six locally elected community geographers in sketch-mapping, cartography, structured interviewing, GPS and compass use, air-photo/satellite interpretation, and small-drone operation, so the community retains independent mapping capacity. (2) Produce, with the community, a consensual set of zonation maps documenting land use, place-names, resource and ceremonial sites, and water features, ground-truthed and re-drafted until the community agrees on a shared representation. (3) Convert those maps, paired with community-voted rules (normas), into a draft zoning/management framework the community can submit to MiAmbiente and the ACP and use to support a collective land claim under Panama's Law 72 of 2008. Success is measured by certified community geographers, community-endorsed maps, and a framework formally received by the agencies."
-                                            : 'El proyecto tiene tres objetivos. (1) Capacitar y certificar a un grupo de seis geógrafos comunitarios elegidos localmente en cartografía de croquis, cartografía, entrevistas estructuradas, uso de GPS y brújula, interpretación de fotografías aéreas y satelitales, y operación de drones pequeños, para que la comunidad mantenga capacidad de mapeo independiente. (2) Producir, con la comunidad, un conjunto consensuado de mapas de zonificación que documenten el uso del suelo, los topónimos, los sitios de recursos y ceremoniales, y las características hídricas, verificados en terreno y rediseñados hasta que la comunidad acuerde una representación compartida. (3) Convertir esos mapas, junto con las normas votadas por la comunidad, en un marco preliminar de zonificación y gestión que la comunidad pueda presentar a MiAmbiente y a la ACP, y usar para sustentar un reclamo colectivo de tierras bajo la Ley 72 de 2008 de Panamá. El éxito se mide por la cantidad de geógrafos comunitarios certificados, los mapas avalados por la comunidad, y un marco recibido formalmente por las agencias.',
+                                            ? 'The project has three goals:'
+                                            : 'El proyecto tiene tres objetivos:',
+                                        style: GoogleFonts.playfairDisplay(
+                                          color: Colors.white,
+                                          fontSize: isMobile ? 15 : 17,
+                                          fontWeight: FontWeight.w600,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                      SizedBox(height: isMobile ? 12 : 16),
+                                      // Goal 1
+                                      Text(
+                                        widget.language == 'en'
+                                            ? '(1) Train community geographers.'
+                                            : '(1) Capacitar a geógrafos comunitarios.',
+                                        style: GoogleFonts.playfairDisplay(
+                                          color: const Color(0xFFE0B660),
+                                          fontSize: isMobile ? 14.5 : 16,
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        widget.language == 'en'
+                                            ? 'Train and certify a cohort of six locally elected community geographers in sketch-mapping, cartography, structured interviewing, GPS and compass use, air-photo/satellite interpretation, and small-drone operation, so the community retains independent mapping capacity.'
+                                            : 'Capacitar y certificar a un grupo de seis geógrafos comunitarios elegidos localmente en cartografía de croquis, cartografía, entrevistas estructuradas, uso de GPS y brújula, interpretación de fotografías aéreas y satelitales, y operación de drones pequeños, para que la comunidad mantenga capacidad de mapeo independiente.',
                                         style: GoogleFonts.playfairDisplay(
                                           color: Colors.white.withOpacity(
                                             0.92,
                                           ),
                                           fontSize: isMobile ? 14 : 15.5,
                                           height: 1.6,
+                                        ),
+                                      ),
+                                      SizedBox(height: isMobile ? 14 : 18),
+                                      // Goal 2
+                                      Text(
+                                        widget.language == 'en'
+                                            ? '(2) Produce consensual zonation maps.'
+                                            : '(2) Producir mapas de zonificación consensuados.',
+                                        style: GoogleFonts.playfairDisplay(
+                                          color: const Color(0xFFE0B660),
+                                          fontSize: isMobile ? 14.5 : 16,
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        widget.language == 'en'
+                                            ? 'Produce, with the community, a consensual set of zonation maps documenting land use, place-names, resource and ceremonial sites, and water features, ground-truthed and re-drafted until the community agrees on a shared representation.'
+                                            : 'Producir, con la comunidad, un conjunto consensuado de mapas de zonificación que documenten el uso del suelo, los topónimos, los sitios de recursos y ceremoniales, y las características hídricas, verificados en terreno y rediseñados hasta que la comunidad acuerde una representación compartida.',
+                                        style: GoogleFonts.playfairDisplay(
+                                          color: Colors.white.withOpacity(
+                                            0.92,
+                                          ),
+                                          fontSize: isMobile ? 14 : 15.5,
+                                          height: 1.6,
+                                        ),
+                                      ),
+                                      SizedBox(height: isMobile ? 14 : 18),
+                                      // Goal 3
+                                      Text(
+                                        widget.language == 'en'
+                                            ? '(3) Deliver a zoning framework.'
+                                            : '(3) Entregar un marco de zonificación.',
+                                        style: GoogleFonts.playfairDisplay(
+                                          color: const Color(0xFFE0B660),
+                                          fontSize: isMobile ? 14.5 : 16,
+                                          fontWeight: FontWeight.w700,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        widget.language == 'en'
+                                            ? 'Convert those maps, paired with community-voted rules (normas), into a draft zoning/management framework the community can submit to MiAmbiente and the ACP. Success is measured by certified community geographers, community-endorsed maps, and a framework formally received by the agencies.'
+                                            : 'Convertir esos mapas, junto con las normas votadas por la comunidad, en un marco preliminar de zonificación y gestión que la comunidad pueda presentar a MiAmbiente y a la ACP. El éxito se mide por los geógrafos comunitarios certificados, los mapas avalados por la comunidad, y un marco recibido formalmente por las agencias.',
+                                        style: GoogleFonts.playfairDisplay(
+                                          color: Colors.white.withOpacity(
+                                            0.92,
+                                          ),
+                                          fontSize: isMobile ? 14 : 15.5,
+                                          height: 1.6,
+                                        ),
+                                      ),
+                                      SizedBox(height: isMobile ? 20 : 26),
+                                      // Clarifying note on scope.
+                                      Container(
+                                        width: double.infinity,
+                                        padding: EdgeInsets.all(
+                                          isMobile ? 14 : 18,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: const Color(
+                                            0xFFE0B660,
+                                          ).withOpacity(0.08),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                            color: const Color(
+                                              0xFFE0B660,
+                                            ).withOpacity(0.30),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          widget.language == 'en'
+                                              ? 'A note on scope: The Chagres Initiative is not politically aligned with any land claim. Our sole focus is Participatory Research Mapping and zoning — a technical, collaborative process that helps the Panamanian government (MiAmbiente, ACP) and the Indigenous community of La Bonga produce shared, evidence-based tools for the conservation and stewardship of the upper Chagres.'
+                                              : 'Sobre el alcance: La Iniciativa Chagres no está políticamente alineada con ningún reclamo de tierras. Nuestro único enfoque es el Mapeo de Investigación Participativa (PRM) y la zonificación — un proceso técnico y colaborativo que ayuda al gobierno panameño (MiAmbiente, ACP) y a la comunidad Indígena de La Bonga a producir herramientas compartidas y basadas en evidencia para la conservación y el manejo del alto Chagres.',
+                                          style: GoogleFonts.playfairDisplay(
+                                            color: Colors.white.withOpacity(
+                                              0.92,
+                                            ),
+                                            fontSize: isMobile ? 13.5 : 15,
+                                            fontStyle: FontStyle.italic,
+                                            height: 1.6,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: isMobile ? 22 : 28),
+                                      // "Click to View Live Maps" button —
+                                      // moved from above the callout to sit
+                                      // after the three-goals subsections.
+                                      Center(
+                                        child: MouseRegion(
+                                          cursor: SystemMouseCursors.click,
+                                          child: GestureDetector(
+                                            onTap: () => _scrollToSection(
+                                              _projectMapsKey,
+                                            ),
+                                            child: _HoverGlow(
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      isMobile ? 22 : 30,
+                                                  vertical: isMobile ? 13 : 16,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: const Color(
+                                                    0xFF0051BA,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        100,
+                                                      ),
+                                                  border: Border.all(
+                                                    color: const Color(
+                                                      0xFF4A90D9,
+                                                    ),
+                                                    width: 1.4,
+                                                  ),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: const Color(
+                                                        0xFF0051BA,
+                                                      ).withOpacity(0.32),
+                                                      blurRadius: 20,
+                                                      offset: const Offset(
+                                                        0,
+                                                        6,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      widget.language == 'en'
+                                                          ? 'Click to View Live Maps'
+                                                          : 'Haga clic para ver los mapas en vivo',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize:
+                                                            isMobile ? 14 : 16,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        letterSpacing: 0.6,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Icon(
+                                                      Icons.arrow_downward,
+                                                      color: Colors.white,
+                                                      size:
+                                                          isMobile ? 16 : 18,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
