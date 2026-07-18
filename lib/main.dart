@@ -848,35 +848,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                     methodologyKey: _methodologyKey,
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  color: const Color(0xFF16402E),
-                  child: Stack(
-                    children: [
-                      if (!isMobile)
-                        Positioned(
-                          left: 0,
-                          top: 0,
-                          bottom: 0,
-                          child: _JungleSideStrip(mirror: false),
-                        ),
-                      if (!isMobile)
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          bottom: 0,
-                          child: _JungleSideStrip(mirror: true),
-                        ),
-                      RevealOnScroll(
-                        child: _MakeDreamsCallout(
-                          language: widget.language,
-                          onDonate: _openDonationPage,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Transition green → navy for Partnerships.
+                // Transition green → navy for the Research Team band.
                 Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
@@ -887,12 +859,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                     ),
                   ),
                   height: 60,
-                ),
-                RevealOnScroll(
-                  child: PartnershipsSection(
-                    key: _partnershipsKey,
-                    language: widget.language,
-                  ),
                 ),
                 RevealOnScroll(
                   child: TeamSection(key: _teamKey, language: widget.language),
@@ -937,11 +903,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                             ),
                           ),
                           RevealOnScroll(
-                            child: AIGeographySection(
-                              language: widget.language,
-                            ),
-                          ),
-                          RevealOnScroll(
                             child: AuthorizationSection(
                               language: widget.language,
                             ),
@@ -982,6 +943,48 @@ class _ChagresHomeState extends State<ChagresHome> {
                           ),
                           // Field Reports section removed — that content will
                           // live on learn.chagresinitiative.org later.
+                          // Launch KU / poem / donate callout moved here so it
+                          // is the last thing visitors see before FAQs.
+                          Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color(0xFF16402E),
+                                  Color(0xFF0C1328),
+                                ],
+                              ),
+                            ),
+                            height: 60,
+                          ),
+                          RevealOnScroll(
+                            child: PartnershipsSection(
+                              key: _partnershipsKey,
+                              language: widget.language,
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color(0xFF0C1328),
+                                  Color(0xFF16402E),
+                                ],
+                              ),
+                            ),
+                            height: 60,
+                          ),
+                          RevealOnScroll(
+                            child: _MakeDreamsCallout(
+                              language: widget.language,
+                              onDonate: _openDonationPage,
+                            ),
+                          ),
                           RevealOnScroll(
                             child: FAQSection(
                               key: _faqKey,
@@ -2018,71 +2021,6 @@ class PartnershipsSection extends StatelessWidget {
                     fit: BoxFit.contain,
                     opacity: const AlwaysStoppedAnimation(0.95),
                   ),
-                  const SizedBox(height: 32),
-                  // Donation button — after Make Dreams section
-                  MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: _openDonationPage,
-                      child: _HoverGlow(
-                        child: Container(
-                          constraints: const BoxConstraints(maxWidth: 280),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFA0291E),
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(
-                              color: const Color(0xFFA0291E),
-                              width: 2,
-                            ),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 28,
-                            vertical: 18,
-                          ),
-                          child: Column(
-                            children: [
-                              language == 'en'
-                                  ? Text.rich(
-                                      TextSpan(
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          const TextSpan(text: 'Please '),
-                                          const TextSpan(
-                                            text: 'Click',
-                                            style: TextStyle(
-                                              fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                          const TextSpan(text: ' to '),
-                                          const TextSpan(
-                                            text: 'Contribute',
-                                            style: TextStyle(
-                                              fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    )
-                                  : const Text(
-                                      'Haga clic aquí para contribuir',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -3067,7 +3005,7 @@ class MappingMethodSection extends StatelessWidget {
                                   ),
                                   TextSpan(
                                     text:
-                                        ' can pinpoint land use locations in uncharted territories by combining Indigenous geographic knowledge (IGK) with modern cartographic tools to create new maps and data needed for land and park management.\n\nWe elevate community members (once the "researched") to a collateral position as co-researchers and co-authors, demanding unprecedented respect of each other’s knowledge and abilities.\n\nCommunity representatives are trained to complete land-use assessments using questionnaires, sketch-maps, GPS, interviews, and more. They work with a team of geographers to transform this information into consensual and then standard cartographic and demographic results.',
+                                        ' can pinpoint land use locations in uncharted territories by combining Indigenous geographic knowledge (IGK) with modern cartographic tools to create new maps and data needed for land and park management.\n\nWe elevate community members (once the "researched") to a collateral position as co-researchers and co-authors, demanding unprecedented respect of each other’s knowledge and abilities.\n\nCommunity representatives are trained to complete land-use assessments using questionnaires, sketch-maps, GPS, interviews, and more. They work with a team of geographers to transform this information into consensual and then standard cartographic and demographic results.\n\nThe following are the iterative steps of the methodology:',
                                   ),
                                 ]
                               : const [
@@ -3108,63 +3046,6 @@ class MappingMethodSection extends StatelessWidget {
                           height: 1.6,
                         ),
                         textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(height: isPhone ? 20 : 28),
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () => launchUrl(
-                          Uri.parse('https://learn.chagresinitiative.org'),
-                          mode: LaunchMode.externalApplication,
-                        ),
-                        child: _HoverGlow(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: isPhone ? 22 : 30,
-                              vertical: isPhone ? 13 : 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF0051BA),
-                              borderRadius: BorderRadius.circular(100),
-                              border: Border.all(
-                                color: const Color(0xFF4A90D9),
-                                width: 1.4,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(
-                                    0xFF0051BA,
-                                  ).withOpacity(0.32),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  language == 'en'
-                                      ? 'Visit our Geography HQ to Learn More'
-                                      : 'Visite nuestro Geography HQ para aprender más',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: isPhone ? 14 : 16,
-                                    fontWeight: FontWeight.w700,
-                                    letterSpacing: 0.6,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Icon(
-                                  Icons.arrow_outward,
-                                  color: Colors.white,
-                                  size: isPhone ? 16 : 18,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
                       ),
                     ),
                   ],
@@ -4764,13 +4645,13 @@ class _MakeDreamsCallout extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(
         isPhone ? 20 : 60,
-        isPhone ? 24 : 36,
+        isPhone ? 6 : 10,
         isPhone ? 20 : 60,
-        isPhone ? 40 : 64,
+        isPhone ? 10 : 14,
       ),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 820),
+          constraints: const BoxConstraints(maxWidth: 640),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: BackdropFilter(
@@ -4778,7 +4659,7 @@ class _MakeDreamsCallout extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: isMobile ? 24 : 36,
-                  vertical: isMobile ? 26 : 34,
+                  vertical: isMobile ? 18 : 22,
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -4830,7 +4711,7 @@ class _MakeDreamsCallout extends StatelessWidget {
                       _MakeDreamsBullet(text: bullets[i]),
                       if (i < bullets.length - 1) const SizedBox(height: 8),
                     ],
-                    SizedBox(height: isMobile ? 20 : 24),
+                    SizedBox(height: isMobile ? 14 : 18),
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
@@ -4880,6 +4761,7 @@ class _MakeDreamsBullet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -4893,9 +4775,10 @@ class _MakeDreamsBullet extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
+        Flexible(
           child: Text(
             text,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xFFD9DEEC),
               fontSize: 15,
@@ -5875,6 +5758,10 @@ class _MethodologySectionState extends State<MethodologySection> {
               '4. Standardizing Map Products',
               'The consensual, community-produced maps are converted into standard maps that are scientifically accurate and recognized by government officials and other external, professional audiences.',
             ),
+            (
+              "5. Anthropic's Claude A.I.",
+              'For the first time we are using Claude, to assist in the development of the four preceding steps and to explore the applications of this emerging technology for geographic applications in community based PRM.',
+            ),
           ]
         : [
             (
@@ -5892,6 +5779,10 @@ class _MethodologySectionState extends State<MethodologySection> {
             (
               '4. Estandarización de Productos Cartográficos',
               'Los mapas consensuados producidos por la comunidad se convierten en mapas estándar que son científicamente precisos y reconocidos por funcionarios gubernamentales y otras audiencias externas y profesionales.',
+            ),
+            (
+              '5. Claude A.I. de Anthropic',
+              'Por primera vez estamos utilizando Claude para asistir en el desarrollo de los cuatro pasos anteriores y para explorar las aplicaciones de esta tecnología emergente en usos geográficos del PRM basado en la comunidad.',
             ),
           ];
 
