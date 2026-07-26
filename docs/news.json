@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-25T11:24:53.306690+00:00",
+  "updated": "2026-07-26T11:27:22.633291+00:00",
   "items": [
     {
       "title": "The Panama Canal is growing more important",
@@ -7,6 +7,13 @@
       "source": "The Economist",
       "published": "Thu, 16 Jul 2026 07:00:00 GMT",
       "date": "7/16/26"
+    },
+    {
+      "title": "Mexico is pulling a land-based Panama Canal out of its hat, and the 303-kilometer route could reroute cargo without locks",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxQaHAxWEVxLWdlOG1KVGdfVnFkd09EY3F4WUdXR0o2Ui0yZHg5bDUydnR0VHp1S3JmUi1iLVZ1c3Y4a1RHaGF3dVlVdjBoWVlzZ1FKb0puOE1wM3V5VmU3R3VPbkFGdG5vbEFScmdNUlFZUW05ZENpaWVtbHNFTWtYbFBkOW9oQkRBcGxVRjJ3QzZsRExLUFVFbDZnYjZ4Z25KWGRVcnBMbzlhdHBfWEFPVWZLWFNWeWNUTUJ0Tmp3WXpvTG1rSVptcFBtb0U3amhkRzBCdzFQLWJmSXRVUy1zVTdYV0tFMkZXMXp2Qg?oc=5",
+      "source": "OkDiario",
+      "published": "Mon, 29 Jun 2026 07:00:00 GMT",
+      "date": "6/29/26"
     },
     {
       "title": "Global Trade Faces Fresh Test as Panama Canal Curbs Bookings",
@@ -30,13 +37,6 @@
       "date": "7/21/26"
     },
     {
-      "title": "How was the Panama Canal built—and who owns it?",
-      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPZEdzazQzUEMxLTdSV0VjX2kySk1RT0k2eml3c2VnclJ4SUhPdDFaX1pQZHhVQjAxQUN2ZUNKUHB2NjhTUnluamlQVzRrS3ZMRkY5d3NrTjBJREZkbC1WRHFqMkYteWFVQjR1ZHkxQWV4TDdSa09uWEc0ZUVlM0xiRW5oM2xCYlZtMTVPN3VLWGE?oc=5",
-      "source": "Encyclopedia Britannica",
-      "published": "Sun, 12 Jul 2026 07:00:00 GMT",
-      "date": "7/12/26"
-    },
-    {
       "title": "Trump told interesting stories about George Washington and the Panama Canal. They’re both fake",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9ELTYwbkNSak12QmstYUR4d1NacG9qN0tKbzhBWnN2d3lqOTVzZjliVVo5UUliVk5ZMW12Nm1IWkdaUTNZa1M4MVVrVmtEbDZXMGkwQ05WQ0s1a0w0QmNXYnRySDdwUkdKTk9CTElSRzlFaTZP?oc=5",
       "source": "CNN",
@@ -51,11 +51,25 @@
       "date": "7/1/26"
     },
     {
+      "title": "How was the Panama Canal built—and who owns it?",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPZEdzazQzUEMxLTdSV0VjX2kySk1RT0k2eml3c2VnclJ4SUhPdDFaX1pQZHhVQjAxQUN2ZUNKUHB2NjhTUnluamlQVzRrS3ZMRkY5d3NrTjBJREZkbC1WRHFqMkYteWFVQjR1ZHkxQWV4TDdSa09uWEc0ZUVlM0xiRW5oM2xCYlZtMTVPN3VLWGE?oc=5",
+      "source": "Encyclopedia Britannica",
+      "published": "Sun, 12 Jul 2026 07:00:00 GMT",
+      "date": "7/12/26"
+    },
+    {
       "title": "Panama Canal to temporarily suspend Period 3 daily auctions; dry bulk markets weigh impact",
       "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQUU1yU2JibUFNXzQ1WHlFVE9EVHUzN3Z0Y3pHUW5xUVo2bFlfbXR3VHJjZkhqZng2dmNiYzMyUHFHVlQ2WGVFSEVCaVBvWW5RMlNYUG1Ta1U1eUhRU0VvY3EzRWp0NFhfYUlZQ2xubWlHUk1HMTNGdUk3eTl4R0h6NnR6d2pfVUcweFNNVld4eFBtY1BpTjVkU2hhMHVhTkZXeWJYUDMxb3ZYSUd4RFJqdFY5TG9jd2FybXBYSjBxcTRNNTRkdDAzSE1TUHYzUVM4VHJZbHFVQm9hRDhSWVVpZWk3bTZGaFVXYXpyM0t2NU9BQW40SDdSNFF3?oc=5",
       "source": "S&P Global",
       "published": "Thu, 23 Jul 2026 05:57:46 GMT",
       "date": "7/23/26"
+    },
+    {
+      "title": "El Nino Development Raises Dryness Concern for Panama Canal",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQOEliWlZZWmhodDg3aUFHRjdZNEg5eVZxT0xNZXc0Tk5EWFhIZlg4WlQyVFZUZnlUQ3M2OEV0TTJQY1Q0d3Axbi1SV0dEd3pxeTVaV21MV09MSmUyakFCZnBLWjBETHdQWVpxTk1vRjMtZ2NRX3FJRS01Y1B0RDFuSUI0aDBGbGkzeU1sVnpQeWp5d1IxWUlzeFlrcWR2Y1ds?oc=5",
+      "source": "DTN Progressive Farmer",
+      "published": "Wed, 01 Jul 2026 13:30:00 GMT",
+      "date": "7/1/26"
     },
     {
       "title": "MSC, CMA CGM introduce fresh Panama Canal surcharges",
@@ -70,20 +84,6 @@
       "source": "Baird Maritime",
       "published": "Wed, 08 Jul 2026 10:24:12 GMT",
       "date": "7/8/26"
-    },
-    {
-      "title": "Royal Caribbean's Discovery-class ships will fit through the Panama Canal",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOdG9wUnVwdTluYm1tci1XZDF0TW1EUFk2QTA5cWcxLWtNb0JlcnJrai1kUmlGcndvNi16S0MxX2JXQWNmLUJuUDdyZFlGd1RNbW12QllFWm1FSV9zM25OOXNMZ0JnRWVLYjl1cndNbXpnbmpOWDh3a2dHSWNQRTJ6dU4tdHZEblFMV05Pd3ZWc1Bqa3Vlb0FGcWFqSm1ZYzdlRXJoX1lZTllndm9TNUl5TnZlb0I?oc=5",
-      "source": "Travel Weekly",
-      "published": "Wed, 01 Jul 2026 07:00:00 GMT",
-      "date": "7/1/26"
-    },
-    {
-      "title": "Ocean carriers levy fees tied to Panama Canal draft limits",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNbG1XQVNNYWdvT2V3UHR5Ul9qWXZSYTFHY2ZLOGdRWUVveHpnX1RaTWNTcmc2T0plRnV2R2Y3U0FXRHhuYTFNS01RMmNyUW1aejBFRVczUDRLem9mcEN3dUhhV3RROFBUTVQ4MzQ5TVktMWdHalJTZmRjVm90TXgtdzBzdjBjNzhJMDB6YlVnUUhYNVBIUmM5MFR3?oc=5",
-      "source": "Journal of Commerce",
-      "published": "Tue, 21 Jul 2026 21:12:00 GMT",
-      "date": "7/21/26"
     }
   ]
 }
