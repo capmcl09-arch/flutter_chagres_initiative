@@ -842,6 +842,77 @@ class _ChagresHomeState extends State<ChagresHome> {
                     ],
                   ),
                 ),
+                // navy → green fade into the palms band.
+                Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFF0C1328), Color(0xFF16402E)],
+                    ),
+                  ),
+                  height: 60,
+                ),
+                // Green palms band holding Institutional Partnerships and
+                // Stay Updated, matching the aesthetic of the other green
+                // sections farther down the page.
+                Container(
+                  width: double.infinity,
+                  color: const Color(0xFF16402E),
+                  child: Stack(
+                    children: [
+                      if (!isMobile)
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: _JungleSideStrip(mirror: false),
+                        ),
+                      if (!isMobile)
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: _JungleSideStrip(mirror: true),
+                        ),
+                      Column(
+                        children: [
+                          RevealOnScroll(
+                            child: _MakeDreamsCallout(
+                              language: widget.language,
+                              onDonate: _openDonationPage,
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: NewsletterSection(
+                              language: widget.language,
+                            ),
+                          ),
+                          RevealOnScroll(
+                            child: GallerySection(
+                              key: _fieldworkKey,
+                              language: widget.language,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // green → navy fade out of the palms band so
+                // MappingMethodSection's own top gradient reads cleanly.
+                Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFF16402E), Color(0xFF0C1328)],
+                    ),
+                  ),
+                  height: 60,
+                ),
                 RevealOnScroll(
                   child: MappingMethodSection(
                     language: widget.language,
@@ -935,12 +1006,8 @@ class _ChagresHomeState extends State<ChagresHome> {
                               ),
                             ),
                           ),
-                          RevealOnScroll(
-                            child: GallerySection(
-                              key: _fieldworkKey,
-                              language: widget.language,
-                            ),
-                          ),
+                          // Photos gallery moved up into the top palms band,
+                          // right after Stay Updated.
                           // Field Reports section removed — that content will
                           // live on learn.chagresinitiative.org later.
                           // Launch KU / poem / donate callout moved here so it
@@ -980,19 +1047,10 @@ class _ChagresHomeState extends State<ChagresHome> {
                             height: 60,
                           ),
                           RevealOnScroll(
-                            child: _MakeDreamsCallout(
-                              language: widget.language,
-                              onDonate: _openDonationPage,
-                            ),
-                          ),
-                          RevealOnScroll(
                             child: FAQSection(
                               key: _faqKey,
                               language: widget.language,
                             ),
-                          ),
-                          RevealOnScroll(
-                            child: NewsletterSection(language: widget.language),
                           ),
                           RevealOnScroll(
                             child: ContactUsSection(language: widget.language),
@@ -1012,59 +1070,6 @@ class _ChagresHomeState extends State<ChagresHome> {
           ),
           if (!isMobile)
             Positioned(top: 0, left: 0, right: 0, child: _buildDesktopHeader()),
-          Positioned(
-            right: 0,
-            top: MediaQuery.of(context).size.height * 0.62,
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: _openDonationPage,
-                child: _HoverGlow(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
-                  scale: 1.04,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isMobile ? 9 : 14,
-                      vertical: isMobile ? 12 : 20,
-                    ),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFA0291E),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black38,
-                          blurRadius: 8,
-                          offset: Offset(-2, 2),
-                        ),
-                      ],
-                    ),
-                    child: RotatedBox(
-                      quarterTurns: 3,
-                      child: Text(
-                        isMobile
-                            ? (widget.language == 'en' ? 'Donate' : 'Donar')
-                            : (widget.language == 'en'
-                                  ? 'Donate Now'
-                                  : 'Donar Ahora'),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: isMobile ? 11 : 13,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -4630,16 +4635,16 @@ class _MakeDreamsCallout extends StatelessWidget {
 
     final bullets = language == 'en'
         ? const [
-            '100% to direct project costs — no overhead, no salaries.',
-            'Three-year mission launching Summer 2026 via KU Endowment.',
-            'Funds workshops, mapping tech, travel, and community-geographer stipends.',
-            'Public-private partnership replacing shrinking federal research funding.',
+            'The Chagres Initiative seeks institutional funding partners — foundations, universities, corporations, and NGOs — not individual donations.',
+            'Three-year mission (2026–2029) at the University of Kansas, administered through KU Endowment.',
+            'Institutional support funds PRM workshops, mapping technology, field travel, and stipends for community geographers — 100% to direct project costs.',
+            'Our public-private research model complements traditional funding avenues — including federal grants, foundation gifts, and university sponsorship — rather than replacing them.',
           ]
         : const [
-            '100% a costos directos — sin gastos generales ni salarios.',
-            'Misión de 3 años, verano 2026, vía KU Endowment.',
-            'Financia talleres, tecnología de mapeo, viajes y estipendios comunitarios.',
-            'Asociación público-privada que reemplaza el financiamiento federal recortado.',
+            'La Iniciativa Chagres busca socios institucionales de financiamiento — fundaciones, universidades, corporaciones y ONG — no donaciones individuales.',
+            'Misión de tres años (2026–2029) en la Universidad de Kansas, administrada a través de KU Endowment.',
+            'El apoyo institucional financia talleres de PRM, tecnología de mapeo, viajes de campo y estipendios para geógrafos comunitarios — 100% a costos directos del proyecto.',
+            'Nuestro modelo de investigación público-privado complementa los mecanismos tradicionales de financiamiento — incluyendo subvenciones federales, aportes de fundaciones y patrocinio universitario — en lugar de reemplazarlos.',
           ];
 
     return Padding(
@@ -4681,8 +4686,8 @@ class _MakeDreamsCallout extends StatelessWidget {
                   children: [
                     Text(
                       language == 'en'
-                          ? 'Make Dreams Possible'
-                          : 'Haga Posibles los Sueños',
+                          ? 'Institutional Partnerships'
+                          : 'Alianzas Institucionales',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.playfairDisplay(
                         color: const Color(0xFFE0B660),
@@ -4696,8 +4701,8 @@ class _MakeDreamsCallout extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       language == 'en'
-                          ? 'FUND KU RESEARCH ABROAD'
-                          : 'FINANCIE LA INVESTIGACIÓN DE KU EN EL EXTERIOR',
+                          ? 'FOUNDATIONS · UNIVERSITIES · CORPORATE PARTNERS · NGOs'
+                          : 'FUNDACIONES · UNIVERSIDADES · SOCIOS CORPORATIVOS · ONG',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -4711,7 +4716,7 @@ class _MakeDreamsCallout extends StatelessWidget {
                       _MakeDreamsBullet(text: bullets[i]),
                       if (i < bullets.length - 1) const SizedBox(height: 8),
                     ],
-                    SizedBox(height: isMobile ? 14 : 18),
+                    SizedBox(height: isMobile ? 16 : 20),
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
@@ -4719,25 +4724,47 @@ class _MakeDreamsCallout extends StatelessWidget {
                         child: _HoverGlow(
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 36,
-                              vertical: 16,
+                              horizontal: 30,
+                              vertical: 14,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFA0291E),
+                              color: const Color(0xFF0051BA),
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
-                                color: const Color(0xFFA0291E),
-                                width: 2,
+                                color: const Color(0xFF4A90D9),
+                                width: 1.4,
                               ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFF0051BA,
+                                  ).withOpacity(0.32),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
                             ),
-                            child: Text(
-                              language == 'en' ? 'Donate Now' : 'Donar Ahora',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.4,
-                              ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  language == 'en'
+                                      ? 'Partner Through Launch KU'
+                                      : 'Aliarse a través de Launch KU',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 0.6,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                const Icon(
+                                  Icons.arrow_outward,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -5906,6 +5933,9 @@ class GallerySection extends StatefulWidget {
 class _GallerySectionState extends State<GallerySection> {
   int _currentIndex = 0;
   final List<String> _images = [
+    'assets/images/Drua_Group.jpeg',
+    'assets/images/La_Bonga_Presenting.JPG',
+    'assets/images/Village_Along_Pequeni.JPG',
     'assets/images/Marcelino_Teaching.jpg',
     'assets/images/lancha.jpg',
     'assets/images/field_tour.jpg',
@@ -5915,8 +5945,22 @@ class _GallerySectionState extends State<GallerySection> {
     'assets/images/site_analysis.jpg',
     'assets/images/lizard.jpg',
     'assets/images/monkey.jpg',
+    'assets/images/signing.jpeg',
+    'assets/images/team_photo.jpg',
   ];
   final List<(String, String)> _captions = [
+    (
+      'Chagres Initiative Research Team Members Peter Herlihy, PhD, and Cap McLiney, in the community of Emberá Drua with Indigenous Leaders: (left to right) Nokó Marcelino Guatico, Andrea Mecha, president of Chagres Ecotourism Cooperative, and Cacique General de Tierras Colectivas Gabriel Menguisama.',
+      'Grupo Drua',
+    ),
+    (
+      'Nokó Marcelino Guatico and Cacique General de Tierras Colectivas, Gabriel Menguisama, discuss their avid support for the Chagres Initiative.',
+      'La Bonga presentando',
+    ),
+    (
+      'Emberá village dedicated to tourism along the Rio Chagres.',
+      'Poblado a lo largo del Río Pequení',
+    ),
     (
       'Indigenous Nokó Marcelino Guatico describes the structure of Indigenous leadership and land tenure under law 72 of Chagres and all of Panama.',
       'El Nokó indígena Marcelino Guatico describe la estructura del liderazgo indígena y la tenencia de tierras bajo la Ley 72 en Chagres y en todo Panamá.',
@@ -5938,6 +5982,14 @@ class _GallerySectionState extends State<GallerySection> {
     ),
     ('Rainforest lizard', 'Lagarto del bosque tropical'),
     ('White-Faced Capuchin Monkey', 'Mono Capuchino de Cara Blanca'),
+    (
+      'Indigenous Local Congress inviting KU geographers to do participatory mapping of their communities in the Chagres National Park to produce the cartographic and statistical data needed for a conservation zoning plan. Photo shows Emberá Chief Marcelino Guático and Community President Elieser Adames signing the legal request (pedido) formalizing the KU Chagres Initiative (Taylor Tappan and Cap McLiney are also shown).',
+      'Congreso Local Indígena invitando a los geógrafos de KU a realizar el mapeo participativo de sus comunidades en el Parque Nacional Chagres para producir los datos cartográficos y estadísticos necesarios para un plan de zonificación de conservación. La foto muestra al Jefe Emberá Marcelino Guático y al Presidente Comunitario Elieser Adames firmando la solicitud legal (pedido) que formaliza la Iniciativa Chagres de KU (Taylor Tappan y Cap McLiney también aparecen en la foto).',
+    ),
+    (
+      'Original KU Research Team of Dr. Peter Herlihy, Cap McLiney, Amalie Hipp, Sam Morrow and Dr. Taylor Tappan on Barro Colorado Island in Lake Gatún, Panama Canal Zone, June 2025.',
+      'Equipo de Investigación Original de KU del Dr. Peter Herlihy, Cap McLiney, Amalie Hipp, Sam Morrow y Dr. Taylor Tappan en la Isla Barro Colorado en el Lago Gatún, Zona del Canal de Panamá, junio de 2025.',
+    ),
   ];
 
   @override
@@ -5958,9 +6010,7 @@ class _GallerySectionState extends State<GallerySection> {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Text(
-                widget.language == 'en'
-                    ? 'Fieldwork & Landscape'
-                    : 'Trabajo de Campo y Paisaje',
+                widget.language == 'en' ? 'Photos' : 'Fotos',
                 style: Theme.of(
                   context,
                 ).textTheme.headlineSmall?.copyWith(color: Colors.white),
@@ -7196,10 +7246,9 @@ class TeamSection extends StatelessWidget {
                   context,
                 ).textTheme.headlineSmall?.copyWith(color: Colors.white),
               ),
-              const SizedBox(height: 24),
-              // Team Photo Carousel
-              _TeamPhotoCarousel(language: language),
               const SizedBox(height: 40),
+              // Team Photo Carousel moved into the Photos gallery at the
+              // bottom of that deck; personnel list stays without photos.
               // La Bonga Section
               _buildTeamSection(
                 context,
@@ -7573,7 +7622,13 @@ class NewsletterSection extends StatefulWidget {
 
 class _NewsletterSectionState extends State<NewsletterSection> {
   void _subscribeToSubstack() {
-    launchUrl(Uri.parse('https://chagresinitiative.substack.com/'));
+    launchUrl(Uri.parse('https://substack.com/@chagresinitiative'));
+  }
+
+  void _openGeographyPost() {
+    launchUrl(
+      Uri.parse('https://substack.com/home/post/p-209553231'),
+    );
   }
 
   @override
@@ -7611,24 +7666,46 @@ class _NewsletterSectionState extends State<NewsletterSection> {
                 context,
               ).textTheme.headlineSmall?.copyWith(color: Colors.white),
             ),
-            const SizedBox(height: 12),
-            Text.rich(
-              TextSpan(
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: const Color(0xFFB9C6EA),
-                ),
-                children: _buildCISpans(
-                  widget.language == 'en'
-                      ? 'Subscribe to our Substack for the latest research updates, field reflections, and news from the Chagres Initiative.'
-                      : 'Suscríbase a nuestro Substack para recibir las últimas actualizaciones de investigación, reflexiones de campo y noticias de la Iniciativa Chagres.',
-                  Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFFB9C6EA),
+            const SizedBox(height: 24),
+            GestureDetector(
+              onTap: _openGeographyPost,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        const Color(0xFF2E7D4F),
+                        const Color(0xFF2E7D4F).withOpacity(0.8),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF2E7D4F).withOpacity(0.4),
+                        blurRadius: 16,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 14,
+                  ),
+                  child: Text(
+                    widget.language == 'en'
+                        ? 'See our Most Recent Update'
+                        : 'Ver Nuestra Actualización Más Reciente',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
-              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             GestureDetector(
               onTap: _subscribeToSubstack,
               child: MouseRegion(
@@ -7656,8 +7733,8 @@ class _NewsletterSectionState extends State<NewsletterSection> {
                   ),
                   child: Text(
                     widget.language == 'en'
-                        ? 'Subscribe on Substack'
-                        : 'Suscribirse en Substack',
+                        ? 'View All Updates'
+                        : 'Ver Todas las Actualizaciones',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
