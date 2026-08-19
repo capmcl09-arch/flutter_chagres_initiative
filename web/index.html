@@ -35,6 +35,8 @@
   <link rel="manifest" href="manifest.json">
   <style>
     body {
+      background-color: #0C1328;
+      margin: 0;
       touch-action: manipulation;
       -webkit-user-select: none;
       user-select: none;
@@ -42,9 +44,26 @@
     #app {
       touch-action: manipulation;
     }
+    /* Shown until the Flutter engine paints its first frame. */
+    #boot {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0C1328;
+      color: #E0B660;
+      font-family: Georgia, 'Times New Roman', serif;
+      letter-spacing: 0.24em;
+      font-size: 13px;
+      text-transform: uppercase;
+      transition: opacity .4s ease;
+    }
   </style>
 </head>
 <body>
+  <div id="boot">Chagres Initiative</div>
+
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader
@@ -54,5 +73,65 @@
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Hold the boot screen until BOTH: (a) the browser has downloaded the
+    // above-the-fold hero assets, and (b) Flutter has painted its first
+    // frame. Whichever finishes second triggers the fade — so the landing
+    // page is fully ready when it unveils. Preloading here (rather than
+    // in Flutter) means the browser primes its HTTP cache in parallel
+    // with the Flutter engine boot; when Flutter later requests the same
+    // URLs they resolve from cache instantly. Safety fallback: 15s.
+    (function () {
+      var CRITICAL = [
+        'assets/assets/images/palms.jpg',
+        'assets/assets/images/chagres_oval_seal.png',
+        'assets/assets/images/labonga_seal.png',
+        'assets/assets/images/jayhawk.png',
+        'assets/assets/images/chagres_initiative_logo_hq.png',
+        'assets/assets/images/logo_badge_revised.png',
+        'assets/assets/images/KU_LOGO_BLUE.jpg',
+        'assets/assets/images/Launch_KU.png',
+        'assets/assets/images/chagres_partners_logo_row.png',
+      ];
+      var imagesReady = false;
+      var flutterReady = false;
+      var removed = false;
+      var loaded = 0;
+
+      function fadeBoot() {
+        if (removed || !imagesReady || !flutterReady) { return; }
+        removed = true;
+        var boot = document.getElementById('boot');
+        if (!boot) { return; }
+        boot.style.opacity = '0';
+        setTimeout(function () { boot.remove(); }, 400);
+      }
+
+      function onImg() {
+        loaded++;
+        if (loaded >= CRITICAL.length) {
+          imagesReady = true;
+          fadeBoot();
+        }
+      }
+
+      CRITICAL.forEach(function (src) {
+        var img = new Image();
+        img.onload = img.onerror = onImg;
+        img.src = src;
+      });
+
+      window.addEventListener('flutter-first-frame', function () {
+        flutterReady = true;
+        fadeBoot();
+      });
+
+      setTimeout(function () {
+        imagesReady = true;
+        flutterReady = true;
+        fadeBoot();
+      }, 15000);
+    })();
+  </script>
 </body>
 </html>

@@ -1180,8 +1180,27 @@ class _ChagresHomeState extends State<ChagresHome> {
             widget.language == 'en' ? 'FAQ' : 'Preguntas Frecuentes',
             _faqKey,
           ),
+          _buildExternalDrawerItem(
+            widget.language == 'en'
+                ? 'Activity Timeline'
+                : 'Cronología de Actividades',
+            'https://updates.chagresinitiative.org',
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildExternalDrawerItem(String label, String url) {
+    return ListTile(
+      title: Text(
+        label,
+        style: const TextStyle(color: Color(0xFFB9C6EA), fontSize: 16),
+      ),
+      onTap: () {
+        Navigator.of(context).pop();
+        launchUrl(Uri.parse(url));
+      },
     );
   }
 
@@ -1215,6 +1234,10 @@ class _ChagresHomeState extends State<ChagresHome> {
               _buildNavLink('Methodology', _methodologyKey),
               _buildNavLink('Fieldwork', _fieldworkKey),
               _buildNavLink('Team', _teamKey),
+              _buildExternalNavLink(
+                'Activity Timeline',
+                'https://updates.chagresinitiative.org',
+              ),
               _buildNavLink('FAQ', _faqKey),
               if (_showLanguageToggle)
                 SizedBox(
@@ -1242,20 +1265,18 @@ class _ChagresHomeState extends State<ChagresHome> {
 
   Widget _buildNavLink(String label, GlobalKey key) {
     final isActive = _activeSection == label;
-    final displayLabel = _translatedNavLabel(label);
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => _scrollToSection(key),
-        child: Text(
-          displayLabel,
-          style: TextStyle(
-            color: isActive ? Colors.white : const Color(0xFFB9C6EA),
-            fontSize: 17,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-          ),
-        ),
-      ),
+    return _NavPillButton(
+      label: _translatedNavLabel(label),
+      isActive: isActive,
+      onTap: () => _scrollToSection(key),
+    );
+  }
+
+  Widget _buildExternalNavLink(String label, String url) {
+    return _NavPillButton(
+      label: _translatedNavLabel(label),
+      isActive: false,
+      onTap: () => launchUrl(Uri.parse(url)),
     );
   }
 
@@ -1267,8 +1288,69 @@ class _ChagresHomeState extends State<ChagresHome> {
       'Fieldwork' => 'Trabajo de Campo',
       'Team' => 'Equipo',
       'FAQ' => 'Preguntas Frecuentes',
+      'Activity Timeline' => 'Cronología de Actividades',
       _ => label,
     };
+  }
+}
+
+class _NavPillButton extends StatefulWidget {
+  final String label;
+  final bool isActive;
+  final VoidCallback onTap;
+
+  const _NavPillButton({
+    required this.label,
+    required this.isActive,
+    required this.onTap,
+  });
+
+  @override
+  State<_NavPillButton> createState() => _NavPillButtonState();
+}
+
+class _NavPillButtonState extends State<_NavPillButton> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final active = widget.isActive;
+    final Color bg = active
+        ? Colors.white.withOpacity(0.18)
+        : _hovered
+            ? Colors.white.withOpacity(0.10)
+            : Colors.white.withOpacity(0.04);
+    final Color border = active
+        ? const Color(0xFFE0B660)
+        : _hovered
+            ? Colors.white.withOpacity(0.35)
+            : Colors.white.withOpacity(0.14);
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 140),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: bg,
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: border, width: 1),
+          ),
+          child: Text(
+            widget.label,
+            style: TextStyle(
+              color: active ? Colors.white : const Color(0xFFE6ECFA),
+              fontSize: 16,
+              fontWeight: active ? FontWeight.bold : FontWeight.w500,
+              letterSpacing: 0.2,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -7631,6 +7713,15 @@ class _NewsletterSectionState extends State<NewsletterSection> {
     );
   }
 
+  // Standalone activity timeline, served from its own repo at
+  // updates.chagresinitiative.org (see the chagres-updates repository).
+  void _openActivityTimeline() {
+    launchUrl(
+      Uri.parse('https://updates.chagresinitiative.org'),
+      webOnlyWindowName: '_blank',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 900;
@@ -7667,6 +7758,44 @@ class _NewsletterSectionState extends State<NewsletterSection> {
               ).textTheme.headlineSmall?.copyWith(color: Colors.white),
             ),
             const SizedBox(height: 24),
+            // Primary CTA: the full activity timeline, hosted standalone at
+            // updates.chagresinitiative.org.
+            GestureDetector(
+              onTap: _openActivityTimeline,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFE0B660), Color(0xFFC79A45)],
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFE0B660).withOpacity(0.35),
+                        blurRadius: 16,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 14,
+                  ),
+                  child: Text(
+                    widget.language == 'en'
+                        ? 'View the Activity Timeline'
+                        : 'Ver la Cronología de Actividades',
+                    style: const TextStyle(
+                      color: Color(0xFF14204A),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
             GestureDetector(
               onTap: _openGeographyPost,
               child: MouseRegion(
@@ -7694,8 +7823,8 @@ class _NewsletterSectionState extends State<NewsletterSection> {
                   ),
                   child: Text(
                     widget.language == 'en'
-                        ? 'See our Most Recent Update'
-                        : 'Ver Nuestra Actualización Más Reciente',
+                        ? 'See our Most Recent Substack Update'
+                        : 'Ver Nuestra Actualización Más Reciente en Substack',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -7733,8 +7862,8 @@ class _NewsletterSectionState extends State<NewsletterSection> {
                   ),
                   child: Text(
                     widget.language == 'en'
-                        ? 'View All Updates'
-                        : 'Ver Todas las Actualizaciones',
+                        ? 'See All Substack Updates'
+                        : 'Ver Todas las Actualizaciones de Substack',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
