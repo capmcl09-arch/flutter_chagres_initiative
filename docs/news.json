@@ -1,40 +1,12 @@
 {
-  "updated": "2026-08-25T11:06:26.545875+00:00",
+  "updated": "2026-08-26T11:07:40.004738+00:00",
   "items": [
-    {
-      "title": "The Panama Canal and the Limits of the Monroe Doctrine",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNYlRWNzh3bkZZc2thNUpqempid1Z1SEoxVVh5SlZ4TC02RU9aV2txb3Vhd3BibmFLdThYNHdCT2duQ1MtNGlrOENCbkhaZWZfd3Y2YjhsbkItZ0VOUkJPUDR6Qk5GMHNfa2RGZk03Z0pDRElLNFBhX0gxV24wRHlSZlRkdnhHaXEySmlnZldVdGRKYUJ6dHlZckxUU1V4d0d0TjZoLQ?oc=5",
-      "source": "Georgetown Journal of International Affairs",
-      "published": "Mon, 03 Aug 2026 07:00:00 GMT",
-      "date": "8/3/26"
-    },
-    {
-      "title": "Panama Canal Cuts Draft for Largest Ships as El Niño Intensifies",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPenE1UFM5V1JXZXpGV1JKNGxVWlJ2czRqWHFDREs4TGw0blBNZDUwcHBBSmVfQ3NkekdPVlQwaTVzeExEandaMG1kemR0YlJteVVPdWpMa2FYdW5DM3pXM1RYZVJMQjFhSTBENndrWGlCNkpzd3dTbjlkYWdiRjhPU1NwTjR4TXgyTjgtWm82NHVvSFEzN0xHdGkxY3ZnazBILUdjOVVsaw?oc=5",
-      "source": "The Maritime Executive",
-      "published": "Thu, 06 Aug 2026 07:00:00 GMT",
-      "date": "8/6/26"
-    },
     {
       "title": "Panama Canal to cap daily transits, anticipating severe El Niño",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQSHlKTzdFdmVBSnlTeW9pam44MndqSjRNU1dBUkkwb3QtRWpDZUlKaVpIZi1tb2hwNEczTV9SMlQzTkVjbkZWeDJyYkpJLWk3MmphVkloTFJnRURFSmtsU3R0eGNkY28tbjZ0MmgxNklvMDhTQWp4dm5DdlFra2ZxR05MVlRfdlZTZnJVeU1ndlFTY3dHdV8yazZ3SnRTMWtVZVZ1NG96ZE9KSXp4Z1lIenRpRHk3dw?oc=5",
       "source": "Reuters",
       "published": "Thu, 20 Aug 2026 22:38:53 GMT",
       "date": "8/20/26"
-    },
-    {
-      "title": "Panama Canal to limit shipping ahead of extreme weather during El Nino",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNdHZpVXdUNWdXbXNLYU55bVpUTzE4VEJCUWtLM0MtSXZTdnp6cTRTT0tlWXlaZ1RsRjJneWw3NGQySl9VVE93NzU0VlJCMTFmWmxmY2NteURoSjJwaTJpRE54dG9UM0ZQQkU4S2o1RVU0Y0lPRVdUQ1JJc2pGRW1vaTY0ejZXWk41X1pNcUtEMXdDU3lid3QxQTNKYUFoWWx5SkhkUG9jbnh4azZxV1Q4S9IBtgFBVV95cUxQenBfVENqN2pnSEJJanNjTVFMTlU0cW8tLTdkenhiMk9Ddm9nNkNhbTlydE5CQnhKeXZzWWhneC1ONUtGZy1VZG9XRFJveEowallBYWcxMm9MRU5uV285ZU9YMHgtei1mYl9KOVlUQVFSUTVSYmpnN0JVdFp0ZmFQM0lmQjhmNVhOZUkzdmw1a3d5TnhhVWVlOWJldUZCc0l1WFdsZklXRUtBcDdPTTBTRURoOUdoQQ?oc=5",
-      "source": "Al Jazeera",
-      "published": "Fri, 21 Aug 2026 01:25:39 GMT",
-      "date": "8/21/26"
-    },
-    {
-      "title": "El Niño Hits the Panama Canal",
-      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBkYzVMOTRrV25EZUk0Q2JISVNxcjhGQUdyekFQYjdtVm8xT0w3dzRtTF91cG11ZUlNanVVYklnOEFQaEtpMXdwTmJxTnNhbmxwVnVhUXB2RDQzeHd6R1lQWXpJbktKX0tFcnFkS1hsLXp2eVhIa3JVb18wYw?oc=5",
-      "source": "Barron's",
-      "published": "Fri, 31 Jul 2026 07:00:00 GMT",
-      "date": "7/31/26"
     },
     {
       "title": "One ship paid $4 million to skip the Panama Canal line. Here’s why that matters for your wallet",
@@ -44,18 +16,32 @@
       "date": "8/21/26"
     },
     {
+      "title": "Panama Canal to limit shipping ahead of extreme weather during El Nino",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNdHZpVXdUNWdXbXNLYU55bVpUTzE4VEJCUWtLM0MtSXZTdnp6cTRTT0tlWXlaZ1RsRjJneWw3NGQySl9VVE93NzU0VlJCMTFmWmxmY2NteURoSjJwaTJpRE54dG9UM0ZQQkU4S2o1RVU0Y0lPRVdUQ1JJc2pGRW1vaTY0ejZXWk41X1pNcUtEMXdDU3lid3QxQTNKYUFoWWx5SkhkUG9jbnh4azZxV1Q4S9IBtgFBVV95cUxQenBfVENqN2pnSEJJanNjTVFMTlU0cW8tLTdkenhiMk9Ddm9nNkNhbTlydE5CQnhKeXZzWWhneC1ONUtGZy1VZG9XRFJveEowallBYWcxMm9MRU5uV285ZU9YMHgtei1mYl9KOVlUQVFSUTVSYmpnN0JVdFp0ZmFQM0lmQjhmNVhOZUkzdmw1a3d5TnhhVWVlOWJldUZCc0l1WFdsZklXRUtBcDdPTTBTRURoOUdoQQ?oc=5",
+      "source": "Al Jazeera",
+      "published": "Fri, 21 Aug 2026 01:25:39 GMT",
+      "date": "8/21/26"
+    },
+    {
       "title": "Panama Canal to cap ship transits due to El Nino drought",
       "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE85WjRqRFlVblNta0YzX1VBNU9zTmpud2tHSjZnZnR4VnpFM3VZUWYxTThKR0c0aGtZN01QemI2eTVKSFpoSXEyYWlpZVI2amNuaWxaX2NXNGwyM2VDbUk2Mi13MNIBY0FVX3lxTFBxWHoySjFLVTBEMzFYWTRsaF9xVlhQMG1Mc3VqTE9HX05WTTNzZWg3WU4zLXA1THB1YVk1R2F2LURnWXEzYWdubVRtM1pBOEdIN3ZqM0ItelJqZFQ1cXltRlNxMA?oc=5",
-      "source": "dw.com",
+      "source": "DW.com",
       "published": "Fri, 21 Aug 2026 07:31:23 GMT",
       "date": "8/21/26"
     },
     {
-      "title": "Panama Canal transit costs hit record amid global shipping disruptions",
-      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPRjBXZmlGXzQzZllXVUJDZ1dXS09yQzFybXJ1MHlMQ2NPc3BRbGlTUWUxOTlQa3BER1hJRkRQOHpNV1ZrVWFBV2VBSFhEc1RzSEJUZ2laVi1kZk43YTZLQ3ZmSlBNQjNtaTZ0RDZWSGFrTHlmUTdHNExISHBManlVTkRhdFJTVHkzaWF0UmNNMnM0YkRySFJETDJ1RXY2N0s2cjZfdUZ1RXFGWnBrVFVIdzkwRQ?oc=5",
-      "source": "CNBC",
-      "published": "Thu, 06 Aug 2026 07:00:00 GMT",
-      "date": "8/6/26"
+      "title": "Panama Canal new capacity cuts put US ports on notice",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNRllzUGN0Q2FvYlpLLV9oVVNHbHhUWWtoc2FDOFhCYy14MXVxZkM0QWZ0dUJHTER4U0FMY2M1YmFHVG9EeGZGWF96Y05sN1RPZTIwTGdrUlNuMFROU3FaemVOUkQxVWdMRVRReHg2ekdqLWRGRmR2d1lkdlBrQmZtLXFFZUZCMlZYZmphYml6V1k?oc=5",
+      "source": "FreightWaves",
+      "published": "Mon, 24 Aug 2026 18:22:22 GMT",
+      "date": "8/24/26"
+    },
+    {
+      "title": "Panama Canal Begins Reducing Daily Transits Due to Declining Water Levels",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNV1RPN1luc3R1dl9LSWNDbGYzdWQ4eUpRU1FQcXZ6NVA0bVMtSDl6Z1JPOTB6T2dsVWZhaTN3eEM0d25ZZXEtUm40R21TTV9PRGc2VGZNVEZTSUxTYjF4UGJMUVpFWXU4cEpxTE1jRVFELUJsRWpuNnAtclNqN2ExdHVRUlY4VEVuZmVwQWJTbDFUU0M2elRqcVE3WklMY0xkbnBLbTlrRjB5ZWZfaS1OTjRn?oc=5",
+      "source": "The Maritime Executive",
+      "published": "Thu, 20 Aug 2026 22:41:26 GMT",
+      "date": "8/20/26"
     },
     {
       "title": "Panama canal to reduce shipping as El Niño strikes vital route",
@@ -65,6 +51,13 @@
       "date": "8/21/26"
     },
     {
+      "title": "Panama Canal to Tighten Draft Limits Again as Water Levels Continue to Fall",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOQnkyeVNSUEs3ZzQ3UkNUODQ3eDNiSmlQa05qX2duVW5MMFNCb3pPRUI2QkhWWVNhU0I1U1RESUFrY0FVSHFKSENRZ1BVWlptdFJQSnIycTdJZmtJamNUMkJHTERxUXdRQmtINUFxVWtMeGlKeXRGYkFLYjE0b2Vpa2J6Z0tkbzM3azg1QTF4UFd6UnF2OVhoMGw4Q0EyZw?oc=5",
+      "source": "gCaptain",
+      "published": "Thu, 06 Aug 2026 07:00:00 GMT",
+      "date": "8/6/26"
+    },
+    {
       "title": "Panama Canal to cut daily transits as El Niño grips region",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPZXpsTDhzNVBvVzhuSXR5dEVZZE1MeUpPY0RjMXlqR1RRZTQzajkwSlJWWW9RU2xPUGN3Tngwclg3NmFlY3VRbUw5R2xlN1M0dkRaQlc2NnZBal9kTUVHZ0lwMXpZeEpId0NlazJCNE9XVHRBcHppRDJqdDR6NEsxZk1sLTI?oc=5",
       "source": "Financial Times",
@@ -72,18 +65,25 @@
       "date": "8/21/26"
     },
     {
-      "title": "24th Marine Expeditionary Unit and USS San Antonio Transit Panama Canal",
-      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQemNYbUxkeWZwRWhRMm9PM19PVUd2R0N0emxIdGE2N05wRTl2a3hra3pRcV9OZkc4emRyRzVwclNWZ3ZPdXRkdnZQSWNoQ3NBa0hIRVNZN0Nid04zX1lMa2daYzJFRlJBQXdIcDJaZ1htWkx5a1lIc3lFUVUybnNMelhId0NaR05qV0FFaHotbGRLV0xTeC1iR2RLcVBHWnZwb1NRRkdUSVJoYVpFTFpONWxVaDFXNUx4TXAzY1hoLVo4QlhVQ1pZOER6QUFEcFRxQ2JkNXM0QXhuV3NXRk9DWm9B?oc=5",
-      "source": "navy.mil",
-      "published": "Mon, 03 Aug 2026 07:00:00 GMT",
-      "date": "8/3/26"
+      "title": "Ship Pays $4 Million to Skip Line to Cross Panama Canal",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPTWdWWlQtWTRhNWZDdVdEMEx0b0c0dDI1dDc3eE1Id01faDBlV0dYZFRHbkNCcEhOVmd4N1VDN0ZQaHZOSGFPSHQ1TnB4MUtPSkJmdHZ1TW02azBpX0F4c2U2TVBEQ1JRdVNESTdNamk3TjZpb2FOR1kzUFVIZ0tkaXRRSXZWR2d0Y3FEOGQ3WWlVaWhoUFItYlpRZDlXeG9ENXFlSzNvdDNmelF0d2N1TA?oc=5",
+      "source": "Bloomberg.com",
+      "published": "Tue, 11 Aug 2026 07:00:00 GMT",
+      "date": "8/11/26"
     },
     {
-      "title": "Panama is one battle in China’s infrastructure war",
-      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPY2UyUmJHbnNMRE4tWGJNWmZ1dFZZQTJWQ09pcHNoaDhpaUFXUnhvM1RGdDJvaEZUNWRZNWdrSG5HamY2SkRQX2pHUGdaazhoekgycFdjV1NuUTNLT0ZweFdleDNuS2UydkRkUmJqa2lFb1pLN21tYTBoTTZMMEM5V0V6eDR0VF92WGfSAY8BQVVfeXFMUHJkblFyV1dHTFYyNHpkaV9MTmxSaUdzbjRlRzlFRE04MFo5aE1lcTN5N0E1TVQtVjZSV1hkbThNam9EOWMxdml3M0lrT3EwYWpadWZqQmhtY0ZRQXpjbElMQXVtaE9qdm9UNnJTZjJWYnNZelpiSkhlcjZ3TE9MVzhUVDlXZHoyLTJPUnN2bXM?oc=5",
-      "source": "The Hill",
-      "published": "Fri, 21 Aug 2026 15:27:00 GMT",
-      "date": "8/21/26"
+      "title": "A Severe Drought Is Straining the Panama Canal. Could Global Warming Make It Worse?",
+      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOMzQxbnptNFlrX19QTmNZNDBNZGdFM0ZtTC1LbURPQjhDNksyUE1OMTdBT1pQUkpRU20xRWNERFFMRjNFcmJ0b2xZZWJGbC01QVVpVDZYc25RR2RHbXUxbXdwX3dRTnVhZ3hreTIweVlnVzUyZ3QtX1BwRzhxWXFNUzlzU1p1QWtTWnYyMkNKVHcxQQ?oc=5",
+      "source": "Inside Climate News",
+      "published": "Tue, 25 Aug 2026 22:11:25 GMT",
+      "date": "8/25/26"
+    },
+    {
+      "title": "Panama Canal Announces New Draft Adjustments for Neopanamax Locks",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQU0RPcmxUUXBsTDNMbnF3cExFaE1iV0hFS0JrOGNjLUNJT1FhZXp1RUtqalhfX2FFUUdHelZsbC1aaG84dUdfc1o0Z3Y5WGZDbC1sZnFfNURCR3BHN0ZyQ211ZDNxcjBFaDdtMWpWTWQxN3lIRDFMOGV2dVB4Q0s5dU9jQVNxZXgwMldad21GaFZGVWJW?oc=5",
+      "source": "pancanal.com",
+      "published": "Wed, 05 Aug 2026 07:00:00 GMT",
+      "date": "8/5/26"
     }
   ]
 }
