@@ -10,14 +10,15 @@ import 'dart:ui_web' as ui;
 import 'dart:math' as math;
 import 'dart:convert';
 
-const String _donationPageUrl =
-    'https://launchku.org/campaigns/chagres-initiative-safeguarding-panama-canal-water-security-through-indigenous-rainforest-stewardship';
 const Color _kuBlue = Color(0xFF1D53B3);
 const String _kuLogoBlueAsset = 'assets/images/KU_LOGO_BLUE.jpg';
 const String _revisedBadgeLogoAsset = 'assets/images/logo_badge_revised.png';
 
-void _openDonationPage() {
-  launchUrl(Uri.parse(_donationPageUrl));
+const String _donationContactEmail = 'bernet@ku.edu';
+const String _donationContactPhone = '785-864-7465';
+
+void _openDonationContactEmail() {
+  launchUrl(Uri.parse('mailto:$_donationContactEmail'));
 }
 
 void main() {
@@ -190,7 +191,6 @@ class _ChagresHomeState extends State<ChagresHome> {
     precacheImage(const AssetImage(_revisedBadgeLogoAsset), context);
     precacheImage(const AssetImage('assets/images/jayhawk.png'), context);
     precacheImage(const AssetImage(_kuLogoBlueAsset), context);
-    precacheImage(const AssetImage('assets/images/Launch_KU.png'), context);
     precacheImage(const AssetImage('assets/images/palms.jpg'), context);
   }
 
@@ -881,7 +881,6 @@ class _ChagresHomeState extends State<ChagresHome> {
                           RevealOnScroll(
                             child: _MakeDreamsCallout(
                               language: widget.language,
-                              onDonate: _openDonationPage,
                             ),
                           ),
                           RevealOnScroll(
@@ -1010,7 +1009,7 @@ class _ChagresHomeState extends State<ChagresHome> {
                           // right after Stay Updated.
                           // Field Reports section removed — that content will
                           // live on learn.chagresinitiative.org later.
-                          // Launch KU / poem / donate callout moved here so it
+                          // KU / poem / donate callout moved here so it
                           // is the last thing visitors see before FAQs.
                           Container(
                             width: double.infinity,
@@ -1418,7 +1417,9 @@ class HeroSection extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1200 / 1440,
         child: Image.asset(
-          'assets/images/chagres_oval_seal.png',
+          language == 'es'
+              ? 'assets/images/chagres_oval_seal_es.png'
+              : 'assets/images/chagres_oval_seal.png',
           fit: BoxFit.contain,
           filterQuality: FilterQuality.high,
         ),
@@ -2072,8 +2073,8 @@ class PartnershipsSection extends StatelessWidget {
               child: Column(
                 children: [
                   // Donation copy now lives in the combined "Why Donations
-                  // Matter" band higher on the page; only the KU/Launch KU
-                  // branding remains here, leading into the donate button.
+                  // Matter" band higher on the page; only the KU research-
+                  // project branding remains here.
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -2085,15 +2086,16 @@ class PartnershipsSection extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
                       SizedBox(width: isPhone ? 14 : 22),
-                      GestureDetector(
-                        onTap: _openDonationPage,
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Image.asset(
-                            'assets/images/Launch_KU.png',
-                            height: isPhone ? 54 : 72,
-                            fit: BoxFit.contain,
-                          ),
+                      Text(
+                        language == 'en'
+                            ? 'A KU Research Project'
+                            : 'Un Proyecto de Investigación de KU',
+                        style: GoogleFonts.playfairDisplay(
+                          color: Colors.white,
+                          fontSize: isPhone ? 20 : 28,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
+                          letterSpacing: 0.4,
                         ),
                       ),
                     ],
@@ -4707,8 +4709,7 @@ class _StoryTag extends StatelessWidget {
 // shortened to a marketing-friendly summary with bullet highlights.
 class _MakeDreamsCallout extends StatelessWidget {
   final String language;
-  final VoidCallback onDonate;
-  const _MakeDreamsCallout({required this.language, required this.onDonate});
+  const _MakeDreamsCallout({required this.language});
 
   @override
   Widget build(BuildContext context) {
@@ -4718,13 +4719,13 @@ class _MakeDreamsCallout extends StatelessWidget {
     final bullets = language == 'en'
         ? const [
             'The Chagres Initiative seeks institutional funding partners — foundations, universities, corporations, and NGOs — not individual donations.',
-            'Three-year mission (2026–2029) at the University of Kansas, administered through KU Endowment.',
+            'Three-year mission (2026–2029) at the University of Kansas, with funds processed through the University of Kansas Office of Research.',
             'Institutional support funds PRM workshops, mapping technology, field travel, and stipends for community geographers — 100% to direct project costs.',
             'Our public-private research model complements traditional funding avenues — including federal grants, foundation gifts, and university sponsorship — rather than replacing them.',
           ]
         : const [
             'La Iniciativa Chagres busca socios institucionales de financiamiento — fundaciones, universidades, corporaciones y ONG — no donaciones individuales.',
-            'Misión de tres años (2026–2029) en la Universidad de Kansas, administrada a través de KU Endowment.',
+            'Misión de tres años (2026–2029) en la Universidad de Kansas, con fondos gestionados a través de la Oficina de Investigación de la Universidad de Kansas.',
             'El apoyo institucional financia talleres de PRM, tecnología de mapeo, viajes de campo y estipendios para geógrafos comunitarios — 100% a costos directos del proyecto.',
             'Nuestro modelo de investigación público-privado complementa los mecanismos tradicionales de financiamiento — incluyendo subvenciones federales, aportes de fundaciones y patrocinio universitario — en lugar de reemplazarlos.',
           ];
@@ -4799,65 +4800,99 @@ class _MakeDreamsCallout extends StatelessWidget {
                       if (i < bullets.length - 1) const SizedBox(height: 8),
                     ],
                     SizedBox(height: isMobile ? 16 : 20),
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: onDonate,
-                        child: _HoverGlow(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 14,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF0051BA),
-                              borderRadius: BorderRadius.circular(100),
-                              border: Border.all(
-                                color: const Color(0xFF4A90D9),
-                                width: 1.4,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(
-                                    0xFF0051BA,
-                                  ).withOpacity(0.32),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  language == 'en'
-                                      ? 'Partner Through Launch KU'
-                                      : 'Aliarse a través de Launch KU',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    letterSpacing: 0.6,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                const Icon(
-                                  Icons.arrow_outward,
-                                  color: Colors.white,
-                                  size: 16,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    _DonationContactBlock(language: language),
                   ],
                 ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+// Reusable block presenting the donation contact info (Brad Bernet).
+// The email renders as a tappable mailto: link; the phone is plain text.
+class _DonationContactBlock extends StatelessWidget {
+  final String language;
+  const _DonationContactBlock({required this.language});
+
+  @override
+  Widget build(BuildContext context) {
+    final isPhone = MediaQuery.of(context).size.width < 600;
+
+    final intro = language == 'en'
+        ? 'To donate to the Chagres Initiative, please contact:'
+        : 'Para donar a la Iniciativa Chagres, por favor contacte a:';
+    final roleLine = language == 'en'
+        ? 'Brad Bernet, Associate Director, Office of Research, University of Kansas'
+        : 'Brad Bernet, Director Asociado, Oficina de Investigación, Universidad de Kansas';
+    final phoneLabel = language == 'en' ? 'Telephone: ' : 'Teléfono: ';
+    final emailLabel = language == 'en' ? 'Email: ' : 'Correo: ';
+
+    final baseStyle = TextStyle(
+      color: const Color(0xFFE6ECF7),
+      fontSize: isPhone ? 14 : 15,
+      height: 1.55,
+    );
+    final strongStyle = baseStyle.copyWith(
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+    );
+    final linkStyle = baseStyle.copyWith(
+      color: const Color(0xFFFFD670),
+      fontWeight: FontWeight.w700,
+      decoration: TextDecoration.underline,
+    );
+
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 520),
+      padding: EdgeInsets.symmetric(
+        horizontal: isPhone ? 18 : 24,
+        vertical: isPhone ? 14 : 18,
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0xFF0051BA).withOpacity(0.28),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFF4A90D9).withOpacity(0.55),
+          width: 1.2,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(intro, textAlign: TextAlign.center, style: baseStyle),
+          const SizedBox(height: 6),
+          Text(roleLine, textAlign: TextAlign.center, style: strongStyle),
+          const SizedBox(height: 8),
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: phoneLabel, style: baseStyle),
+                TextSpan(text: _donationContactPhone, style: strongStyle),
+              ],
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 4),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: _openDonationContactEmail,
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(text: emailLabel, style: baseStyle),
+                    TextSpan(text: _donationContactEmail, style: linkStyle),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -7138,63 +7173,7 @@ class _GivingLevelsSectionState extends State<GivingLevelsSection> {
             padding: const EdgeInsets.all(30),
             child: Column(
               children: [
-                // Donation Button
-                GestureDetector(
-                  onTap: _openDonationPage,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: _HoverGlow(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFA0291E),
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(
-                            color: const Color(0xFFA0291E),
-                            width: 2,
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 28,
-                          vertical: 12,
-                        ),
-                        child: widget.language == 'en'
-                            ? Text.rich(
-                                TextSpan(
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    const TextSpan(text: 'Please '),
-                                    const TextSpan(
-                                      text: 'Click',
-                                      style: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                    ),
-                                    const TextSpan(text: ' to '),
-                                    const TextSpan(
-                                      text: 'Contribute',
-                                      style: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const Text(
-                                'Haga clic aquí para contribuir',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                      ),
-                    ),
-                  ),
-                ),
+                _DonationContactBlock(language: widget.language),
                 const SizedBox(height: 32),
                 // Giving Levels List
                 Container(
