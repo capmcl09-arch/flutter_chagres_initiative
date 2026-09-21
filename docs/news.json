@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-20T11:03:53.552222+00:00",
+  "updated": "2026-09-21T11:04:41.542374+00:00",
   "items": [
     {
       "title": "$5.3 million a new record for Panama Canal transit",
       "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQR1o2MzNYVU9uRms3LVpiZXR0czNZMC1kcmx6NjNYWDV1RWZ0cnBPU2ZHNWY0aHduZXRIQ3ZQOUkteHpmS0ppNkE1bHFsWUJaOS1ZQmdEMnpTMGFubWhxR0VsUnFiQVlEdFdaMC1rX2otQTYtLS1lLXZ4X2N1bWpzSl95bGxTUkZXdllr?oc=5",
-      "source": "freightwaves.com",
+      "source": "FreightWaves",
       "published": "Mon, 31 Aug 2026 07:00:00 GMT",
       "date": "8/31/26"
     },
     {
       "title": "Panama Canal restricts traffic amid Hormuz crisis: Why this matters",
       "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNa0xBWU5kVWE1T1owS3M3Rk9mUXNMRW4ya1ZQdlRqNEVNVnhmTmdudHM2RlZYTHlkaW1OeE5WS1lKeFFReHg2UzlfcHBfd2lhWktkTlN2eUI1Ym9YWU1OTDVZQVI1NjRZclNyYld5T041M2ZXc1Q0TFBSQWJrV3RKd2tYVDJlaC1pb2xTTHhScWU3X2ttYTBJc3V5bXhjejlmRUsxMkhQcURQUdIBrwFBVV95cUxQci1KeHAxbDhSOXg1VmdvNmxrdllEaTJDd3hMTDFLdWc5NFl1a1hHcFFPV2RCQkRhQkpZdVFhWmpsWmdCcWFiRmxMb0JOR3Vielk2NVdPekpHS094SEVGaDk0OWd3c3lSX0ZWRS1xM0NYenBuZ0h0X0FkY0FYNVVVTmVIQm9UdnEzMUZLLUVHMUZJU09DSXNqVlhsbi1mLUpUWFR5U2VZNDRNSGhHUW9z?oc=5",
-      "source": "aljazeera.com",
+      "source": "Al Jazeera",
       "published": "Thu, 03 Sep 2026 07:00:00 GMT",
       "date": "9/3/26"
     },
@@ -25,7 +25,7 @@
     {
       "title": "The Panama Canal’s New Boss Inherits a Drought and a Bidding War for Transit Slots",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQTnFvamNxX1hVX3lSck5FMWE5NU5rSGhDZzFjX3o1aTV4amlIaUxvYzVOUDNjSTllaVIzS2wxNUFKcWI1aGoyZWdfYTdIazNXNmRhVjBYSDZ5ajhzNmpOSTIydUZMQVQ4ZmFLcmxFVU8zSWY0YlptSTltRWNEYUxfbUZ2Y0tCUThzS0NjM1hXTERRREpZT291RjFSdmVYZWN3NkdpZWlhNmYzVl9sU1VEeDJfLVUzVWpaVnlQbWpMQTRZNk9oaUE?oc=5",
-      "source": "WSJ",
+      "source": "wsj.com",
       "published": "Mon, 07 Sep 2026 07:00:00 GMT",
       "date": "9/7/26"
     },
@@ -44,13 +44,6 @@
       "date": "9/7/26"
     },
     {
-      "title": "Asian Shipper Pays Record $5.3 Million for Panama Canal Access",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPNmRnM3BiR3NMaC1DS3kwMGFqSUVoU2oxcmd2b3Rjd01keDUwbG9Rc0YxV0s2WF9oU3dKSDA1WUR4Yk1ScVJBODhiRkhqNW1LTDQ2UnpiYlRKS1dzc2o1R1gwX2xtZFBGVWVERE9WQVpGZ0xDMXExOFc1bF9DSDdVaDVVdTVEazBFWGU5eTE2bzh3OVpDM2VFbmllM1FpdzVselJwRjBsSlBNbmt0WHp0Yy1B?oc=5",
-      "source": "Bloomberg.com",
-      "published": "Tue, 25 Aug 2026 07:00:00 GMT",
-      "date": "8/25/26"
-    },
-    {
       "title": "First female administrator in the Panama Canal’s history takes the helm",
       "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxON2VMSjhtQnJaa3JpNnJ1a3IwTVUwa0tHc0FKNkF4UkVqNnNrazJQMFpUY1h4VEhQUi1jUGtNeEt5Nnk1b1Z5Sm1SaDdZdnhXZEpfWkxXRGM3V0ZYZGVyVHpYTW81eGF6X0JTR1FrNzlmd25Ta3FQS0ZwQ1FMRUZGdWZvNFBkRkVxeDlpdTFFTlB1YmYydE9jSQ?oc=5",
       "source": "AP News",
@@ -65,11 +58,25 @@
       "date": "9/15/26"
     },
     {
-      "title": "Panama Canal Congestion Drives Gas Tankers To Unusual Routes",
-      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPQnBWdDZDQmxGVEtRWllKMlk1SGVYSTd0TGNzYmptZFo3N29vd1M0Y21UNnJfSVEyYWNjYlJiSXdhd1o1aGhFV2ZSTXFERnF0RGthRW8xc0w1ZmJTOV8tMVVTWnZMbTd4c21Tdl9ZRkJFWGxxaG14Rm9iVExEczJjSUg3X3F0UWxjLVE?oc=5",
+      "title": "Asian Shipper Pays Record $5.3 Million for Panama Canal Access",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPNmRnM3BiR3NMaC1DS3kwMGFqSUVoU2oxcmd2b3Rjd01keDUwbG9Rc0YxV0s2WF9oU3dKSDA1WUR4Yk1ScVJBODhiRkhqNW1LTDQ2UnpiYlRKS1dzc2o1R1gwX2xtZFBGVWVERE9WQVpGZ0xDMXExOFc1bF9DSDdVaDVVdTVEazBFWGU5eTE2bzh3OVpDM2VFbmllM1FpdzVselJwRjBsSlBNbmt0WHp0Yy1B?oc=5",
+      "source": "Bloomberg.com",
+      "published": "Tue, 25 Aug 2026 07:00:00 GMT",
+      "date": "8/25/26"
+    },
+    {
+      "title": "Asian shipper pays record US$5.3 million for Panama Canal access",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPaXVqeDlVV0JpSHpMTXJpR2VXUldJWHNxamw5eUxEY0RzRTh6WnNTcHBLbjNUQXI1SEhSZ3ItMEE2M1RmcW41NzFPMVJxbHhHOEpvT3AxLXh0MmVkbjdRLU4tV3haVXdNODFENlpDWnJMRW05WWNPazdVRVRWUzhoWTJLeEZpMFEwaXhIZk54U3lwandJUEpTbThHc2dubTk0cjkwNGs2WmFrR2ZydDRDSjlQWFRrd9IBtgFBVV95cUxQM0tiZnZ1MXJDb1k4aURjazhxY2daRHBxUHRNb2g3bXJtLTBKQjVFX0Q4UGRSNjZZd3NaajhfM3pyY29ZcGp2MjkwX29ZWExkc0FTTGxmdGNaVFNtNDgxd0hvY2w4SHZNeVJ6SG53Zkw5TDhGb0dHc3pIRDVrMHJEa1kwY2c4NjV4dmViTl9rcmtwNjBGdXNqN2tIXzBaRnBHV2kzU1ZHU0IwWWJVTTBVd3BiUm44Zw?oc=5",
+      "source": "SCMP",
+      "published": "Wed, 26 Aug 2026 07:00:00 GMT",
+      "date": "8/26/26"
+    },
+    {
+      "title": "Panama Canal Scraps Planned October Draft Cut—for Now",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQLXNwZ1UzT2gtNUZYRFZmemY5S0kwNHVJX210OFpuZjF2LThQVF9XcWRVWFROX2lMVW1QOGhWQzdmZEZJRGQtMlJfRTRyWXR5b0hobXBtc29fN2YxWlNRRlRwVU5VQVZ5QmFpeUNXMV9EeEYwM0lIRnVKczBmWTlMMA?oc=5",
       "source": "gCaptain",
-      "published": "Sat, 29 Aug 2026 07:00:00 GMT",
-      "date": "8/29/26"
+      "published": "Fri, 04 Sep 2026 07:00:00 GMT",
+      "date": "9/4/26"
     },
     {
       "title": "Tanker pays record $5.3m to transit Panama Canal amid El Niño drought",
@@ -77,13 +84,6 @@
       "source": "Euronews.com",
       "published": "Fri, 28 Aug 2026 07:00:00 GMT",
       "date": "8/28/26"
-    },
-    {
-      "title": "Panama Canal to reduce shipping over El Nino-fuelled drought",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQS3V5UGhIY1V3NWdQQVEzcnYxVVFtdm5iUzE1VVNaYVZyQTluMW9rN1NjSXNtellmbFJ2WlNwbFprZzh2TmxVYXd1UW1uTjZkWXM2d3FfN2RmWndzZlV5Tkt2aTNYVmwzbmR0SG56cE4wZ0JfUlg0Zi1Ob2xNc2JnbmstRldUeGE2S1ZGNk5odERlR09YYmRwZlptbWhyVERNeGlnR2U3N3Y4bGNFaVI3T0hrcFXSAbQBQVVfeXFMT2VZcHREeC1uaEN0VXJkSTR4N2kzTUdnc05DeGpkVnM3RDdFUEVkS0tCYkFqeHZCRUJDcWxWZ3kxZEZkUXMwMXBqSHd1ZS1XakNWczh6SFdRVzJKUVNKSDlmazgxMEJ5M0hpemxoN1FORDZKRWFjZUM0NnZfN3U3OTZoTlVWMjVYQTlsVDlfUUlRWm02U2tmVTJPSkZpVlNpVGJlOFhwbVA2Z2dGUkh2bDhURkFY?oc=5",
-      "source": "South China Morning Post",
-      "published": "Sun, 23 Aug 2026 07:00:00 GMT",
-      "date": "8/23/26"
     }
   ]
 }
